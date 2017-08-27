@@ -1,4 +1,5 @@
 <nz-root>
+
   <nz-layout class="layout">
     <nz-header>
 
@@ -64,6 +65,7 @@
             <br>
             在《網絡素養》的英文版原文釋出後，迄今已翻譯成十多種語言，試圖將網絡科學的基本知識傳遞給每一位現代公民。我們希望繁體中文版的譯本能讓更多華人世界的朋友認識網絡科學，盼能提供大家不同的思維和角度看待身邊的人事物，讓我們的社會更加進步。
           </div>
+
         </div>
         <!--<div style="width: 90%; padding-left: 50px;">-->
         <!--<p>-->
@@ -79,7 +81,9 @@
         <!--</div>-->
       </nz-content>
       <nz-sider [nzWidth]="350">
-        <div style="height: 90px;"></div>
+        <div style="margin-top: -60px;">
+          <graph [nodes]="nodes" [links]="links"></graph>
+        </div>
         <nz-card style="width:240px">
           <ng-template #body>
             <div class="custom-image">

@@ -4,12 +4,22 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+
+
+import { D3Service, D3_DIRECTIVES } from './d3';
+
 import { AppComponent } from './app.component';
-import { NzDemoFormInlineComponent } from './app.component';
+
+
+import { GraphComponent } from './visuals/graph/graph.component';
+import { SHARED_VISUALS } from './visuals/shared';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GraphComponent,
+    ...SHARED_VISUALS,
+    ...D3_DIRECTIVES
 
   ],
   imports: [
@@ -19,6 +29,7 @@ import { NzDemoFormInlineComponent } from './app.component';
     BrowserAnimationsModule,
     NgZorroAntdModule.forRoot()
   ],
+  providers: [D3Service],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
