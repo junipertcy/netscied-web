@@ -1,20 +1,119 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAyNTAgMjUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyNTAgMjUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojREQwMDMxO30NCgkuc3Qxe2ZpbGw6I0MzMDAyRjt9DQoJLnN0MntmaWxsOiNGRkZGRkY7fQ0KPC9zdHlsZT4NCjxnPg0KCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTI1LDMwIDEyNSwzMCAxMjUsMzAgMzEuOSw2My4yIDQ2LjEsMTg2LjMgMTI1LDIzMCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAJIi8+DQoJPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIxMjUsMzAgMTI1LDUyLjIgMTI1LDUyLjEgMTI1LDE1My40IDEyNSwxNTMuNCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAxMjUsMzAgCSIvPg0KCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xMjUsNTIuMUw2Ni44LDE4Mi42aDBoMjEuN2gwbDExLjctMjkuMmg0OS40bDExLjcsMjkuMmgwaDIxLjdoMEwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMQ0KCQlMMTI1LDUyLjF6IE0xNDIsMTM1LjRIMTA4bDE3LTQwLjlMMTQyLDEzNS40eiIvPg0KPC9nPg0KPC9zdmc+DQo=">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://blog.angular.io//">Angular blog</a></h2>
-  </li>
-</ul>
+<nz-root>
+  <nz-layout class="layout">
+    <nz-header>
 
+      <div class="logo"><a href="."><img src="../assets/img/nseit-logo.png" style="width: 300px; margin-top: -10px;
+    margin-left: 10px;"></a></div>
+      <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px; font-size: 14px;">
+        <li nz-submenu>
+          <span title><i class="anticon anticon-share-alt"></i>生活中的網絡</span>
+          <ul>
+            <li nz-menu-group>
+              <span title>社會網絡</span>
+              <ul>
+                <li nz-menu-item (click)="gotoJinMa()">2016 金馬入圍關聯網</li>
+              </ul>
+            </li>
+            <li nz-menu-group>
+            <span title>自然界的網絡</span>
+            <ul>
+            <li nz-menu-item [nzDisable]="true">（蒐集中 ...）</li>
+            <!--<li nz-menu-item></li>-->
+            </ul>
+            </li>
+          </ul>
+        </li>
+        <li nz-menu-item></li>
+
+        <li nz-submenu>
+          <span title><i class="anticon anticon-book"></i>其他參考資料</span>
+          <ul>
+            <li nz-menu-group>
+              <span title>給中學生的教學材料</span>
+              <ul>
+                <li nz-menu-item [nzDisable]="true">（翻譯中 ...）</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nz-header>
+    <nz-layout>
+      <nz-content style="padding-left: 150px; padding-right: 50px;">
+        <nz-breadcrumb style="margin:12px 0;">
+          <!--<nz-breadcrumb-item>Home</nz-breadcrumb-item>-->
+          <!--<nz-breadcrumb-item>List</nz-breadcrumb-item>-->
+        </nz-breadcrumb>
+        <div style="background:#fff; padding: 24px;">
+          <div class="paragraph" style="text-align: justify;">
+            <h2>網絡素養 – 關於網絡科學的基本概念和核心思想</h2>
+            <div style="height: 26px;"></div>
+            翻譯自 NETWORK LITERACY: Essential Concepts and Core Ideas；源於網絡科學教育計畫 (Network Science in Education |
+            NetSciEd)，旨在讓每個人都能學習並且應用網絡科學，提昇全民的網絡素養。
+          </div>
+          <div style="height: 13px;"></div>
+          <div class="paragraph" style="text-align: justify;">
+            由於網際網路的普及以及社群網站服務的流行，資訊得以有效率地在人與人之間傳播，地球村每個角落的距離因而大幅縮短，彼此的關係愈來愈容易相互影響而密不可分。如果人們對這個連結你我的無形網絡能有更多認識，社會或將因網絡提高資訊散播之效率而更加進步。簡而言之，一個網絡化的社會需要人們擁有「網絡素養」：意即認識各式各樣的網絡結構如何用來發現新知、作出決策，以及了解網絡所帶來的機會與挑戰。另一方面，對於無時無刻沉浸在網絡（無論是網際網路還是社群網路）中的年輕人，如何協助他們在學生時期建立對於網絡科學的基本素養，更是當代資訊教育的重要課題。網絡以各種不同形式、面貌且無所不在地存在你我之間；可惜的是，如此重要的網絡卻在我們的教育系統裡缺席了。
+            <br>
+            <br>
+            近二十年來，網絡科學已從物理、資訊工程等領域，演繹出一套獨特的方法學，並應用在解決生物學、社會學與經濟學等許多真實世界之問題，譬如：應用在金融界的異常交易行為預警系統，或是線上購物網站的商品推薦系統。本文將作為建立大眾網絡素養的入門磚，透過七個簡潔有趣的例子，以平實的文字，為人們介紹網絡科學的基本概念，是適合大小朋友閱讀的科普文章。本文由網絡科學領域的學者和工作者反覆潤飾撰寫而成，他們是研究並且開發網絡科學應用的跨領域科學家。如果您想要知道更多關於網絡科學的故事，特別是網絡素養計畫的緣由，歡迎訪問我們的專頁：
+            <br>
+            <br>
+            <a href="http://sites.google.com/a/binghamton.edu/netscied">http://sites.google.com/a/binghamton.edu/netscied</a>
+            <br>
+            <br>
+            在《網絡素養》的英文版原文釋出後，迄今已翻譯成十多種語言，試圖將網絡科學的基本知識傳遞給每一位現代公民。我們希望繁體中文版的譯本能讓更多華人世界的朋友認識網絡科學，盼能提供大家不同的思維和角度看待身邊的人事物，讓我們的社會更加進步。
+          </div>
+        </div>
+        <!--<div style="width: 90%; padding-left: 50px;">-->
+        <!--<p>-->
+        <!--如果你想知道我們的動態，可以告訴我們你的信箱喔。-->
+        <!--別擔心，我們和你一樣討厭廣告。-->
+        <!--</p>-->
+        <!--<br>-->
+        <!--<nz-input [nzType]="'text'" [nzPlaceHolder]="'Please enter your email address. No worries. We hate spams as you do. :-)'">-->
+        <!--<ng-template #prefix>-->
+        <!--<i class="anticon anticon-mail"></i>-->
+        <!--</ng-template>-->
+        <!--</nz-input>-->
+        <!--</div>-->
+      </nz-content>
+      <nz-sider [nzWidth]="350">
+        <div style="height: 90px;"></div>
+        <nz-card style="width:240px">
+          <ng-template #body>
+            <div class="custom-image">
+              <img width="100%" src="../assets/img/booklet-thumbnail.png"/>
+            </div>
+            <div class="custom-card">
+              <h4>網絡科學教育計畫</h4>
+              <p>https://netscied.tw/</p>
+            </div>
+          </ng-template>
+        </nz-card>
+        <div style="height: 30px; background: #fff;"></div>
+        <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="downloadEnglishVersion();">
+          <i class="anticon anticon-cloud-download"></i>
+          <span>
+            <nz-tooltip [nzTitle]="'Download English Version'">
+              <span nz-tooltip>下載英文原版</span>
+            </nz-tooltip>
+          </span>
+        </button>
+        <div style="height: 10px; background: #fff;"></div>
+        <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="downloadChineseVersion();">
+          <i class="anticon anticon-cloud-download"></i>
+          <span>
+              <span nz-tooltip>下載中文翻譯</span>
+          </span>
+        </button>
+      </nz-sider>
+    </nz-layout>
+    <div style="height: 80px; background: #fff;"></div>
+    <nz-footer style="text-align: center;">Copyright © 2016 – 2017 翻譯：<a href="https://junipertcy.info" target="_blank">顏子祺</a>、<a
+      href="http://myweb.ncku.edu.tw/~chengte/index.html" target="_blank">李政德</a> | Last Updated: August 25, 2017 |
+      Powered by <a
+        href="https://angular.io/" target="_blank">Angular</a> and <a href="https://ng.ant.design/" target="_blank">NG-ZORRO</a>.
+    </nz-footer>
+  </nz-layout>
+</nz-root>
