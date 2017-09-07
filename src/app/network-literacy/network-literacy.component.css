@@ -1,0 +1,50 @@
+.paragraph {
+    font-style: normal;
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+    font-variant-numeric: normal;
+    font-weight: lighter;
+    font-stretch: normal;
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: Roboto, sans-serif;
+    color: #4d4d4d;
+    background: #fff;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    margin: 0 auto 1.7em;
+}
+
+.custom-image img {
+  display: block;
+}
+
+.custom-card {
+  padding: 10px 16px;
+}
+
+.custom-card p {
+  color: #999;
+}
+
+.ant-card-body {
+  padding: 0;
+}
+
+.ant-layout-header {
+    background: #fff;
+}
+
+.ant-layout-content {
+    background: #fff;
+}
+
+nz-sider.ant-layout-sider {
+    background: #fff;
+
+}
+
+.ant-layout-footer {
+    background: #fff;
+    font-size: 12px;
+}
