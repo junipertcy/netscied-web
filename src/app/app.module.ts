@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -16,12 +16,13 @@ import { SHARED_VISUALS } from './visuals/shared';
 import { NetworkInfoComponent } from './infos/network-info/network-info.component';
 import { NetworkComponent } from './network/network.component';
 import { NetworkLiteracyComponent } from './network-literacy/network-literacy.component';
+import { Stat1021Component } from './teaching/stat1021/stat1021.component';
 
 const appRoutes: Routes = [
   { path: '', component: NetworkLiteracyComponent },
-  { path: 'network/:id', component: NetworkComponent }
+  { path: 'network/:id', component: NetworkComponent },
+  { path: 'stat1021', component: Stat1021Component, data: { title: 'STAT1021: 資料科學導論' } }
 ];
-
 
 @NgModule({
   declarations: [
@@ -31,8 +32,8 @@ const appRoutes: Routes = [
     ...D3_DIRECTIVES,
     NetworkInfoComponent,
     NetworkComponent,
-    NetworkLiteracyComponent
-
+    NetworkLiteracyComponent,
+    Stat1021Component
 
   ],
   imports: [
@@ -50,7 +51,10 @@ const appRoutes: Routes = [
 
 
   ],
-  providers: [D3Service],
+  providers: [
+    D3Service,
+    Title
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
