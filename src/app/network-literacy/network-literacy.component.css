@@ -1,18 +1,22 @@
 .paragraph {
-    font-style: normal;
-    font-variant-ligatures: normal;
-    font-variant-caps: normal;
-    font-variant-numeric: normal;
-    font-weight: lighter;
-    font-stretch: normal;
-    font-size: 16px;
-    line-height: 1.5;
-    font-family: Roboto, sans-serif;
-    color: #4d4d4d;
-    background: #fff;
-    height: 100%;
-    -webkit-font-smoothing: antialiased;
-    margin: 0 auto 1.7em;
+  font-style: normal;
+  font-variant-ligatures: normal;
+  font-variant-caps: normal;
+  font-variant-numeric: normal;
+  font-weight: lighter;
+  font-stretch: normal;
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: Roboto, sans-serif;
+  color: #4d4d4d;
+  background: #fff;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  margin: 0 auto 1.7em;
+}
+
+.paragraph ul {
+  padding: 0 10px 0 20px;
 }
 
 .custom-image img {
@@ -32,19 +36,19 @@
 }
 
 .ant-layout-header {
-    background: #fff;
+  background: #fff;
 }
 
 .ant-layout-content {
-    background: #fff;
+  background: #fff;
 }
 
 nz-sider.ant-layout-sider {
-    background: #fff;
+  background: #fff;
 
 }
 
 .ant-layout-footer {
-    background: #fff;
-    font-size: 12px;
+  background: #fff;
+  font-size: 12px;
 }

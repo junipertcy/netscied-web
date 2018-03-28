@@ -20,7 +20,7 @@ export class NetworkLiteracyComponent {
   nodes: Node[] = [];
   links: Link[] = [];
 
-    constructor() {
+  constructor() {
     const N = APP_CONFIG.N,
           getIndex = number => number - 1;
 

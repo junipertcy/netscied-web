@@ -27,3 +27,8 @@
 li {
   font-size: 11pt;
 }
+
+#supplemental_readings li.intent {
+    margin: 0 0 0 20px;
+    list-style-type: circle;
+}
