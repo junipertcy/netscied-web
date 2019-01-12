@@ -1,51 +1,49 @@
-<nz-root>
-
-  <nz-layout class="layout">
-    <nz-header>
-      <div class="logo"><a href="."><img src="../assets/img/nseit-logo.png" style="width: 300px; margin-top: -10px;
-    margin-left: 10px;"></a></div>
-      <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px; font-size: 14px;">
-        <li nz-submenu>
-          <span title><i class="anticon anticon-share-alt"></i>生活中的網絡</span>
-          <ul>
-            <li nz-menu-group>
-              <span title>社會文化網絡</span>
-              <ul>
-                <li nz-menu-item (click)="gotoJinMa()">2016 金馬入圍關聯網</li>
-                <li nz-menu-item (click)="gotoLinkedJazz()">Linked Jazz</li>
-              </ul>
-            </li>
-            <li nz-menu-group>
-            <span title>自然界的網絡</span>
+<nz-layout class="layout">
+  <nz-header>
+    <div class="logo">
+      <a href="."><img src="../assets/img/nseit-logo.png" style="width: 300px; margin-top: -40px; margin-left: 10px;"></a>
+    </div>
+    <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px; font-size: 14px;">
+      <li nz-submenu>
+        <span title><i nz-icon type="share-alt" theme="outline"></i>生活中的網絡</span>
+        <ul>
+          <li nz-menu-group>
+            <span title>社會文化網絡</span>
             <ul>
-              <!--http://vallandingham.me/shaw_bros_analysis.html-->
-              <!--<li nz-menu-item (click)="btnClick()"></li>-->
-              <li nz-menu-item [nzDisable]="true">（蒐集中 ...）</li>
-            <!--<li nz-menu-item></li>-->
+              <li nz-menu-item (click)="gotoJinMa()">金馬獎入圍關聯網</li>
+              <li nz-menu-item (click)="gotoLinkedJazz()">Linked Jazz</li>
             </ul>
-            </li>
-          </ul>
-        </li>
-        <li nz-menu-item></li>
-
-        <li nz-submenu>
-          <span title><i class="anticon anticon-book"></i>其他參考資料</span>
+          </li>
+          <li nz-menu-group>
+          <span title>自然界的網絡</span>
           <ul>
-            <li nz-menu-group>
-              <span title>給中學生的教學材料</span>
-              <ul>
-                <li nz-menu-item [nzDisable]="true">（翻譯中 ...）</li>
-              </ul>
-            </li>
+            <!--http://vallandingham.me/shaw_bros_analysis.html-->
+            <!--<li nz-menu-item (click)="btnClick()"></li>-->
+            <li nz-menu-item [nzDisabled]="true">（蒐集中 ...）</li>
+            <!--<li nz-menu-item></li>-->
           </ul>
-        </li>
-      </ul>
-    </nz-header>
-    <router-outlet></router-outlet>
-    <div style="height: 80px; background: #fff;"></div>
-    <nz-footer style="text-align: center;">Copyright © 2016 – 2019 網絡科學教育在台灣 | Last Updated: March 19, 2018 |
-      Powered by <a
-        href="https://angular.io/" target="_blank">Angular</a> and <a href="https://ng.ant.design/" target="_blank">NG-ZORRO</a>.
-    </nz-footer>
-  </nz-layout>
-</nz-root>
+          </li>
+        </ul>
+      </li>
+      <li nz-menu-item></li>
+
+      <li nz-submenu>
+        <span title><i nz-icon type="book" theme="outline"></i>其他參考資料</span>
+        <ul>
+          <li nz-menu-group>
+            <span title>給中學生的教學材料</span>
+            <ul>
+              <li nz-menu-item [nzDisabled]="true">（翻譯中 ...）</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-header>
+  <router-outlet></router-outlet>
+  <div style="height: 80px; background: #fff;"></div>
+  <nz-footer style="text-align: center;">Copyright © 2016 – 2019 網絡科學教育在台灣 | Last Updated: March 19, 2018 |
+    Powered by <a
+      href="https://angular.io/" target="_blank">Angular</a> and <a href="https://ng.ant.design/" target="_blank">NG-ZORRO</a>.
+  </nz-footer>
+</nz-layout>

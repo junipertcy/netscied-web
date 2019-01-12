@@ -52,20 +52,15 @@
     <div style="margin-top: -60px;">
       <graph [nodes]="nodes" [links]="links"></graph>
     </div>
-    <nz-card style="width:240px">
-      <ng-template #body>
-        <div class="custom-image">
-          <img width="100%" src="../../assets/img/booklet-thumbnail.png"/>
-        </div>
-        <div class="custom-card">
-          <h4>網絡科學教育計畫</h4>
-          <p>https://netscied.tw/</p>
-        </div>
-      </ng-template>
+    <nz-card nzHoverable style="width:240px" [nzCover]="coverTemplate">
+      <nz-card-meta nzTitle="網絡科學教育計畫" nzDescription="https://netscied.tw"></nz-card-meta>
     </nz-card>
+    <ng-template #coverTemplate>
+      <img alt="book-cover" src="../../assets/img/booklet-thumbnail.png"/>
+    </ng-template>
     <div style="height: 30px; background: #fff;"></div>
-    <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="downloadEnglishVersion();">
-      <i class="anticon anticon-cloud-download"></i>
+    <button nz-button [nzType]="'primary'" [nzSize]="'default'" (click)="downloadEnglishVersion();">
+      <i nz-icon type="download" theme="outline"></i>
       <span>
             <nz-tooltip [nzTitle]="'Download English Version'">
               <span nz-tooltip>下載英文原版</span>
@@ -73,11 +68,11 @@
           </span>
     </button>
     <div style="height: 10px; background: #fff;"></div>
-    <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="downloadChineseVersion();">
-      <i class="anticon anticon-cloud-download"></i>
+    <button nz-button [nzType]="'primary'" [nzSize]="'default'" (click)="downloadChineseVersion();">
+      <i nz-icon type="download" theme="outline"></i>
       <span>
-              <span nz-tooltip>下載中文翻譯</span>
-          </span>
+        <span nz-tooltip>下載中文翻譯</span>
+      </span>
     </button>
   </nz-sider>
 </nz-layout>
