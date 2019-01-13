@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'app';
 
   btnClick = function () {
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
   getTitleFromRouter = function( router: Router) {
     for (const r of router.config) {
       if ('/' + r.path === router.url) {
-        return r.data ? r.data.title : '網絡科學在台灣';
+        return r.data ? r.data.title : '台灣網絡科學教育';
       }
     }
   }
@@ -36,7 +36,5 @@ export class AppComponent implements OnInit {
       this.setTitle(this.getTitleFromRouter(router));
     });
   }
-
-  ngOnInit() {}
 }
 

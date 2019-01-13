@@ -1,20 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import APP_CONFIG from '../app.config';
 import { Node, Link } from '../d3';
 
-
 @Component({
-  selector: 'app-network-literacy',
-  templateUrl: './network-literacy.component.html',
-  styleUrls: ['./network-literacy.component.css']
+  selector: 'app-news',
+  templateUrl: './news.component.html',
+  styleUrls: ['./news.component.css']
 })
-export class NetworkLiteracyComponent {
-  downloadEnglishVersion() {
-    window.location.href = 'https://sites.google.com/a/binghamton.edu/netscied/Network-Literacy-high-res.pdf';
-  }
-  downloadChineseVersion() {
-    window.location.href = 'https://wiki.junipertcy.info/images/c/ce/Network_Literacy_tw_Mandarin.pdf';
-  }
+export class NewsComponent implements OnInit {
+
   nodes: Node[] = [];
   links: Link[] = [];
 
@@ -37,6 +31,9 @@ export class NetworkLiteracyComponent {
         this.links.push(new Link(i, i * m));
       }
     }
+  }
+
+  ngOnInit() {
   }
 
 }

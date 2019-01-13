@@ -1,0 +1,80 @@
+<nz-layout>
+  <nz-content style="padding-left: 150px; padding-right: 50px;">
+    <nz-breadcrumb style="margin:12px 0;">
+      <!--<nz-breadcrumb-item>Home</nz-breadcrumb-item>-->
+      <!--<nz-breadcrumb-item>List</nz-breadcrumb-item>-->
+    </nz-breadcrumb>
+    <div style="background:#fff; padding: 24px;">
+      <div class="paragraph" style="text-align: justify;">
+        <h2>生活中的網路</h2>
+        <div style="height: 26px;"></div>
+        有許多網路服務讓人們公開下載網絡數據，例如歐洲的 <a href="http://konect.cc/networks/" target="_blank">KONECT 計劃</a>或美國的<a href="https://icon.colorado.edu/" target="_blank">科羅拉多大學</a>和<a href="https://snap.stanford.edu/data/" target="_blank">史丹佛大學</a>等。
+        這裡我們收集和台灣有關的網絡數據，供大家下載。若時間與經費允許，針對每一個網絡，我們將請相關專業人士撰文，簡介該數據集。
+      </div>
+      <div style="height: 13px;"></div>
+      <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'" [nzAnimated]="false" [nzSize]="'default'">
+        <nz-tab nzTitle="社會與文化">
+          <ul>
+            <li>
+              <strong>金馬獎入圍關係網</strong>
+              – 金馬獎 2018 的「演員-電影」二元網路，見此<a href="https://jinma.today/relations" target="_blank">連接</a>。
+            </li>
+            <li>
+              <strong>人口遷徙</strong>
+              – 搜集中...
+            </li>
+          </ul>
+        </nz-tab>
+        <nz-tab nzTitle="經濟">
+          <ul>
+            <li>
+              <strong>港口貿易</strong>
+              – 搜集中...
+            </li>
+          </ul>
+        </nz-tab>
+        <nz-tab nzTitle="自然界">
+          <ul>
+            <li>
+              <strong>生物食物鏈</strong>
+              – 搜集中...
+            </li>
+          </ul>
+        </nz-tab>
+        <nz-tab nzTitle="基礎建設">
+          <ul>
+            <li>
+              <strong>縣市路網</strong>
+              – 搜集中...
+            </li>
+            <li>
+              <strong>航空路線</strong>
+              – 搜集中...
+            </li>
+          </ul>
+        </nz-tab>
+        <nz-tab nzTitle="科技">
+          <ul>
+            <li>
+              <strong>港口貿易</strong>
+              – 搜集中...
+            </li>
+          </ul>
+        </nz-tab>
+        <nz-tab nzTitle="資訊">
+          <ul>
+            <li>
+              <strong>網路節點與頻寬</strong>
+              – 台灣網路資訊中心整理<a href="https://map.twnic.net.tw/" target="_blank">於此</a>。
+            </li>
+          </ul>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </nz-content>
+  <nz-sider [nzWidth]="350">
+    <div style="margin-top: -60px;">
+      <graph [nodes]="nodes" [links]="links"></graph>
+    </div>
+  </nz-sider>
+</nz-layout>

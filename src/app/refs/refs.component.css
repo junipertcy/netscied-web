@@ -15,32 +15,16 @@
   margin: 0 auto 1.7em;
 }
 
+.ant-layout-content {
+  background: #fff;
+}
+
 .paragraph ul {
   padding: 0 10px 0 20px;
 }
 
 .custom-image img {
   display: block;
-}
-
-.custom-card {
-  padding: 10px 16px;
-}
-
-.custom-card p {
-  color: #999;
-}
-
-.ant-card-body {
-  padding: 0;
-}
-
-.ant-layout-header {
-  background: #fff;
-}
-
-.ant-layout-content {
-  background: #fff;
 }
 
 nz-sider.ant-layout-sider {

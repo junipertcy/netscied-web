@@ -12,6 +12,11 @@
   background: #fff;
 }
 
+/* make menu items closer */
+.ant-menu-item, .ant-menu-submenu-title {
+    padding: 0 10px;
+}
+
 
 /*.navigator {*/
     /*font-style: normal;*/
