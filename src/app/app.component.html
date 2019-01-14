@@ -1,18 +1,18 @@
 <nz-layout class="layout">
   <nz-header>
     <div class="logo">
-      <a routerLink="/"><img src="../assets/img/nseit-logo.png" style="height: 55px; margin-top: -25px; margin-left: 30px;"></a>
+      <a routerLink="/" (click)="logoClick();"><img src="../assets/img/nseit-logo.png" style="height: 55px; margin-top: -25px; margin-left: 30px;"></a>
     </div>
     <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px; font-size: 14px;">
-      <li nz-menu-item routerLink="/networks" routerLinkActive="active">
+      <li nz-menu-item routerLink="/networks">
         <i nz-icon type="share-alt" theme="outline"></i>
         生活中的網絡
       </li>
-      <li nz-menu-item routerLink="/refs" routerLinkActive="active">
+      <li nz-menu-item routerLink="/refs">
         <i nz-icon type="read" theme="outline"></i>
         參考資料
       </li>
-      <li nz-menu-item routerLink="/booklet" routerLinkActive="active">
+      <li nz-menu-item routerLink="/booklet">
         <i nz-icon type="book" theme="outline"></i>
         網絡素養小冊
       </li>

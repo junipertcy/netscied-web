@@ -11,15 +11,13 @@ import { Title } from '@angular/platform-browser';
 export class AppComponent {
   title = 'app';
 
-  btnClick = function () {
-    this.router.navigateByUrl('/network/fish');
+  logoClick = function () {
+    // this.router.navigateByUrl('/network/fish');
+    document.querySelectorAll('li.ant-menu-item-selected').forEach(function (e) {
+      e.setAttribute('class', 'ant-menu-item');
+    });
   };
-  gotoJinMa = function() {
-    window.location.href = 'https://jinma.today/relations';
-  };
-  gotoLinkedJazz = function() {
-    window.location.href = 'https://linkedjazz.org/network/';
-  };
+
   public setTitle( newTitle: string) {
     this.titleService.setTitle( newTitle );
   }
