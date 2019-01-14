@@ -13,7 +13,7 @@ export class NewsComponent implements OnInit {
   links: Link[] = [];
 
   constructor() {
-    const N = APP_CONFIG.N,
+    const N = APP_CONFIG.ZKC_NETWORK.N,
           getIndex = number => number - 1;
 
     /** constructing the nodes array */
@@ -21,16 +21,20 @@ export class NewsComponent implements OnInit {
       this.nodes.push(new Node(i));
     }
 
-    for (let i = 1; i <= N; i++) {
-      for (let m = 2; i * m <= N; m++) {
-        /** increasing connections toll on connecting nodes */
-        this.nodes[getIndex(i)].linkCount++;
-        this.nodes[getIndex(i * m)].linkCount++;
+    console.log(getIndex);
+    console.log(N);
 
-        /** connecting the nodes before starting the simulation */
-        this.links.push(new Link(i, i * m));
-      }
-    }
+    const that = this;
+    APP_CONFIG.ZKC_NETWORK.EDGELIST.forEach(function (e) {
+      that.nodes[getIndex(e[0])].linkCount++;
+      that.nodes[getIndex(e[1])].linkCount++;
+      that.links.push(new Link(e[0], e[1]));
+    });
+
+
+    console.log(this.nodes);
+    console.log(this.links);
+
   }
 
   ngOnInit() {

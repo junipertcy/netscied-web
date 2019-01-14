@@ -18,7 +18,6 @@ import { ShareAltOutline, BookOutline, DownloadOutline, ReadOutline } from '@ant
 import { GraphComponent } from './visuals/graph/graph.component';
 import { SHARED_VISUALS } from './visuals/shared';
 import { NetworkInfoComponent } from './infos/network-info/network-info.component';
-import { NetworkComponent } from './network/network.component';
 import { NetworkLiteracyComponent } from './network-literacy/network-literacy.component';
 import { Stat1021Component } from './teaching/stat1021/stat1021.component';
 
@@ -38,7 +37,6 @@ const appRoutes: Routes = [
   { path: 'refs', component: RefsComponent },
   { path: 'networks', component: NetworksComponent },
   { path: 'booklet', component: NetworkLiteracyComponent },
-  { path: 'network/:id', component: NetworkComponent },
   { path: 'stat1021', component: Stat1021Component, data: { title: 'STAT1021: 資料科學導論' } }
 ];
 
@@ -49,7 +47,6 @@ const appRoutes: Routes = [
     ...SHARED_VISUALS,
     ...D3_DIRECTIVES,
     NetworkInfoComponent,
-    NetworkComponent,
     NetworkLiteracyComponent,
     Stat1021Component,
     NewsComponent,
@@ -68,8 +65,6 @@ const appRoutes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     NgZorroAntdModule
-
-
   ],
   providers: [
     D3Service,

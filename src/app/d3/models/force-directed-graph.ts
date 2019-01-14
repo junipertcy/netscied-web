@@ -3,10 +3,10 @@ import { Link, Node } from './';
 import * as d3 from 'd3';
 
 const FORCES = {
-  LINKS: 1 / 50,
+  LINKS: 1 / 30,
   COLLISION: 1,
   CHARGE: -1
-}
+};
 
 export class ForceDirectedGraph {
   public ticker: EventEmitter<d3.Simulation<Node, Link>> = new EventEmitter();

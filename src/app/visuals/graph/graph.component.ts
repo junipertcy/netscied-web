@@ -17,7 +17,7 @@ import { D3Service, ForceDirectedGraph, Node } from '../../d3';
 })
 export class GraphComponent {
   // Deleted "private" declaration
-  _options: { width, height } = { width: 800, height: 600 };
+  _options: { width, height } = { width: 350, height: 350 };
   graph: ForceDirectedGraph;
 
   @Input('nodes') nodes;
@@ -27,8 +27,6 @@ export class GraphComponent {
   onResize(event) {
     this.graph.initSimulation(this.options);
   }
-
-
 
   constructor(private d3Service: D3Service, private ref: ChangeDetectorRef) { }
 
@@ -50,12 +48,10 @@ export class GraphComponent {
     this.graph.initSimulation(this.options);
   }
 
-
-
   get options() {
     return this._options = {
-      width: 238,
-      height: 238
+      width: 350,
+      height: 350
       // width: window.innerWidth,
       // height: window.innerHeight
     };

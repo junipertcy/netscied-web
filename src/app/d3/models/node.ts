@@ -19,10 +19,10 @@ export class Node implements d3.SimulationNodeDatum {
 
   normal = () => {
     return Math.sqrt(this.linkCount / APP_CONFIG.N);
-  }
+  };
 
   get r() {
-    return 5 * this.normal() + 10;
+    return 6 * this.normal() + 5;
   }
 
   get fontSize() {
@@ -30,7 +30,10 @@ export class Node implements d3.SimulationNodeDatum {
   }
 
   get color() {
-    const index = Math.floor(APP_CONFIG.SPECTRUM.length * this.normal());
+    let index = Math.floor(APP_CONFIG.SPECTRUM.length * this.normal());
+    if (index >= APP_CONFIG.SPECTRUM.length) {
+      index = APP_CONFIG.SPECTRUM.length - 1;  // I don't like black-colored nodes.
+    }
     return APP_CONFIG.SPECTRUM[index];
   }
 }
