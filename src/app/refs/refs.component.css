@@ -3,7 +3,7 @@
   font-variant-ligatures: normal;
   font-variant-caps: normal;
   font-variant-numeric: normal;
-  font-weight: lighter;
+  font-weight: normal;
   font-stretch: normal;
   font-size: 16px;
   line-height: 1.5;
@@ -30,3 +30,4 @@
 nz-sider.ant-layout-sider {
   background: #fff;
 }
+

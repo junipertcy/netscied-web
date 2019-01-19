@@ -24,6 +24,7 @@ import { Stat1021Component } from './teaching/stat1021/stat1021.component';
 import { NewsComponent } from './news/news.component';
 import { RefsComponent } from './refs/refs.component';
 import { NetworksComponent } from './networks/networks.component';
+import { Str2urlPipe } from './str2url.pipe';
 
 const icons: IconDefinition[] = [ ShareAltOutline, BookOutline, DownloadOutline, ReadOutline ];
 
@@ -51,7 +52,8 @@ const appRoutes: Routes = [
     Stat1021Component,
     NewsComponent,
     RefsComponent,
-    NetworksComponent
+    NetworksComponent,
+    Str2urlPipe
   ],
   imports: [
     RouterModule.forRoot(
@@ -73,6 +75,7 @@ const appRoutes: Routes = [
     { provide: NZ_ICON_DEFAULT_TWOTONE_COLOR, useValue: '#00ff00' },
     { provide: NZ_ICONS, useValue: icons }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: []
 })
 export class AppModule { }

@@ -10,21 +10,59 @@
         請參考<a routerLink="/stat1021">網絡科學課程</a>裡的資料。
         <div style="height: 26px;"></div>
         <h3>教學材料</h3>
-          <ul>
-            <li>
-              <strong>教青少年網絡科學</strong>
-              – 請參考<a href="http://www.math.ucla.edu/~mason/papers/teach-final.pdf" target="_blank">此文</a>。
-            </li>
-          </ul>
+        <ul>
+          <li>
+            <strong>教青少年網絡科學</strong>
+            – 請參考<a href="http://www.math.ucla.edu/~mason/papers/teach-final.pdf" target="_blank">此文</a>。
+          </li>
+        </ul>
+      </div>
+      <div class="paragraph" style="text-align: justify;">
         <h3>電腦工具</h3>
-          <ul>
-            <li>
-              <strong>Graph-tool</strong>
-              – 請參考<a href="https://graph-tool.skewed.de/" target="_blank">該專案官網</a>。
-            </li>
-          </ul>
+        <nz-table #basicTable [nzData]="dataSet" nzSize="middle">
+          <thead>
+          <tr>
+            <th>名稱</th>
+            <th nzShowExpand>簡介</th>
+            <th>主要作者</th>
+            <th>語言</th>
+            <th>更新時間</th>
+            <th>類別</th>
+            <th>授權</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-template ngFor let-data [ngForOf]="basicTable.data">
+            <tr>
+              <td><a href="{{data.name | str2url}}" target="_blank" *ngIf="data.name | str2url">{{data.name}}</a></td>
+              <td nzShowExpand [(nzExpand)]="data.expand"></td>
+              <td><a href="{{data.author | str2url}}" target="_blank"
+                     *ngIf="data.author | str2url; else strAuthor">{{data.author}}</a></td>
+              <ng-template #strAuthor>
+                <p>
+                  {{data.author}}
+                </p>
+              </ng-template>
+              <td>{{data.lang}}</td>
+              <td>{{data.updatedTime}}</td>
+              <td>{{data.category}}</td>
+              <td><a href="{{data.license | str2url}}" target="_blank"
+                     *ngIf="data.license | str2url; else strLicense">{{data.license}}</a></td>
+              <ng-template #strLicense>
+                <p>
+                  {{data.license}}
+                </p>
+              </ng-template>
+            </tr>
+            <tr [nzExpand]="data.expand">
+              <td colspan="7">{{data.desc}}</td>
+            </tr>
+          </ng-template>
+          </tbody>
+        </nz-table>
       </div>
     </div>
+
   </nz-content>
   <nz-sider [nzWidth]="400">
     <div style="margin-top: -60px;">
