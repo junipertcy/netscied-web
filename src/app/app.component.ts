@@ -21,13 +21,15 @@ export class AppComponent {
   public setTitle( newTitle: string) {
     this.titleService.setTitle( newTitle );
   }
+
   getTitleFromRouter = function( router: Router) {
     for (const r of router.config) {
       if ('/' + r.path === router.url) {
-        return r.data ? r.data.title : '台灣網絡科學教育';
+        return r.data ? r.data.title : '台灣網絡科學教育 - NetSciEd';
       }
     }
-  }
+  };
+
   constructor(private router: Router, private titleService: Title) {
     router.events.subscribe((event) => {  // fires on every URL change
       console.log(router);
