@@ -9,11 +9,13 @@ export class Str2urlPipe implements PipeTransform {
     switch (value) {
       // Licenses
       case 'GNU GPL v3':
-        return 'https://www.gnu.org/licenses/gpl-3.0.html';
+        return 'https://choosealicense.com/licenses/gpl-3.0/';
       case 'GNU GPL v2':
         return 'https://www.gnu.org/licenses/gpl-2.0.html';
       case 'BSD 3-Clause':
         return 'https://opensource.org/licenses/BSD-3-Clause';
+      case 'MIT':
+        return 'https://choosealicense.com/licenses/mit/';
       //  Humans
       case 'Tiago P. Peixoto':
         return 'https://skewed.de/tiago';
@@ -21,6 +23,8 @@ export class Str2urlPipe implements PipeTransform {
         return 'https://comunelab.fbk.eu/manlio/index.php';
       case 'Mikko Kivelä':
         return 'http://www.mkivela.com/';
+      case 'Benjamin F. Maier':
+        return 'http://benmaier.org/';
       //  Tools
       case 'Graph-tool':
         return 'https://graph-tool.skewed.de/';
@@ -38,6 +42,12 @@ export class Str2urlPipe implements PipeTransform {
         return 'http://www.mkivela.com/pymnet/';
       case 'NetworkX':
         return 'https://networkx.github.io/';
+      case 'PNet':
+        return 'http://www.melnet.org.au/pnet/';
+      case 'statnet':
+        return 'http://statnet.csde.washington.edu/index.shtml';
+      case 'netwulf':
+        return 'https://github.com/benmaier/netwulf';
       default:
         return false;
     }

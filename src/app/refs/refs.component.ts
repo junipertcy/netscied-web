@@ -65,10 +65,10 @@ export class RefsComponent {
       name: 'webweb',
       author: 'Daniel B. Larremore 等人',
       lang: 'JavaScript, MATLAB, & Python',
-      desc: 'webweb 幫助用戶在瀏覽器上，藉由 D3.js 視覺化 MATLAB 生成的網絡數據。這方便網絡科學家分享數據。',
+      desc: 'webweb 幫助用戶在瀏覽器上，藉由 D3.js 視覺化 MATLAB（或一般 Python 的數據結構）生成的網絡數據。它可以作為教學使用，也可以將圖以 svg 匯出，方便網絡科學家分享數據。',
       updatedTime: '2019',
-      category: '視覺化',
-      license: '未知'
+      category: '函式庫: 視覺化',
+      license: 'GNU GPL v3'
     },
     {
       name: 'igraph',
@@ -105,6 +105,33 @@ export class RefsComponent {
       updatedTime: '2019',
       category: '函式庫: 萬用工具',
       license: 'BSD 3-Clause'
+    },
+    {
+      name: 'PNet',
+      author: 'Peng Wang 等人',
+      lang: 'Java & .NET',
+      desc: 'PNet 是在 Windows 上運行的獨立程式。它使用 ERGM (Exponential Random Graph Model) 與 ALAAM (Auto-logistic Actor Attribute Model) 等方法分析社交網絡。',
+      updatedTime: '未知',
+      category: '獨立程式: 萬用工具',
+      license: '未知'
+    },
+    {
+      name: 'statnet',
+      author: 'Martina Morris 等人',
+      lang: 'R',
+      desc: 'statnet 是 R 的函式庫。它可以分析、模擬與視覺化網絡。尤其是 ERGMs (Exponential Random Graph Models) 相關的分析。',
+      updatedTime: '2016',
+      category: '函式庫: 萬用工具',
+      license: 'GNU GPL v3'
+    },
+    {
+      name: 'netwulf',
+      author: 'Benjamin F. Maier',
+      lang: 'Python',
+      desc: 'netwulf 可以在 networkx 的基礎上，有效地視覺化網絡數據。因為使用 canvas 作為繪圖引擎，它可以渲染比較大的網絡。',
+      updatedTime: '2018',
+      category: '函式庫: 視覺化',
+      license: 'MIT'
     }
   ];
   //
