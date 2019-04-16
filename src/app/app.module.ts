@@ -13,7 +13,13 @@ import { D3Service, D3_DIRECTIVES } from './d3';
 /** icons **/
 import { IconDefinition } from '@ant-design/icons-angular';
 import { NZ_ICON_DEFAULT_TWOTONE_COLOR, NZ_ICONS } from 'ng-zorro-antd';
-import { ShareAltOutline, BookOutline, DownloadOutline, ReadOutline } from '@ant-design/icons-angular/icons';
+import {
+  ShareAltOutline,
+  BookOutline,
+  DownloadOutline,
+  ReadOutline,
+  LaptopOutline
+} from '@ant-design/icons-angular/icons';
 
 import { GraphComponent } from './visuals/graph/graph.component';
 import { SHARED_VISUALS } from './visuals/shared';
@@ -25,8 +31,9 @@ import { NewsComponent } from './news/news.component';
 import { RefsComponent } from './refs/refs.component';
 import { NetworksComponent } from './networks/networks.component';
 import { Str2urlPipe } from './str2url.pipe';
+import { ToolsComponent } from './tools/tools.component';
 
-const icons: IconDefinition[] = [ ShareAltOutline, BookOutline, DownloadOutline, ReadOutline ];
+const icons: IconDefinition[] = [ ShareAltOutline, BookOutline, DownloadOutline, ReadOutline, LaptopOutline ];
 
 /** angular i18n **/
 // import { registerLocaleData } from '@angular/common';
@@ -36,6 +43,7 @@ const icons: IconDefinition[] = [ ShareAltOutline, BookOutline, DownloadOutline,
 const appRoutes: Routes = [
   { path: '', component: NewsComponent },
   { path: 'refs', component: RefsComponent },
+  { path: 'tools', component: ToolsComponent },
   { path: 'networks', component: NetworksComponent },
   { path: 'booklet', component: NetworkLiteracyComponent },
   { path: 'stat1021', component: Stat1021Component, data: { title: 'STAT1021: 資料科學導論' } }
@@ -53,7 +61,8 @@ const appRoutes: Routes = [
     NewsComponent,
     RefsComponent,
     NetworksComponent,
-    Str2urlPipe
+    Str2urlPipe,
+    ToolsComponent
   ],
   imports: [
     RouterModule.forRoot(

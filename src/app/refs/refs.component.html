@@ -43,50 +43,6 @@
           </li>
         </ul>
       </div>
-      <div class="paragraph" style="text-align: justify;">
-        <h3>電腦工具</h3>
-        <nz-table #basicTable [nzData]="displayData" nzSize="middle">
-          <thead>
-          <tr>
-            <th nzShowSort [(nzSort)]="sortMap.name" (nzSortChange)="sort('name', $event)">名稱</th>
-            <th nzShowExpand>簡介</th>
-            <th nzShowSort [(nzSort)]="sortMap.author" (nzSortChange)="sort('author', $event)">主要作者</th>
-            <th nzShowSort [(nzSort)]="sortMap.lang" (nzSortChange)="sort('lang', $event)">語言</th>
-            <th nzShowSort [(nzSort)]="sortMap.updatedTime" (nzSortChange)="sort('updatedTime', $event)">更新時間</th>
-            <th nzShowSort [(nzSort)]="sortMap.category" (nzSortChange)="sort('category', $event)">類別</th>
-            <th nzShowSort [(nzSort)]="sortMap.license" (nzSortChange)="sort('license', $event)">授權</th>
-          </tr>
-          </thead>
-          <tbody>
-          <ng-template ngFor let-data [ngForOf]="basicTable.data">
-            <tr>
-              <td><a href="{{data.name | str2url}}" target="_blank" *ngIf="data.name | str2url">{{data.name}}</a></td>
-              <td nzShowExpand [(nzExpand)]="data.expand"></td>
-              <td><a href="{{data.author | str2url}}" target="_blank"
-                     *ngIf="data.author | str2url; else strAuthor">{{data.author}}</a></td>
-              <ng-template #strAuthor>
-                <p>
-                  {{data.author}}
-                </p>
-              </ng-template>
-              <td>{{data.lang}}</td>
-              <td>{{data.updatedTime}}</td>
-              <td>{{data.category}}</td>
-              <td><a href="{{data.license | str2url}}" target="_blank"
-                     *ngIf="data.license | str2url; else strLicense">{{data.license}}</a></td>
-              <ng-template #strLicense>
-                <p>
-                  {{data.license}}
-                </p>
-              </ng-template>
-            </tr>
-            <tr [nzExpand]="data.expand">
-              <td colspan="7">{{data.desc}}</td>
-            </tr>
-          </ng-template>
-          </tbody>
-        </nz-table>
-      </div>
     </div>
 
   </nz-content>
