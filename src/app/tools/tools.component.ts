@@ -90,6 +90,15 @@ export class ToolsComponent {
       license: 'GNU GPL v3'
     },
     {
+      name: 'Infomap',
+      author: 'Martin Rosvall 等人',
+      lang: 'C++',
+      desc: 'Infomap 是基於 map equation 的發現網絡社群結構的函式庫。除了主要的程式外，還包含了判定社群顯著性的 "significance-clustering" 以及能在數億級大小的網絡上平行運算的 "GossipMap" 等輔助程式。',
+      updatedTime: '2019',
+      category: '函式庫: 萬用工具',
+      license: 'GNU AGPL v3'
+    },
+    {
       name: 'Pymnet',
       author: 'Mikko Kivelä',
       lang: 'Python',
@@ -142,6 +151,24 @@ export class ToolsComponent {
       updatedTime: '2019',
       category: '函式庫: 萬用工具',
       license: 'Apache-2.0'
+    },
+    {
+      name: 'nauty',
+      author: 'Brendan D. McKay',
+      lang: 'C',
+      desc: 'nauty 是用來計算無向或有向圖的自同構群 (automorphism groups) 的函式庫。',
+      updatedTime: '2018',
+      category: '函式庫: 特殊工具',
+      license: 'Apache-2.0'
+    },
+    {
+      name: 'GraphPruning',
+      author: 'Navid Dianati',
+      lang: 'Python',
+      desc: 'GraphPruning 可以過濾有權重的網絡，讓密集的網絡稀疏些，幫助視覺化呈現。他採用 configuration model 作為基準模型，挑出權重比較特別的邊，並過濾掉剩下的。',
+      updatedTime: '2016',
+      category: '函式庫: 特殊工具',
+      license: 'GNU LGPL v3'
     }
   ];
   //

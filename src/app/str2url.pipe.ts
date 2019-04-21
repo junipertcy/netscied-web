@@ -10,14 +10,18 @@ export class Str2urlPipe implements PipeTransform {
       // Licenses
       case 'GNU GPL v3':
         return 'https://choosealicense.com/licenses/gpl-3.0/';
+      case 'GNU LGPL v3':
+        return 'https://choosealicense.com/licenses/lgpl-3.0/';
+      case 'GNU AGPL v3':
+        return 'https://choosealicense.com/licenses/agpl-3.0/';
       case 'GNU GPL v2':
-        return 'https://www.gnu.org/licenses/gpl-2.0.html';
+        return 'https://choosealicense.com/licenses/gpl-2.0/';
       case 'BSD 3-Clause':
-        return 'https://opensource.org/licenses/BSD-3-Clause';
+        return 'https://choosealicense.com/licenses/bsd-3-clause/';
       case 'MIT':
         return 'https://choosealicense.com/licenses/mit/';
       case 'Apache-2.0':
-        return 'https://opensource.org/licenses/Apache-2.0';
+        return 'https://choosealicense.com/licenses/apache-2.0/';
       //  Humans
       case 'Tiago P. Peixoto':
         return 'https://skewed.de/tiago';
@@ -27,6 +31,12 @@ export class Str2urlPipe implements PipeTransform {
         return 'http://www.mkivela.com/';
       case 'Benjamin F. Maier':
         return 'http://benmaier.org/';
+      case 'Brendan D. McKay':
+        return 'http://users.cecs.anu.edu.au/~bdm/index.html';
+      case 'Navid Dianati':
+        return 'https://scholar.google.com/citations?hl=en&user=guPKE8QAAAAJ';
+      case 'Martin Rosvall':
+        return 'http://www.tp.umu.se/~rosvall/index.html';
       //  Tools
       case 'Graph-tool':
         return 'https://graph-tool.skewed.de/';
@@ -52,6 +62,12 @@ export class Str2urlPipe implements PipeTransform {
         return 'https://github.com/benmaier/netwulf';
       case 'GrasPy':
         return 'https://neurodata.io/graspy/';
+      case 'nauty':
+        return 'http://pallini.di.uniroma1.it/';
+      case 'GraphPruning':
+        return 'https://github.com/naviddianati/GraphPruning';
+      case 'Infomap':
+        return 'http://www.mapequation.org/index.html';
       default:
         return false;
     }
