@@ -99,6 +99,15 @@ export class ToolsComponent {
       license: 'GNU AGPL v3'
     },
     {
+      name: 'pathpy',
+      author: 'Ingo Scholtes',
+      lang: 'Python',
+      desc: 'pathpy 是分析能時間解析的網絡的工具，即網絡的每個邊都帶有時間戳。在我們有生成該網絡的時間序列模型的前提下，它能分析這種網絡的結構或是數據在時序上的特徵。',
+      updatedTime: '2019',
+      category: '函式庫: 萬用工具',
+      license: 'GNU AGPL v3'
+    },
+    {
       name: 'Pymnet',
       author: 'Mikko Kivelä',
       lang: 'Python',

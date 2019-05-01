@@ -37,6 +37,8 @@ export class Str2urlPipe implements PipeTransform {
         return 'https://scholar.google.com/citations?hl=en&user=guPKE8QAAAAJ';
       case 'Martin Rosvall':
         return 'http://www.tp.umu.se/~rosvall/index.html';
+      case 'Ingo Scholtes':
+        return 'https://www.ifi.uzh.ch/en/dag/people/scholtes.html';
       //  Tools
       case 'Graph-tool':
         return 'https://graph-tool.skewed.de/';
@@ -68,6 +70,8 @@ export class Str2urlPipe implements PipeTransform {
         return 'https://github.com/naviddianati/GraphPruning';
       case 'Infomap':
         return 'http://www.mapequation.org/index.html';
+      case 'pathpy':
+        return 'http://www.pathpy.net/';
       default:
         return false;
     }
