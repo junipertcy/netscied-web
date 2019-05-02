@@ -39,6 +39,8 @@ export class Str2urlPipe implements PipeTransform {
         return 'http://www.tp.umu.se/~rosvall/index.html';
       case 'Ingo Scholtes':
         return 'https://www.ifi.uzh.ch/en/dag/people/scholtes.html';
+      case 'Andy Wuensche':
+        return 'http://www.ddlab.org/AW.html';
       //  Tools
       case 'Graph-tool':
         return 'https://graph-tool.skewed.de/';
@@ -72,6 +74,10 @@ export class Str2urlPipe implements PipeTransform {
         return 'http://www.mapequation.org/index.html';
       case 'pathpy':
         return 'http://www.pathpy.net/';
+      case 'tikz-network':
+        return 'https://github.com/hackl/tikz-network';
+      case 'DDLab':
+        return 'http://www.ddlab.org/';
       default:
         return false;
     }
