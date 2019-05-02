@@ -32,6 +32,7 @@ import { RefsComponent } from './refs/refs.component';
 import { NetworksComponent } from './networks/networks.component';
 import { Str2urlPipe } from './str2url.pipe';
 import { ToolsComponent } from './tools/tools.component';
+import { IntroToSbmComponent } from './teaching/intro-to-sbm/intro-to-sbm.component';
 
 const icons: IconDefinition[] = [ ShareAltOutline, BookOutline, DownloadOutline, ReadOutline, LaptopOutline ];
 
@@ -46,7 +47,8 @@ const appRoutes: Routes = [
   { path: 'tools', component: ToolsComponent },
   { path: 'networks', component: NetworksComponent },
   { path: 'booklet', component: NetworkLiteracyComponent },
-  { path: 'stat1021', component: Stat1021Component, data: { title: 'STAT1021: 資料科學導論' } }
+  { path: 'stat1021', component: Stat1021Component, data: { title: 'STAT1021: 資料科學導論' } },
+  { path: 'intro-to-sbm', component: IntroToSbmComponent, data: { title: '隨機塊模型：用統計方法分析網絡數據' } }
 ];
 
 @NgModule({
@@ -62,7 +64,8 @@ const appRoutes: Routes = [
     RefsComponent,
     NetworksComponent,
     Str2urlPipe,
-    ToolsComponent
+    ToolsComponent,
+    IntroToSbmComponent
   ],
   imports: [
     RouterModule.forRoot(
