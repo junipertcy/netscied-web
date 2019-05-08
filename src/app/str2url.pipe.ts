@@ -41,6 +41,8 @@ export class Str2urlPipe implements PipeTransform {
         return 'https://www.ifi.uzh.ch/en/dag/people/scholtes.html';
       case 'Andy Wuensche':
         return 'http://www.ddlab.org/AW.html';
+      case 'Daniel Larremore':
+        return 'http://danlarremore.com/';
       //  Tools
       case 'Graph-tool':
         return 'https://graph-tool.skewed.de/';

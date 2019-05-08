@@ -26,13 +26,14 @@ import { SHARED_VISUALS } from './visuals/shared';
 import { NetworkInfoComponent } from './infos/network-info/network-info.component';
 import { NetworkLiteracyComponent } from './network-literacy/network-literacy.component';
 import { Stat1021Component } from './teaching/stat1021/stat1021.component';
+import { NetworkCommunitiesAndHierarchiesComponent } from './teaching/network-communities-and-hierarchies/network-communities-and-hierarchies.component';
 
 import { NewsComponent } from './news/news.component';
 import { RefsComponent } from './refs/refs.component';
 import { NetworksComponent } from './networks/networks.component';
 import { Str2urlPipe } from './str2url.pipe';
 import { ToolsComponent } from './tools/tools.component';
-import { IntroToSbmComponent } from './teaching/intro-to-sbm/intro-to-sbm.component';
+
 
 const icons: IconDefinition[] = [ ShareAltOutline, BookOutline, DownloadOutline, ReadOutline, LaptopOutline ];
 
@@ -48,7 +49,7 @@ const appRoutes: Routes = [
   { path: 'networks', component: NetworksComponent },
   { path: 'booklet', component: NetworkLiteracyComponent },
   { path: 'stat1021', component: Stat1021Component, data: { title: 'STAT1021: 資料科學導論' } },
-  { path: 'intro-to-sbm', component: IntroToSbmComponent, data: { title: '隨機塊模型：用統計方法分析網絡數據' } }
+  { path: 'network-communities-and-hierarchies', component: NetworkCommunitiesAndHierarchiesComponent, data: { title: '網絡數據裡的介觀結構：隱藏的社群和階層' } }
 ];
 
 @NgModule({
@@ -65,7 +66,7 @@ const appRoutes: Routes = [
     NetworksComponent,
     Str2urlPipe,
     ToolsComponent,
-    IntroToSbmComponent
+    NetworkCommunitiesAndHierarchiesComponent
   ],
   imports: [
     RouterModule.forRoot(
