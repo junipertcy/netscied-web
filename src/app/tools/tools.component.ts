@@ -209,6 +209,16 @@ export class ToolsComponent {
       updatedTime: '2019',
       category: '函式庫: 萬用工具',
       license: 'GNU GPL v3'
+    },
+    {
+      name: 'leidenalg',
+      author: 'Vincent Traag',
+      lang: 'Python & C++',
+      desc: 'Leiden 演算法改善了 Louvain 演算法的問題，例如挖掘到的社群，應該歸納成同一群的節點，結果是斷開的。' +
+        'Leiden 演算法保證可以用更快的速度，找到「高品質」的社群。',
+      updatedTime: '2019',
+      category: '函式庫: 特殊工具',
+      license: 'GNU GPL v3'
     }
   ];
   //

@@ -43,6 +43,8 @@ export class Str2urlPipe implements PipeTransform {
         return 'http://www.ddlab.org/AW.html';
       case 'Daniel Larremore':
         return 'http://danlarremore.com/';
+      case 'Vincent Traag':
+        return 'http://www.traag.net/';
       //  Tools
       case 'Graph-tool':
         return 'https://graph-tool.skewed.de/';
@@ -80,6 +82,8 @@ export class Str2urlPipe implements PipeTransform {
         return 'https://github.com/hackl/tikz-network';
       case 'DDLab':
         return 'http://www.ddlab.org/';
+      case 'leidenalg':
+        return 'https://github.com/vtraag/leidenalg';
       default:
         return false;
     }
