@@ -6,7 +6,7 @@
 }
 
 .ant-layout-header {
-  background: #fff;
+  background: #ffffff;
 }
 .ant-layout-footer {
   background: #fff;
@@ -17,6 +17,11 @@
     padding: 0 10px;
 }
 
+.ant-layout {
+  height: 100%;
+  background: #ffffff;
+  margin: 0 auto;
+}
 
 /*.navigator {*/
     /*font-style: normal;*/

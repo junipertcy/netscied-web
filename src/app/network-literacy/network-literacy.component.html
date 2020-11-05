@@ -39,16 +39,14 @@
     </ng-template>
     <div style="height: 30px; background: #fff;"></div>
     <button nz-button [nzType]="'primary'" [nzSize]="'default'" (click)="downloadEnglishVersion();">
-      <i nz-icon type="download" theme="outline"></i>
+      <i nz-icon nzType="download" nzTheme="outline"></i>
       <span>
-            <nz-tooltip [nzTitle]="'Download English Version'">
-              <span nz-tooltip>下載英文原版</span>
-            </nz-tooltip>
-          </span>
+        <span nz-tooltip>下載英文原版</span>
+      </span>
     </button>
     <div style="height: 10px; background: #fff;"></div>
     <button nz-button [nzType]="'primary'" [nzSize]="'default'" (click)="downloadChineseVersion();">
-      <i nz-icon type="download" theme="outline"></i>
+      <i nz-icon nzType="download" nzTheme="outline"></i>
       <span>
         <span nz-tooltip>下載中文翻譯</span>
       </span>

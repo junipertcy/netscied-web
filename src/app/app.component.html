@@ -1,34 +1,41 @@
 <nz-layout class="layout">
   <nz-header>
     <div class="logo">
-      <a routerLink="/" (click)="logoClick();"><img src="../assets/img/nseit-logo.png" style="height: 60px; margin-top: -25px; margin-left: 25px;"></a>
+      <a routerLink="/" (click)="logoClick();"><img src="../assets/img/nseit-logo.png" alt="logo"
+                                                    style="height: 54px; margin-top: -25px; margin-left: 25px;"></a>
     </div>
-    <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px; font-size: 14px;">
+    <ul nz-menu [nzMode]="'horizontal'" style="border-bottom: 0">
       <li nz-menu-item routerLink="/networks">
-        <i nz-icon type="share-alt" theme="outline"></i>
+        <i nz-icon nzType="share-alt" nzTheme="outline"></i>
         生活中的網絡
       </li>
       <li nz-menu-item routerLink="/tools">
-        <i nz-icon type="laptop" theme="outline"></i>
+        <i nz-icon nzType="laptop" nzTheme="outline"></i>
         電腦工具
       </li>
       <li nz-menu-item routerLink="/refs">
-        <i nz-icon type="read" theme="outline"></i>
+        <i nz-icon nzType="read" nzTheme="outline"></i>
         參考資料
       </li>
       <li nz-menu-item routerLink="/booklet">
-        <i nz-icon type="book" theme="outline"></i>
+        <i nz-icon nzType="book" nzTheme="outline"></i>
         網絡素養小冊
       </li>
     </ul>
   </nz-header>
-  <router-outlet></router-outlet>
-  <div style="height: 80px; background: #fff;"></div>
+    <div [style.min-height.px]="screenHeight">
+      <router-outlet></router-outlet>
+    </div>
+<!--  <div style="height: 80px; background: #fff;"></div>-->
   <nz-footer style="text-align: center; position: inherit; bottom: 0; width: 100%;">
     Copyright © 2016 – 2020 台灣網絡科學教育 |
-    <a href="mailto:hi@netscied.tw" style="color: rgba(0,0,0,.65);">聯絡我們</a> |
-    <a href="https://github.com/junipertcy/netscied-web" target="_blank" style="color: rgba(0,0,0,.65);"><i nz-icon type="github" theme="outline"></i></a> |
+    <a href="mailto:hi@netscied.tw" style="color: rgba(0,0,0,.85);">聯絡我們</a> |
+    <a href="https://github.com/junipertcy/netscied-web" target="_blank" style="color: rgba(0,0,0,.65);">
+      <i nz-icon nzType="github" nzTheme="outline"></i>
+    </a>
+    |
     Powered by <a
-      href="https://angular.io/" target="_blank" style="color: rgba(0,0,0,.65);">Angular</a> and <a href="https://ng.ant.design/" target="_blank" style="color: rgba(0,0,0,.65);">NG-ZORRO</a>.
+    href="https://angular.io/" target="_blank" style="color: rgba(0,0,0,.85);">Angular</a> and <a
+    href="https://ng.ant.design/" target="_blank" style="color: rgba(0,0,0,.85);">NG-ZORRO</a>.
   </nz-footer>
 </nz-layout>

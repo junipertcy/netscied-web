@@ -10,13 +10,13 @@
         <nz-table #basicTable [nzData]="displayData" nzSize="middle">
           <thead>
           <tr>
-            <th nzShowSort [(nzSort)]="sortMap.name" (nzSortChange)="sort('name', $event)">名稱</th>
-            <th nzShowExpand>簡介</th>
-            <th nzShowSort [(nzSort)]="sortMap.author" (nzSortChange)="sort('author', $event)">主要作者</th>
-            <th nzShowSort [(nzSort)]="sortMap.lang" (nzSortChange)="sort('lang', $event)">語言</th>
-            <th nzShowSort [(nzSort)]="sortMap.updatedTime" (nzSortChange)="sort('updatedTime', $event)">更新時間</th>
-            <th nzShowSort [(nzSort)]="sortMap.category" (nzSortChange)="sort('category', $event)">類別</th>
-            <th nzShowSort [(nzSort)]="sortMap.license" (nzSortChange)="sort('license', $event)">授權</th>
+            <th nzShowSort [(nzSortOrder)]="sortMap.name" (nzSortOrderChange)="sort('name', $event)">名稱</th>
+            <th>簡介</th>
+            <th nzShowSort [(nzSortOrder)]="sortMap.author" (nzSortOrderChange)="sort('author', $event)">主要作者</th>
+            <th nzShowSort [(nzSortOrder)]="sortMap.lang" (nzSortOrderChange)="sort('lang', $event)">語言</th>
+            <th nzShowSort [(nzSortOrder)]="sortMap.updatedTime" (nzSortOrderChange)="sort('updatedTime', $event)">更新時間</th>
+            <th nzShowSort [(nzSortOrder)]="sortMap.category" (nzSortOrderChange)="sort('category', $event)">類別</th>
+            <th nzShowSort [(nzSortOrder)]="sortMap.license" (nzSortOrderChange)="sort('license', $event)">授權</th>
           </tr>
           </thead>
           <tbody>

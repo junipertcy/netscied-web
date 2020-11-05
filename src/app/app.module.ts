@@ -5,14 +5,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgZorroAntdModule, NZ_I18N, zh_TW } from 'ng-zorro-antd';
+import { NZ_I18N, zh_TW } from 'ng-zorro-antd/i18n';
 import { AppComponent } from './app.component';
 
 import { D3Service, D3_DIRECTIVES } from './d3';
 
 /** icons **/
 import { IconDefinition } from '@ant-design/icons-angular';
-import { NZ_ICON_DEFAULT_TWOTONE_COLOR, NZ_ICONS } from 'ng-zorro-antd';
+import { NZ_ICON_DEFAULT_TWOTONE_COLOR, NZ_ICONS } from 'ng-zorro-antd/icon';
 import {
   ShareAltOutline,
   BookOutline,
@@ -21,6 +21,7 @@ import {
   LaptopOutline
 } from '@ant-design/icons-angular/icons';
 
+import { NgZorroAntdModule } from './ng-zorro-antd.module';
 import { GraphComponent } from './visuals/graph/graph.component';
 import { SHARED_VISUALS } from './visuals/shared';
 import { NetworkInfoComponent } from './infos/network-info/network-info.component';
@@ -49,7 +50,7 @@ const appRoutes: Routes = [
   { path: 'networks', component: NetworksComponent },
   { path: 'booklet', component: NetworkLiteracyComponent },
   { path: 'stat1021', component: Stat1021Component, data: { title: 'STAT1021: 資料科學導論' } },
-  { path: 'network-communities-and-hierarchies', component: NetworkCommunitiesAndHierarchiesComponent, data: { title: '網絡數據裡的介觀結構：隱藏的社群和階層' } }
+  // { path: 'network-communities-and-hierarchies', component: NetworkCommunitiesAndHierarchiesComponent, data: { title: '數據裡的結構：隱藏的社群和階層' } }
 ];
 
 @NgModule({
