@@ -7,11 +7,9 @@
     <div style="background:#fff; padding: 24px;">
       <div class="paragraph" style="text-align: justify;">
         <h2>網絡素養 – 關於網絡科學的基本概念和核心思想</h2>
-        <div style="height: 26px;"></div>
         翻譯自 NETWORK LITERACY: Essential Concepts and Core Ideas；源於網絡科學教育計畫 (Network Science in Education |
         NetSciEd)，旨在讓每個人都能學習並且應用網絡科學，提昇全民的網絡素養。
       </div>
-      <div style="height: 13px;"></div>
       <div class="paragraph" style="text-align: justify;">
         由於網際網路的普及以及社群網站服務的流行，資訊得以有效率地在人與人之間傳播，地球村每個角落的距離因而大幅縮短，彼此的關係愈來愈容易相互影響而密不可分。如果人們對這個連結你我的無形網絡能有更多認識，社會或將因網絡提高資訊散播之效率而更加進步。簡而言之，一個網絡化的社會需要人們擁有「網絡素養」：意即認識各式各樣的網絡結構如何用來發現新知、作出決策，以及了解網絡所帶來的機會與挑戰。另一方面，對於無時無刻沉浸在網絡（無論是網際網路還是社群網路）中的年輕人，如何協助他們在學生時期建立對於網絡科學的基本素養，更是當代資訊教育的重要課題。網絡以各種不同形式、面貌且無所不在地存在你我之間；可惜的是，如此重要的網絡卻在我們的教育系統裡缺席了。
         <br>
@@ -24,6 +22,24 @@
         <br>
         <br>
         在《網絡素養》的英文版原文釋出後，迄今已翻譯成十多種語言，試圖將網絡科學的基本知識傳遞給每一位現代公民。我們希望繁體中文版的譯本能讓更多華人世界的朋友認識網絡科學，盼能提供大家不同的思維和角度看待身邊的人事物，讓我們的社會更加進步。
+      </div>
+      <div style="height: 26px;"></div>
+      <div class="paragraph" style="text-align: justify;">
+        <h2>另外 ...</h2>
+        我們也翻譯了《複雜系統：沒說你不知道》，源於 <a href="https://complexityexplained.github.io/" target="_blank">#ComplexityExplained</a>
+        計畫，希望推廣複雜系統科學。「網絡」當然也是複雜科學研究的對象。
+        <div style="height: 10px"></div>
+        <div>
+          <button nz-button [nzType]="'default'" [nzSize]="'small'" nzShape="round" (click)="download_ce_en();">
+            <i nz-icon nzType="download" nzTheme="outline"></i>
+            <span nz-tooltip>英文原版</span>
+          </button>
+          &nbsp;
+          <button nz-button [nzType]="'default'" [nzSize]="'small'" nzShape="round" (click)="download_ce_zh();">
+            <i nz-icon nzType="download" nzTheme="outline"></i>
+            <span nz-tooltip>中文翻譯</span>
+          </button>
+        </div>
       </div>
     </div>
   </nz-content>
@@ -38,18 +54,14 @@
       <img alt="book-cover" src="../../assets/img/booklet-thumbnail.png"/>
     </ng-template>
     <div style="height: 30px; background: #fff;"></div>
-    <button nz-button [nzType]="'primary'" [nzSize]="'default'" (click)="downloadEnglishVersion();">
+    <button nz-button [nzType]="'primary'" [nzSize]="'small'" nzShape="round" (click)="download_nl_en();">
       <i nz-icon nzType="download" nzTheme="outline"></i>
-      <span>
-        <span nz-tooltip>下載英文原版</span>
-      </span>
+      <span nz-tooltip>英文原版</span>
     </button>
-    <div style="height: 10px; background: #fff;"></div>
-    <button nz-button [nzType]="'primary'" [nzSize]="'default'" (click)="downloadChineseVersion();">
+    &nbsp;
+    <button nz-button [nzType]="'primary'" [nzSize]="'small'" nzShape="round" (click)="download_nl_zh();">
       <i nz-icon nzType="download" nzTheme="outline"></i>
-      <span>
-        <span nz-tooltip>下載中文翻譯</span>
-      </span>
+      <span nz-tooltip>中文翻譯</span>
     </button>
   </nz-sider>
 </nz-layout>

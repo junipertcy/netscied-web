@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import APP_CONFIG from '../app.config';
-import { Node, Link } from '../d3';
+import {Node, Link} from '../d3';
 
 
 @Component({
@@ -9,18 +9,12 @@ import { Node, Link } from '../d3';
   styleUrls: ['./network-literacy.component.css']
 })
 export class NetworkLiteracyComponent {
-  downloadEnglishVersion() {
-    window.location.href = 'https://sites.google.com/a/binghamton.edu/netscied/Network-Literacy-high-res.pdf';
-  }
-  downloadChineseVersion() {
-    window.location.href = 'https://wiki.junipertcy.info/images/c/ce/Network_Literacy_tw_Mandarin.pdf';
-  }
   nodes: Node[] = [];
   links: Link[] = [];
 
   constructor() {
     const N = APP_CONFIG.N,
-          getIndex = number => number - 1;
+      getIndex = number => number - 1;
 
     /** constructing the nodes array */
     for (let i = 1; i <= N; i++) {
@@ -38,5 +32,22 @@ export class NetworkLiteracyComponent {
       }
     }
   }
+
+  download_nl_en() {
+    window.location.href = 'https://sites.google.com/a/binghamton.edu/netscied/Network-Literacy-high-res.pdf';
+  }
+
+  download_nl_zh() {
+    window.location.href = 'https://wiki.junipertcy.info/images/c/ce/Network_Literacy_tw_Mandarin.pdf';
+  }
+
+  download_ce_en() {
+    window.location.href = 'https://complexityexplained.github.io/ComplexityExplained.pdf';
+  }
+
+  download_ce_zh() {
+    window.location.href = 'https://complexityexplained.github.io/ComplexityExplained[Chinese].pdf';
+  }
+
 
 }
