@@ -1,0 +1,63 @@
+.table-scroll {
+  overflow-x: auto;
+}
+
+table.tools {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.92em;
+}
+
+th {
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+  padding: 0;
+  white-space: nowrap;
+}
+
+th button {
+  font: inherit;
+  font-weight: 600;
+  color: var(--text);
+  background: none;
+  border: 0;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+th button:hover {
+  color: var(--link-hover);
+}
+
+th button:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: -2px;
+}
+
+.arrow {
+  margin-left: 4px;
+  font-size: 0.75em;
+  color: #aaa;
+}
+
+th[aria-sort='ascending'] .arrow,
+th[aria-sort='descending'] .arrow {
+  color: var(--coral);
+}
+
+td {
+  padding: 6px 8px 2px;
+  vertical-align: top;
+}
+
+tr.desc td {
+  padding: 0 8px 10px;
+  color: #666;
+  font-size: 0.92em;
+  border-bottom: 1px solid #eee;
+}
+
+.tool-name {
+  font-weight: 600;
+  white-space: nowrap;
+}

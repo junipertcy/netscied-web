@@ -1,0 +1,33 @@
+<div class="wrap">
+  <header class="top">
+    <a class="brand" routerLink="/">
+      <img src="assets/img/netscied-mark-300.png" alt="" width="46" height="46">
+      <span>
+        <span class="name">台灣網絡科學教育</span>
+        <span class="en" lang="en">Network Science Education in Taiwan</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="台灣網絡科學教育">
+      @for (item of nav; track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="active" ariaCurrentWhenActive="page"
+           [routerLinkActiveOptions]="{ exact: item.exact }">{{ item.label }}</a>
+      }
+    </nav>
+  </header>
+
+  <main>
+    <router-outlet />
+  </main>
+
+  <footer class="foot">
+    <div>
+      Copyright © 2016 – 2020 台灣網絡科學教育 |
+      <a href="mailto:hi@netscied.tw">聯絡我們</a> |
+      <a href="https://github.com/junipertcy/netscied-web" target="_blank">GitHub</a>
+    </div>
+    <div class="maint">
+      本站由<a href="https://junipertcy.info/about">顏子祺</a>維護 ·
+      <span lang="en">Maintained by <a href="https://junipertcy.info/about">Tzu-Chi Yen</a></span>
+    </div>
+  </footer>
+</div>

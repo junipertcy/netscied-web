@@ -1,1 +1,107 @@
-/* You can add global styles to this file, and also import other style files */
+/* Site-wide styles. Fonts are the system's own: Latin text in the platform UI face,
+   Chinese in a Traditional Chinese face (the page is lang="zh-Hant-TW"). */
+
+:root {
+  /* The three colours of the Taiwan-network mark. */
+  --navy: #163a63;
+  --coral: #ee5a73;
+  --teal: #52c3bb;
+
+  --text: #1d1d1d;
+  --body: #333;
+  --muted: #6b6b6b;
+  --line: #e8e8e8;
+  --link: #276190;
+  --link-hover: #3077b0;
+
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'PingFang TC', 'Hiragino Sans TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--body);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+h1, h2, h3, h4 {
+  color: var(--text);
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+/* Page headings: one h1 per page, h2 for its sections. */
+.page h1 {
+  font-size: 1.5rem;
+  margin: 0 0 0.5em;
+}
+
+.page h2 {
+  font-size: 1.15rem;
+  margin: 1.4em 0 0.4em;
+}
+
+/* Left-aligned, not justified: Han characters are near-monospace, so lines end
+   almost evenly anyway, and justify spreads characters apart wherever a long
+   Latin run forces a break. */
+.paragraph {
+  margin-bottom: 1.2em;
+}
+
+.page ul {
+  padding-left: 1.3em;
+}
+
+.page li {
+  margin-bottom: 0.45em;
+}
+
+/* Small labels, as the old site's nz-tag. */
+.pill {
+  display: inline-block;
+  font-size: 0.8em;
+  line-height: 1.6;
+  padding: 0 7px;
+  margin-right: 4px;
+  border: 1px solid #d9d9d9;
+  border-radius: 3px;
+  color: #555;
+  background: #fafafa;
+}
+
+.pill.green { color: #237804; border-color: #b7eb8f; background: #f6ffed; }
+.pill.magenta { color: #9e1068; border-color: #ffadd2; background: #fff0f6; }
+.pill.geekblue { color: #1d39c4; border-color: #adc6ff; background: #f0f5ff; }
+.pill.volcano { color: #ad2102; border-color: #ffbb96; background: #fff2e8; }
+
+/* Rounded link buttons (downloads). */
+.pill-btn {
+  display: inline-block;
+  padding: 1px 14px;
+  border: 1px solid var(--link);
+  border-radius: 14px;
+  color: var(--link);
+  font-size: 0.9em;
+}
+
+.pill-btn:hover {
+  text-decoration: none;
+  background: #f3f8fc;
+}

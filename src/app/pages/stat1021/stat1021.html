@@ -1,0 +1,311 @@
+<nav class="crumb" aria-label="Breadcrumb">
+  課程
+  <span aria-hidden="true">›</span>
+  <a href="http://web.ncku.edu.tw/" target="_blank">國立成功大學</a>
+  <span aria-hidden="true">›</span>
+  <a href="http://class-qry.acad.ncku.edu.tw/syllabus/online_display.php?syear=0106&sem=2&co_no=H212200&class_code=" target="_blank">STAT1021: 資料科學導論</a>
+</nav>
+<div>
+  <h1>
+    STAT1021: Introduction to Data Science (Spring 2018)
+  </h1>
+  <h2>
+    Special Lectures on Elementary Software Engineering Skills Applied to Network Data
+  </h2>
+  <br>
+  <p class="course-meta">
+    Guest Instructor: <a href="https://junipertcy.info" target="_blank">Tzu-Chi Yen</a> (courtesy of <a
+    href="http://myweb.ncku.edu.tw/~chengte/index.html" target="_blank">Prof. Cheng-Te Li</a>)<br>
+    Email: tzuchi.yen [at] colorado.edu<br>
+    Lecture hours: Apr. 11 & Apr. 18 [Wed], 15:10pm-18:00pm<br>
+    Lecture room: Dept. Bldg. of Statistics 62223, National Cheng Kung Univserity, Tainan, Taiwan<br>
+    <br>
+    Office location: TBD<br>
+    Office hours: TBD<br>
+  </p>
+  <br>
+</div>
+
+<div>
+  <h2>Announcement<small> (updated Apr. 21 16:30)</small></h2>
+  <ul id="announcement">
+    <li class="intent">
+      The <em>networkie</em> library is updated (Please do <em>git pull origin master</em> often). It now includes the raw result of the friendship questionnaire and the script that parses the data into a neat csv file.
+    </li>
+    <li class="intent">
+      There's a crowdsourced list of awesome GitHub projects for the lecture. Check it out <a href="https://docs.google.com/spreadsheets/d/1HmSsZ6FPcuDjuWc4M1iQki2iWzoquO5LsVVrM0FLcs0/edit?usp=sharing">here</a>! And, help improve the data by adding new repos that you like.
+    </li>
+    <li class="intent">
+      <strong>The slides on Apr. 18 is <a href="http://wiki.junipertcy.info/images/a/ac/Clauset_2015_SFI_Networks_ShortCourse_Modified.pdf" style="color: salmon">here</a>.</strong> It is modified from Prof. Aaron Clauset's <a href="http://tuvalu.santafe.edu/~aaronc/slides/Clauset_2015_SFI_Networks_ShortCourse.pdf" target="_blank">slides</a>.
+    </li>
+    <li class="intent">
+      <strong>The slides on Apr. 11 is <a href="http://wiki.junipertcy.info/images/e/ed/Stat1021_special_2018_L1.pdf" target="_blank" style="color: salmon">here</a>.</strong>
+    </li>
+    <li class="intent">
+      Please install a shell emulator (if you are using Windows) and Git on your computer. You may follow <a href="https://www.atlassian.com/git/tutorials/install-git">this link</a> for instructions.
+    </li>
+    <li class="intent">
+      Read <a href="http://linux.vbird.org/">鳥哥的 Linux 私房菜</a> if you are unfamiliar with shell commands.
+    </li>
+    <li class="intent">
+      Please sign up a new GitHub account on <a href="https://github.com/">GitHub</a>. You might clone or fork a project that you are interested.
+    </li>
+
+  </ul>
+  <br>
+  <h2>Lecture Description</h2>
+  This short lecture series provides an introduction to the daily practices and workflow for a data
+  scientist/engineer in the industry,
+  with an emphasis on building intuition on network data.
+
+  Specifically, we will sample and analyze the in-class social network and introduce broadly
+  applicable concepts in network analysis.
+  <br><br>
+  The lectures will be delivered as three integrated parts:
+  on using Git and GitHub, on website hosting on GitHub Pages, and on a very short (but not hurried) introduction
+  to
+  Network Science.
+
+  These will include (web) software development methods and tools;
+  graph theory and graph concepts; community detection; the implications of popular concepts such as "six
+  degrees of separation" and the "friendship paradox".
+  <br><br>
+  After these lectures, the students will be able to publish an open source software on GitHub that analyzes and
+  visualizes network data and host a personal/professional website on GitHub Pages.
+  <br>
+  <br>
+
+  <u>
+    Important links:
+  </u>
+  <ul>
+    <li>
+      <a
+        href="http://class-qry.acad.ncku.edu.tw/syllabus/online_display.php?syear=0106&sem=2&co_no=H212200&class_code="
+        target="_blank">STAT1021 official webpage</a>
+    </li>
+    <li>
+      <a [href]="urlToDetailedOutline" target="_blank">Detailed outline</a>
+    </li>
+    <li>
+      <a href="https://github.com/junipertcy/networkie" target="_blank">Python library <i>"networkie"</i> on GitHub</a>
+    </li>
+  </ul>
+  <br>
+  <h2>Prerequisites</h2>
+  The materials will be accessible to students with little programming experience; however, they must be able to
+  write and run Python scripts on the command-line. This tutorial might also appeal to people being interested in
+  Network Science. Yet it will focus on the practical side, i.e. using Python for network data analysis.
+  Web development experience is not required but a prior exposure to HTML/CSS/JavaScript would be useful.
+  <br>
+  <br>
+  <h2>Problem Sets</h2>
+  Problem sets are posted on the course website (here!), solutions will be sent through email soon after the
+  submission deadline.
+  See the <a [href]="urlToDetailedOutline" target="_blank">detailed outline</a> for information about grading, late,
+  and collaboration policy.
+  <br>
+  <br>
+  <h2>Data</h2>
+  <a [href]="urlToInClassSocialNetwork" target="_blank">In-class social network</a>, collected via the <a
+  href="https://goo.gl/forms/bpHjwDw8V56Rloeo1" target="_blank">self-reported friendship questionnaire</a> (in Mandarin
+  Chinese).
+  <br>
+  <a href="http://www-personal.umich.edu/~mejn/netdata/karate.zip">Zachary Karate Club</a>
+  <br>
+  <br>
+  <h2>Tentative Schedule</h2>
+  <div>
+    <table width="100%" id="lectures">
+      <colgroup>
+        <col width="5%">
+        <col width="20%">
+        <col width="38%">
+        <col width="23%">
+        <col width="14%">
+      </colgroup>
+      <thead>
+      <tr>
+        <th align="center">Date</th>
+        <th align="left">Topic</th>
+        <th align="left">Content</th>
+        <th align="left">Text Reading</th>
+        <th align="left">Problem Sets</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td align="center">4/11</td>
+        <td align="left"><b>Network Science I</b></td>
+        <td align="left">Introduction and overview</td>
+        <td align="left">Chaps. 1-2 in [2, 3], respectively</td>
+        <td align="left"></td>
+      </tr>
+      <tr>
+        <td align="center"></td>
+        <td align="left"><b>GitHub I</b></td>
+        <td align="left">Git commands and software patterns</td>
+        <td align="left">The first 2 sections in [4]</td>
+        <td align="left"><a
+          [href]="urlToInClassSocialNetwork" target="_blank">Data file</a></td>
+      </tr>
+      <tr>
+        <td align="center">4/18</td>
+        <td align="left"><b>GitHub II & Web Development</b></td>
+        <td align="left">Managing conflicts & website hosting on the GitHub</td>
+        <td align="left">The 4th section in [4] ('BWC')</td>
+        <td align="left"></td>
+      </tr>
+      <tr>
+        <td align="center"></td>
+        <td align="left"><b>Network Science II</b></td>
+        <td align="left">Measures of structural importance & community detection</td>
+        <td align="left">Secs. 9.1-2 in [3]</td>
+        <td align="left"><a [href]="urlToProblemSet1" target="_blank">Hw 3</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+<h2>Text
+  <small>(none of them is strictly required)</small>
+</h2>
+<ul>
+  <li>
+    [1] M.E.J. Newman, "<a href="http://www.amazon.com/Networks-Introduction-Mark-Newman/dp/0199206651"
+                           target="_blank">Networks: An Introduction</a>", Oxford University Press, Oxford (2010).
+  </li>
+  <li>
+    [2] D. Easley and J. Kleinberg, "<a
+    href="http://www.amazon.com/Networks-Crowds-Markets-Reasoning-Connected/dp/0521195330/" target="_blank">Networks,
+    Crowds, and Markets</a>", Cambridge University Press, Cambridge (2010). The complete textbook is <a
+    href="http://www.cs.cornell.edu/home/kleinber/networks-book/">available online</a>.
+  </li>
+  <li>
+    [3] A.-L. Barabási, "<a
+    href="https://www.amazon.com/Network-Science-Albert-L%C3%A1szl%C3%B3-Barab%C3%A1si/dp/1107076269"
+    target="_blank">Network Science</a>", Cambridge University Press, Cambridge (2016). The complete textbook is <a
+    href="http://barabasi.com/networksciencebook/">available online</a>.
+  </li>
+  <li>
+    [4] The GitHub Community, "Open Source Guides". The
+    guide was <a href="https://opensource.guide/" target="_blank">released online</a> in 2016 and is growing.
+  </li>
+</ul>
+<br>
+<h2>Supplemental Readings</h2>
+<ul id="supplemental_readings">
+  Week 1:
+  <li class="intent">
+    M.E.J. Newman, "<a href="https://arxiv.org/abs/cond-mat/0303516" target="_blank">The structure and function
+    of complex networks</a>." <em>SIAM Review</em> <strong>45</strong>, 167-256 (2003).
+  </li>
+  <li class="intent">
+    Brett Slatkin, "Effective Python: 59 Specific Ways to Write Better Python." The complete textbook is <a
+    href="https://effectivepython.com/">NOT available online</a>. Yet one might check <a
+    href="https://meesong.github.io/StaticBlog/2016/Language/Writing-Solid-Python-Code-Notes/" target="_blank">this
+    alternative</a> (in Mandarin Chinese).
+  </li>
+  <li class="intent">
+    M.J. Salganik, "<a href="http://bitbybitbook.com/" target="_blank">Bit By Bit: Social Research in the Digital Age</a>." Princeton University Press, Princeton (2017). An introductory
+book on data science and social science, i.e. computational social science.
+  </li>
+  Week 2:
+  <li class="intent">
+    B. Ball, M.E.J. Newman, "<a href='https://arxiv.org/abs/1205.6822' target='_blank'>Friendship networks and
+    social status</a>." <i>arXiv</i>:1205.6822 (2012). [published in <a href="https://doi.org/10.1017/nws.2012.4"
+                                                                        target="_blank">Network Science 1, 16-30
+    (2013)</a>]
+  </li>
+  <li class="intent">
+    L. Breiman, "<a href="https://projecteuclid.org/euclid.ss/1009213726" target="_blank">Statistical Modeling: The
+    Two Cultures</a>." <i>Statistical Science</i> <strong>16</strong>, 199-231 (2001).
+  </li>
+  <li class="intent">
+    S. Chacon and B. Straub, "<a href="https://git-scm.com/book/en/v2" target="_blank">Pro Git</a>." Apress (2014). A fully-updated guide to Git and its usage in the modern world.
+  </li>
+</ul>
+<br>
+<h2>Network Libraries in Python</h2>
+<a href="https://networkx.github.io/" target="_blank">NetworkX</a>, network analysis package (Python)
+<br>
+<a href="http://igraph.org/" target="_blank">igraph</a>, network analysis tools (Python, C++, R)
+<br>
+<a href="https://graph-tool.skewed.de/" target="_blank">graph-tool</a> network analysis and visualization software
+(Python, C++)
+<br>
+<br>
+<h2>Network Visualization Tools</h2>
+<a href="http://www.cytoscape.org/" target="_blank">Cytoscape</a>, network visualization software (Java;
+Linux/MacOS/Windows)
+<br>
+<a href="http://coco.binghamton.edu/netscidraw/" target="_blank">NetSciDraw</a>, a learning tool for all students
+(Web)
+<br>
+<a href="https://gephi.org/" target="_blank">Gephi</a>, network visualization and exploration software (Java;
+Linux/MacOS/Windows)
+<br>
+<a href="http://danlarremore.com/webweb/" target="_blank">webweb</a>, network visualization tool joining Matlab and
+d3.js (Web)
+<br>
+<a href="http://muxviz.net/" target="_blank">MuxViz</a>, multilayer analysis and visualization platform (R;
+Linux/MacOS/Windows)
+<br>
+<br>
+<h2>Network Data Sets</h2>
+<a href="https://icon.colorado.edu/" target="_blank">The Colorado Index of Complex Networks</a> (ICON; more than
+4000 graphs)
+<br>
+<a href="http://konect.cc/networks/" target="_blank">The KONECT project</a> (ca. 1321 networks)
+<br>
+<a href="https://snap.stanford.edu/data/" target="_blank">The Stanford Large Network Dataset Collection</a> (SNAP)
+<br>
+<br>
+<h2>General Visualization (Galleries!)</h2>
+<a href="https://matplotlib.org/gallery.html" target="_blank">Matplotlib</a> (Python)
+<br>
+<a href="https://bokeh.pydata.org/en/latest/docs/gallery.html#gallery" target="_blank">Bokeh</a> (Python)
+<br>
+<a href="https://seaborn.pydata.org/examples/index.html" target="_blank">seaborn</a> (Python; statistical data
+visualization)
+<br>
+<a href="https://altair-viz.github.io/gallery/index.html" target="_blank">Altair</a>
+(Python; declarative statistical visualization based on <a href="https://vega.github.io/vega/"
+                                                           target="_blank">Vega</a> and <a
+href="https://vega.github.io/vega-lite/" target="_blank">Vega-Lite</a>; check out this Jake VanderPlas <a
+href="https://twitter.com/jakevdp/status/974761969549852672" target="_blank">tweet</a>)
+<br>
+<a href="https://github.com/d3/d3/wiki/Gallery" target="_blank">d3.js</a> (JavaScript)
+<br>
+<a href="https://beta.observablehq.com/" target="_blank">Observable</a> (Web; Mike Bostock: <a
+href="https://medium.com/@mbostock/a-better-way-to-code-2b1d2876a3a0" target="_blank">A Better Way to Code</a> on
+<em>Medium</em>)
+<br>
+<br>
+<h2>Resources</h2>
+<a href="https://www.numfocus.org/sponsored-projects/?_sft_project_category=python-interface" target="_blank">NumFOCUS
+  sponsored projects in Python</a> (See <a href="https://www.numfocus.org/sponsored-projects/affiliated-projects/"
+                                           target="_blank">its affiliated projects</a>)<br>
+<a href="http://www.wolframalpha.com/" target="_blank">Wolfram Alpha</a> (Web interface for simple integration and
+differentiation)<br>
+<a href="https://stackoverflow.com/" target="_blank">Stack Overflow</a> (Trusted online community for
+developers)<br>
+<a href="https://www.python.org/community/pycon/" target="_blank">PyCon Home at python.org</a> (See <a
+href="https://tw.pycon.org/2018/zh-hant/" target="_blank">"PyCon Taiwan" in Taiwan</a>)<br>
+<a href="https://github.com/explore" target="_blank">Explore GitHub</a> (Trending/Popular technologies on
+GitHub)<br>
+Top stories on Medium tagged in <a href="https://medium.com/tag/web-development" target="_blank">Web Development</a>
+or <a href="https://medium.com/tag/front-end-development" target="_blank">Front End Development</a><br>
+<a href="https://backlog.com/git-tutorial/" target="_blank">Git Beginner's Guide for Dummies</a> (Same website in <a
+href="https://backlog.com/git-tutorial/tw/" target="_blank">Mandarin Chinese</a>)<br>
+<a href="https://www.atlassian.com/git" target="_blank">Getting Git right</a> (tutorials, news and tips by <a href="https://www.atlassian.com/" target="_blank">Atlassian</a>)<br>
+<br>
+<h2>Acknowledgements</h2>
+The "networky" part of this lecture series has its inspirations from the following two courses. You may find
+abundant and useful information about networks in the two links.<br>
+<a href='http://tuvalu.santafe.edu/~aaronc/courses/5352/' target="_blank">Network Analysis and Modeling</a>
+(University of Colorado Boulder; taught by <a href="http://tuvalu.santafe.edu/~aaronc/" target="_blank">Prof. Aaron
+Clauset</a>)<br>
+<a href='http://www-personal.umich.edu/~mejn/courses/2017/cscs535/' target="_blank">Network Theory</a> (University
+of Michigan; taught by <a href="http://www-personal.umich.edu/~mejn/" target="_blank">Prof. Mark Newman</a>)<br>
