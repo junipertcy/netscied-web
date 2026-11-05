@@ -66,3 +66,19 @@ def test_the_graph_is_undirected_and_film_person(product):
     assert not g.directed
     for s, t, _ in g.edges:
         assert g.nodes[s]["kind"] == "person" and g.nodes[t]["kind"] == "film"
+
+
+def test_the_graphml_file_and_the_csv_bundle_agree(product, tmp_path):
+    import networkx as nx
+
+    from netscied.formats import read_csv_bundle, write_csv_bundle, write_graphml
+
+    write_csv_bundle(product.graph, tmp_path, name="gh", version="1.0.0", title="金馬", license_id="CC-BY-4.0")
+    gml = nx.read_graphml(write_graphml(product.graph, tmp_path / "gh.graphml"), force_multigraph=True)
+    csvg = read_csv_bundle(tmp_path)
+    assert (gml.number_of_nodes(), gml.number_of_edges()) == (csvg.number_of_nodes(), csvg.number_of_edges()) == (174, 146)
+    for n, a in csvg.nodes(data=True):
+        assert {k: v for k, v in gml.nodes[n].items()} == {k: v for k, v in a.items() if k != "index" and v is not None}, n
+    key = lambda d: (d["category"], d["winner"])  # noqa: E731
+    for u, v in csvg.edges():
+        assert sorted(map(key, gml.get_edge_data(u, v).values())) == sorted(map(key, csvg.get_edge_data(u, v).values()))
