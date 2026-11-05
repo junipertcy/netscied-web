@@ -288,5 +288,5 @@ def test_a_snapshot_series_explains_repeated_pairs_as_one_link_per_snapshot(tmp_
     assert m["statistics"]["graph"]["repeated_pairs"] == 1
     zh, en = m["changelog"]["zh-Hant"], m["changelog"]["en"]
     assert "重複出現" not in zh
-    assert "2 個 month 快照" in zh and "同一快照內沒有重複的配對" in zh
-    assert "2 snapshots" in en
+    assert "2 個月份快照" in zh and "同一快照內沒有重複的配對" in zh
+    assert "2 monthly snapshots" in en

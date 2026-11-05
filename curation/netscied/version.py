@@ -100,6 +100,9 @@ def _citation(record: dict, version: str, released: str) -> str:
     return f"{'、'.join(authors)}（{released[:4]}）。{record['title']['zh-Hant']}（版本 {version}）［資料集］。{SITE['zh-Hant']}。{target}"
 
 
+SNAPSHOT_LABELS = {"month": ("月份", "monthly")}
+
+
 def _n(count: int, one: str, many: str) -> str:
     return f"{count} {one if count == 1 else many}"
 
@@ -112,22 +115,23 @@ def _quality_notes(stats: dict, product: "Product | None" = None) -> tuple[list[
         graph = product.graph
         snaps = {a.get(key) for _, _, a in graph.edges}
         within = len(graph.edges) - len({(a.get(key), s, t) if graph.directed else (a.get(key), *sorted((s, t))) for s, t, a in graph.edges})
+        label_zh, label_en = SNAPSHOT_LABELS.get(key, (key, key))
         zh.append(
-            f"共 {len(snaps)} 個 {key} 快照：每個起訖配對在每個快照中最多一條連結，跨快照的配對共 {g['unique_pairs']} 組"
-            + ("，同一快照內沒有重複的配對。" if within == 0 else f"，同一快照內有 {within} 組重複配對，保留為多重邊。")
+            f"共 {len(snaps)} 個{label_zh}快照：每個起訖配對在每個快照中最多一條連結，跨快照的配對共 {g['unique_pairs']:,} 組"
+            + ("，同一快照內沒有重複的配對。" if within == 0 else f"，同一快照內有 {within:,} 組重複配對，保留為多重邊。")
         )
         en.append(
-            f"{len(snaps)} snapshots by {key}: a pair has at most one link per snapshot, {g['unique_pairs']} distinct pairs across snapshots"
-            + ("; no pair repeats within a snapshot." if within == 0 else f"; {within} pairs repeat within a snapshot and are kept as multi-edges.")
+            f"{len(snaps)} {label_en} snapshots: a pair has at most one link per snapshot, {g['unique_pairs']:,} distinct pairs across snapshots"
+            + ("; no pair repeats within a snapshot." if within == 0 else f"; {within:,} pairs repeat within a snapshot and are kept as multi-edges.")
         )
         g = {k: v for k, v in g.items() if k != "repeated_pairs"}
     if g:
         if g.get("repeated_pairs"):
-            zh.append(f"資料品質：有 {g['repeated_pairs']} 組節點配對重複出現（共 {g['edges']} 條連結、{g['unique_pairs']} 組不同配對），保留為多重邊，未合併。")
-            en.append(f"Data quality: {_n(g['repeated_pairs'], 'node pair is', 'node pairs are')} repeated ({g['edges']} edges, {g['unique_pairs']} distinct pairs); repeated pairs are kept as multi-edges, not merged.")
+            zh.append(f"資料品質：有 {g['repeated_pairs']:,} 組節點配對重複出現（共 {g['edges']:,} 條連結、{g['unique_pairs']:,} 組不同配對），保留為多重邊，未合併。")
+            en.append(f"Data quality: {_n(g['repeated_pairs'], 'node pair is', 'node pairs are')} repeated ({g['edges']:,} edges, {g['unique_pairs']:,} distinct pairs); repeated pairs are kept as multi-edges, not merged.")
         if g.get("self_loops"):
-            zh.append(f"含 {g['self_loops']} 條自環（起點與終點相同）。")
-            en.append(f"Self-loops (source equals target): {g['self_loops']}.")
+            zh.append(f"含 {g['self_loops']:,} 條自環（起點與終點相同）。")
+            en.append(f"Self-loops (source equals target): {g['self_loops']:,}.")
         if g.get("isolated_nodes"):
             zh.append(f"有 {g['isolated_nodes']} 個孤立節點。")
             en.append(f"Isolated nodes: {g['isolated_nodes']}.")
