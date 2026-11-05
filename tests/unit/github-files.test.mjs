@@ -63,3 +63,15 @@ test('the PR template has the license, Taiwan-basis and personal-data checklist'
   const t = readFileSync(path.join(repoRoot, '.github', 'pull_request_template.md'), 'utf8');
   for (const s of ['授權證據', '與臺灣的關係', '個人資料審查']) assert.ok(t.includes(s), s);
 });
+
+// Review of Milestone A, finding 6: on a push to main, origin/main is the pushed
+// commit, so the history checks must compare against the commit before the push.
+test('CI validates against the commit before a push, and against the base branch on a pull request', () => {
+  const wf = parse(readFileSync(path.join(repoRoot, '.github', 'workflows', 'ci.yml'), 'utf8'));
+  const step = wf.jobs.test.steps.find((s) => /validate\.mjs/.test(s.run ?? ''));
+  assert.ok(step, 'a validation step');
+  const script = `${step.run}\n${JSON.stringify(step.env ?? {})}`;
+  assert.match(script, /github\.event\.before/);
+  assert.match(script, /github\.base_ref/);
+  assert.match(script, /--require-base/);
+});
