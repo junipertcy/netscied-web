@@ -165,7 +165,7 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, bas
   };
 
   const summaries = published.map((f) => datasetSummary(f.full));
-  write('api/v1/datasets.json', stable(summaries), { media_type: 'application/json', description: 'All published datasets, summary form', schema: `${ORIGIN}/api/v1/schema/dataset-summary.schema.json` });
+  write('api/v1/datasets.json', stable(summaries), { media_type: 'application/json', description: 'All published datasets, summary form', schema: `${ORIGIN}/api/v1/schema/dataset-list.schema.json` });
   write(
     'api/v1/datasets.csv',
     toCsv(
@@ -202,7 +202,7 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, bas
     }
   }
   const courseSummaries = courses.map((c) => courseSummary(c.full));
-  write('api/v1/courses.json', stable(courseSummaries), { media_type: 'application/json', description: 'All courses offered in Taiwan, summary form', schema: `${ORIGIN}/api/v1/schema/course-summary.schema.json` });
+  write('api/v1/courses.json', stable(courseSummaries), { media_type: 'application/json', description: 'All courses offered in Taiwan, summary form', schema: `${ORIGIN}/api/v1/schema/course-list.schema.json` });
   write(
     'api/v1/courses.csv',
     toCsv(
@@ -227,8 +227,8 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, bas
     { media_type: 'text/csv', description: 'All courses as CSV (UTF-8, no BOM)' },
   );
   for (const { full } of courses) write(`api/v1/courses/${full.id}.json`, stable(full), { media_type: 'application/json', description: `Course record: ${full.id}`, schema: `${ORIGIN}/api/v1/schema/course-record.schema.json` });
-  write('api/v1/wanted.json', stable(wanted.map((w) => w.entry)), { media_type: 'application/json', description: 'Wanted datasets (許願池), including ones since published (已收錄)', schema: `${ORIGIN}/api/v1/schema/wanted-entry.schema.json` });
-  write('api/v1/news.json', stable(news.map(({ body_md, ...n }) => ({ ...n, body_md }))), { media_type: 'application/json', description: 'News items, newest first', schema: `${ORIGIN}/api/v1/schema/news-item.schema.json` });
+  write('api/v1/wanted.json', stable(wanted.map((w) => w.entry)), { media_type: 'application/json', description: 'Wanted datasets (許願池), including ones since published (已收錄)', schema: `${ORIGIN}/api/v1/schema/wanted-list.schema.json` });
+  write('api/v1/news.json', stable(news.map(({ body_md, ...n }) => ({ ...n, body_md }))), { media_type: 'application/json', description: 'News items, newest first', schema: `${ORIGIN}/api/v1/schema/news-list.schema.json` });
   write('api/v1/taxonomy.json', stable(taxonomy(vocab)), { media_type: 'application/json', description: 'Every controlled vocabulary with Mandarin and English labels' });
   write('api/v1/catalog.json', catalogText, { media_type: 'application/json', description: 'Internal: the search payload the browser uses (records, aliases, fold map). Its shape may change without a new API version; use datasets.json and courses.json instead.' });
   // Response schemas (what the API serves) at /api/v1/schema/; the source-record

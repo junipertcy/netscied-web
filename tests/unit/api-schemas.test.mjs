@@ -102,3 +102,23 @@ test('catalog.json is marked internal in the index, not part of the v1 contract'
   assert.equal(entry.stability, 'internal');
   assert.ok(json('api/v1/index.json').files.filter((f) => f.path !== '/api/v1/catalog.json').every((f) => f.stability === 'stable'));
 });
+
+test('final review W7: every file the index lists validates against the schema the index names for it', () => {
+  const index = json('api/v1/index.json');
+  const named = index.files.filter((f) => f.schema);
+  assert.ok(named.some((f) => f.path === '/api/v1/datasets.json'));
+  for (const f of named) {
+    const v = ajv.getSchema(f.schema);
+    assert.ok(v, `${f.path}: schema ${f.schema} is published`);
+    assert.ok(v(json(f.path.slice(1))), `${f.path} against ${f.schema}: ${JSON.stringify(v.errors?.slice(0, 2))}`);
+  }
+  valid('index.schema.json', index, 'index.json');
+});
+
+test('final review W7: the content type the index declares for each file is the one the deploy uploads it with', async () => {
+  const { classify } = await import('../../scripts/deploy.mjs');
+  for (const f of json('api/v1/index.json').files) {
+    const uploaded = classify(f.path.slice(1)).contentType?.split(';')[0].trim();
+    assert.equal(uploaded, f.media_type, f.path);
+  }
+});

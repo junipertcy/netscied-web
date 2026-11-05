@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/news-list.schema.json",
+  "title": "/api/v1/news.json: News items, newest first",
+  "description": "The whole file: an array of news-item objects (each item is described by news-item.schema.json).",
+  "type": "array",
+  "items": {
+    "$ref": "news-item.schema.json"
+  }
+}

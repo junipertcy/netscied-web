@@ -46,7 +46,7 @@
       "url": "https://netscied.tw/api/v1/courses.json",
       "media_type": "application/json",
       "description": "All courses offered in Taiwan, summary form",
-      "schema": "https://netscied.tw/api/v1/schema/course-summary.schema.json",
+      "schema": "https://netscied.tw/api/v1/schema/course-list.schema.json",
       "stability": "stable"
     },
     {
@@ -69,7 +69,7 @@
       "url": "https://netscied.tw/api/v1/datasets.json",
       "media_type": "application/json",
       "description": "All published datasets, summary form",
-      "schema": "https://netscied.tw/api/v1/schema/dataset-summary.schema.json",
+      "schema": "https://netscied.tw/api/v1/schema/dataset-list.schema.json",
       "stability": "stable"
     },
     {
@@ -101,7 +101,7 @@
       "url": "https://netscied.tw/api/v1/news.json",
       "media_type": "application/json",
       "description": "News items, newest first",
-      "schema": "https://netscied.tw/api/v1/schema/news-item.schema.json",
+      "schema": "https://netscied.tw/api/v1/schema/news-list.schema.json",
       "stability": "stable"
     },
     {
@@ -109,6 +109,13 @@
       "url": "https://netscied.tw/api/v1/schema/api-common.schema.json",
       "media_type": "application/schema+json",
       "description": "JSON Schema of the API response: api-common",
+      "stability": "stable"
+    },
+    {
+      "path": "/api/v1/schema/course-list.schema.json",
+      "url": "https://netscied.tw/api/v1/schema/course-list.schema.json",
+      "media_type": "application/schema+json",
+      "description": "JSON Schema of the API response: course-list",
       "stability": "stable"
     },
     {
@@ -123,6 +130,13 @@
       "url": "https://netscied.tw/api/v1/schema/course-summary.schema.json",
       "media_type": "application/schema+json",
       "description": "JSON Schema of the API response: course-summary",
+      "stability": "stable"
+    },
+    {
+      "path": "/api/v1/schema/dataset-list.schema.json",
+      "url": "https://netscied.tw/api/v1/schema/dataset-list.schema.json",
+      "media_type": "application/schema+json",
+      "description": "JSON Schema of the API response: dataset-list",
       "stability": "stable"
     },
     {
@@ -151,6 +165,13 @@
       "url": "https://netscied.tw/api/v1/schema/news-item.schema.json",
       "media_type": "application/schema+json",
       "description": "JSON Schema of the API response: news-item",
+      "stability": "stable"
+    },
+    {
+      "path": "/api/v1/schema/news-list.schema.json",
+      "url": "https://netscied.tw/api/v1/schema/news-list.schema.json",
+      "media_type": "application/schema+json",
+      "description": "JSON Schema of the API response: news-list",
       "stability": "stable"
     },
     {
@@ -217,6 +238,13 @@
       "stability": "stable"
     },
     {
+      "path": "/api/v1/schema/wanted-list.schema.json",
+      "url": "https://netscied.tw/api/v1/schema/wanted-list.schema.json",
+      "media_type": "application/schema+json",
+      "description": "JSON Schema of the API response: wanted-list",
+      "stability": "stable"
+    },
+    {
       "path": "/api/v1/taxonomy.json",
       "url": "https://netscied.tw/api/v1/taxonomy.json",
       "media_type": "application/json",
@@ -228,7 +256,7 @@
       "url": "https://netscied.tw/api/v1/wanted.json",
       "media_type": "application/json",
       "description": "Wanted datasets (許願池), including ones since published (已收錄)",
-      "schema": "https://netscied.tw/api/v1/schema/wanted-entry.schema.json",
+      "schema": "https://netscied.tw/api/v1/schema/wanted-list.schema.json",
       "stability": "stable"
     }
   ]

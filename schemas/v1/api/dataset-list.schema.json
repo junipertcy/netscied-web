@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/dataset-list.schema.json",
+  "title": "/api/v1/datasets.json: All published datasets, summary form",
+  "description": "The whole file: an array of dataset-summary objects (each item is described by dataset-summary.schema.json).",
+  "type": "array",
+  "items": {
+    "$ref": "dataset-summary.schema.json"
+  }
+}

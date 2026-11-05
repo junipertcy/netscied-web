@@ -40,6 +40,8 @@ export function classify(file) {
   if (file === 'robots.txt' || file === 'llms.txt') return { phase: 'machine', cacheControl: SHORT, contentType: 'text/plain; charset=utf-8' };
   if (file === 'sitemap.xml') return { phase: 'machine', cacheControl: SHORT, contentType: 'application/xml; charset=utf-8' };
   if (base === 'feed.xml') return { phase: 'machine', cacheControl: SHORT, contentType: 'application/atom+xml; charset=utf-8' };
+  // JSON Schemas, as /api/v1/index.json declares them.
+  if (base.endsWith('.schema.json')) return { phase: 'machine', cacheControl: SHORT, contentType: 'application/schema+json; charset=utf-8' };
   if (MACHINE_TYPES[ext]) return { phase: 'machine', cacheControl: SHORT, contentType: MACHINE_TYPES[ext] };
   throw new Error(`deploy: unclassified file ${file}; add a rule to scripts/deploy.mjs`);
 }

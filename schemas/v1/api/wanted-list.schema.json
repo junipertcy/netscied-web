@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/wanted-list.schema.json",
+  "title": "/api/v1/wanted.json: Wanted datasets, including ones since published",
+  "description": "The whole file: an array of wanted-entry objects (each item is described by wanted-entry.schema.json).",
+  "type": "array",
+  "items": {
+    "$ref": "wanted-entry.schema.json"
+  }
+}

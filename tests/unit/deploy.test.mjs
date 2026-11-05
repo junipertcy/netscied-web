@@ -134,7 +134,7 @@ test('task 7.2: llms.txt, Markdown siblings, the feed, CSVs, schemas and page da
     'datasets/x/index.md': 'text/markdown; charset=utf-8',
     'news/feed.xml': 'application/atom+xml; charset=utf-8',
     'api/v1/datasets.csv': 'text/csv; charset=utf-8',
-    'api/v1/schema/dataset-record.schema.json': 'application/json; charset=utf-8',
+    'api/v1/schema/dataset-record.schema.json': 'application/schema+json; charset=utf-8',
     '_data/home.json': 'application/json; charset=utf-8',
     'sitemap.xml': 'application/xml; charset=utf-8',
   };
