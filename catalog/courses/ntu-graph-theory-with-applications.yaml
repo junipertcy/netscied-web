@@ -1,25 +1,31 @@
 id: ntu-graph-theory-with-applications
 university: ntu
-department: { zh-Hant: 資訊工程學研究所 }
-title: { zh-Hant: 圖論與應用, en: Graph Theory with Applications }
+department: {zh-Hant: 資訊工程學研究所}
+title: {zh-Hant: 圖論與應用, en: Graph Theory with Applications}
 course_code: CSIE5136
 category: graph-theory
 relevance: core
 offering_type: credit
 level: mixed
-languages: [zh]
+languages: []
 inclusion_note:
   zh-Hant: 課程概述列出的十個主題全為圖論工具及其在演算法與計算複雜度上的應用。
 summary:
   zh-Hant: 理論計算機科學取向的圖論課，介紹圖參數、極值圖論、譜圖論、圖嵌入與分解、擴展圖分解，並應用於最短路徑、網路流、配對、圖稀疏化與最小成本流等演算法問題。
 keywords: [圖論, 譜圖論, 擴展圖, 圖演算法, 網路流]
-provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
 offerings:
   - term: "114-2"
     code: "25074"
     instructors:
-      - { name: 黃上恩 }
+      - {name: 黃上恩}
     evidence_url: https://nol.ntu.edu.tw/nol/coursesearch/print_table.php?class=&course_id=922+U1730&dpt_code=9220&semester=114-2&ser_no=25074
     verified_on: "2026-11-04"
     note:
       zh-Hant: 流水號 25074，課程識別碼 922 U1730，選修 3 學分；頁面未列授課語言。
+unverified:
+  fields:
+    - languages
+  checked_on: 2026-11-04
+  note:
+    zh-Hant: 課程頁未列授課語言，待確認。

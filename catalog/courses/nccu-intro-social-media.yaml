@@ -1,25 +1,31 @@
 id: nccu-intro-social-media
 university: nccu
-department: { zh-Hant: 資訊科學系, en: Computer Science }
-title: { zh-Hant: 社群媒體概論, en: Introduction to Social Media }
+department: {zh-Hant: 資訊科學系, en: Computer Science}
+title: {zh-Hant: 社群媒體概論, en: Introduction to Social Media}
 course_code: "703857"
 category: social-network-analysis
 relevance: partial
 offering_type: credit
 level: undergraduate
-languages: [zh]
+languages: []
 inclusion_note:
   zh-Hant: 114-1 週次進度第 10 至 13 週為社會網絡分析單元（節點層級測量、中心性、子群與社群偵測、等價），約四週，教科書為 Borgatti 等人《Analyzing Social Networks》。
 summary:
   zh-Hant: 資訊科學系大學部的社群媒體導論，涵蓋社群媒體資料的蒐集與管理、互動設計、視覺化與推論統計，並以約四週介紹社會網絡分析，期末有分組專題。
 keywords: [社群媒體, 社會網絡分析, 中心性, 社群偵測, UCINET]
-provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
 offerings:
   - term: "114-1"
     code: "703857001"
     instructors:
-      - { name: 謝佩璇, name_en: HSIEH PEI-HSUAN }
+      - {name: 謝佩璇, name_en: HSIEH PEI-HSUAN}
     evidence_url: https://newdoc.nccu.edu.tw/teaschm/1141/schmPrv.jsp-yy=114&smt=1&num=703857&gop=00&s=1.html
     verified_on: "2026-11-04"
     note:
       zh-Hant: 開課單位資訊一、資訊二；大綱未列授課語言。同一教師 112-2 另有創新創造力研究中心開設、課號 070261 的同名課程，內容幾乎全為社會網絡分析，未納入本紀錄。
+unverified:
+  fields:
+    - languages
+  checked_on: 2026-11-04
+  note:
+    zh-Hant: 課程頁未列授課語言，待確認。

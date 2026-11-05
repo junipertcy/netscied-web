@@ -1,25 +1,31 @@
 id: thu-social-network-theory-research
 university: thu
-department: { zh-Hant: 教育研究所碩士在職專班 }
-title: { zh-Hant: 社群網絡理論與研究, en: Theory and Research on Social Network }
+department: {zh-Hant: 教育研究所碩士在職專班}
+title: {zh-Hant: 社群網絡理論與研究, en: Theory and Research on Social Network}
 course_code: "6608"
 category: social-network-analysis
 relevance: core
 offering_type: credit
 level: professional
-languages: [zh]
+languages: []
 inclusion_note:
   zh-Hant: 教育目標說明本課以社會網絡分析找出學習社群中的關鍵角色與連結，並教授網絡資料的蒐集、分析與網絡圖繪製。
 summary:
   zh-Hant: 教育研究所在職專班課程，從學習社群經營的角度介紹網絡概念、網絡資料的定義與蒐集分析，並以分析軟體繪製網絡圖、研讀社會網絡相關理論與研究；參考書為 UCINET 應用專書。
 keywords: [社會網絡分析, 學習社群, UCINET, 教育研究]
-provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
 offerings:
   - term: "114-2"
     code: "6608"
     instructors:
-      - { name: 王承諺 }
+      - {name: 王承諺}
     evidence_url: https://national.service.thu.edu.tw/view/114/2/6608
     verified_on: "2026-11-04"
     note:
       zh-Hant: 週六 8–10 節，修課班級教育專班 1、2 年級；113-2、114-1、115-1 的系所課程列表未見此課。
+unverified:
+  fields:
+    - languages
+  checked_on: 2026-11-04
+  note:
+    zh-Hant: 課程頁未列授課語言，待確認。

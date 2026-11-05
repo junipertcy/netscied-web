@@ -1,25 +1,31 @@
 id: nccu-personal-networks
 university: nccu
-department: { zh-Hant: 社會學系, en: Sociology }
-title: { zh-Hant: 個人網絡, en: Personal Networks }
+department: {zh-Hant: 社會學系, en: Sociology}
+title: {zh-Hant: 個人網絡, en: Personal Networks}
 course_code: "204811"
 category: social-network-analysis
 relevance: core
 offering_type: credit
 level: undergraduate
-languages: [zh]
+languages: []
 inclusion_note:
   zh-Hant: 課程簡介說明本課是社會網絡實證與理論研究的導論，並以個人網絡分析的基本概念與原則為核心目標。
 summary:
   zh-Hant: 透過研讀經典與當代研究，介紹社會網絡的基本定義、網絡形成與結構（同質性、焦點、社群）、網絡上的傳染與影響、合作網絡、線上網絡，以及網絡抽樣與資料蒐集。
 keywords: [社會網絡, 個人網絡, 同質性, 社會影響, 網絡抽樣]
-provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
 offerings:
   - term: "113-2"
     code: "204811001"
     instructors:
-      - { name: 陳人豪, name_en: CHEN JEN-HAO }
+      - {name: 陳人豪, name_en: CHEN JEN-HAO}
     evidence_url: https://newdoc.nccu.edu.tw/teaschm/1132/schmPrv.jsp-yy=113&smt=2&num=204811&gop=00&s=1.html
     verified_on: "2026-11-04"
     note:
       zh-Hant: 開課單位社會三、社會四；研究資料另記有研究所合開課號 254775，本次未核對。
+unverified:
+  fields:
+    - languages
+  checked_on: 2026-11-04
+  note:
+    zh-Hant: 課程頁未列授課語言，待確認。
