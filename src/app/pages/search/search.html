@@ -2,10 +2,24 @@
 <app-search-form inputId="search-q" [q]="query()" [type]="mode()" />
 <app-noscript-catalog ngSkipHydration [datasets]="datasets()" />
 
-@switch (state()) {
-  @case ('loading') {
-    <p class="status" role="status">搜尋中…</p>
+<!-- One live region for the whole page, so a screen reader hears each change of
+     its text (final review W9): 搜尋中…, then the count. -->
+<p class="status" role="status" aria-live="polite">
+  @switch (state()) {
+    @case ('loading') {搜尋中…}
+    @case ('ready') {
+      @let rs = result();
+      @if (!rs.query.empty) {
+        @if (mode() === 'datasets') {找到 {{ hits().length }} 筆資料集} @else {找到 {{ hits().length }} 門課程}
+        @if (rs.otherCount) {
+          ；另有 {{ rs.otherCount }} {{ mode() === 'datasets' ? '門課程' : '筆資料集' }}符合，<a [href]="otherHref()">看{{ mode() === 'datasets' ? '課程' : '資料集' }}結果</a>
+        }
+      }
+    }
   }
+</p>
+
+@switch (state()) {
   @case ('error') {
     <div class="notice" role="alert">
       <p><strong>搜尋暫時無法使用。</strong>請稍後再試，或直接瀏覽：</p>
@@ -18,7 +32,7 @@
       <p class="notice" role="note">搜尋字詞超過 100 個字，只使用了前 100 個字。</p>
     }
     @if (r.query.empty) {
-      <div class="empty-query" role="status">
+      <div class="empty-query">
         <p>請輸入想找的資料或課程，例如「捷運」「超圖」「社會網絡分析」。也可以直接瀏覽：</p>
         <ul>
           <li><a routerLink="/datasets">全部資料集（{{ index().counts.datasets }} 筆）</a></li>
@@ -26,12 +40,6 @@
         </ul>
       </div>
     } @else {
-      <p class="status" role="status" aria-live="polite">
-        @if (mode() === 'datasets') {找到 {{ hits().length }} 筆資料集} @else {找到 {{ hits().length }} 門課程}
-        @if (r.otherCount) {
-          ；另有 {{ r.otherCount }} {{ mode() === 'datasets' ? '門課程' : '筆資料集' }}符合，<a [href]="otherHref()">看{{ mode() === 'datasets' ? '課程' : '資料集' }}結果</a>
-        }
-      </p>
       @if (r.hints.networking) {
         <p class="hint" role="note">
           @if (mode() === 'datasets') {

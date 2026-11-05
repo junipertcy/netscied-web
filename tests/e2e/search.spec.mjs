@@ -180,3 +180,22 @@ test('IME: a keydown reported as composing never submits, whatever the engine', 
   });
   expect(prevented).toEqual([true, true]);
 });
+
+// Final review W9: screen readers announce changes to a live region that stays
+// in the document; a role="status" element re-inserted per state is often missed.
+test('the count is announced by one persistent live region, from loading to results', async ({ page }) => {
+  let release;
+  const gate = new Promise((r) => (release = r));
+  await page.route('**/api/v1/catalog.json', async (route) => {
+    await gate;
+    await route.continue();
+  });
+  await page.goto(q('捷運'));
+  const status = page.locator('main [role="status"]');
+  await expect(status).toHaveCount(1);
+  await expect(status).toHaveAttribute('aria-live', 'polite');
+  const handle = await status.elementHandle();
+  release();
+  await expect(status).toContainText('找到');
+  expect(await handle.evaluate((el) => el.isConnected && el.textContent.includes('找到'))).toBe(true);
+});

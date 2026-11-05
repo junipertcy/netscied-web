@@ -359,6 +359,8 @@ details summary { cursor: pointer; min-height: 24px; }
 /* ---------- Search results ---------- */
 
 .status { font-weight: 700; }
+/* The search page keeps one live region in place; empty, it takes no room. */
+.status:empty { margin: 0; }
 .results { list-style: none; padding: 0; }
 .result { padding: 0.8em 0; border-bottom: 1px solid var(--line); }
 .result-title { font-size: 1.1rem; margin: 0; }
