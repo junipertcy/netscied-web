@@ -44,14 +44,18 @@ structure:
     zh-Hant: |-
       原始資料包含同站進出（起迄相同）的人次。
       2026 年 9 月檔案第一個小時有 120 個進站名稱、109 個出站名稱：
-      環狀線各站只出現在進站欄，部分轉乘站在出站欄加上路線代碼（例如「G大坪林」「O景安」），
-      彙總前需要整理站名。
+      環狀線各站只出現在進站欄，部分轉乘站在出站欄加上路線代碼（例如「G大坪林」「O景安」）。
+      本站把出站欄的「G大坪林」「O景安」「O頭前庄」併入「大坪林」「景安」「頭前庄」（兩邊的月人次相近）；
+      環狀線其他車站沒有出站紀錄，在網絡中只有出邊。
     en: >-
       The source counts trips that enter and exit at the same station. In the
       September 2026 file, the first hour has 120 entry-station names and 109
       exit-station names: Circular Line stations appear only as entries, and some
       transfer stations carry a line code on the exit side (for example
-      "G大坪林", "O景安"), so station names need harmonising before aggregation.
+      "G大坪林", "O景安"). This site merges the exit names G大坪林, O景安 and
+      O頭前庄 into 大坪林, 景安 and 頭前庄 (their monthly volumes match); the other
+      Circular Line stations have no exit records, so in the network they have
+      outgoing edges only.
 coverage:
   temporal:
     start: "2017-01"
