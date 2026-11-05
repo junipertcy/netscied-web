@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "released": "2026-11-05",
   "snapshot_date": "2026-11-05",
+  "coverage": {
+    "temporal": {
+      "start": "2020-02",
+      "end": "2024-01"
+    }
+  },
   "changelog": {
     "zh-Hant": "第一版：第10屆立法院委員提案的提案人與連署人超圖，取自 LYAPI（2026 年 11 月 5 日擷取）。670 件由黨團提出、沒有個別委員列名的議案不收錄。43 件上游的提案人與連署人名單都是空白，不收錄。4 個不在第10屆立法委員名單上的姓名（其中 4 個是黨團）未列為超邊成員。1 件議案同一人同時列為提案人與連署人，只保留提案人角色。4 件議案的名單中有重複姓名，各只算一次。1 件議案的提案日期不在第10屆任期內（2013-04-19），照上游資料保留。有 2 個孤立節點。",
     "en": "First version, the sponsor and co-signer hypergraph of member-proposed bills of the 10th Legislative Yuan, from LYAPI (retrieved 2026-11-05, Taipei time). 670 bills filed by a caucus with no individual legislator listed are left out. 43 bills with empty sponsor and co-signer lists upstream are left out. 4 names not on the term-10 legislator roster (4 of them caucuses) are not members of any hyperedge. In 1 bill, one legislator is listed as both sponsor and co-signer; only the sponsor role is kept. In 4 bills, a name repeats within a list; it counts once. 1 bill with a 提案日期 outside the term (2013-04-19) is kept as upstream gives it. Isolated nodes: 2."
@@ -13,8 +19,8 @@
     {
       "path": "ly-bill-cosponsorship-10th-1.0.0.zip",
       "url": "https://netscied.tw/data/ly-bill-cosponsorship-10th/1.0.0/ly-bill-cosponsorship-10th-1.0.0.zip",
-      "bytes": 1065777,
-      "sha256": "2d5f5de624c2ddee59d1722d43a4ada6a309dc77e35166188d0a7adcd46c4791",
+      "bytes": 1065816,
+      "sha256": "6d8dcdb534addab4458a6850f5a1c6328747df74c03ba6af393b034d8775d6a4",
       "media_type": "application/zip",
       "format": "zip",
       "role": "bundle"
@@ -122,8 +128,8 @@
     {
       "path": "provenance.json",
       "url": "https://netscied.tw/data/ly-bill-cosponsorship-10th/1.0.0/provenance.json",
-      "bytes": 5666,
-      "sha256": "08a3ef0e30f0fb758bcd1794c0223fb6e0362b9ccc58bc53d4a7cf35a614393f",
+      "bytes": 5760,
+      "sha256": "1e7a90093cfd5c67b08102719bd11ed584b7fd075d234e3a28c8d5d1500d36ea",
       "media_type": "application/json",
       "format": "provenance",
       "role": "metadata"
@@ -132,7 +138,7 @@
       "path": "SHA256SUMS",
       "url": "https://netscied.tw/data/ly-bill-cosponsorship-10th/1.0.0/SHA256SUMS",
       "bytes": 1245,
-      "sha256": "b27f0fa78c28d7024eb594192ad6e2c2445981400efd1863a9ebac31510c5ae3",
+      "sha256": "845b3f226790ce3f6ff5815ae50afbfaf93c4f3526b789c69e37637f13b9c4fd",
       "media_type": "text/plain",
       "format": "sha256sums",
       "role": "checksums"
@@ -162,7 +168,7 @@
       "jsonschema": "4.26.0",
       "pyyaml": "6.0.3"
     },
-    "commit": "b8ea59ddf5e7a09f09a9050921eac4541c216986",
+    "commit": "a3bf4e758c94a46829da817f476043b5edffa35b",
     "lock_sha256": "f18b9e94750ef187372bfd0a5d398bc82b10dbcbb9bbc8d0487fc6f41a060078"
   },
   "upstream_snapshot": {

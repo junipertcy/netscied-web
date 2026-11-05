@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "released": "2026-11-05",
   "snapshot_date": "2026-11-05",
+  "coverage": {
+    "temporal": {
+      "start": "2025-10",
+      "end": "2026-09"
+    }
+  },
   "changelog": {
     "zh-Hant": "第一版：2025 年 10 月至 2026 年 9 月共 12 個月的站間起訖月彙總網絡。120 個車站名稱照原始資料保留；11 個只出現在進站欄，0 個只出現在出站欄（節點屬性 appears_as）。2025-12 的檔案含 2026-01-01 凌晨（6 時前）的通宵營運旅次 112,999 人次，依原始檔計入 2025-12。共 12 個月份快照：每個起訖配對在每個快照中最多一條連結，跨快照的配對共 12,998 組，同一快照內沒有重複的配對。含 1,298 條自環（起點與終點相同）。",
     "en": "First version, monthly station-to-station OD networks for the 12 months from October 2025 to September 2026. 120 station names are kept as the source gives them; 11 appear only as entries and 0 only as exits (node attribute appears_as). The 2025-12 file carries 112,999 trips from 2026-01-01 before 06:00 (all-night service); they count for 2025-12, as the source files them. 12 monthly snapshots: a pair has at most one link per snapshot, 12,998 distinct pairs across snapshots; no pair repeats within a snapshot. Self-loops (source equals target): 1,298."
@@ -13,8 +19,8 @@
     {
       "path": "taipei-metro-od-monthly-1.0.0.zip",
       "url": "https://netscied.tw/data/taipei-metro-od-monthly/1.0.0/taipei-metro-od-monthly-1.0.0.zip",
-      "bytes": 2679247,
-      "sha256": "cc2bdbe3e11b4c57840d508bf08bf37b1366ae3291d2e7dbc5dfb372a6fe6963",
+      "bytes": 2679282,
+      "sha256": "f4656bc4bd8718ada1b196e41397b3dc9bf367db0c2108aee5bb2e89a8c86e37",
       "media_type": "application/zip",
       "format": "zip",
       "role": "bundle"
@@ -71,8 +77,8 @@
     {
       "path": "provenance.json",
       "url": "https://netscied.tw/data/taipei-metro-od-monthly/1.0.0/provenance.json",
-      "bytes": 21238,
-      "sha256": "be5f676155e6a6163974ddc28a96cab1436cd7ea44eaf6734cbafaa559096f37",
+      "bytes": 21332,
+      "sha256": "9398801172f369829645acd2a7564add855f94b57507bc6f45c2a19f483f8c66",
       "media_type": "application/json",
       "format": "provenance",
       "role": "metadata"
@@ -81,7 +87,7 @@
       "path": "SHA256SUMS",
       "url": "https://netscied.tw/data/taipei-metro-od-monthly/1.0.0/SHA256SUMS",
       "bytes": 603,
-      "sha256": "3f377903332304ad3bbabf65dd6d8adc7e12e438305879f4b810007dd3da2927",
+      "sha256": "b9107a8433895e5dc7569fe1fdee73791ebe173335a11bc8e5f4ee6467c5ff80",
       "media_type": "text/plain",
       "format": "sha256sums",
       "role": "checksums"
@@ -110,7 +116,7 @@
       "jsonschema": "4.26.0",
       "pyyaml": "6.0.3"
     },
-    "commit": "97856a4ba6fe529301e3634d094936787a53ff89",
+    "commit": "a3bf4e758c94a46829da817f476043b5edffa35b",
     "lock_sha256": "f18b9e94750ef187372bfd0a5d398bc82b10dbcbb9bbc8d0487fc6f41a060078"
   },
   "upstream_snapshot": {

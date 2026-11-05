@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "released": "2026-11-04",
   "snapshot_date": "2026-11-04",
+  "coverage": {
+    "temporal": {
+      "start": "2018",
+      "end": "2018"
+    }
+  },
   "changelog": {
     "zh-Hant": "第一版：依金馬獎官方入圍得獎資料庫（2018 年）自行整理的入圍者–影片網絡。資料品質：有 13 組節點配對重複出現（共 146 條連結、133 組不同配對），保留為多重邊，未合併。",
     "en": "First version, compiled by this site from the official Golden Horse nominee database (2018). Data quality: 13 node pairs are repeated (146 edges, 133 distinct pairs); repeated pairs are kept as multi-edges, not merged."
@@ -13,8 +19,8 @@
     {
       "path": "golden-horse-2018-nominations-1.0.0.zip",
       "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/golden-horse-2018-nominations-1.0.0.zip",
-      "bytes": 19472,
-      "sha256": "10f628c2816409872c7b5ec84bb840ac8a0166dd063c443693210e06995b8ea6",
+      "bytes": 20407,
+      "sha256": "459b0d476579616233e545e594f8154d03dfb6000a4271189b356153bd5f98dc",
       "media_type": "application/zip",
       "format": "zip",
       "role": "bundle"
@@ -71,8 +77,8 @@
     {
       "path": "ATTRIBUTION.txt",
       "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/ATTRIBUTION.txt",
-      "bytes": 2160,
-      "sha256": "56eed2f85737a2b937a295fa410e153f5cf6194abcb228e73c68dade5f29f9cd",
+      "bytes": 3017,
+      "sha256": "bcf9279d2ff3ac98c3807c55694e577076d37fc571985a898d8af315a239c081",
       "media_type": "text/plain",
       "format": "attribution",
       "role": "metadata"
@@ -80,8 +86,8 @@
     {
       "path": "provenance.json",
       "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/provenance.json",
-      "bytes": 3521,
-      "sha256": "e5cb783a34e35e915985c0e9cab5beedb62388c209f820436e5c4f3b2266dd50",
+      "bytes": 4590,
+      "sha256": "2295325101f2174bec1d2b2582148cdf1ae3972a05ef37da0802e01d686619a6",
       "media_type": "application/json",
       "format": "provenance",
       "role": "metadata"
@@ -90,7 +96,7 @@
       "path": "SHA256SUMS",
       "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/SHA256SUMS",
       "bytes": 706,
-      "sha256": "67de4ca65aed2e257e910e45c54aa2e47ab407ac5b04f1bae7a915b7c9fa7203",
+      "sha256": "96517e48d056bbcb0a7142fc04e126e6e862ce35c7aede46817d5004196e7570",
       "media_type": "text/plain",
       "format": "sha256sums",
       "role": "checksums"
@@ -122,7 +128,7 @@
       "jsonschema": "4.26.0",
       "pyyaml": "6.0.3"
     },
-    "commit": "d8e1b0e9acc1b890c3c62becb44ef340a32f30f1",
+    "commit": "a3bf4e758c94a46829da817f476043b5edffa35b",
     "lock_sha256": "f18b9e94750ef187372bfd0a5d398bc82b10dbcbb9bbc8d0487fc6f41a060078"
   },
   "upstream_snapshot": {
