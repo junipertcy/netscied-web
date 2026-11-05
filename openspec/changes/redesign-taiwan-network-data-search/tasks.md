@@ -87,7 +87,7 @@
 - [ ] 11.1 Removed site files stay live: deploys never delete, so a file dropped from `public/` or the build keeps serving from the bucket. Add a reviewed prune of non-hashed keys missing from the build (after the HTML upload, before the invalidation, never touching hashed assets), or remove such files by hand at each deploy. Verify: a dry run lists the keys it would delete.
 - [ ] 11.2 Before task 5.6 enables the legacy redirects, exclude the `from` paths of enabled rows in `config/redirects.yaml` from `sitemap.xml`; Angular prerenders `redirectTo` routes and lists them in `prerendered-routes.json`. Verify: with the rows enabled, the sitemap lists no redirect source.
 - [ ] 11.3 Use `request.rawQueryString()` in the edge function, keeping the object loop as the fallback for the vm test harness, so `?debug=` and parameter order survive redirects unchanged. Verify: a test with a raw query string, and `aws cloudfront test-function` at task 2.5.
-- [ ] 11.4 Skip `index.csr.html` in the deploy.
+- [x] 11.4 Skip `index.csr.html` in the deploy.
 - [ ] 11.5 `smoke.sh`: check that the 404 body is the not-found page (找不到這個頁面, noindex), and check `Cache-Control` on `/` and on a hashed asset.
 - [ ] 11.6 Before the page count reaches the thousands, switch deploy upload groups to glob patterns or the SDK. AWS CLI filters are quadratic (about 6 s for 2,000 files in one group) and `ARG_MAX` is hit at about 14k files per group, which fails safely.
 - [ ] 11.7 Decide whether `/404/` itself should answer 404, and whether `/mcp` should skip the trailing-slash rule (the agent-access spec reserves it as a 404; today it gets 301 `/mcp/` → 404).

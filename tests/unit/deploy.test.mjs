@@ -99,3 +99,13 @@ test('--dry-run on the real build prints the plan and calls no AWS command', () 
   assert.match(out, /--include main-[A-Z0-9]{8}\.js/);
   assert.match(lines.at(-1), /^aws cloudfront create-invalidation --distribution-id ETEST --paths '\/\*'$/);
 });
+
+// Task 11.4 — Angular's client-side-rendering fallback page is not part of the
+// static site; uploading it would publish a second, unrendered copy of the home page.
+test('index.csr.html is never uploaded', () => {
+  const p = planDeploy({ buildDir: '/b', files: ['index.html', 'index.csr.html', 'main-ABCDEFGH.js'], bucket: 'b', distributionId: 'E' });
+  const uploaded = p.flatMap((s) => s.files ?? []);
+  assert.ok(!uploaded.includes('index.csr.html'));
+  assert.ok(uploaded.includes('index.html'));
+  assert.ok(!p.some((s) => s.args.includes('index.csr.html')));
+});

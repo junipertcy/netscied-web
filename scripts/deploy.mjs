@@ -41,9 +41,13 @@ export function classify(file) {
   throw new Error(`deploy: unclassified file ${file}; add a rule to scripts/deploy.mjs`);
 }
 
+// Build files that are not part of the static site: Angular's client-side
+// rendering fallback (task 11.4).
+export const SKIP = new Set(['index.csr.html']);
+
 export function planDeploy({ buildDir, files, bucket, distributionId }) {
   const groups = new Map();
-  for (const file of [...files].sort()) {
+  for (const file of [...files].filter((f) => !SKIP.has(f)).sort()) {
     const c = classify(file);
     const key = `${PHASES.indexOf(c.phase)}|${c.cacheControl}|${c.contentType ?? ''}`;
     if (!groups.has(key)) groups.set(key, { ...c, files: [] });
