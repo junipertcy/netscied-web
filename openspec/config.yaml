@@ -1,0 +1,41 @@
+schema: spec-driven
+
+context: |
+  Site: netscied.tw (台灣網絡科學教育). One maintainer (Tzu-Chi Yen); hosting is personally funded.
+  Tech stack: Angular 22 standalone + zoneless, every route prerendered to static HTML at build time
+  (@angular/ssr RenderMode.Prerender); pnpm with exact version pins; TypeScript 6.
+  Hosting: static files in an S3 bucket behind CloudFront; DNS on Route 53.
+  Audience: Taiwanese citizens (Traditional Mandarin, zh-Hant-TW, is primary; English supported) and the AI agents
+  they use. Old public URLs must keep working (301 or a meaningful page).
+  Keep designs proportionate: no always-on servers or paid services unless a decision in design.md justifies it.
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+# Example:
+#   context: |
+#     Tech stack: TypeScript, React, Node.js
+#     We use conventional commits
+#     Domain: e-commerce platform
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing
