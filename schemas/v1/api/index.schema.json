@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/index.schema.json",
+  "title": "The API manifest at /api/v1/index.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["api_version", "last_breaking_change", "updated", "courses_refreshed", "site", "metadata_license", "counts", "guide", "files"],
+  "properties": {
+    "api_version": { "const": "1" },
+    "last_breaking_change": { "$ref": "api-common.schema.json#/$defs/date" },
+    "updated": { "$ref": "api-common.schema.json#/$defs/date" },
+    "courses_refreshed": { "type": ["string", "null"] },
+    "site": { "type": "object" },
+    "metadata_license": { "type": "object", "required": ["id", "url", "statement"] },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["datasets", "hosted", "wanted", "withdrawn", "courses"],
+      "properties": { "datasets": { "type": "integer" }, "hosted": { "type": "integer" }, "wanted": { "type": "integer" }, "withdrawn": { "type": "integer" }, "courses": { "type": "integer" } }
+    },
+    "guide": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "url", "media_type", "description", "stability"],
+        "properties": {
+          "path": { "type": "string", "pattern": "^/api/v1/" },
+          "url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+          "media_type": { "type": "string" },
+          "description": { "type": "string" },
+          "schema": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+          "stability": { "enum": ["stable", "internal"], "description": "internal: may change shape without a new API version (catalog.json, the browser's search payload)." }
+        }
+      }
+    }
+  }
+}

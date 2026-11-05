@@ -164,7 +164,7 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, ski
   };
 
   const summaries = published.map((f) => datasetSummary(f.full));
-  write('api/v1/datasets.json', stable(summaries), { media_type: 'application/json', description: 'All published datasets, summary form' });
+  write('api/v1/datasets.json', stable(summaries), { media_type: 'application/json', description: 'All published datasets, summary form', schema: `${ORIGIN}/api/v1/schema/dataset-summary.schema.json` });
   write(
     'api/v1/datasets.csv',
     toCsv(
@@ -176,7 +176,7 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, ski
         kinds: s.kinds,
         domains: s.domains.map((d) => d.id),
         license: s.license.id,
-        redistribution: s.redistribution,
+        redistribution: s.redistribution.basis,
         latest_version: s.latest_version?.version,
         released: s.latest_version?.released,
         nodes: s.size?.nodes,
@@ -185,7 +185,7 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, ski
         size_approximate: s.size ? String(!!s.size.approximate) : '',
         temporal_start: s.temporal?.start,
         temporal_end: s.temporal?.ongoing ? 'ongoing' : s.temporal?.end,
-        personal_data: s.personal_data,
+        personal_data: s.personal_data.level,
         url: s.url,
         api_url: s.api_url,
       })),
@@ -193,15 +193,15 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, ski
     { media_type: 'text/csv', description: 'All published datasets as CSV (UTF-8, no BOM)' },
   );
   for (const { full } of [...published, ...withdrawn]) {
-    write(`api/v1/datasets/${full.id}.json`, stable(full), { media_type: 'application/json', description: `Dataset record: ${full.id}` });
+    write(`api/v1/datasets/${full.id}.json`, stable(full), { media_type: 'application/json', description: `Dataset record: ${full.id}`, schema: `${ORIGIN}/api/v1/schema/dataset-record.schema.json` });
   }
   for (const { full } of published) {
     for (const alias of full.aliases) {
-      write(`api/v1/datasets/${alias}.json`, stable({ id: alias, status: 'renamed', current_id: full.id, url: full.url, api_url: full.api_url }), { media_type: 'application/json', description: `Former id of ${full.id}` });
+      write(`api/v1/datasets/${alias}.json`, stable({ id: alias, status: 'renamed', current_id: full.id, url: full.url, api_url: full.api_url }), { media_type: 'application/json', description: `Former id of ${full.id}`, schema: `${ORIGIN}/api/v1/schema/dataset-record.schema.json` });
     }
   }
   const courseSummaries = courses.map((c) => courseSummary(c.full));
-  write('api/v1/courses.json', stable(courseSummaries), { media_type: 'application/json', description: 'All courses offered in Taiwan, summary form' });
+  write('api/v1/courses.json', stable(courseSummaries), { media_type: 'application/json', description: 'All courses offered in Taiwan, summary form', schema: `${ORIGIN}/api/v1/schema/course-summary.schema.json` });
   write(
     'api/v1/courses.csv',
     toCsv(
@@ -213,7 +213,7 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, ski
         university: c.university.id,
         department: c.department['zh-Hant'],
         category: c.category.id,
-        relevance: c.relevance,
+        relevance: c.relevance.id,
         level: c.level.id,
         languages: c.languages.map((l) => l.id),
         latest_term: c.latest.term ?? c.latest.start,
@@ -225,14 +225,21 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, ski
     ),
     { media_type: 'text/csv', description: 'All courses as CSV (UTF-8, no BOM)' },
   );
-  for (const { full } of courses) write(`api/v1/courses/${full.id}.json`, stable(full), { media_type: 'application/json', description: `Course record: ${full.id}` });
-  write('api/v1/wanted.json', stable(wanted.map((w) => w.entry)), { media_type: 'application/json', description: 'Wanted datasets (許願池), including ones since published (已收錄)' });
-  write('api/v1/news.json', stable(news.map(({ body_md, ...n }) => ({ ...n, body_md }))), { media_type: 'application/json', description: 'News items, newest first' });
+  for (const { full } of courses) write(`api/v1/courses/${full.id}.json`, stable(full), { media_type: 'application/json', description: `Course record: ${full.id}`, schema: `${ORIGIN}/api/v1/schema/course-record.schema.json` });
+  write('api/v1/wanted.json', stable(wanted.map((w) => w.entry)), { media_type: 'application/json', description: 'Wanted datasets (許願池), including ones since published (已收錄)', schema: `${ORIGIN}/api/v1/schema/wanted-entry.schema.json` });
+  write('api/v1/news.json', stable(news.map(({ body_md, ...n }) => ({ ...n, body_md }))), { media_type: 'application/json', description: 'News items, newest first', schema: `${ORIGIN}/api/v1/schema/news-item.schema.json` });
   write('api/v1/taxonomy.json', stable(taxonomy(vocab)), { media_type: 'application/json', description: 'Every controlled vocabulary with Mandarin and English labels' });
-  write('api/v1/catalog.json', catalogText, { media_type: 'application/json', description: 'The search catalog the browser uses (records, aliases and the fold map)' });
+  write('api/v1/catalog.json', catalogText, { media_type: 'application/json', description: 'Internal: the search payload the browser uses (records, aliases, fold map). Its shape may change without a new API version; use datasets.json and courses.json instead.' });
+  // Response schemas (what the API serves) at /api/v1/schema/; the source-record
+  // schemas (what curators write in catalog/) under /api/v1/schema/source/.
+  const apiSchemaDir = path.join(schemaDir, 'api');
+  for (const f of readdirSync(apiSchemaDir).filter((x) => x.endsWith('.schema.json')).sort()) {
+    copyFileSync(path.join(apiSchemaDir, f), path.join(mkdirP(path.join(out, 'api', 'v1', 'schema')), f));
+    files.push({ path: `/api/v1/schema/${f}`, url: `${ORIGIN}/api/v1/schema/${f}`, media_type: 'application/schema+json', description: `JSON Schema of the API response: ${f.replace('.schema.json', '')}` });
+  }
   for (const f of readdirSync(schemaDir).filter((x) => x.endsWith('.schema.json')).sort()) {
-    copyFileSync(path.join(schemaDir, f), path.join(mkdirP(path.join(out, 'api', 'v1', 'schema')), f));
-    files.push({ path: `/api/v1/schema/${f}`, url: `${ORIGIN}/api/v1/schema/${f}`, media_type: 'application/schema+json', description: `JSON Schema: ${f.replace('.schema.json', '')}` });
+    copyFileSync(path.join(schemaDir, f), path.join(mkdirP(path.join(out, 'api', 'v1', 'schema', 'source')), f));
+    files.push({ path: `/api/v1/schema/source/${f}`, url: `${ORIGIN}/api/v1/schema/source/${f}`, media_type: 'application/schema+json', description: `JSON Schema of the source record in the repository: ${f.replace('.schema.json', '')}` });
   }
 
   const lastUpdated = [...published, ...withdrawn, ...courses].map((x) => x.full.updated).filter(Boolean).sort().at(-1) ?? today;
@@ -250,7 +257,9 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, ski
     },
     counts,
     guide: `${ORIGIN}/llms.txt`,
-    files: files.sort((a, b) => a.path.localeCompare(b.path)),
+    files: files
+      .map((f) => ({ ...f, stability: f.path === '/api/v1/catalog.json' ? 'internal' : 'stable' }))
+      .sort((a, b) => a.path.localeCompare(b.path)),
   };
   write('api/v1/index.json', stable(index));
 

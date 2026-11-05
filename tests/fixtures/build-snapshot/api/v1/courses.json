@@ -22,7 +22,11 @@
       "zh-Hant": "圖論",
       "en": "graph theory"
     },
-    "relevance": "core",
+    "relevance": {
+      "id": "core",
+      "zh-Hant": "核心課程",
+      "en": "core"
+    },
     "level": {
       "id": "master",
       "zh-Hant": "碩士班",

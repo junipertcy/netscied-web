@@ -8,13 +8,14 @@ import addFormats from 'ajv-formats';
 
 export const repoRoot = fileURLToPath(new URL('../../../', import.meta.url));
 export const schemaDir = path.join(repoRoot, 'schemas', 'v1');
-const BASE = 'https://netscied.tw/api/v1/schema/';
+const BASE = 'https://netscied.tw/api/v1/schema/source/';
 
 let cached;
 export function loadSchemas() {
   if (cached) return cached;
   const ajv = new Ajv2020({ allErrors: true, strict: true, strictTypes: false, strictRequired: false, allowUnionTypes: true });
   addFormats(ajv);
+  // Only the source-record schemas (the response schemas are in schemas/v1/api/).
   const files = readdirSync(schemaDir).filter((f) => f.endsWith('.schema.json'));
   for (const f of files) ajv.addSchema(JSON.parse(readFileSync(path.join(schemaDir, f), 'utf8')));
   const get = (name) => {

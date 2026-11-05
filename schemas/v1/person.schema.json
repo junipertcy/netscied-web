@@ -1,33 +1,66 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://netscied.tw/api/v1/schema/person.schema.json",
-  "title": "netscied.tw public person record (catalog/people/<id>.yaml)",
+  "$id": "https://netscied.tw/api/v1/schema/source/person.schema.json",
+  "title": "Source record: netscied.tw public person record (catalog/people/<id>.yaml)",
   "description": "Allowlist only (researcher-registry spec). A person appears here only after recorded consent, and only the fields listed in `display` are shown. Contact details, outreach and permissions live in the private log, never here.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "name", "consented_on", "display"],
+  "required": [
+    "id",
+    "name",
+    "consented_on",
+    "display"
+  ],
   "properties": {
-    "id": { "$ref": "common.schema.json#/$defs/personId" },
-    "name": { "$ref": "common.schema.json#/$defs/textAny" },
+    "id": {
+      "$ref": "common.schema.json#/$defs/personId"
+    },
+    "name": {
+      "$ref": "common.schema.json#/$defs/textAny"
+    },
     "affiliation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "properties": {
-        "name": { "$ref": "common.schema.json#/$defs/textAny" },
-        "ror": { "type": "string", "pattern": "^https://ror\\.org/0[a-z0-9]{8}$" }
+        "name": {
+          "$ref": "common.schema.json#/$defs/textAny"
+        },
+        "ror": {
+          "type": "string",
+          "pattern": "^https://ror\\.org/0[a-z0-9]{8}$"
+        }
       }
     },
-    "orcid": { "type": "string", "pattern": "^https://orcid\\.org/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$" },
-    "homepage": { "$ref": "common.schema.json#/$defs/httpsUrl" },
-    "consented_on": { "$ref": "common.schema.json#/$defs/date" },
+    "orcid": {
+      "type": "string",
+      "pattern": "^https://orcid\\.org/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$"
+    },
+    "homepage": {
+      "$ref": "common.schema.json#/$defs/httpsUrl"
+    },
+    "consented_on": {
+      "$ref": "common.schema.json#/$defs/date"
+    },
     "display": {
       "description": "The fields this person agreed to display.",
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
-      "items": { "enum": ["name", "affiliation", "orcid", "homepage"] },
-      "contains": { "const": "name" }
+      "items": {
+        "enum": [
+          "name",
+          "affiliation",
+          "orcid",
+          "homepage"
+        ]
+      },
+      "contains": {
+        "const": "name"
+      }
     }
-  }
+  },
+  "$comment": "Describes the human-edited source files in the repository (catalog/, content/), not the API responses; those are described by /api/v1/schema/*-record.schema.json and friends."
 }

@@ -63,16 +63,33 @@
         "zh-Hant": "政府資料開放授權條款－第1版",
         "en": "Taiwan Open Government Data License, version 1.0"
       },
+      "url": "https://data.gov.tw/license",
       "class": "permissive"
     },
-    "redistribution": "license-permits",
+    "redistribution": {
+      "basis": "license-permits",
+      "label": {
+        "id": "license-permits",
+        "zh-Hant": "授權允許本站轉載",
+        "en": "the license permits redistribution"
+      },
+      "may_redistribute": true
+    },
     "hosted": true,
     "latest_version": {
       "version": "1.0.0",
       "released": "2026-11-05",
       "doi": null
     },
-    "personal_data": "none",
+    "personal_data": {
+      "level": "none",
+      "label": {
+        "id": "none",
+        "zh-Hant": "不含個人資料",
+        "en": "no personal data"
+      },
+      "reviewed_on": "2026-11-01"
+    },
     "added": "2026-11-01",
     "updated": "2026-11-01"
   },
@@ -134,12 +151,29 @@
         "zh-Hant": "未載明授權",
         "en": "No license stated"
       },
+      "url": null,
       "class": "link-only"
     },
-    "redistribution": "link-only",
+    "redistribution": {
+      "basis": "link-only",
+      "label": {
+        "id": "link-only",
+        "zh-Hant": "本站不轉載，僅提供連結",
+        "en": "link only; not redistributed here"
+      },
+      "may_redistribute": false
+    },
     "hosted": false,
     "latest_version": null,
-    "personal_data": "none",
+    "personal_data": {
+      "level": "none",
+      "label": {
+        "id": "none",
+        "zh-Hant": "不含個人資料",
+        "en": "no personal data"
+      },
+      "reviewed_on": "2026-11-02"
+    },
     "added": "2026-11-02",
     "updated": "2026-11-02"
   }

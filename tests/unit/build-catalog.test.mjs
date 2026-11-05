@@ -146,9 +146,12 @@ test('taxonomy.json carries every controlled vocabulary with Mandarin and Englis
   assert.equal(t.kinds.find((k) => k.id === 'hypergraph')['zh-Hant'], '超圖');
 });
 
-test('the JSON Schemas are published under /api/v1/schema/', () => {
-  for (const name of ['dataset', 'version', 'course', 'person', 'news', 'recipe', 'common', 'vocab']) {
+test('the response schemas are published under /api/v1/schema/, the source-record schemas under /api/v1/schema/source/', () => {
+  for (const name of ['dataset-record', 'dataset-summary', 'course-record', 'course-summary', 'wanted-entry', 'news-item', 'index', 'api-common']) {
     assert.ok(existsSync(path.join(out, 'api', 'v1', 'schema', `${name}.schema.json`)), name);
+  }
+  for (const name of ['dataset', 'version', 'course', 'person', 'news', 'recipe', 'common', 'vocab']) {
+    assert.ok(existsSync(path.join(out, 'api', 'v1', 'schema', 'source', `${name}.schema.json`)), name);
   }
 });
 

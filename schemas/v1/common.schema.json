@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://netscied.tw/api/v1/schema/common.schema.json",
-  "title": "Shared definitions for netscied.tw records",
+  "$id": "https://netscied.tw/api/v1/schema/source/common.schema.json",
+  "title": "Source record: Shared definitions for netscied.tw records",
   "$defs": {
     "slug": {
       "description": "A permanent identifier: lowercase ASCII kebab-case, 3 to 64 characters.",
@@ -53,10 +53,18 @@
       "description": "Text in Traditional Mandarin, with an optional English version.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["zh-Hant"],
+      "required": [
+        "zh-Hant"
+      ],
       "properties": {
-        "zh-Hant": { "type": "string", "minLength": 1 },
-        "en": { "type": "string", "minLength": 1 }
+        "zh-Hant": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "textAny": {
@@ -65,20 +73,37 @@
       "additionalProperties": false,
       "minProperties": 1,
       "properties": {
-        "zh-Hant": { "type": "string", "minLength": 1 },
-        "en": { "type": "string", "minLength": 1 }
+        "zh-Hant": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "evidence": {
       "description": "Where a fact was checked, and when.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["url", "checked_on"],
+      "required": [
+        "url",
+        "checked_on"
+      ],
       "properties": {
-        "url": { "$ref": "#/$defs/url" },
-        "checked_on": { "$ref": "#/$defs/date" },
-        "quote": { "type": "string", "minLength": 1 }
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "checked_on": {
+          "$ref": "#/$defs/date"
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     }
-  }
+  },
+  "$comment": "Describes the human-edited source files in the repository (catalog/, content/), not the API responses; those are described by /api/v1/schema/*-record.schema.json and friends."
 }

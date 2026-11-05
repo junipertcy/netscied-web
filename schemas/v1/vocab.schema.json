@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://netscied.tw/api/v1/schema/vocab.schema.json",
-  "title": "netscied.tw controlled vocabularies (catalog/vocab/*.yaml)",
+  "$id": "https://netscied.tw/api/v1/schema/source/vocab.schema.json",
+  "title": "Source record: netscied.tw controlled vocabularies (catalog/vocab/*.yaml)",
   "$defs": {
     "label": {
       "type": "object",
@@ -324,5 +324,6 @@
         }
       }
     }
-  }
+  },
+  "$comment": "Describes the human-edited source files in the repository (catalog/, content/), not the API responses; those are described by /api/v1/schema/*-record.schema.json and friends."
 }

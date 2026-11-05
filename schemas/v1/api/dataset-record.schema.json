@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/dataset-record.schema.json",
+  "title": "A dataset record at /api/v1/datasets/<id>.json",
+  "description": "status published: the full record. status withdrawn: a tombstone with the date and reason and no files. status renamed: the id was changed; current_id and url point to the record.",
+  "oneOf": [{ "$ref": "#/$defs/published" }, { "$ref": "#/$defs/withdrawn" }, { "$ref": "#/$defs/renamed" }],
+  "$defs": {
+    "published": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "url", "api_url", "markdown_url", "title", "description", "summary", "keywords", "semantics", "structure", "structure_badges", "structure_text", "size", "coverage", "domains", "tags", "taiwan_relevance", "license", "redistribution", "personal_data", "hosted", "latest_version", "versions", "access", "provenance", "creators", "credits", "references", "citation", "attribution", "related", "aliases", "added", "published", "updated"],
+      "properties": {
+        "id": { "type": "string" },
+        "status": { "const": "published" },
+        "url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+        "api_url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+        "markdown_url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+        "title": { "$ref": "api-common.schema.json#/$defs/title" },
+        "description": { "$ref": "api-common.schema.json#/$defs/text" },
+        "summary": { "$ref": "api-common.schema.json#/$defs/text" },
+        "keywords": { "type": "array", "items": { "type": "string" } },
+        "semantics": { "type": "object", "required": ["node", "link"], "properties": { "node": { "$ref": "api-common.schema.json#/$defs/text" }, "link": { "$ref": "api-common.schema.json#/$defs/text" } }, "additionalProperties": false },
+        "structure": { "type": "object", "required": ["kinds"], "description": "As in the source record: kinds plus typed properties (directed, weighted, partitions, layers, temporal, spatial …)." },
+        "structure_badges": { "type": "array", "items": { "$ref": "api-common.schema.json#/$defs/label" } },
+        "structure_text": { "$ref": "api-common.schema.json#/$defs/text" },
+        "size": { "$ref": "api-common.schema.json#/$defs/size" },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["temporal", "spatial"],
+          "properties": { "temporal": { "$ref": "api-common.schema.json#/$defs/temporal" }, "spatial": { "$ref": "api-common.schema.json#/$defs/text" } }
+        },
+        "domains": { "type": "array", "items": { "$ref": "api-common.schema.json#/$defs/label" } },
+        "tags": { "type": "array", "items": { "$ref": "api-common.schema.json#/$defs/label" } },
+        "taiwan_relevance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["basis", "justification"],
+          "properties": { "basis": { "type": "array", "items": { "$ref": "api-common.schema.json#/$defs/label" } }, "justification": { "type": "string" }, "subset_note": { "$ref": "api-common.schema.json#/$defs/text" } }
+        },
+        "license": { "$ref": "api-common.schema.json#/$defs/license" },
+        "redistribution": { "$ref": "api-common.schema.json#/$defs/redistribution" },
+        "personal_data": { "$ref": "api-common.schema.json#/$defs/personalData" },
+        "hosted": { "type": "boolean" },
+        "latest_version": { "anyOf": [{ "type": "null" }, { "$ref": "api-common.schema.json#/$defs/version" }] },
+        "versions": { "type": "array", "items": { "$ref": "api-common.schema.json#/$defs/version" } },
+        "access": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "url"],
+            "properties": { "label": { "$ref": "api-common.schema.json#/$defs/text" }, "url": { "$ref": "api-common.schema.json#/$defs/url" }, "format": { "type": "string" }, "format_label": { "anyOf": [{ "type": "null" }, { "$ref": "api-common.schema.json#/$defs/label" }] }, "controlled_access": { "type": "boolean" } },
+            "additionalProperties": false
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source"],
+          "properties": {
+            "source": { "type": "object", "required": ["name", "url"] },
+            "method": { "$ref": "api-common.schema.json#/$defs/text" },
+            "checked_on": { "type": ["string", "null"] },
+            "retrieved_at": { "type": ["string", "null"], "description": "Date the upstream snapshot of the latest version was retrieved." }
+          }
+        },
+        "creators": { "type": "array", "items": { "type": "object", "required": ["organization", "role"] } },
+        "credits": {
+          "description": "People who consented to be credited, with only the fields they agreed to show.",
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": false, "required": ["role", "name"], "properties": { "role": { "type": "string" }, "name": { "$ref": "api-common.schema.json#/$defs/text" }, "affiliation": { "type": "object" }, "orcid": { "type": "string" }, "homepage": { "type": "string" } } }
+        },
+        "references": { "type": "array", "items": { "type": "object", "required": ["citation"] } },
+        "citation": { "type": "object", "additionalProperties": false, "required": ["text", "bibtex", "url"], "properties": { "text": { "type": "string" }, "bibtex": { "type": "string" }, "url": { "type": "string" } } },
+        "attribution": { "type": "string" },
+        "related": { "type": "object" },
+        "aliases": { "type": "array", "items": { "type": "string" } },
+        "added": { "$ref": "api-common.schema.json#/$defs/date" },
+        "published": { "$ref": "api-common.schema.json#/$defs/date" },
+        "updated": { "$ref": "api-common.schema.json#/$defs/date" },
+        "wanted": { "type": "object", "required": ["status", "requests"] }
+      }
+    },
+    "withdrawn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "url", "api_url", "title", "withdrawn", "aliases", "updated"],
+      "properties": {
+        "id": { "type": "string" },
+        "status": { "const": "withdrawn" },
+        "url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+        "api_url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+        "title": { "$ref": "api-common.schema.json#/$defs/title" },
+        "withdrawn": { "type": "object", "additionalProperties": false, "required": ["date", "reason"], "properties": { "date": { "$ref": "api-common.schema.json#/$defs/date" }, "reason": { "$ref": "api-common.schema.json#/$defs/text" } } },
+        "aliases": { "type": "array", "items": { "type": "string" } },
+        "updated": { "$ref": "api-common.schema.json#/$defs/date" }
+      }
+    },
+    "renamed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "current_id", "url", "api_url"],
+      "properties": {
+        "id": { "type": "string", "description": "The former id." },
+        "status": { "const": "renamed" },
+        "current_id": { "type": "string" },
+        "url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+        "api_url": { "$ref": "api-common.schema.json#/$defs/siteUrl" }
+      }
+    }
+  }
+}
