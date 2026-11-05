@@ -92,7 +92,7 @@ YAML records in `catalog/` and Markdown news in `content/` are the source of tru
    - The plan's mandatory WAF web ACL gets one rate-based rule on `/data/*`, and must be checked so it does not challenge the crawlers agent-access promises to allow.
    - A Budgets alert catches storage creep.
 5. **Per-file ceiling:** 100 MB per hosted file on the Free plan, which leaves room before one popular file exhausts the 100 GB allowance shared with the HTML. On Pro the ceiling is 2 GB. Larger files wait for the archive change and are served from Zenodo. Large raw sources (for example monthly MRT OD at about 300 MB) are hosted as aggregates.
-6. **Lifecycle:** expire noncurrent versions after 30 days and CDN logs after 90 days.
+6. **Lifecycle:** CDN logs, if enabled, expire after 90 days. Noncurrent object versions are kept (owner decision A8, 2026-11-05): the bucket holds 118,026 of them (1.53 GB, back to 2017), they cost about US$0.04 a month, and the new site adds few, because data versions never overwrite. Revisit if storage grows.
 7. **Logs:** access logs are a Pro-and-above feature (verified on the AWS flat-rate docs, 2026-11-04), so the Free plan has none. On Pro, logs are kept 90 days and disclosed. Because search is a GET navigation, `/search/?q=…` loads in the logs show what people look for. Zero-result status is computed in the browser, so the D4 semantic-search trigger replays logged queries offline through the same search core; it can only fire after Pro. Custom error responses are not among the plan's unsupported features; task 2.6 confirms them before the 404 cut-over.
 
 **Cost model summary** (full model, formulas and assumptions in research.md § Storage and cost; USD/month):
@@ -381,6 +381,14 @@ The owner chose the architect's recommended option on every question.
 | # | Question | Decision | Where it is reflected |
 |---|---|---|---|
 | A6 | Small cells in the Taipei Metro monthly aggregate (274 of 153,586 cells below 3 trips, 1,073 below 10) | **Keep them.** Cells count trips, not individuals, carry no traveller attributes, and the source publishes finer daily and hourly counts under OGDL; the record states why they are not suppressed. The small-cell rule applies to aggregates that count individuals. | `taipei-metro-od-monthly` personal-data note; content-governance spec, scenario "Counts of events, not individuals"; task 12.4 |
+
+### Answers of 2026-11-05 during Phase 0a
+
+| # | Question | Decision | Where it is reflected |
+|---|---|---|---|
+| A7 | The bucket also serves the owner's older projects: `/greenpeace/jp/` (the coal site-by-site map demo, with its `node_modules` and `.git`), `/data_taipei/` and `/sensoro/`. What should CloudFront serve once it reads through OAC? | **Keep as today.** Serve exactly the files that were public before the bucket was closed, and none of the 281 that were not. | `infra/s3/bucket-policy.template.json`, `infra/rollback/private-objects.txt`; task 1.2 |
+| A8 | A lifecycle rule expiring noncurrent versions after 30 days would delete 118,026 old versions (1.53 GB, back to 2017) | **Keep all history**; no noncurrent-version rule for now. | Phase 0a item 6 above; task 1.3 |
+| A9 | Budget alert recipients | **Leave as is.** The existing $5/month "My Monthly Cost Budget" already sends actual (85%, 100%) and forecast (100%) alerts to the owner's email. | task 1.3; site-hosting spec, scenario "Cost alert" |
 
 ## Open items for the owner
 
