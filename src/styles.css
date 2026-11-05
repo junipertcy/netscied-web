@@ -31,14 +31,15 @@ body {
   line-height: 1.75;
 }
 
+/* Links are underlined, so they are distinguishable without colour (WCAG 1.4.1). */
 a {
   color: var(--link);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 a:hover {
   color: var(--link-hover);
-  text-decoration: underline;
 }
 
 h1, h2, h3, h4 {

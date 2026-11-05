@@ -6,9 +6,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build && node scripts/build/sitemap.mjs",
-    "test": "pnpm build && pnpm test:only",
+    "test": "pnpm build && pnpm test:only && pnpm test:e2e",
     "test:only": "node --test \"tests/**/*.test.mjs\"",
-    "edge:build": "node scripts/edge/build-function.mjs"
+    "edge:build": "node scripts/edge/build-function.mjs",
+    "test:e2e": "playwright test",
+    "preview": "node scripts/preview.mjs"
   },
   "private": true,
   "packageManager": "pnpm@11.21.0",
@@ -23,6 +25,7 @@
     "@angular/platform-server": "22.2.4",
     "@angular/router": "22.2.4",
     "@angular/ssr": "22.2.5",
+    "minisearch": "7.2.0",
     "rxjs": "7.8.2",
     "tslib": "2.9.1"
   },
@@ -30,8 +33,16 @@
     "@angular/build": "22.2.5",
     "@angular/cli": "22.2.5",
     "@angular/compiler-cli": "22.2.4",
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
     "@types/node": "26.6.6",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "linkedom": "0.18.13",
+    "marked": "18.1.1",
+    "opencc-data": "1.4.2",
     "robots-parser": "3.0.1",
+    "turndown": "7.2.4",
     "typescript": "6.0.3",
     "yaml": "2.9.1"
   }
