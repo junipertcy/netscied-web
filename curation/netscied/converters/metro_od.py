@@ -20,6 +20,12 @@ from ..formats import Graph
 from ..version import Product
 
 HEADER = ["日期", "時段", "進站", "出站", "人次"]
+OVERNIGHT_END = 6  # service hours start again at 06:00
+
+
+def _next_month_first(month: str) -> str:
+    y, m = (int(x) for x in month.split("-"))
+    return f"{y + (m == 12)}-{m % 12 + 1:02d}-01"
 SOURCE = re.compile(r"^od-(\d{4})-(\d{2})$")
 
 
@@ -29,6 +35,7 @@ def convert(recipe: dict, files: dict, options: dict) -> Product:
     entries: set[str] = set()
     exits: set[str] = set()
     raw: set[str] = set()
+    overnight: dict[tuple[str, str], int] = defaultdict(int)
     months = sorted((f"{m.group(1)}-{m.group(2)}", sid) for sid in files if (m := SOURCE.match(sid)))
     if not months:
         raise ValueError("no monthly sources (od-YYYY-MM) to convert")
@@ -42,9 +49,15 @@ def convert(recipe: dict, files: dict, options: dict) -> Product:
                 for row in reader:
                     if not row:
                         continue
-                    date, _hour, a, b, n = row
+                    date, hour, a, b, n = row
                     if date[:7] != month:
-                        raise ValueError(f"{path.name}: a row dated {date} in the file for {month}")
+                        # All-night service (for example New Year's Eve) is filed under the
+                        # operating day: the first morning of the next month, before 06:00,
+                        # belongs to this file's month and is not repeated in the next file.
+                        if date == _next_month_first(month) and int(hour) < OVERNIGHT_END:
+                            overnight[(month, date)] += int(n)
+                        else:
+                            raise ValueError(f"{path.name}: a row dated {date} {hour}:00 in the file for {month}")
                     raw.update((a, b))
                     a, b = aliases.get(a, a), aliases.get(b, b)
                     entries.add(a)
@@ -66,4 +79,11 @@ def convert(recipe: dict, files: dict, options: dict) -> Product:
             "en": f"{len(g.nodes)} station names are kept as the source gives them; {len(entry_only)} appear only as entries and {len(exit_only)} only as exits (node attribute appears_as).",
         }
     ]
+    for (month, date), n in sorted(overnight.items()):
+        notes.append(
+            {
+                "zh-Hant": f"{month} 的檔案含 {date} 凌晨（6 時前）的通宵營運旅次 {n:,} 人次，依原始檔計入 {month}。",
+                "en": f"The {month} file carries {n:,} trips from {date} before 06:00 (all-night service); they count for {month}, as the source files them.",
+            }
+        )
     return Product(kind="graph", graph=g, weight="trips", notes=notes)

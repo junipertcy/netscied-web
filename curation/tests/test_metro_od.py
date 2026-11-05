@@ -72,8 +72,21 @@ def test_station_aliases_from_the_recipe_merge_names(files):
 
 
 def test_a_row_from_another_month_fails(files, tmp_path):
-    write(files["od-2026-08"][0], [("2026-09-01", "00", "松山機場", "台北車站", 1)])
+    write(files["od-2026-08"][0], [("2026-09-15", "08", "松山機場", "台北車站", 1)])
     with pytest.raises(ValueError, match="2026-08"):
+        convert(RECIPE, files)
+
+
+def test_overnight_rows_dated_the_next_morning_count_for_the_files_month_and_are_noted(files):
+    # The December file of 2025 carries 2026-01-01 02:00–05:59, the New Year's Eve
+    # all-night service; the January file does not repeat those hours.
+    write(files["od-2026-08"][0], [("2026-08-31", "23", "松山機場", "台北車站", 7), ("2026-09-01", "02", "松山機場", "台北車站", 5)])
+    p = convert(RECIPE, files)
+    aug = [a["trips"] for s, t, a in p.graph.edges if a["month"] == "2026-08"]
+    assert aug == [12]
+    assert any("2026-09-01" in n["zh-Hant"] and "2026-08" in n["zh-Hant"] for n in p.notes)
+    write(files["od-2026-08"][0], [("2026-09-01", "06", "松山機場", "台北車站", 5)])
+    with pytest.raises(ValueError, match="2026-09-01"):
         convert(RECIPE, files)
 
 
