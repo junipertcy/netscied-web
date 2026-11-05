@@ -16,6 +16,11 @@ is in account "<ACCOUNT_ID>" (see `aws sts get-caller-identity`).
 | 2026-11-05 | Created OAC `E12UCPQWOI4L4Q` and added origin `S3-netscied-data` with cache behavior `/data/*`: CachingOptimized, managed SimpleCORS (`Access-Control-Allow-Origin: *`). | Remove the behavior and the origin from the distribution. |
 | 2026-11-05 | Created IAM role `netscied-data-publish`, trusted only by `repo:junipertcy/netscied-web:environment:publish` through the account's existing GitHub OIDC provider. It may PutObject and GetObject on `netscied-data/data/*` and ListBucket under `data/`; it cannot delete (`iam/`). | `aws iam delete-role-policy` then `delete-role`. |
 | 2026-11-05 | Created GitHub environment `publish`: the owner is the required reviewer, only branch `main` may deploy to it; secret `NETSCIED_PUBLISH_ROLE_ARN`, variable `NETSCIED_DATA_BUCKET=netscied-data`. | Delete the environment in the repository settings. |
+| 2026-11-05 | Deployed the relaunch build from `main` (27393f6) with `scripts/deploy.mjs` (tasks 2.5, 10.2). 171 new keys; of 11 overwritten keys only `index.html` changed content. The previous version ids are in `rollback/local/predeploy-versions.tsv`. | Copy the previous `index.html` version back (`aws s3api copy-object --copy-source "netscied.tw/index.html?versionId=..."`). |
+| 2026-11-05 | Published CloudFront Function `netscied-viewer-request` (cloudfront-js-2.0, from `cloudfront/viewer-request.js`) on the default, `/api/*` and `/data/*` behaviors. It was tested first in the function runtime: 14 events, then 20 after the legacy-folder fix. | Remove the function associations. |
+| 2026-11-05 | Error responses: 403 and 404 → `/404/index.html` with status 404 (error caching 60 s), replacing 403 → `/index.html` 200. | Restore `rollback/local/cloudfront-E1T4HFQSMO2DUV.pre-golive.json`'s `CustomErrorResponses`. |
+| 2026-11-05 | Added cache behavior `/api/*` (site origin, CachingOptimized, managed SimpleCORS), as design D2 planned. | Remove the behavior. |
+| 2026-11-05 | The function passes `/greenpeace/`, `/data_taipei/` and `/sensoro/` through untouched (owner decision A7). The first published version had added a slash to their 2,831 extensionless files. | — |
 
 After every step, 25 URLs (the home page, the legacy paths, the old project demos
 and the files kept private) answered byte-identically to the snapshot taken
