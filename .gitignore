@@ -58,3 +58,6 @@ deploy.sh
 /curation/.venv/
 __pycache__/
 .pytest_cache/
+
+# Unredacted AWS config backups (account id); kept local only
+infra/rollback/local/

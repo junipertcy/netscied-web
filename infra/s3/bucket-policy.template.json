@@ -1,0 +1,99 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowCloudFrontRead",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "cloudfront.amazonaws.com"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::netscied.tw/*",
+      "Condition": {
+        "StringEquals": {
+          "AWS:SourceArn": "arn:aws:cloudfront::<ACCOUNT_ID>:distribution/E1T4HFQSMO2DUV"
+        }
+      }
+    },
+    {
+      "Sid": "KeepLegacyPrivateFilesPrivate",
+      "Effect": "Deny",
+      "Principal": {
+        "Service": "cloudfront.amazonaws.com"
+      },
+      "Action": "s3:GetObject",
+      "Resource": [
+        "arn:aws:s3:::netscied.tw/.git/*",
+        "arn:aws:s3:::netscied.tw/.idea/*",
+        "arn:aws:s3:::netscied.tw/e2e/*",
+        "arn:aws:s3:::netscied.tw/uploads/*",
+        "arn:aws:s3:::netscied.tw/.angular-cli.json",
+        "arn:aws:s3:::netscied.tw/.editorconfig",
+        "arn:aws:s3:::netscied.tw/.gitignore",
+        "arn:aws:s3:::netscied.tw/README.md",
+        "arn:aws:s3:::netscied.tw/assets/",
+        "arn:aws:s3:::netscied.tw/assets/img/",
+        "arn:aws:s3:::netscied.tw/greenpeace/",
+        "arn:aws:s3:::netscied.tw/inline.31e1fb380eb7cf3d75b1.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.0854f8ea7c4de40e0dc4.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.0918e12c15c003ae9e9c.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.16dfdcf9b52192ed2de4.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.1817a033e32f489563c2.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.2b6f52bee7c802751b34.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.3266f232b395dc29ef72.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.327b6e799a793f0f68ab.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.356e81d3426656d15b2d.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.368938575daabe98d992.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.3e652ca8cd1beff7c8a3.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.405dae9a22daef0e8525.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.4bb1a47b1c4c727371bd.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.4cd9bc4cda25ea911a4c.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.4fa7156365ae7dbc91cc.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.5332336482435923c6e9.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.59cb2b6d40e03690bda0.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.5b12ab0560000d0d8feb.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.5f882ceae622961df3be.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.6a30ad36ec0eab6f9ce1.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.72fc0479787e80ca2ed3.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.7554e9e7d934c23081ae.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.75760e0827521123953e.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.7b6c0dc7ea0d6a9c1b38.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.7d6ee7dd81737d13c30c.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.89fa3881632744a0f4e1.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.8a3abef5249833f42a28.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.8f4ac9ed7fdaf8d38d3a.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.8fa6d65fa0665c590f06.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.908577a36de95144175d.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.972d55393e9d049de1df.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.9d9b9f7c1444c9d36681.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.9ddffbe2b1a25e088e87.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.a309203d7d1df91bd673.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.a48fbff99e72e317bd6b.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.a619a1c5db89b1b461da.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.a7ace2686a93f490aed4.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.a91f387a4d06402bfedf.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.a9deacfacb53d876d9e4.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.b07efcd7833c1274e365.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.be2ec043e128a8745c91.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.c2737646c3f6a45fb4c4.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.c4bb2b4a7ff19a33cb68.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.cad4fdc906d6ebffa824.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.d57dad68af3cc8c8f7b1.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.de1129a4183255825bc0.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.e4aefaff33723c5cd6c4.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.e5384a663d10a59d84f8.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.e7bd8c7b240469b7eb4f.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.e96e2ba5fcb8fc84e23a.bundle.js",
+        "arn:aws:s3:::netscied.tw/main.fe30ec505b73af9a8ef1.bundle.js",
+        "arn:aws:s3:::netscied.tw/polyfills.099351152ea1d7f1c280.bundle.js",
+        "arn:aws:s3:::netscied.tw/polyfills.425c57ecb6af9aee67b7.bundle.js",
+        "arn:aws:s3:::netscied.tw/polyfills.b25baed3be79a9179d5a.bundle.js",
+        "arn:aws:s3:::netscied.tw/polyfills.b50781ceaaf9ac72d61f.bundle.js",
+        "arn:aws:s3:::netscied.tw/styles.ac89bfdd6de82636b768.bundle.css",
+        "arn:aws:s3:::netscied.tw/vendor.1416269b249429413f4c.bundle.js",
+        "arn:aws:s3:::netscied.tw/vendor.28a655677adf9443886f.bundle.js",
+        "arn:aws:s3:::netscied.tw/vendor.dc3c56a020717e200773.bundle.js"
+      ]
+    }
+  ]
+}
