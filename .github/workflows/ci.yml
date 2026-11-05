@@ -11,9 +11,12 @@ on:
 permissions:
   contents: read
 
+# Superseded pull-request runs are cancelled; push runs never are, because the
+# next push compares manifests against github.event.before, which a cancelled
+# run would have left unchecked.
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   test:

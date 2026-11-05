@@ -89,3 +89,22 @@ test('task 8.7: the health workflow runs monthly, may only read the repo and wri
   assert.match(issue[0].if, /findings/);
   assert.doesNotMatch(text, /git push|git commit|gh pr/);
 });
+
+test('final review W4: CI cancels superseded runs only on pull requests, never on a push to main', () => {
+  const wf = parse(readFileSync(path.join(repoRoot, '.github', 'workflows', 'ci.yml'), 'utf8'));
+  // A cancelled push run would let the next push compare against a commit whose
+  // manifest edits were never checked (the base is github.event.before).
+  assert.equal(wf.concurrency['cancel-in-progress'], "${{ github.event_name == 'pull_request' }}");
+});
+
+test('final review W2: the monthly deploy receives the site-check stamp with the build it stamps', () => {
+  const wf = parse(readFileSync(path.join(repoRoot, '.github', 'workflows', 'monthly.yml'), 'utf8'));
+  const upload = wf.jobs.build.steps.find((s) => /upload-artifact/.test(s.uses ?? ''));
+  const paths = String(upload.with.path).split('\n').map((p) => p.trim()).filter(Boolean);
+  assert.ok(paths.includes('dist/netscied/browser/') && paths.includes('dist/netscied/site-check.json'), paths.join(' '));
+  const download = wf.jobs.deploy.steps.find((s) => /download-artifact/.test(s.uses ?? ''));
+  // upload-artifact roots several paths at their common ancestor, dist/netscied/.
+  assert.equal(download.with.path, 'dist/netscied/');
+  const deployStep = wf.jobs.deploy.steps.findIndex((s) => /scripts\/deploy\.mjs/.test(s.run ?? ''));
+  assert.ok(deployStep > wf.jobs.deploy.steps.indexOf(download));
+});
