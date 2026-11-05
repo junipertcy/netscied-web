@@ -148,3 +148,21 @@ def test_withdrawn_versions_are_not_rehashed(tmp_path, site):
     doc["withdrawn"] = {"date": "2026-11-20", "reason": {"zh-Hant": "下架"}}
     m.write_text(json.dumps(doc), encoding="utf-8")
     assert not [f for f in run(root, site).findings if f.kind == "published-file"]
+
+
+def test_an_api_source_is_checked_by_its_first_page_against_the_published_original(tmp_path, site):
+    root = catalog(tmp_path, site)
+    page = b'{"total": 1, "bills": [1]}'
+    recipe = {"dataset": "d1", "version": "1.0.0", "sources": [{"id": "bills", "method": "api", "url": site.base + "/api/bills", "params": {"term": 10}, "pagination": {"page_param": "page", "size_param": "limit", "size": 1000}, "landing_page": site.base + "/landing"}]}
+    (root / "curation" / "recipes" / "d1.yaml").write_text(yaml.safe_dump(recipe), encoding="utf-8")
+    m = root / "catalog" / "versions" / "d1" / "1.0.0.json"
+    doc = json.loads(m.read_text(encoding="utf-8"))
+    doc["files"].append({"path": "original/bills/page-0001.json", "url": "https://netscied.tw/data/d1/1.0.0/original/bills/page-0001.json", "bytes": len(page), "sha256": sha(page), "media_type": "application/json", "format": "json", "role": "original"})
+    m.write_text(json.dumps(doc), encoding="utf-8")
+    site.routes["/data/d1/1.0.0/original/bills/page-0001.json"] = (200, {}, page)
+    site.routes["/api/bills?term=10&page=1&limit=1000"] = (200, {}, page)
+    assert [f for f in run(root, site).findings if f.kind == "upstream"] == []
+    site.routes["/api/bills?term=10&page=1&limit=1000"] = (200, {}, b'{"total": 2, "bills": [1, 2]}')
+    found = [f for f in run(root, site).findings if f.kind == "upstream"]
+    assert [f.subject for f in found] == ["d1 1.0.0 來源 bills"]
+    assert "第 1 頁" in found[0].detail
