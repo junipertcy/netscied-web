@@ -86,4 +86,4 @@ def convert(recipe: dict, files: dict, options: dict) -> Product:
                 "en": f"The {month} file carries {n:,} trips from {date} before 06:00 (all-night service); they count for {month}, as the source files them.",
             }
         )
-    return Product(kind="graph", graph=g, weight="trips", notes=notes)
+    return Product(kind="graph", graph=g, weight="trips", notes=notes, snapshot="month")

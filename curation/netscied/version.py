@@ -63,6 +63,9 @@ class Product:
     # Data-driven findings of the conversion (for example how many names were
     # left out), added to the version's change note as {"zh-Hant": ..., "en": ...}.
     notes: list = field(default_factory=list)
+    # The edge attribute naming the snapshot of a temporal snapshot series (for
+    # example "month"): a pair then repeats once per snapshot by design.
+    snapshot: str | None = None
 
 
 def _formats() -> dict:
@@ -101,9 +104,23 @@ def _n(count: int, one: str, many: str) -> str:
     return f"{count} {one if count == 1 else many}"
 
 
-def _quality_notes(stats: dict) -> tuple[list[str], list[str]]:
+def _quality_notes(stats: dict, product: "Product | None" = None) -> tuple[list[str], list[str]]:
     zh, en = [], []
     g = stats.get("graph")
+    if g and product is not None and product.snapshot and product.graph is not None:
+        key = product.snapshot
+        graph = product.graph
+        snaps = {a.get(key) for _, _, a in graph.edges}
+        within = len(graph.edges) - len({(a.get(key), s, t) if graph.directed else (a.get(key), *sorted((s, t))) for s, t, a in graph.edges})
+        zh.append(
+            f"共 {len(snaps)} 個 {key} 快照：每個起訖配對在每個快照中最多一條連結，跨快照的配對共 {g['unique_pairs']} 組"
+            + ("，同一快照內沒有重複的配對。" if within == 0 else f"，同一快照內有 {within} 組重複配對，保留為多重邊。")
+        )
+        en.append(
+            f"{len(snaps)} snapshots by {key}: a pair has at most one link per snapshot, {g['unique_pairs']} distinct pairs across snapshots"
+            + ("; no pair repeats within a snapshot." if within == 0 else f"; {within} pairs repeat within a snapshot and are kept as multi-edges.")
+        )
+        g = {k: v for k, v in g.items() if k != "repeated_pairs"}
     if g:
         if g.get("repeated_pairs"):
             zh.append(f"資料品質：有 {g['repeated_pairs']} 組節點配對重複出現（共 {g['edges']} 條連結、{g['unique_pairs']} 組不同配對），保留為多重邊，未合併。")
@@ -282,7 +299,7 @@ def write_version(*, recipe, record, fetch_summary, cache_base, product: Product
             entry["files"] = [Path(f).name for f in got["files"]]
         sources.append(entry)
     snapshot = max(s["retrieved_at"][:10] for s in sources)
-    zh_notes, en_notes = _quality_notes(stats)
+    zh_notes, en_notes = _quality_notes(stats, product)
     zh_notes = [n["zh-Hant"] for n in product.notes] + zh_notes
     en_notes = [n.get("en", "") for n in product.notes] + en_notes
     changelog = dict(recipe.get("changelog") or {"zh-Hant": f"版本 {ver}。"})

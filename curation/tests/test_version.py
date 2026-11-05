@@ -276,3 +276,17 @@ def test_fetch_warnings_are_kept_in_provenance(tmp_path):
     write_version(recipe=RECIPE, record=record(), fetch_summary=summary, cache_base=base, product=Product(kind="graph", graph=graph(), weight="trips"), out_dir=tmp_path / "data", catalog_dir=tmp_path / "catalog", released="2026-11-04", pipeline=PIPELINE)
     prov = json.loads((tmp_path / "data" / "test-graph" / "1.0.0" / "provenance.json").read_text(encoding="utf-8"))
     assert prov["sources"][0]["warnings"] == ["Content-MD5 x does not match the bytes"]
+
+
+def test_a_snapshot_series_explains_repeated_pairs_as_one_link_per_snapshot(tmp_path):
+    g = Graph(directed=True, node_attrs=["name"], edge_attrs=["month", "trips"])
+    g.add_node("s1", name="甲站")
+    g.add_node("s2", name="乙站")
+    g.add_edge("s1", "s2", month="2026-08", trips=3)
+    g.add_edge("s1", "s2", month="2026-09", trips=4)
+    m = build(tmp_path, "a", product=Product(kind="graph", graph=g, weight="trips", snapshot="month"))
+    assert m["statistics"]["graph"]["repeated_pairs"] == 1
+    zh, en = m["changelog"]["zh-Hant"], m["changelog"]["en"]
+    assert "重複出現" not in zh
+    assert "2 個 month 快照" in zh and "同一快照內沒有重複的配對" in zh
+    assert "2 snapshots" in en
