@@ -26,7 +26,7 @@ The owner wants the site to become **the place Taiwanese citizens, and the AI ag
   - A personal-data level on every dataset decides hosting.
   - A takedown and correction procedure, a privacy notice and a disclaimer.
   - Request and contribution channels: a Google Form (no account needed), GitHub Issue Forms, and email.
-  - Removal of the student friendship-data links from the archived `/stat1021/` page, with a build-time denylist.
+  - The archived `/stat1021/` page is kept with its 2018 links, including the class data its participants consented to publish (owner decision, 2026-11-04).
 - **IA and legacy URLs.**
   - Navigation becomes 資料集 · 課程 · 消息 · 關於.
   - 301s: `/networks` → `/datasets/`, `/refs` → `/courses/`, `/booklet` → `/about/#booklet`, `/tools` → the GitHub Network-Code-Repository. `/stat1021/` is kept as an archive.
@@ -58,13 +58,13 @@ None. The repository has no existing specs; `openspec/` was initialized for this
 ## Impact
 
 - **Code:**
-  - `src/app/pages/*` are rewritten. Removed: `tools`, `booklet`, and the essay in `home`. New: `search`, `datasets`, `dataset-detail`, `wanted`, `courses`, `course-detail`, `news`, `about`, and `not-found` (prerendered at `/404/`). `stat1021` is cleaned.
+  - `src/app/pages/*` are rewritten. Removed: `tools`, `booklet`, and the essay in `home`. New: `search`, `datasets`, `dataset-detail`, `wanted`, `courses`, `course-detail`, `news`, `about`, and `not-found` (prerendered at `/404/`). `stat1021` keeps its content under an archive banner.
   - `app.routes.ts` and `app.routes.server.ts` gain parameterized prerender routes from the catalog.
   - New build scripts: catalog validation and build, search index, API, sitemap, feed, llms.txt, search evaluation.
 - **New repository folders:**
   - `catalog/`: dataset and course records, version manifests, consented public person records, vocabularies including the search concept table, `ids.lock`, the gold query set.
   - `content/news/`.
-  - `config/`: `redirects.yaml`, `pii-denylist.yaml`.
+  - `config/`: `redirects.yaml`.
   - `schemas/v1/`.
   - `search/`: the shared TypeScript search core.
   - `infra/`: the CloudFront Function with its tests, and rollback configs.

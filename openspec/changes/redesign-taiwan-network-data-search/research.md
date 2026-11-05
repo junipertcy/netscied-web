@@ -1824,7 +1824,7 @@ Each item gives the competing positions (with the researcher who held them), the
       - the course discovery script;
       - DCAT and Croissant exports.
     - **Why:** the review estimated the first draft at 280–435 h to build and 16–33 h/month to run. The revised budget is about 150–225 h and about 4.5–6 h/month (design.md D13).
-    - **`/stat1021`:** the archived page drops its links to the 2018 in-class friendship questionnaire and data (in the public `junipertcy/networkie` repo). That data covers students, some of whom were minors under the 2018 Civil Code, so it is `sensitive`. A build-time denylist prevents such links. The owner is asked to make that repo's data private.
+    - **`/stat1021`:** kept as an archived page with all its 2018 links. Owner decision (2026-11-04): the class questionnaire and its data, including the `junipertcy/networkie` repository, were published with the participants' consent and stay linked and unchanged.
     - **Flat-rate plan constraints** (AWS docs, checked 2026-11-04, https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/flat-rate-pricing-plan.html):
       - Access logs are Pro and above only.
       - Custom response-header policies are Business and above only; managed ones (SimpleCORS) work on every tier.

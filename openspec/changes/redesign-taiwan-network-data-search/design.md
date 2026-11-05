@@ -16,7 +16,7 @@ See proposal.md § Why for the motivation. The constraints that shape the design
   - 2 real datasets. The 金馬獎 2018 JSON (174 nodes, 146 edges, 133 unique pairs) covers nominees of every role, not only actors, and its license is unknown. TWNIC is externally hosted at map.twnic.tw behind a token form, with no stated license.
   - 7 placeholders and 4 news items (2018–2019).
   - `/refs` lists mostly foreign courses.
-  - `/stat1021` links to a 2018 in-class friendship questionnaire and its data, which is student personal data (see D12).
+  - `/stat1021` is the archived page of the 2018 NCKU guest lectures, with links to the class questionnaire, its data and the `networkie` repository; the participants consented to their publication (owner decision, D12).
 - **Audience:** Taiwanese citizens typing Traditional Mandarin with Zhuyin or Cangjie, often inside LINE's in-app browser. AI agents mostly do **not** run JavaScript; only Googlebot and Applebot render it.
 - **Landscape:** Taiwan network data is almost absent from Netzschleuder, ICON, SNAP and KONECT. It lives on data.gov.tw (52,539 of 52,581 datasets are under 政府資料開放授權條款－第1版), LYAPI/立法院, sports and civic-tech sites, and with individual researchers.
 
@@ -49,7 +49,7 @@ See proposal.md § Why for the motivation. The constraints that shape the design
  ├─ catalog/people/p-XXXXXXXX.yaml    consented, allowlisted fields only (hand-edited via PR)
  ├─ catalog/vocab/*.yaml   domains, tags, licenses, formats, concepts (search aliases)
  ├─ catalog/ids.lock       catalog/search-gold.yaml
- ├─ content/news/*.md      config/redirects.yaml  config/pii-denylist.yaml
+ ├─ content/news/*.md      config/redirects.yaml
  ├─ schemas/v1/*.schema.json          JSON Schema 2020-12
  ├─ curation/   Python (uv-pinned): fetch, convert, stats, manifest, upload (approval-gated)
  ├─ search/     TypeScript search core (browser, CI eval, and later an endpoint or MCP)
@@ -125,7 +125,7 @@ YAML records in `catalog/` and Markdown news in `content/` are the source of tru
   - the file name equals the id; ids are unique and covered by `ids.lock`;
   - SPDX membership against a pinned `licenses.json`; person references resolve;
   - link-only versus hosted consistency; manifest immutability against `origin/main` (CI uses `fetch-depth: 0`);
-  - the personal-data rules, the PII regex scan, and the personal-data URL denylist.
+  - the personal-data rules and the PII regex scan.
   
   Missing recommended fields produce warnings. A prototype of the schema accepted 5 good records and rejected 13 deliberately bad ones.
 - **Effort per record:** the required core of a link-only record is about 15–30 minutes, longer when the license needs research.
@@ -197,7 +197,7 @@ YAML records in `catalog/` and Markdown news in `content/` are the source of tru
 - **`/refs` → `/courses/`**, with the foreign courses in `/courses/#international`.
 - **`/booklet` → `/about/#booklet`**, with the PDFs re-hosted under `/files/` or linked as labelled archived copies.
 - **`/tools` → the GitHub Network-Code-Repository**, which exists (last push 2019).
-- **`/stat1021/` is kept**, stripped of personal-data links (D12).
+- **`/stat1021/` is kept** as an archived page with all its 2018 links (D12).
 - Angular `redirectTo` routes stay for client-side navigation. The CloudFront Function serves the real 301s.
 - Visual design: system fonts (PingFang TC, Noto Sans TC, Microsoft JhengHei), weights 400/700, line height 1.75, 「」 quotes, no web fonts. Tables become cards on phones while keeping table semantics.
 
@@ -298,7 +298,7 @@ YAML records in `catalog/` and Markdown news in `content/` are the source of tru
   - Its provenance and license are unknown. Unless the owner confirms rights, **rebuild it from the official nominee announcement** as the site's own compilation (`own-work`, CC BY 4.0). That gives one hosted dataset cheaply.
   - It is retitled 「第55屆金馬獎入圍者–電影網絡」, because it covers every nominee role.
 - **TWNIC:** `link-only` to map.twnic.tw until written permission arrives.
-- **`/stat1021`:** the archived page must drop its links to the in-class friendship questionnaire, `In-class_network.txt`, and the public `junipertcy/networkie` repo. That repo holds friend lists with sex, age, department and habits, keyed by possibly reversible hashed student IDs, and some students were minors under the 2018 Civil Code. The Clauset-derived slides link to Clauset's original instead of being re-hosted. `config/pii-denylist.yaml` fails the build on such links. The `networkie` repository is outside this repo; making that data private is an owner action (below).
+- **`/stat1021`:** the archived page keeps every 2018 link, including the class questionnaire, its data and the `junipertcy/networkie` repository. Owner decision (2026-11-04): the class data was published with the participants' consent, and it stays linked and unchanged; the 2018 class files in `public/` are kept. The Clauset-derived slides link to Clauset's original instead of being re-hosted. The `networkie` repository is outside this change and is not modified.
 
 ### D13. Phasing, follow-up changes, and the hours budget
 - **Phase 0a, close the bucket** (about 3–5 h): OAC, REST origin, the old error mapping kept, Block Public Access, Budgets.
@@ -332,12 +332,11 @@ YAML records in `catalog/` and Markdown news in `content/` are the source of tru
 - [A plan-gated feature (custom error responses, the WAF rate rule) turns out unavailable on Free] → Task 2.6 checks before cut-over. Fallbacks: grant `s3:ListBucket` to the OAC so missing keys return a real 404 (S3's XML body), or stay on pay-as-you-go with the per-file ceiling and the Budgets alert until Pro.
 - [The CloudFront Function or the origin switch breaks old links] → Phase 0a/0b split, a Function that fails open, full redirect-table tests, and post-deploy `curl` smoke checks; rollback configs saved first.
 - [Legal positions are assumptions; PDPA amendments may take effect] → Default to link-only when unsure; a short legal review before hosting anything above `public-role`; re-check the PDPA status before launch and yearly.
-- [Student personal data reachable from the old `/stat1021` page and the `networkie` repo] → Strip the links now and add the denylist; the owner acts on `networkie`, independent of this change.
 - [Over-aliasing creates false positives] → Forbidden lists in the gold set; aliases kept granular.
 - [IME edge cases on Android Gboard Zhuyin and older iOS Safari] → Native form submit in v1; real-device tests before launch.
 - [Bus factor of one] → Everything is in git; succession and key-recovery notes in the private repo; a co-curator for the Zenodo community when the archive change lands.
 - [Fragile upstream portals (token forms, anti-bot walls, US-IP timeouts)] → Manual recipes with recorded hashes; fetch from Taiwan when needed.
-- [Personal data leaks into the public repo, where git history makes it permanent] → Allowlist schemas, CI PII scan, denylist, and a private log outside every public system.
+- [Personal data leaks into the public repo, where git history makes it permanent] → Allowlist schemas, CI PII scan, and a private log outside every public system.
 
 ## Migration Plan
 
@@ -377,6 +376,6 @@ These do not block implementation. The design proceeds on the stated default; ea
 | O2 | Do copies exist of the 《網絡素養》 Mandarin and English PDFs and of the three STAT1021 PDFs (homework 3, homework 6, syllabus)? | Link to labelled archived copies where found; otherwise list the item without a download link (task 4.7) | If the files exist, re-host them under `/files/` and link them directly. The in-class network file is never re-hosted. |
 | O3 | Is `www.netscied.tw` used anywhere? | 301 from `www` to the apex (site-structure spec; task 2.3) | If something depends on `www` serving content, keep the 301 (it preserves path and query) and add a note; only an integration needing non-redirected responses would require a separate behavior. |
 | O4 | Does the AWS account show as "using AWS Free Tier"? | Not on the Free Tier, so eligible for flat-rate plans (task 1.1) | If ineligible: run pay-as-you-go with the Budgets alert, and treat the 100 MB per-file ceiling and the WAF rate rule as the cost caps until the account becomes eligible. If the account never becomes eligible, apply the Cloudflare flip criteria in D2. |
-| O5 | Defaults the architect set without asking: catalog at `/datasets/` (301 from `/networks`); `/tools` → 301 to the GitHub Network-Code-Repository; `/stat1021/` kept as a cleaned archive page; data bucket in AWS Taipei (ap-east-2); English title required on every published dataset | As listed | `/networks/` as the catalog path: swap the path in the site-structure spec, the redirect map and the dataset URLs (no other change). `/tools` as 410 or a tombstone: one row of the redirect map. `/stat1021` folded into its course record: add a redirect row. Seoul for the data bucket: storage is ~10% dearer and the data stays outside Taiwan. English title optional: relax one schema rule; English search recall drops for those records. |
+| O5 | Defaults the architect set without asking: catalog at `/datasets/` (301 from `/networks`); `/tools` → 301 to the GitHub Network-Code-Repository; `/stat1021/` kept as an archive page; data bucket in AWS Taipei (ap-east-2); English title required on every published dataset | As listed | `/networks/` as the catalog path: swap the path in the site-structure spec, the redirect map and the dataset URLs (no other change). `/tools` as 410 or a tombstone: one row of the redirect map. `/stat1021` folded into its course record: add a redirect row. Seoul for the data bucket: storage is ~10% dearer and the data stays outside Taiwan. English title optional: relax one schema rule; English search recall drops for those records. |
 
-**Out of scope for this change:** the public repository `junipertcy/networkie` holds the 2018 NCKU in-class friendship questionnaire results, which are student personal data. The coordinator is raising this with the owner separately. This change only removes every link to that data from `/stat1021/`, and adds a build-time denylist so such links cannot return.
+**Decided (2026-11-04):** `/stat1021/` keeps its links to the 2018 class questionnaire, its data and the `junipertcy/networkie` repository. The owner confirmed that the participants consented to their publication; this change neither alters nor comments on that material.

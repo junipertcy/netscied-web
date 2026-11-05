@@ -89,16 +89,16 @@ Every path the previous site published SHALL keep resolving, with a 301 redirect
 - **WHEN** a client requests `/tools`
 - **THEN** the response is a 301 to the Network-Code-Repository on GitHub
 
-### Requirement: Archived course page without personal data
-`/stat1021/` SHALL show the 2018 NCKU guest-lecture content under a banner 「2018 年課程封存頁 · Archived」, with a link to its course record. It SHALL NOT link to the in-class friendship questionnaire, to its data files, or to any repository holding them. It SHALL NOT re-host third-party slides; it SHALL link to the original authors' copies instead. The build SHALL fail if any page links to a URL on the personal-data denylist kept in the repository.
+### Requirement: Archived course page
+`/stat1021/` SHALL show the 2018 NCKU guest-lecture content under a banner 「2018 年課程封存頁 · Archived」, with a link to its course record. It SHALL keep the lecture's own links, including the class materials and data that the 2018 participants consented to publish. It SHALL NOT re-host third-party slides; it SHALL link to the original authors' copies instead.
 
 #### Scenario: Archived page
 - **WHEN** a visitor opens `/stat1021/`
-- **THEN** the lecture description, schedule and announcements are shown under the archive banner, and there is no link to the friendship questionnaire, its results, or the `networkie` repository
+- **THEN** the lecture description, schedule, announcements and links are shown under the archive banner, with a link to the course record
 
-#### Scenario: Denylisted link blocked
-- **WHEN** a page template contains a link to a denylisted personal-data URL
-- **THEN** the build fails and names the page and the URL
+#### Scenario: Third-party slides
+- **WHEN** the page refers to slides adapted from another author's course
+- **THEN** it links to the original author's copy, and the site hosts no copy of those slides
 
 ### Requirement: Real not-found responses
 A request for a path that is neither a page, a published file, nor a redirect source SHALL receive HTTP status 404 with a Mandarin not-found page that contains the search form and links to `/datasets/` and `/courses/`. The not-found page SHALL carry `noindex`. No path SHALL return the home page with status 200 as a fallback.
