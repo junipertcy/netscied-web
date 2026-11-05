@@ -355,3 +355,31 @@ test('review 8: a sensitive record may not point at raw data through its source 
     r.references = [{ citation: '某作者（2026）。某研究。某期刊。', url: 'https://example.org/raw/edges.csv' }];
   }), 'link-only-graph.yaml', 'references[0].url', 'controlled-access');
 });
+
+// Review of Milestone A, finding 10: a manual source is committed and verified
+// against its recorded SHA-256 and size; automated jobs never re-fetch it.
+function withRecipe(d, csv, expected) {
+  mkdirSync(path.join(d, 'curation', 'recipes'), { recursive: true });
+  mkdirSync(path.join(d, 'curation', 'inputs', 'hosted-graph'), { recursive: true });
+  if (csv !== null) writeFileSync(path.join(d, 'curation', 'inputs', 'hosted-graph', 'data.csv'), csv);
+  writeFileSync(path.join(d, 'curation', 'recipes', 'hosted-graph.yaml'), stringify({
+    dataset: 'hosted-graph',
+    version: '1.0.0',
+    sources: [{ id: 'manual-copy', method: 'manual', steps: { 'zh-Hant': '手動下載。' }, file: 'hosted-graph/data.csv', landing_page: 'https://example.org/source', expected, retrieved_at: '2026-11-01', license_evidence: { url: 'https://example.org/license', checked_on: '2026-11-01' } }],
+    convert: { converter: 'test', kind: 'graph' },
+  }));
+}
+
+test('review 10: a manual source file must match its recorded SHA-256 and size', () => {
+  const good = { sha256: 'b5bb9d8014a0f9b1d61e21e796d78dccdf1352f23cd32812f4850b878ae4944c', bytes: 4 };
+  const dir = fixture();
+  try {
+    withRecipe(dir, 'foo\n', good);
+    const { code, out } = run(dir);
+    assert.equal(code, 0, out);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+  expectFailure((d) => withRecipe(d, 'bar\n', good), 'hosted-graph.yaml', 'sources[0]', 'SHA-256');
+  expectFailure((d) => withRecipe(d, null, good), 'hosted-graph.yaml', 'sources[0].file', 'missing');
+});

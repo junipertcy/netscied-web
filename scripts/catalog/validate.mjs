@@ -6,6 +6,8 @@
 //
 // Errors fail the build; missing recommended fields only warn. Every message
 // names the file and the field.
+import { createHash } from 'node:crypto';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -186,6 +188,21 @@ export function validateCatalog({ root, baseRef = 'origin/main', requireBase = f
   for (const { file, data } of cat.recipes) {
     for (const e of schemaErrors(schemas.recipe, data)) err(file, e.field, e.message);
     if (data?.dataset && !datasetIds.has(data.dataset)) err(file, 'dataset', `unknown dataset "${data.dataset}"`);
+    // A manual source is committed under curation/inputs/ and only verified
+    // against its recorded hash and size, never fetched again.
+    (data?.sources ?? []).forEach((src, i) => {
+      if (src.method !== 'manual' || !src.file) return;
+      const input = path.join(root, 'curation', 'inputs', src.file);
+      if (!existsSync(input)) {
+        err(file, `sources[${i}].file`, `the manual source curation/inputs/${src.file} is missing`);
+        return;
+      }
+      const bytes = readFileSync(input);
+      const sha = createHash('sha256').update(bytes).digest('hex');
+      if (src.expected && (sha !== src.expected.sha256 || bytes.length !== src.expected.bytes)) {
+        err(file, `sources[${i}]`, `curation/inputs/${src.file} has SHA-256 ${sha} and ${bytes.length} bytes, but the recipe records ${src.expected.sha256} and ${src.expected.bytes}`);
+      }
+    });
   }
 
   // --- International and rejected course lists ------------------------------------
