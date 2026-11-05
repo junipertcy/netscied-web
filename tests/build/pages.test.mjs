@@ -53,6 +53,8 @@ test('task 5.1: every internal page link in the prerendered HTML ends in a slash
   for (const f of htmlFiles()) {
     for (const a of page(f).querySelectorAll('a[href]')) {
       const href = a.getAttribute('href');
+      // Final review W1: with <base href="/">, a fragment-only link resolves to the home page.
+      assert.ok(!href.startsWith('#'), `${f}: fragment-only link ${href}; write the full path`);
       if (!href.startsWith('/') || href.startsWith('//')) continue;
       const pathPart = href.split(/[?#]/)[0];
       const last = pathPart.slice(pathPart.lastIndexOf('/') + 1);

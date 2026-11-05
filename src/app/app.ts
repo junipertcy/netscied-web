@@ -18,11 +18,22 @@ export class App {
   ];
   /** The home page has its own large search form; every other page gets one in the header. */
   protected readonly isHome = signal(true);
+  /**
+   * The skip link names the current page: with <base href="/">, a bare "#main"
+   * would resolve to the home page (final review W1).
+   */
+  protected readonly skipHref = signal('/#main');
 
   constructor() {
     const router = inject(Router);
     router.events.subscribe((e) => {
-      if (e instanceof NavigationEnd) this.isHome.set(e.urlAfterRedirects.split(/[?#]/)[0].replace(/\/+$/, '') === '');
+      if (!(e instanceof NavigationEnd)) return;
+      const [beforeHash] = e.urlAfterRedirects.split('#');
+      const [rawPath, query] = beforeHash.split('?');
+      const path = rawPath.replace(/\/+$/, '');
+      this.isHome.set(path === '');
+      // Keep the query, or the skip link on /search/?q=… would load a new, empty search.
+      this.skipHref.set(`${path}/${query ? `?${query}` : ''}#main`);
     });
   }
 }
