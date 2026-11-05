@@ -399,3 +399,20 @@ test('task 12.3: an alias line in ids.lock must match a record that lists that a
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test('task 12.5: coverage.spatial may not use non-neutral naming for Taiwan', () => {
+  for (const [zh, en] of [['中國臺灣', 'Taiwan'], ['臺灣', 'Taiwan, Province of China'], ['中国台湾', 'Taiwan']]) {
+    expectFailure((dir) => editYaml(dir, D('link-only-graph'), (r) => (r.coverage.spatial = { 'zh-Hant': zh, en })), 'coverage.spatial');
+  }
+});
+
+test('task 12.5: a list of places that includes China is not flagged', () => {
+  const dir = fixture();
+  try {
+    editYaml(dir, D('link-only-graph'), (r) => (r.coverage.spatial = { 'zh-Hant': '臺灣、中國、日本', en: 'Taiwan, China, Japan' }));
+    const { code, out } = run(dir);
+    assert.equal(code, 0, out);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

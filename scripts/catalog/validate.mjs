@@ -25,6 +25,10 @@ export function taipeiToday(now = new Date()) {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
 }
 
+// 中國臺灣 / 中国台湾, "Taiwan, China" (as the whole value, so a list such as
+// "Taiwan, China, Japan" passes), "Taiwan, Province of China", "China (Taiwan)".
+const NON_NEUTRAL_TAIWAN = /中[國国]\s*[臺台][灣湾]|Taiwan\s*,\s*China\s*$|Taiwan\s*,?\s*\(?Province of China\)?|China\s*\(Taiwan\)/i;
+
 export function validateCatalog({ root, baseRef = 'origin/main', requireBase = false, today = taipeiToday() }) {
   const cat = loadCatalog(root);
   const errors = [...cat.errors];
@@ -151,6 +155,10 @@ export function validateCatalog({ root, baseRef = 'origin/main', requireBase = f
       for (const v of manifests) {
         if (!v.data.withdrawn) err(file, 'status', `the record is withdrawn but ${v.file} still lists live files; add "withdrawn" to that manifest`);
       }
+    }
+    // Neutral naming (task 12.5): Taiwan is not described as part of the PRC.
+    for (const [lang, v] of Object.entries(r.coverage?.spatial ?? {})) {
+      if (NON_NEUTRAL_TAIWAN.test(String(v))) err(file, `coverage.spatial.${lang}`, `"${v}" names Taiwan as part of China; write 臺灣 / Taiwan (or the place itself)`);
     }
     (r.creators ?? []).forEach((c, i) => {
       if (c.person && !people.has(c.person)) err(file, `creators[${i}].person`, `unknown person "${c.person}"; no catalog/people/${c.person}.yaml`);

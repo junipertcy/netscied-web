@@ -99,7 +99,7 @@
 - [ ] 12.2 Reject person records that hold `orcid` or `homepage` without listing them in `display`. Verify: a failing fixture.
 - [x] 12.3 Cross-check `alias` lines of `ids.lock` against the records' `aliases`. Verify: a fixture with a stray alias line fails.
 - [ ] 12.4 Add a small-cell rule for hosted aggregates (`small_cell_threshold`), for example taipei-metro-od-monthly. Verify: a fixture aggregate below the threshold fails.
-- [ ] 12.5 Reject non-neutral Taiwan naming in `coverage.spatial` (for example 中國臺灣). Verify: a failing fixture.
+- [x] 12.5 Reject non-neutral Taiwan naming in `coverage.spatial` (for example 中國臺灣). Verify: a failing fixture.
 - [ ] 12.6 Require `license.statement` on published link-only records. Verify: a failing fixture.
 - [ ] 12.7 `networking` alone is too broad a computer-networking trigger (`social networking` returns 0 courses). Verify: a gold query.
 - [ ] 12.8 Junk bigrams across spaces between Chinese words (spaces between Han characters are removed before tokenizing). Verify: a test with a two-word query.
