@@ -88,3 +88,38 @@ test('task 4.4: the Taipei Metro version is a monthly aggregate under OGDL with 
   assert.ok(g.edges > 1000 && g.total_weight > 0);
   assert.ok(full.latest_version.files.every((f) => f.bytes <= 100_000_000));
 });
+
+// Final review D12: the review-14 test only caught records whose own notes said
+// 未列授課語言; a language asserted with no source at all slipped through. Now a
+// language that is not marked unverified must be backed by a statement in the
+// record's notes of where it was read.
+const LANGUAGE_STATEMENT = /授課語言|英文授課|英語授課|全英語|英授|中文授課|華語授課|Taught in English|Lecture in English|in English/i;
+test('final review D12: every course language not marked unverified is backed by a stated source', () => {
+  const unsourced = [];
+  for (const c of api('courses.json')) {
+    if (c.languages_unverified) continue;
+    const full = api(`courses/${c.id}.json`);
+    const notes = JSON.stringify([full.offerings.map((o) => [o.note, o.unverified]), full.unverified, full.summary]);
+    if (!LANGUAGE_STATEMENT.test(notes)) unsourced.push(c.id);
+  }
+  assert.deepEqual(unsourced, []);
+});
+
+test('final review D5: the LY personal-data note says what the files hold, in both languages, without overclaiming', () => {
+  const notes = api('datasets/ly-bill-cosponsorship-10th.json').personal_data.notes;
+  assert.doesNotMatch(notes['zh-Hant'], /其他姓名不會進入託管的檔案/);
+  assert.match(notes['zh-Hant'], /議案名稱照上游原文保留/);
+  assert.match(notes['zh-Hant'], /已故/);
+  assert.match(notes.en ?? '', /titles are kept verbatim/i);
+  assert.match(notes.en ?? '', /no petitions/i);
+});
+
+test('final review D3: the Taipei Metro record covers the hosted months and says the upstream reaches back to 2017-01', () => {
+  const full = api('datasets/taipei-metro-od-monthly.json');
+  assert.equal(full.coverage.temporal.start, '2025-10');
+  assert.equal(full.coverage.temporal.end, '2026-09');
+  assert.ok(!full.coverage.temporal.ongoing);
+  assert.match(JSON.stringify(full.coverage.temporal.note), /2017/);
+  const ld = JSON.parse(readDist('datasets/taipei-metro-od-monthly/index.html').match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g).map((s) => s.replace(/<\/?script[^>]*>/g, '')).find((s) => s.includes('"Dataset"')));
+  assert.equal(ld.temporalCoverage, '2025-10/2026-09');
+});

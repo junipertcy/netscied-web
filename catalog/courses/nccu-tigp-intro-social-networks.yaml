@@ -47,3 +47,11 @@ offerings:
     syllabus_url: https://tigpsnhcc.iis.sinica.edu.tw/download/SN_Fall_2024.pdf
     note:
       zh-Hant: TIGP 2024 Fall 課綱列主持人 Yi-Shin Chen，講者另有 Mi-Yen Yeh、Ming-Feng Tsai。
+# Final review D12: no source states the language of instruction (owner answer A4).
+unverified:
+  fields:
+    - languages
+  checked_on: "2026-11-05"
+  note:
+    zh-Hant: 政大 115-1、114-1 課程頁、TIGP 課程頁與 2025 年課綱都未列授課語言；英語為學程慣例，待確認。
+    en: The NCCU 115-1 and 114-1 course pages, the TIGP course page and the 2025 syllabus do not state the language of instruction; English is the programme's practice, to be confirmed.

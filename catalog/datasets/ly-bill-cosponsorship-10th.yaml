@@ -109,9 +109,20 @@ personal_data:
   reviewed_on: "2026-11-04"
   notes:
     zh-Hant: |-
-      只含立法委員的姓名、英文姓名、黨籍與黨團，以及其職務上的提案、連署行為。上游的議案資料也有一般民眾提出的請願等案件，
-      本站只收錄「委員提案」，並只保留名列第10屆立法委員名單的提案人與連署人，其他姓名不會進入託管的檔案。
+      託管檔案的節點只有第10屆立法委員：姓名、英文姓名、黨籍與黨團，以及其職務上的提案、連署行為。
+      本站只收錄「委員提案」，不收錄一般民眾提出的請願案；提案人與連署人只保留名列第10屆立法委員名單者。
+      議案名稱照上游原文保留，可能提及公職人員、公共職務的被提名人，或公務事件中的已故者（例如殉職軍人的姓氏、階級與單位）。
       LYAPI 委員資料中的學歷、經歷與照片不收錄。
+    en: >-
+      The nodes of the hosted files are only 10th-term legislators: name,
+      English name, party and caucus, with their official sponsoring and
+      co-signing. Only member-proposed bills (委員提案) are included, no
+      petitions from private citizens; only sponsors and co-signers on the
+      10th-term roster are kept. Bill titles are kept verbatim and may name
+      public officials, nominees to public posts, or deceased persons in
+      official matters (for example soldiers who died on duty, by surname,
+      rank and unit). Education, career and photos from LYAPI's legislator
+      data are not included.
 creators:
   - organization: { zh-Hant: 立法院, en: Legislative Yuan }
     url: https://data.ly.gov.tw/
