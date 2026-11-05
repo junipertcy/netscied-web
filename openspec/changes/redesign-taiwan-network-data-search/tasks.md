@@ -48,10 +48,10 @@
 ## 6. Search
 
 - [x] 6.1 Implement `search/` in TypeScript: NFKC, lowercase, corpus-cut T→S fold map, 網絡≡網路, Bopomofo and filler stripping, 100-character truncation, bigram + Latin tokenizer, MiniSearch with field boosts, the 4 query rules, published-only filter, facet counts. Verify: unit tests for each rule, including a hostile-query test.
-- [ ] 6.2 Generate the fold map and concept aliases at build time; enforce the 150 KB gz budget. Verify: an oversized fixture fails the build with the budget message.
+- [x] 6.2 Generate the fold map and concept aliases at build time; enforce the 150 KB gz budget. Verify: an oversized fixture fails the build with the budget message.
 - [ ] 6.3 Build `/search/`: native GET form with radio toggle, query read after hydration, results with badges, cross-type hint, wanted group, dataset and course empty states with prefilled and encoded links, load-failure message, `noindex`, and a `<noscript>` block with the dataset list. Verify: Playwright tests for `?q=人口遷徙`, `?q=`, an over-long query, a blocked `catalog.json`, and JS disabled; no hydration errors in the console.
 - [ ] 6.4 IME tests: a Playwright script that dispatches composition events and Enter, and manual checks on macOS Zhuyin, Android Gboard Zhuyin and iOS Safari. Verify: exactly one search runs, on the committed text; manual results are recorded in the PR.
-- [ ] 6.5 Write `catalog/search-gold.yaml` (at least 20 queries with expected and forbidden ids) and `scripts/search-eval.mjs` (top-5 assertions, script/臺台/full-width invariance, unpublished ids skipped). Verify: CI fails when a forbidden fixture result is injected, and passes when an expected id is withdrawn.
+- [x] 6.5 Write `catalog/search-gold.yaml` (at least 20 queries with expected and forbidden ids) and `scripts/search-eval.mjs` (top-5 assertions, script/臺台/full-width invariance, unpublished ids skipped). Verify: CI fails when a forbidden fixture result is injected, and passes when an expected id is withdrawn.
 
 ## 7. Machine access
 

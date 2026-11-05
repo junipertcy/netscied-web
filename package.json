@@ -5,14 +5,15 @@
     "preinstall": "npx only-allow pnpm",
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build && node scripts/build/sitemap.mjs",
+    "build": "node scripts/catalog/validate.mjs && node scripts/catalog/build.mjs && node scripts/search-eval.mjs && ng build && node scripts/build/sitemap.mjs",
     "test": "pnpm build && pnpm test:only && pnpm test:e2e",
     "test:only": "node --test \"tests/**/*.test.mjs\"",
     "edge:build": "node scripts/edge/build-function.mjs",
     "test:e2e": "playwright test",
     "preview": "node scripts/preview.mjs",
     "catalog:validate": "node scripts/catalog/validate.mjs",
-    "catalog:build": "node scripts/catalog/build.mjs"
+    "catalog:build": "node scripts/catalog/build.mjs",
+    "search:eval": "node scripts/search-eval.mjs"
   },
   "private": true,
   "packageManager": "pnpm@11.21.0",

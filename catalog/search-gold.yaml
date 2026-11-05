@@ -1,0 +1,55 @@
+# Search gold set (site-search spec, "Search quality gate"; design D4). The build
+# runs every query through the search core over /api/v1/catalog.json and fails if
+# an expected published record is not in the top 5, a forbidden one is, or an
+# expect_* assertion fails. For lang zh-Hant queries it also checks that the
+# Simplified, 臺/台-swapped and full-width forms return the same top result.
+# Expected ids that are not published are skipped, so a takedown never breaks
+# the build. These are assertions, not metric baselines: add a query when a
+# record is added or a real query fails, and keep forbidden lists short.
+#
+# Fields: q, mode (datasets|courses), lang (zh-Hant|zh-Hans|en|mixed),
+# expected (ids that must be in the top 5), first (id that must rank 1),
+# forbidden (ids never in the top 5), expect_zero, expect_nonzero,
+# expected_wanted (wanted entries shown in the separate group), note.
+queries:
+  # Taipei MRT
+  - { q: 捷運, mode: datasets, lang: zh-Hant, expected: [taipei-metro-od-monthly] }
+  - { q: 台北捷运, mode: datasets, lang: zh-Hans, expected: [taipei-metro-od-monthly] }
+  - { q: 臺北捷運旅次, mode: datasets, lang: zh-Hant, first: taipei-metro-od-monthly }
+  - { q: MRT ridership, mode: datasets, lang: en, expected: [taipei-metro-od-monthly] }
+  - { q: 地铁客流网络, mode: datasets, lang: zh-Hans, expected: [taipei-metro-od-monthly], note: mainland vocabulary }
+  - { q: Taipei 捷運 OD, mode: datasets, lang: mixed, expected: [taipei-metro-od-monthly] }
+  # Legislative Yuan co-sponsorship hypergraph
+  - { q: 超圖, mode: datasets, lang: zh-Hant, first: ly-bill-cosponsorship-10th }
+  - { q: hypergraph, mode: datasets, lang: en, first: ly-bill-cosponsorship-10th }
+  - { q: 有沒有立委連署的網絡資料, mode: datasets, lang: zh-Hant, first: ly-bill-cosponsorship-10th, note: natural-language query (spec scenario) }
+  - { q: legislator cosponsorship network, mode: datasets, lang: en, expected: [ly-bill-cosponsorship-10th] }
+  # Golden Horse nominees
+  - { q: 金馬獎, mode: datasets, lang: zh-Hant, first: golden-horse-2018-nominations }
+  - { q: 二分網絡, mode: datasets, lang: zh-Hant, expected: [golden-horse-2018-nominations] }
+  - { q: bipartite network, mode: datasets, lang: en, expected: [golden-horse-2018-nominations] }
+  - { q: 金馬講 演員, mode: datasets, lang: zh-Hant, expected: [golden-horse-2018-nominations], note: typo (講 for 獎) }
+  - { q: 電影演員合作關係, mode: datasets, lang: zh-Hant, expected: [golden-horse-2018-nominations], note: paraphrase, a known weak spot }
+  # TWNIC
+  - { q: 台灣網路節點頻寬, mode: datasets, lang: zh-Hant, first: twnic-interconnection-bandwidth }
+  - { q: internet topology, mode: datasets, lang: en, first: twnic-interconnection-bandwidth }
+  - { q: 網際網路拓樸, mode: datasets, lang: zh-Hant, expected: [twnic-interconnection-bandwidth] }
+  # Computer networking: no social, film, legislative or transport data in the top 5
+  - q: 計算機網路
+    mode: datasets
+    lang: zh-Hant
+    forbidden: [golden-horse-2018-nominations, ly-bill-cosponsorship-10th, taipei-metro-od-monthly]
+    note: TWNIC is acceptable here; an empty result also passes
+  - q: computer network
+    mode: datasets
+    lang: en
+    forbidden: [golden-horse-2018-nominations, ly-bill-cosponsorship-10th, taipei-metro-od-monthly]
+  # Sensitive data is never hosted: social-media interaction networks return nothing
+  - { q: 社群網路 PTT, mode: datasets, lang: mixed, expect_zero: true, note: PTT/Dcard interaction graphs are level sensitive }
+  # Generic-only query lists everything
+  - { q: 台灣 網絡 資料, mode: datasets, lang: zh-Hant, expect_nonzero: true }
+  # No dataset yet: the wanted entry shows in its own group
+  - { q: 人口遷徙, mode: datasets, lang: zh-Hant, expect_zero: true, expected_wanted: [population-migration] }
+  # Courses
+  - { q: 計算機網路, mode: courses, lang: zh-Hant, expect_zero: true, note: the course catalog excludes computer networking }
+  - { q: CS224W, mode: courses, lang: en, expect_zero: true, note: foreign courses are outside search }

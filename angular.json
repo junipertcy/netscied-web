@@ -47,6 +47,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "build/site",
+                "ignore": [".netscied-build"]
               }
             ],
             "styles": [

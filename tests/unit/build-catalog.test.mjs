@@ -206,3 +206,32 @@ if (process.env.UPDATE_SNAPSHOTS === '1') {
     cpSync(path.join(out, '_data'), path.join(snapshotDir, '_data'), { recursive: true });
   });
 }
+
+test('task 6.2: a search payload over 150 KB gzipped fails the build with the budget message', () => {
+  const dir = mkdtempSync(path.join(tmpdir(), 'cat-'));
+  const outDir = mkdtempSync(path.join(tmpdir(), 'site-'));
+  try {
+    cpSync(fixture, dir, { recursive: true });
+    // Enough wanted records with incompressible Mandarin text to blow the budget.
+    let seed = 7;
+    const rand = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+    const text = (n) => Array.from({ length: n }, () => String.fromCodePoint(0x4e00 + Math.floor(rand() * 20000))).join('');
+    let lock = readFileSync(path.join(dir, 'catalog', 'ids.lock'), 'utf8');
+    for (let i = 0; i < 700; i++) {
+      const id = `bulk-${i}`;
+      writeFileSync(
+        path.join(dir, 'catalog', 'datasets', `${id}.yaml`),
+        `id: ${id}\nstatus: wanted\nadded: 2026-11-01\ntitle: { zh-Hant: ${text(12)} }\ndescription: { zh-Hant: ${text(400)} }\ndomains: [society]\nwanted: { reason: { zh-Hant: 測試 } }\n`,
+      );
+      lock += `dataset ${id} 2026-11-01\n`;
+    }
+    writeFileSync(path.join(dir, 'catalog', 'ids.lock'), lock);
+    const res = build(dir, outDir);
+    assert.notEqual(res.status, 0, 'expected the build to fail');
+    assert.match(res.stderr, /search payload budget exceeded/);
+    assert.match(res.stderr, /150 KB/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+    rmSync(outDir, { recursive: true, force: true });
+  }
+});
