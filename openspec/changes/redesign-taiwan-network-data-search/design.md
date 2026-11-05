@@ -376,6 +376,12 @@ The owner chose the architect's recommended option on every question.
 | A4 | Course facts that could not be confirmed from outside Taiwan | **Publish only what is confirmed.** An unconfirmed fact is left blank or marked unverified, with the date it was checked; never guessed. Applies to three NCKU offerings read only through a third-party fetcher, the NYCU languages of instruction, and the TIGP 社群網路 115-1 instructor (NCCU lists 鄧雅文, TIGP 陳宜欣). | course schema `unverified` markers; course-catalog spec; task 4.5 |
 | A5 | The no-account request form (Q5) | **The owner creates the Google Form later**; the site keeps a placeholder until its URL is provided. | `src/app/site.ts`; task 3.7 |
 
+### Answer of 2026-11-05 to the final-review question
+
+| # | Question | Decision | Where it is reflected |
+|---|---|---|---|
+| A6 | Small cells in the Taipei Metro monthly aggregate (274 of 153,586 cells below 3 trips, 1,073 below 10) | **Keep them.** Cells count trips, not individuals, carry no traveller attributes, and the source publishes finer daily and hourly counts under OGDL; the record states why they are not suppressed. The small-cell rule applies to aggregates that count individuals. | `taipei-metro-od-monthly` personal-data note; content-governance spec, scenario "Counts of events, not individuals"; task 12.4 |
+
 ## Open items for the owner
 
 These do not block implementation. The design proceeds on the stated default; each row says what changes if the answer differs.

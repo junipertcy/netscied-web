@@ -31,6 +31,10 @@ The site SHALL treat a network whose nodes are individuals as personal data even
 - **WHEN** a village-level migration table contains cells with a count of 1
 - **THEN** the hosted copy aggregates those cells to a level where every published count is at least 3, and the record documents the aggregation
 
+#### Scenario: Counts of events, not individuals
+- **WHEN** an aggregate counts events such as trips, with no attributes of the people making them, and the source already publishes finer counts under an open license
+- **THEN** small cells are published as the source gives them, and the record states why they are not suppressed
+
 ### Requirement: Takedown and correction procedure
 The site SHALL publish a takedown and correction procedure at `/about/#takedown` in Mandarin, with an English summary, reachable from every page footer. Any person named in a dataset or course record, and any rights holder, MAY use it. Requests by email, by the request form, or by GitHub issue SHALL receive an acknowledgement within 7 days; an automatic reply on the contact address SHALL satisfy this. On a credible request concerning personal data, the maintainer SHALL suspend downloads of the affected files within 3 days, pending review. Suspension means deleting the objects from the site's storage, invalidating their CDN paths, marking the version as suspended in the API, and asking the archival repository to restrict any deposited copy. A decision SHALL be made within 30 days, extendable once by 30 days with notice to the requester. A removed dataset or version SHALL leave a tombstone: its identifier, title, removal date and a reason remain at its URL and in the API, with no files. When an upstream source withdraws data that the site re-hosts, the site SHALL mirror the withdrawal.
 

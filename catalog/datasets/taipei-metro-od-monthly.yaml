@@ -130,6 +130,18 @@ personal_data:
     zh-Hant: |-
       資料是車站之間的人次統計，不含個別旅客資訊。
       逐時資料有許多 0 或 1 人次的格子，本站只發布月彙總。
+      月彙總中仍有少數小於 3 人次的格子（2025-10 至 2026-09 共 274 格，多數起站為環狀線車站），本站照上游數值發布，不做隱藏或合併：
+      這些數字計算的是旅次而不是人，不附任何旅客屬性，上游也以政府資料開放授權條款公開更細的逐日、逐時數值；隱藏它們不會增加隱私保護，反而會讓總數與官方資料對不上。
+    en: >-
+      Counts of trips between stations, with no information about individual
+      travellers. The hourly source has many cells of 0 or 1 trips; this site
+      publishes monthly totals only. A few monthly cells are still below 3
+      trips (274 in 2025-10 to 2026-09, most starting at Circular Line
+      stations). They are published as the source gives them, not suppressed
+      or merged: they count trips, not people, carry no traveller attributes,
+      and the source already publishes finer daily and hourly counts under the
+      Open Government Data License. Suppressing them would add no privacy and
+      would stop the totals matching the official data.
 creators:
   - organization: { zh-Hant: 臺北大眾捷運股份有限公司, en: Taipei Metro }
     role: publisher
