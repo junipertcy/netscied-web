@@ -1,0 +1,459 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/dataset.schema.json",
+  "title": "netscied.tw dataset record (catalog/datasets/<id>.yaml)",
+  "description": "The human-edited source of truth for one dataset, including wanted and withdrawn ones. Counts and checksums of hosted versions live in machine-written version manifests, not here. Vocabulary ids, licenses and person references are checked against catalog/vocab and catalog/people by scripts/catalog/validate.mjs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "status", "added"],
+  "properties": {
+    "id": { "$ref": "common.schema.json#/$defs/slug" },
+    "status": { "enum": ["published", "wanted", "withdrawn"] },
+    "added": { "$ref": "common.schema.json#/$defs/date" },
+    "published": {
+      "description": "Date of first publication; defaults to `added`. Used for the generated news item.",
+      "$ref": "common.schema.json#/$defs/date"
+    },
+    "announce": {
+      "description": "false suppresses the news item generated on first publication.",
+      "type": "boolean"
+    },
+    "aliases": {
+      "description": "Former identifiers; each redirects to this record.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "common.schema.json#/$defs/slug" }
+    },
+    "title": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["zh-Hant"],
+      "properties": {
+        "zh-Hant": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "en": { "type": "string", "minLength": 2, "maxLength": 200 }
+      }
+    },
+    "description": { "$ref": "common.schema.json#/$defs/text" },
+    "keywords": {
+      "description": "Free search keywords, in any language.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node", "link"],
+      "properties": {
+        "node": { "$ref": "common.schema.json#/$defs/text" },
+        "link": { "$ref": "common.schema.json#/$defs/text" }
+      }
+    },
+    "structure": { "$ref": "#/$defs/structure" },
+    "counts": { "$ref": "#/$defs/counts" },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "temporal": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "start": { "type": "string", "pattern": "^[0-9]{4}(-[0-9]{2}(-[0-9]{2})?)?$" },
+            "end": { "type": "string", "pattern": "^[0-9]{4}(-[0-9]{2}(-[0-9]{2})?)?$" },
+            "ongoing": { "type": "boolean" },
+            "note": { "$ref": "common.schema.json#/$defs/text" }
+          }
+        },
+        "spatial": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["zh-Hant"],
+          "properties": {
+            "zh-Hant": { "type": "string", "minLength": 1 },
+            "en": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "domains": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": { "$ref": "common.schema.json#/$defs/vocabId" }
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "common.schema.json#/$defs/vocabId" }
+    },
+    "concepts": {
+      "description": "Extra search concepts from catalog/vocab/concepts.yaml, beyond those implied by structure, domains and tags.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "common.schema.json#/$defs/vocabId" }
+    },
+    "taiwan_relevance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basis", "justification"],
+      "properties": {
+        "basis": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["collected-in-taiwan", "about-taiwanese-entities", "taiwanese-publisher", "taiwan-based-creators", "taiwan-subset"]
+          }
+        },
+        "justification": { "type": "string", "minLength": 5 },
+        "subset_note": { "$ref": "common.schema.json#/$defs/text" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source"],
+      "properties": {
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "url"],
+          "properties": {
+            "name": { "$ref": "common.schema.json#/$defs/text" },
+            "url": { "$ref": "common.schema.json#/$defs/url" },
+            "publisher": { "$ref": "common.schema.json#/$defs/text" }
+          }
+        },
+        "method": { "$ref": "common.schema.json#/$defs/text" },
+        "access": {
+          "description": "Upstream access links (for link-only data, these replace the download table).",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "url"],
+            "properties": {
+              "label": { "$ref": "common.schema.json#/$defs/text" },
+              "url": { "$ref": "common.schema.json#/$defs/url" },
+              "format": { "$ref": "common.schema.json#/$defs/vocabId" },
+              "controlled_access": {
+                "description": "true when the link is a controlled-access landing page (data-use agreement, application).",
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "checked_on": {
+          "description": "When the upstream source was last checked (link-only records).",
+          "$ref": "common.schema.json#/$defs/date"
+        }
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "description": "An SPDX id from the pinned list, LicenseRef-<name>, NOASSERTION or NONE.",
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9.+-]+|LicenseRef-[A-Za-z0-9.-]+|NOASSERTION|NONE)$"
+        },
+        "name": { "$ref": "common.schema.json#/$defs/text" },
+        "url": { "$ref": "common.schema.json#/$defs/url" },
+        "attribution": {
+          "description": "Attribution statement the license requires (for OGDL-Taiwan-1.0, the 顯名聲明).",
+          "type": "string",
+          "minLength": 1
+        },
+        "statement": {
+          "description": "The upstream license statement, as published.",
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "evidence": { "$ref": "common.schema.json#/$defs/evidence" }
+      }
+    },
+    "redistribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basis"],
+      "properties": {
+        "basis": { "enum": ["license-permits", "written-permission", "own-work", "link-only"] },
+        "permission_ref": { "$ref": "common.schema.json#/$defs/permissionRef" },
+        "note": { "$ref": "common.schema.json#/$defs/text" }
+      }
+    },
+    "personal_data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level"],
+      "properties": {
+        "level": { "enum": ["none", "public-role", "private-individuals", "sensitive"] },
+        "reviewed_on": { "$ref": "common.schema.json#/$defs/date" },
+        "notes": { "$ref": "common.schema.json#/$defs/text" },
+        "ethics_ref": { "type": "string", "minLength": 1 },
+        "small_cell_threshold": {
+          "description": "Smallest count of individuals in any published cell of an aggregated table.",
+          "type": "integer",
+          "minimum": 3
+        }
+      }
+    },
+    "creators": {
+      "description": "Who collected or published the data. Organisations by name; people only through consented person records.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "organization": { "$ref": "common.schema.json#/$defs/text" },
+          "url": { "$ref": "common.schema.json#/$defs/url" },
+          "ror": { "type": "string", "pattern": "^https://ror\\.org/0[a-z0-9]{8}$" },
+          "person": { "$ref": "common.schema.json#/$defs/personId" },
+          "role": { "enum": ["collector", "publisher", "curator", "contributor"] }
+        },
+        "oneOf": [{ "required": ["organization"] }, { "required": ["person"] }]
+      }
+    },
+    "references": {
+      "description": "Cited works. Author names appear exactly as published.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["citation"],
+        "properties": {
+          "citation": { "type": "string", "minLength": 10 },
+          "doi": { "type": "string", "pattern": "^10\\.[0-9]{4,9}/\\S+$" },
+          "url": { "$ref": "common.schema.json#/$defs/url" }
+        }
+      }
+    },
+    "related": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "datasets": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/slug" } },
+        "courses": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/slug" } }
+      }
+    },
+    "wanted": {
+      "description": "Wanted-list entry. Kept after publication, so /wanted/#<id> shows a 已收錄 row.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason"],
+      "properties": {
+        "reason": { "$ref": "common.schema.json#/$defs/text" },
+        "status": { "enum": ["seeking", "source-found", "in-progress", "unavailable"] },
+        "unavailable_reason": { "$ref": "common.schema.json#/$defs/text" },
+        "requests": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "withdrawn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "reason"],
+      "properties": {
+        "date": { "$ref": "common.schema.json#/$defs/date" },
+        "reason": { "$ref": "common.schema.json#/$defs/text" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "published" } } },
+      "then": {
+        "required": ["title", "description", "semantics", "structure", "domains", "taiwan_relevance", "provenance", "license", "redistribution", "personal_data"],
+        "properties": {
+          "title": { "required": ["zh-Hant", "en"] },
+          "description": { "properties": { "zh-Hant": { "minLength": 50 } } },
+          "personal_data": { "required": ["level", "reviewed_on"] }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "status": { "const": "wanted" } } },
+      "then": { "required": ["title", "description", "domains", "wanted"] }
+    },
+    {
+      "if": { "properties": { "status": { "const": "withdrawn" } } },
+      "then": { "required": ["title", "withdrawn"] }
+    },
+    {
+      "if": { "properties": { "wanted": { "properties": { "status": { "const": "unavailable" } }, "required": ["status"] } }, "required": ["wanted"] },
+      "then": { "properties": { "wanted": { "required": ["unavailable_reason"] } } }
+    },
+    {
+      "if": { "properties": { "license": { "properties": { "id": { "pattern": "^LicenseRef-" } } } }, "required": ["license"] },
+      "then": { "properties": { "license": { "required": ["name", "url"] } } }
+    },
+    {
+      "if": {
+        "properties": { "license": { "properties": { "id": { "enum": ["NOASSERTION", "NONE"] } } } },
+        "required": ["license"]
+      },
+      "then": { "properties": { "redistribution": { "properties": { "basis": { "not": { "const": "license-permits" } } } } } }
+    },
+    {
+      "if": { "properties": { "redistribution": { "properties": { "basis": { "const": "written-permission" } } } }, "required": ["redistribution"] },
+      "then": { "properties": { "redistribution": { "required": ["basis", "permission_ref"] } } }
+    },
+    {
+      "if": {
+        "properties": { "taiwan_relevance": { "properties": { "basis": { "contains": { "const": "taiwan-subset" } } } } },
+        "required": ["taiwan_relevance"]
+      },
+      "then": { "properties": { "taiwan_relevance": { "required": ["basis", "justification", "subset_note"] } } }
+    }
+  ],
+  "$defs": {
+    "attribute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$" },
+        "description": { "$ref": "common.schema.json#/$defs/text" }
+      }
+    },
+    "structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kinds"],
+      "properties": {
+        "kinds": {
+          "description": "Structure kinds; the first is the native representation.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["graph", "hypergraph", "simplicial-complex", "cell-complex", "ranking", "pairwise-comparison", "other-relational"] }
+        },
+        "directed": { "type": "boolean" },
+        "weighted": { "type": "boolean" },
+        "weight": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["meaning"],
+          "properties": {
+            "meaning": { "$ref": "common.schema.json#/$defs/text" },
+            "unit": { "type": "string", "minLength": 1 }
+          }
+        },
+        "signed": { "type": "boolean" },
+        "multi_edges": { "type": "boolean" },
+        "self_loops": { "type": "boolean" },
+        "partitions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["count", "names"],
+          "properties": {
+            "count": { "type": "integer", "minimum": 2 },
+            "names": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "zh-Hant"],
+                "properties": {
+                  "id": { "$ref": "common.schema.json#/$defs/vocabId" },
+                  "zh-Hant": { "type": "string", "minLength": 1 },
+                  "en": { "type": "string", "minLength": 1 }
+                }
+              }
+            }
+          }
+        },
+        "layers": { "enum": ["single", "multiplex", "multilayer"] },
+        "temporal": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["form"],
+          "properties": {
+            "form": { "enum": ["none", "snapshots", "event-times", "intervals"] },
+            "resolution": { "type": "string", "minLength": 1 }
+          }
+        },
+        "spatial": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["form"],
+          "properties": {
+            "form": { "enum": ["none", "node-coordinates", "areal-units", "edge-geometry"] }
+          }
+        },
+        "node_attributes": { "type": "array", "items": { "$ref": "#/$defs/attribute" } },
+        "edge_attributes": { "type": "array", "items": { "$ref": "#/$defs/attribute" } },
+        "simplicial": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "max_dimension": { "type": "integer", "minimum": 1 },
+            "stored": { "enum": ["facets", "all-faces"] },
+            "lifting": { "type": "string", "minLength": 1 }
+          }
+        },
+        "ranking": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["data_type"],
+          "properties": {
+            "data_type": { "enum": ["soc", "soi", "toc", "toi", "cat"] }
+          }
+        },
+        "comparison": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["outcome", "direction"],
+          "properties": {
+            "outcome": { "enum": ["win-loss", "win-loss-draw", "score", "margin", "preference-strength"] },
+            "direction": { "$ref": "common.schema.json#/$defs/text" }
+          }
+        },
+        "notes": { "$ref": "common.schema.json#/$defs/text" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kinds": { "contains": { "const": "graph" } } } },
+          "then": { "required": ["directed", "weighted"] }
+        },
+        {
+          "if": { "properties": { "weighted": { "const": true } }, "required": ["weighted"] },
+          "then": { "required": ["weight"] }
+        },
+        {
+          "if": { "properties": { "kinds": { "contains": { "const": "ranking" } } } },
+          "then": { "required": ["ranking"] }
+        },
+        {
+          "if": { "properties": { "kinds": { "contains": { "const": "pairwise-comparison" } } } },
+          "then": { "required": ["comparison"] }
+        }
+      ]
+    },
+    "counts": {
+      "description": "Approximate or curator-entered counts. Only for link-only records; hosted versions take counts from their manifests.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "approximate": { "type": "boolean" },
+        "as_of": { "$ref": "common.schema.json#/$defs/date" },
+        "nodes": { "type": "integer", "minimum": 0 },
+        "edges": { "type": "integer", "minimum": 0 },
+        "hyperedges": { "type": "integer", "minimum": 0 },
+        "layers": { "type": "integer", "minimum": 0 },
+        "snapshots": { "type": "integer", "minimum": 0 },
+        "alternatives": { "type": "integer", "minimum": 0 },
+        "rankings": { "type": "integer", "minimum": 0 },
+        "comparisons": { "type": "integer", "minimum": 0 },
+        "partitions": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 }
+        },
+        "note": { "$ref": "common.schema.json#/$defs/text" }
+      }
+    }
+  }
+}

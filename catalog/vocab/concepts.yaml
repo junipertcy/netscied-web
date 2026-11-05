@@ -1,0 +1,225 @@
+# Search concepts and aliases (design D4; site-search spec, "Query understanding").
+# At build time each record gets the labels and aliases of every concept it
+# carries, and the search indexes them as an alias field (boost 1.5–2). This
+# table is what lets an English or mainland-vocabulary query reach a record
+# written only in Traditional Mandarin. Keep aliases granular: an alias that is
+# too broad shows up as a forbidden hit in catalog/search-gold.yaml.
+#
+# attach: how a record gets the concept.
+#   kind: <structure kind>          property: <bipartite|multipartite|directed|weighted|signed|temporal|multilayer|spatial>
+#   domain: <domain id>             tag: <tag id>
+#   category: <course category>     (no attach: only through a record's `concepts:` list)
+
+# Words that say nothing about which record is meant. They never count toward
+# the coverage rule; a query of only these words lists everything.
+generic: [網路, 網絡, 網絡圖, network, networks, graph, graphs, 圖, 資料, data, 關係, 關聯]
+
+# Removed from queries before matching (natural-language filler; 台灣 says
+# nothing in a Taiwan-only catalog). Longest first.
+fillers: [有沒有, 我想找, 想要找, 請問, 哪裡有, 哪裡, 哪裏, 相關的, 相關, 有關的, 有關, 關於, 一些, 什麼, 資料集, 資料, 數據集, 數據, 下載, 臺灣, 台灣, 的, 嗎, 呢, dataset, datasets, data, download, taiwanese, taiwan]
+
+# A query containing one of these means computer networking or the internet
+# (site-search spec, "Computer-networking ambiguity").
+networking_intent: [計算機網路, 電腦網路, 網路工程, 網路協定, 網路通訊, 網路安全, 資訊網路, 通訊網路, tcp/ip, tcp, ip address, computer network, computer networks, computer networking, networking]
+
+# In data mode, course words show a hint toward 課程; in course mode, dataset
+# words show a hint toward 資料. Either way they are removed before matching.
+mode_words:
+  courses: [課程, 開課, 修課, 學分, 授課, syllabus, course, courses, class, classes, lecture]
+  datasets: [資料集, 數據集, 資料庫, dataset, datasets, database]
+
+# Phrase folds, applied after the character fold: 網絡 and 網路 mean the same here.
+phrase_folds:
+  - [網絡, 網路]
+  - [社群網路, 社會網路]
+
+concepts:
+  # Structure kinds
+  - id: kind:graph
+    zh-Hant: 圖
+    en: graph
+    aliases: [網絡圖, 簡單圖]
+    attach: { kind: graph }
+  - id: kind:hypergraph
+    zh-Hant: 超圖
+    en: hypergraph
+    aliases: [超圖, 超網路, 超網絡, 高階網路, 高階網絡, 高階, hypergraph, hypergraphs, higher-order network, higher-order]
+    attach: { kind: hypergraph }
+  - id: kind:simplicial-complex
+    zh-Hant: 單純複形
+    en: simplicial complex
+    aliases: [單純複形, 單形複形, 單純形, simplicial complex, simplicial, higher-order]
+    attach: { kind: simplicial-complex }
+  - id: kind:cell-complex
+    zh-Hant: 胞腔複形
+    en: cell complex
+    aliases: [胞腔複形, cell complex, cw complex]
+    attach: { kind: cell-complex }
+  - id: kind:other-relational
+    zh-Hant: 其他關聯資料
+    en: other relational data
+    aliases: [關聯資料, 關聯表, relational data]
+    attach: { kind: other-relational }
+  - id: kind:ranking
+    zh-Hant: 排名
+    en: ranking
+    aliases: [排名, 排序, 排行, 名次, 偏好, ranking, rankings, preference, preflib]
+    attach: { kind: ranking }
+  - id: kind:pairwise-comparison
+    zh-Hant: 成對比較
+    en: pairwise comparison
+    aliases: [成對比較, 兩兩比較, 對戰, 勝負, 比賽結果, pairwise comparison, pairwise, tournament, bradley-terry, elo]
+    attach: { kind: pairwise-comparison }
+  # Structural properties
+  - id: property:bipartite
+    zh-Hant: 二分網絡
+    en: bipartite network
+    aliases: [二分網路, 二分網絡, 二分圖, 二部圖, 雙模網絡, 雙模, 二元網絡, 隸屬網絡, bipartite, two-mode, affiliation network]
+    attach: { property: bipartite }
+  - id: property:multipartite
+    zh-Hant: 多分網絡
+    en: multipartite network
+    aliases: [多分圖, 多部圖, multipartite, k-partite]
+    attach: { property: multipartite }
+  - id: property:directed
+    zh-Hant: 有向網絡
+    en: directed network
+    aliases: [有向, 有向圖, directed, digraph]
+    attach: { property: directed }
+  - id: property:weighted
+    zh-Hant: 加權網絡
+    en: weighted network
+    aliases: [加權, 權重, weighted]
+    attach: { property: weighted }
+  - id: property:signed
+    zh-Hant: 帶正負號網絡
+    en: signed network
+    aliases: [正負號, 符號網絡, 贊成反對, signed]
+    attach: { property: signed }
+  - id: property:temporal
+    zh-Hant: 時序網絡
+    en: temporal network
+    aliases: [時序, 時序網絡, 動態網絡, 時變, 時間序列, temporal, dynamic network, time-varying, longitudinal]
+    attach: { property: temporal }
+  - id: property:multilayer
+    zh-Hant: 多層網絡
+    en: multilayer network
+    aliases: [多層, 多層網絡, 多重網絡, multilayer, multiplex]
+    attach: { property: multilayer }
+  - id: property:spatial
+    zh-Hant: 空間網絡
+    en: spatial network
+    aliases: [空間, 地理, 空間網絡, spatial, geographic, geospatial]
+    attach: { property: spatial }
+  # Domains
+  - { id: domain:society, zh-Hant: 社會關係, en: society, aliases: [社會, 人際, 社會網絡, social, society], attach: { domain: society } }
+  - { id: domain:politics, zh-Hant: 政治與治理, en: politics, aliases: [政治, 治理, 政府, political, politics, governance], attach: { domain: politics } }
+  - { id: domain:culture, zh-Hant: 文化、媒體與運動, en: culture, aliases: [文化, 媒體, 藝術, 娛樂, culture, media, entertainment], attach: { domain: culture } }
+  - { id: domain:economy, zh-Hant: 經濟與產業, en: economy, aliases: [經濟, 產業, 金融, 企業, economy, economic, industry, finance], attach: { domain: economy } }
+  - { id: domain:transport, zh-Hant: 交通與移動, en: transport, aliases: [交通, 運輸, 移動, 基礎建設, transport, transportation, mobility], attach: { domain: transport } }
+  - { id: domain:technology, zh-Hant: 科技與基礎設施, en: technology, aliases: [科技, 基礎設施, 技術, technology, infrastructure], attach: { domain: technology } }
+  - { id: domain:information, zh-Hant: 資訊與知識, en: information, aliases: [資訊, 知識, 文獻, information, knowledge], attach: { domain: information } }
+  - { id: domain:life, zh-Hant: 生物與生態, en: life, aliases: [生物, 生態, 物種, biology, biological, ecology], attach: { domain: life } }
+  - { id: domain:health, zh-Hant: 健康與醫療, en: health, aliases: [健康, 醫療, 疾病, 公衛, health, medicine, medical], attach: { domain: health } }
+  # Subjects
+  - id: topic:metro
+    zh-Hant: 捷運
+    en: metro
+    aliases: [捷運, 北捷, 高捷, 桃捷, 地鐵, 地下鐵, 旅次, 運量, 起訖, 客流, 進出站, mrt, metro, subway, ridership, origin-destination, od]
+    attach: { tag: metro }
+  - id: topic:public-transport
+    zh-Hant: 大眾運輸
+    en: public transport
+    aliases: [大眾運輸, 公共運輸, 公車, 客運, public transport, transit, bus]
+    attach: { tag: public-transport }
+  - id: topic:bicycle-sharing
+    zh-Hant: 公共自行車
+    en: bicycle sharing
+    aliases: [youbike, 微笑單車, 公共自行車, 共享單車, 自行車, 單車, bike sharing, bicycle, bike]
+    attach: { tag: bicycle-sharing }
+  - id: topic:aviation
+    zh-Hant: 航空
+    en: aviation
+    aliases: [航空, 航線, 班機, 機場, 飛航, flight, flights, airline, airport, aviation]
+    attach: { tag: aviation }
+  - id: topic:legislature
+    zh-Hant: 立法院
+    en: legislature
+    aliases: [立法院, 立委, 立法委員, 國會, 議員, 連署, 共同提案, 提案, 法案, 議案, legislator, legislators, legislature, parliament, cosponsorship, co-sponsorship, bill, bills]
+    attach: { tag: legislature }
+  - id: topic:elections
+    zh-Hant: 選舉
+    en: elections
+    aliases: [選舉, 投票, 候選人, 得票, election, elections, voting, candidates]
+    attach: { tag: elections }
+  - id: topic:internet
+    zh-Hant: 網際網路
+    en: internet
+    aliases: [網際網路, 網路基礎設施, 網路節點, 骨幹, 頻寬, 拓樸, 網路拓樸, 互連, 交換中心, isp, autonomous system, internet, internet topology, peering, bandwidth, backbone]
+    attach: { tag: internet }
+  - id: topic:film
+    zh-Hant: 電影
+    en: film
+    aliases: [電影, 影片, 影展, 影人, 演員, 導演, 金馬, 金馬獎, film, films, movie, movies, cinema, golden horse]
+    attach: { tag: film }
+  - id: topic:awards
+    zh-Hant: 獎項
+    en: awards
+    aliases: [獎項, 入圍, 提名, 得獎, award, awards, nomination, nominations, nominee, nominees]
+    attach: { tag: awards }
+  - id: topic:baseball
+    zh-Hant: 棒球
+    en: baseball
+    aliases: [棒球, 中職, 職棒, 中華職棒, 打者, 投手, cpbl, baseball]
+    attach: { tag: baseball }
+  - id: topic:sport
+    zh-Hant: 運動
+    en: sport
+    aliases: [運動, 體育, 球賽, 比賽, sport, sports]
+    attach: { tag: sport }
+  - id: topic:input-output
+    zh-Hant: 產業關聯
+    en: input–output
+    aliases: [產業關聯, 產業關聯表, 投入產出, 投入產出表, 交易表, input-output, input–output, leontief]
+    attach: { tag: input-output }
+  - id: topic:trade
+    zh-Hant: 貿易
+    en: trade
+    aliases: [貿易, 進出口, 出口, 進口, trade, export, exports, import, imports]
+    attach: { tag: trade }
+  - id: topic:energy
+    zh-Hant: 能源
+    en: energy
+    aliases: [能源, 電力, 電網, 潮流, 輸電, 台電, energy, electricity, power grid, power flow]
+    attach: { tag: energy }
+  - id: topic:migration
+    zh-Hant: 人口遷徙
+    en: migration
+    aliases: [遷徙, 遷移, 遷入, 遷出, 人口移動, migration]
+    attach: { tag: migration }
+  - id: topic:citations
+    zh-Hant: 引用
+    en: citations
+    aliases: [引用, 引文, 文獻引用, 共同作者, 合著, citation, citations, co-authorship, coauthorship, bibliometric]
+    attach: { tag: citations }
+  # Course categories
+  - id: category:network-science
+    zh-Hant: 網絡科學
+    en: network science
+    aliases: [網絡科學, 網路科學, 複雜網絡, 複雜網路, 複雜系統, 生物網路, 網路生物學, network science, complex networks, complex systems]
+    attach: { category: network-science }
+  - id: category:social-network-analysis
+    zh-Hant: 社會網絡分析
+    en: social network analysis
+    aliases: [社會網絡分析, 社會網路分析, 社群網路分析, 社會網絡, 社群網路, 網絡分析, sna, social network analysis, social networks, social network]
+    attach: { category: social-network-analysis }
+  - id: category:graph-theory
+    zh-Hant: 圖論
+    en: graph theory
+    aliases: [圖論, 圖形理論, 圖演算法, 組合數學, graph theory, graph algorithms, combinatorics]
+    attach: { category: graph-theory }
+  - id: category:graph-ml
+    zh-Hant: 圖機器學習
+    en: graph machine learning
+    aliases: [圖神經網路, 圖神經網絡, 圖機器學習, 圖探勘, 圖表示學習, 圖學習, gnn, graph neural network, graph neural networks, graph machine learning, graph mining, graph representation learning]
+    attach: { category: graph-ml }

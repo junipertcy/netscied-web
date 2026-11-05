@@ -1,0 +1,87 @@
+id: twnic-interconnection-bandwidth
+status: published
+added: "2026-11-04"
+announce: false
+title:
+  zh-Hant: TWNIC 連線頻寬網絡
+  en: TWNIC inter-network bandwidth network
+description:
+  zh-Hant: |-
+    財團法人台灣網路資訊中心（TWNIC）的「連線頻寬登錄查詢系統」，
+    提供臺灣各網路之間登錄的連線與頻寬，可依年份與季別下載 GML 格式的網絡檔，
+    資料自 2001 年起，每季公布一次。本站不轉載檔案，請至 TWNIC 網站下載。
+  en: >-
+    TWNIC's registry of interconnection bandwidth between networks in Taiwan,
+    downloadable as GML by year and quarter since 2001. This site links to the
+    files; it does not host them.
+keywords: [TWNIC, 連線頻寬, 網路拓樸, GML, ISP]
+semantics:
+  node:
+    zh-Hant: 登錄於 TWNIC 連線頻寬登錄查詢系統的網路
+    en: a network registered in TWNIC's bandwidth registry
+  link:
+    zh-Hant: 兩個網路之間登錄的連線，標示頻寬（Mbps）
+    en: a registered connection between two networks, labelled with its bandwidth (Mbps)
+structure:
+  kinds: [graph]
+  directed: true
+  weighted: true
+  weight:
+    meaning:
+      zh-Hant: 連線頻寬（GML 檔中只以標籤文字記載，例如「179 mbps」）
+      en: bandwidth, stored only as label text in the GML (for example "179 mbps")
+    unit: Mbps
+  temporal: { form: snapshots, resolution: quarter }
+  spatial: { form: none }
+  notes:
+    zh-Hant: |-
+      2026 年 7 月的檔案宣告為有向圖，509 對節點互有連線，其中 501 對兩個方向的頻寬相同；
+      節點顏色分為三類，原始資料未說明其意義。
+counts:
+  approximate: true
+  as_of: "2026-11-04"
+  nodes: 115
+  edges: 1023
+  note:
+    zh-Hant: 節點與連結數取自 2026 年 7 月公布的檔案，其他季別的規模可能不同。
+coverage:
+  temporal: { start: "2001", ongoing: true }
+  spatial: { zh-Hant: 臺灣, en: Taiwan }
+domains: [technology]
+tags: [internet, telecommunications]
+taiwan_relevance:
+  basis: [about-taiwanese-entities, taiwanese-publisher]
+  justification: 由臺灣的 TWNIC 發布，描述臺灣各網路之間的連線。
+provenance:
+  source:
+    name: { zh-Hant: TWNIC 連線頻寬登錄查詢系統, en: TWNIC bandwidth registry }
+    url: https://map.twnic.tw/main_gml.html
+    publisher: { zh-Hant: 財團法人台灣網路資訊中心, en: Taiwan Network Information Center (TWNIC) }
+  method:
+    zh-Hant: 各網路單位向 TWNIC 登錄連線頻寬，TWNIC 每季彙整公布。
+  access:
+    - label: { zh-Hant: GML 資料下載（選擇年份與季別）, en: GML download (choose year and quarter) }
+      url: https://map.twnic.tw/main_gml.html
+      format: gml
+    - label: { zh-Hant: 連線頻寬圖, en: bandwidth map }
+      url: https://map.twnic.tw/main_map.html
+      format: web
+  checked_on: "2026-11-04"
+license:
+  id: NOASSERTION
+  statement:
+    zh-Hant: TWNIC 網站未載明資料的授權條款（2026-11-04 檢查）。
+  evidence:
+    url: https://map.twnic.tw/main_gml.html
+    checked_on: "2026-11-04"
+redistribution:
+  basis: link-only
+  note:
+    zh-Hant: 在取得 TWNIC 書面同意前，本站只提供連結。
+personal_data:
+  level: none
+  reviewed_on: "2026-11-04"
+creators:
+  - organization: { zh-Hant: 財團法人台灣網路資訊中心, en: Taiwan Network Information Center (TWNIC) }
+    url: https://www.twnic.tw/
+    role: publisher

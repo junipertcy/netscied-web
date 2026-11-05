@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/version.schema.json",
+  "title": "netscied.tw version manifest (catalog/versions/<id>/<version>.json)",
+  "description": "Written by the curation pipeline, never by hand, and immutable once on main: only `doi`, `suspended` and `withdrawn` may be added later. `upstream_snapshot` is internal provenance and is not published in the API.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["dataset", "version", "released", "changelog", "files", "statistics", "computed_by"],
+  "properties": {
+    "dataset": { "$ref": "common.schema.json#/$defs/slug" },
+    "version": { "$ref": "common.schema.json#/$defs/semver" },
+    "released": { "$ref": "common.schema.json#/$defs/date" },
+    "snapshot_date": {
+      "description": "Date the upstream data was retrieved (shown as 來源快照日期).",
+      "$ref": "common.schema.json#/$defs/date"
+    },
+    "changelog": { "$ref": "common.schema.json#/$defs/text" },
+    "doi": { "type": ["string", "null"], "pattern": "^10\\.[0-9]{4,9}/\\S+$" },
+    "license": {
+      "description": "License of the files in this version (SPDX id).",
+      "type": "string"
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "url", "bytes", "sha256", "media_type", "format", "role"],
+        "properties": {
+          "path": { "type": "string", "pattern": "^[A-Za-z0-9._/-]+$" },
+          "url": { "type": "string", "pattern": "^https://netscied\\.tw/data/[a-z0-9-]+/[0-9]+\\.[0-9]+\\.[0-9]+/[A-Za-z0-9._/-]+$" },
+          "bytes": { "type": "integer", "minimum": 0 },
+          "sha256": { "$ref": "common.schema.json#/$defs/sha256" },
+          "md5": { "type": "string", "pattern": "^[0-9a-f]{32}$" },
+          "media_type": { "type": "string", "minLength": 3 },
+          "format": { "$ref": "common.schema.json#/$defs/vocabId" },
+          "role": { "enum": ["canonical", "convenience", "original", "metadata", "checksums", "bundle"] },
+          "conforms_to": { "$ref": "common.schema.json#/$defs/url" }
+        }
+      }
+    },
+    "statistics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "graph": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["nodes", "edges"],
+          "properties": {
+            "nodes": { "type": "integer", "minimum": 0 },
+            "edges": { "type": "integer", "minimum": 0 },
+            "partitions": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+            "repeated_pairs": { "type": "integer", "minimum": 0 },
+            "unique_pairs": { "type": "integer", "minimum": 0 },
+            "self_loops": { "type": "integer", "minimum": 0 },
+            "isolated_nodes": { "type": "integer", "minimum": 0 },
+            "components": { "type": "integer", "minimum": 0 },
+            "largest_component_nodes": { "type": "integer", "minimum": 0 },
+            "total_weight": { "type": "number" }
+          }
+        },
+        "hypergraph": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["nodes", "hyperedges", "incidences"],
+          "properties": {
+            "nodes": { "type": "integer", "minimum": 0 },
+            "hyperedges": { "type": "integer", "minimum": 0 },
+            "incidences": { "type": "integer", "minimum": 0 },
+            "edge_size": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["min", "max"],
+              "properties": {
+                "min": { "type": "integer", "minimum": 0 },
+                "max": { "type": "integer", "minimum": 0 },
+                "mean": { "type": "number" }
+              }
+            },
+            "empty_hyperedges": { "type": "integer", "minimum": 0 },
+            "isolated_nodes": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "ranking": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["alternatives", "voters"],
+          "properties": {
+            "alternatives": { "type": "integer", "minimum": 0 },
+            "voters": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "comparison": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["items", "comparisons"],
+          "properties": {
+            "items": { "type": "integer", "minimum": 0 },
+            "comparisons": { "type": "integer", "minimum": 0 },
+            "ties": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "computed_by": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tool", "version"],
+      "properties": {
+        "tool": { "type": "string" },
+        "version": { "type": "string" },
+        "libraries": { "type": "object", "additionalProperties": { "type": "string" } },
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+        "lock_sha256": { "$ref": "common.schema.json#/$defs/sha256" }
+      }
+    },
+    "upstream_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sources"],
+      "properties": {
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "retrieved_at", "sha256", "bytes"],
+            "properties": {
+              "id": { "type": "string" },
+              "url": { "$ref": "common.schema.json#/$defs/url" },
+              "landing_page": { "$ref": "common.schema.json#/$defs/url" },
+              "archived_landing_page": { "$ref": "common.schema.json#/$defs/url" },
+              "retrieved_at": { "type": "string", "minLength": 10 },
+              "sha256": { "$ref": "common.schema.json#/$defs/sha256" },
+              "bytes": { "type": "integer", "minimum": 0 }
+            }
+          }
+        }
+      }
+    },
+    "suspended": {
+      "description": "true while downloads are suspended under the takedown procedure; files then list no URLs to agents.",
+      "type": "boolean"
+    },
+    "withdrawn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "reason"],
+      "properties": {
+        "date": { "$ref": "common.schema.json#/$defs/date" },
+        "reason": { "$ref": "common.schema.json#/$defs/text" }
+      }
+    }
+  }
+}

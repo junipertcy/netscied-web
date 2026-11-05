@@ -1,0 +1,34 @@
+id: ncku-stat-intro-data-science
+university: ncku
+department: { zh-Hant: 統計學系, en: Department of Statistics }
+title: { zh-Hant: 資料科學導論, en: Introduction to Data Science }
+course_code: H212200
+category: network-science
+relevance: partial
+offering_type: module
+level: undergraduate
+languages: [zh, en]
+historical: true
+related_page: /stat1021/
+inclusion_note:
+  zh-Hant: 106-2 學期的兩次客座講授以網絡資料分析為主題；本站保留為歷史紀錄。
+  en: Two guest lectures on network data in spring 2018; kept as a historical record.
+summary:
+  zh-Hant: 2018 年春季的兩次客座講授，介紹 Git 與 GitHub、以 GitHub Pages 架設網站，以及網絡科學入門（中心性、社群偵測、友誼悖論）。
+  en: Two guest lectures in spring 2018 on Git and GitHub, website hosting on GitHub Pages, and a short introduction to network science.
+disclosure:
+  zh-Hant: 本站維護者顏子祺是這兩次講授的客座講者。
+  en: The site's maintainer, Tzu-Chi Yen, gave these guest lectures.
+provenance:
+  found_via: manual
+  added: "2026-11-04"
+  reviewed: "2026-11-04"
+offerings:
+  - term: 106-2
+    code: H212200
+    instructors:
+      - { name: 顏子祺, name_en: Tzu-Chi Yen, role: guest }
+    evidence_url: http://class-qry.acad.ncku.edu.tw/syllabus/online_display.php?syear=0106&sem=2&co_no=H212200&class_code=
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 講授日期為 2018 年 4 月 11 日與 18 日（星期三）。

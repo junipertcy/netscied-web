@@ -1,0 +1,8 @@
+# Every dataset and course identifier ever issued (dataset-catalog spec,
+# "Permanent identifiers"). Append-only: never edit or delete a line. Each line is
+#   <kind> <id> <date added>
+# and the record with that id must keep that `added` date, so an id can never be
+# reused for a different record. Aliases are listed as `alias <old id> <new id>`.
+dataset twnic-interconnection-bandwidth 2026-11-04
+dataset population-migration 2026-11-04
+course ncku-stat-intro-data-science 2026-11-04

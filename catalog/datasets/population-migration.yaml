@@ -1,0 +1,15 @@
+id: population-migration
+status: wanted
+added: "2026-11-04"
+title:
+  zh-Hant: 人口遷徙網絡
+  en: Population migration network
+description:
+  zh-Hant: 臺灣各地之間的人口遷入、遷出流量，例如縣市或鄉鎮之間的遷徙人數。
+domains: [society]
+tags: [migration]
+wanted:
+  reason:
+    zh-Hant: 舊版網站「生活中的網絡」列為搜集中的項目。
+  status: seeking
+  requests: 0

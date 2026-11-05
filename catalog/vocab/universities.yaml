@@ -1,0 +1,23 @@
+# Institutions offering courses in the catalog (course-catalog spec: the
+# university is a short key mapping to Mandarin and English names and ROR id).
+# ROR ids were looked up in the ROR API (api.ror.org/v2) on 2026-11-04.
+- { id: ntu, zh-Hant: 國立臺灣大學, short: 臺大, en: National Taiwan University, ror: "https://ror.org/05bqach95" }
+- { id: ncku, zh-Hant: 國立成功大學, short: 成大, en: National Cheng Kung University, ror: "https://ror.org/01b8kcc49" }
+- { id: nthu, zh-Hant: 國立清華大學, short: 清大, en: National Tsing Hua University, ror: "https://ror.org/00zdnkx70" }
+- { id: nycu, zh-Hant: 國立陽明交通大學, short: 陽明交大, en: National Yang Ming Chiao Tung University, ror: "https://ror.org/00se2k293" }
+- { id: nccu, zh-Hant: 國立政治大學, short: 政大, en: National Chengchi University, ror: "https://ror.org/03rqk8h36" }
+- { id: ntnu, zh-Hant: 國立臺灣師範大學, short: 臺師大, en: National Taiwan Normal University, ror: "https://ror.org/059dkdx38" }
+- { id: ncu, zh-Hant: 國立中央大學, short: 中央, en: National Central University, ror: "https://ror.org/00944ve71" }
+- { id: nsysu, zh-Hant: 國立中山大學, short: 中山, en: National Sun Yat-sen University, ror: "https://ror.org/00mjawt10" }
+- { id: nchu, zh-Hant: 國立中興大學, short: 中興, en: National Chung Hsing University, ror: "https://ror.org/05vn3ca78" }
+- { id: ccu, zh-Hant: 國立中正大學, short: 中正, en: National Chung Cheng University, ror: "https://ror.org/0028v3876" }
+- { id: ntust, zh-Hant: 國立臺灣科技大學, short: 臺科大, en: National Taiwan University of Science and Technology, ror: "https://ror.org/00q09pe49" }
+- { id: nuk, zh-Hant: 國立高雄大學, short: 高大, en: National University of Kaohsiung, ror: "https://ror.org/013zjb662" }
+- { id: thu, zh-Hant: 東海大學, short: 東海, en: Tunghai University, ror: "https://ror.org/00zhvdn11" }
+- { id: scu, zh-Hant: 東吳大學, short: 東吳, en: Soochow University (Taiwan), ror: "https://ror.org/05kvm7n82" }
+- { id: tku, zh-Hant: 淡江大學, short: 淡江, en: Tamkang University, ror: "https://ror.org/04tft4718" }
+- { id: cycu, zh-Hant: 中原大學, short: 中原, en: Chung Yuan Christian University, ror: "https://ror.org/02w8ws377" }
+- { id: fju, zh-Hant: 輔仁大學, short: 輔大, en: Fu Jen Catholic University, ror: "https://ror.org/04je98850" }
+- { id: cgu, zh-Hant: 長庚大學, short: 長庚, en: Chang Gung University, ror: "https://ror.org/00d80zx46" }
+- { id: tmu, zh-Hant: 臺北醫學大學, short: 北醫, en: Taipei Medical University, ror: "https://ror.org/05031qk94" }
+- { id: sinica, zh-Hant: 中央研究院, short: 中研院, en: Academia Sinica, ror: "https://ror.org/05bxb3784" }

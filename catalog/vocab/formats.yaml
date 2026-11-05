@@ -1,0 +1,16 @@
+# File formats used in version manifests and access links. conforms_to is the
+# specification a canonical file validates against (data-curation spec).
+- { id: csv-bundle, zh-Hant: CSV 檔案組（節點表與連結表）, en: CSV bundle (nodes and edges), media_type: text/csv, conforms_to: "https://datapackage.org/standard/data-package/" }
+- { id: datapackage, zh-Hant: Frictionless 資料包描述, en: Frictionless Data Package descriptor, media_type: application/json, conforms_to: "https://datapackage.org/profiles/2.0/datapackage.json" }
+- { id: graphml, zh-Hant: GraphML, en: GraphML, media_type: application/graphml+xml, conforms_to: "http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd" }
+- { id: hif, zh-Hant: HIF 超圖交換格式, en: Hypergraph Interchange Format (HIF), media_type: application/json, conforms_to: "https://github.com/HIF-org/HIF-standard" }
+- { id: gml, zh-Hant: GML, en: GML, media_type: text/plain }
+- { id: csv, zh-Hant: CSV, en: CSV, media_type: text/csv }
+- { id: json, zh-Hant: JSON, en: JSON, media_type: application/json }
+- { id: xlsx, zh-Hant: Excel 試算表, en: Excel workbook, media_type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet }
+- { id: zip, zh-Hant: ZIP 壓縮檔（全部檔案）, en: ZIP archive (all files), media_type: application/zip }
+- { id: sha256sums, zh-Hant: SHA-256 檢查碼清單, en: SHA-256 checksum list, media_type: text/plain }
+- { id: attribution, zh-Hant: 姓名標示說明, en: attribution notice, media_type: text/plain }
+- { id: provenance, zh-Hant: 來源與處理紀錄, en: provenance record, media_type: application/json }
+- { id: api, zh-Hant: 網路 API, en: web API, media_type: application/json }
+- { id: web, zh-Hant: 網頁, en: web page, media_type: text/html }
