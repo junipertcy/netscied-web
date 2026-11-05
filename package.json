@@ -7,7 +7,8 @@
     "start": "ng serve",
     "build": "ng build && node scripts/build/sitemap.mjs",
     "test": "pnpm build && pnpm test:only",
-    "test:only": "node --test \"tests/**/*.test.mjs\""
+    "test:only": "node --test \"tests/**/*.test.mjs\"",
+    "edge:build": "node scripts/edge/build-function.mjs"
   },
   "private": true,
   "packageManager": "pnpm@11.21.0",

@@ -1,0 +1,27 @@
+# The site's one redirect map (site-structure spec, "Legacy URLs keep working").
+# `pnpm edge:build` embeds it in infra/cloudfront/viewer-request.js, and
+# `pnpm test` fails if the two drift apart. Redirects keep the query string.
+#
+# Phase 0 deploys only the host rule and the slash rules, so the old pages keep
+# serving. The legacy rows below ship disabled; task 5.6 enables them for the
+# Phase 1 deploy.
+
+canonical_host: netscied.tw
+redirect_hosts:
+  - www.netscied.tw
+
+# `from`: a path without a trailing slash; it also matches `from/` and `from/index.html`.
+# `to`: a site path, or an https URL for an external target.
+paths:
+  - from: /networks
+    to: /datasets/
+    enabled: false
+  - from: /refs
+    to: /courses/
+    enabled: false
+  - from: /booklet
+    to: /about/#booklet
+    enabled: false
+  - from: /tools
+    to: https://github.com/junipertcy/Network-Code-Repository
+    enabled: false
