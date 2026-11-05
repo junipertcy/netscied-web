@@ -104,6 +104,14 @@ export function validateCatalog({ root, baseRef = 'origin/main', requireBase = f
         }
       }
     };
+    // Every `alias <old> <new>` line names a record <new> that lists <old> in its aliases.
+    const aliasOwner = new Map();
+    for (const { data } of [...cat.datasets, ...cat.courses]) for (const a of data?.aliases ?? []) aliasOwner.set(a, data.id);
+    for (const a of lock.aliases) {
+      const owner = aliasOwner.get(a.from);
+      if (owner === undefined) err(lockFile, `line ${a.line}`, `alias "${a.from}" → "${a.to}", but no record lists "${a.from}" in its aliases`);
+      else if (owner !== a.to) err(lockFile, `line ${a.line}`, `alias "${a.from}" → "${a.to}", but "${a.from}" is an alias of "${owner}"`);
+    }
     checkLocked('dataset', cat.datasets);
     checkLocked('course', cat.courses);
   }

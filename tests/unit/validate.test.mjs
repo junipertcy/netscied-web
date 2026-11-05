@@ -383,3 +383,19 @@ test('review 10: a manual source file must match its recorded SHA-256 and size',
   expectFailure((d) => withRecipe(d, 'bar\n', good), 'hosted-graph.yaml', 'sources[0]', 'SHA-256');
   expectFailure((d) => withRecipe(d, null, good), 'hosted-graph.yaml', 'sources[0].file', 'missing');
 });
+
+test('task 12.3: an alias line in ids.lock must match a record that lists that alias', () => {
+  expectFailure((dir) => {
+    writeFileSync(path.join(dir, 'catalog', 'ids.lock'), readFileSync(path.join(dir, 'catalog', 'ids.lock'), 'utf8') + 'alias ghost-id link-only-graph\n');
+  }, 'ids.lock', 'ghost-id');
+  // A matching alias line passes.
+  const dir = fixture();
+  try {
+    editYaml(dir, D('link-only-graph'), (r) => (r.aliases = ['old-link-graph']));
+    writeFileSync(path.join(dir, 'catalog', 'ids.lock'), readFileSync(path.join(dir, 'catalog', 'ids.lock'), 'utf8') + 'alias old-link-graph link-only-graph\n');
+    const { code, out } = run(dir);
+    assert.equal(code, 0, out);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
