@@ -75,3 +75,17 @@ test('CI validates against the commit before a push, and against the base branch
   assert.match(script, /github\.base_ref/);
   assert.match(script, /--require-base/);
 });
+
+test('task 8.7: the health workflow runs monthly, may only read the repo and write issues, and opens one issue only when there are findings', () => {
+  const wf = parse(readFileSync(path.join(repoRoot, '.github', 'workflows', 'health.yml'), 'utf8'));
+  assert.ok(wf.on.schedule?.[0]?.cron, 'scheduled');
+  assert.deepEqual(wf.permissions, { contents: 'read', issues: 'write' });
+  const text = readFileSync(path.join(repoRoot, '.github', 'workflows', 'health.yml'), 'utf8');
+  assert.doesNotMatch(text, /aws|id-token|secrets\./i, 'no storage credentials');
+  const steps = Object.values(wf.jobs).flatMap((j) => j.steps);
+  assert.ok(steps.some((s) => /netscied health/.test(s.run ?? '')));
+  const issue = steps.filter((s) => /gh issue create/.test(s.run ?? ''));
+  assert.equal(issue.length, 1);
+  assert.match(issue[0].if, /findings/);
+  assert.doesNotMatch(text, /git push|git commit|gh pr/);
+});

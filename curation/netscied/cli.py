@@ -5,6 +5,7 @@
   stats     the same statistics, as JSON only
   manifest  write the version folder build/data/<id>/<version>/ and catalog/versions/<id>/<version>.json
   upload    refused here: uploads run only in the approved publish job (task 8.6)
+  health    the monthly health check; prints one report and changes nothing
 
 Nothing here uploads or publishes (data-curation spec, "Human gate on publication").
 """
@@ -22,6 +23,7 @@ from pathlib import Path
 from . import __version__
 from .converters import convert as run_converter
 from .fetch import Fetcher, FetchError, fetch_recipe
+from .health import render, run_health
 from .licenses import LicenseRefused, check_recipe
 from .recipes import REPO, RecipeError, dataset_record, load_recipe, recipe_path
 from .stats import graph_stats, hypergraph_stats
@@ -91,7 +93,19 @@ def main(argv=None) -> int:
             p.add_argument("--released", help="release date, YYYY-MM-DD (default: today in Taipei)")
             p.add_argument("--allow-dirty", action="store_true", help="allow uncommitted pipeline changes (tests only)")
             p.add_argument("--force", action="store_true", help="overwrite an existing manifest that is not yet on main")
+    h = sub.add_parser("health", help="monthly health check: re-hash published files, check upstream sources and access links; writes one report")
+    h.add_argument("--report", type=Path, help="write the Markdown report (the issue body) here")
+    h.add_argument("--data-base", default="https://netscied.tw/data", help="where the published version folders are served")
     args = parser.parse_args(argv)
+
+    if args.command == "health":
+        report = run_health(root=REPO, fetcher=Fetcher(), data_base=args.data_base.rstrip("/"), today=datetime.now(TAIPEI).date().isoformat())
+        body = render(report)
+        if args.report:
+            args.report.write_text(body, encoding="utf-8")
+        print(body)
+        # 3 = findings to report (the workflow then opens one issue); nothing is ever changed.
+        return 3 if report.findings else 0
 
     try:
         if args.command == "upload":

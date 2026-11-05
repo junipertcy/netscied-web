@@ -1,0 +1,46 @@
+# Monthly health check (task 8.7; data-curation spec, "Integrity and monthly
+# health check"). It re-hashes every published file under /data/, checks every
+# hosted dataset's upstream sources (HTTP validators, page checksums,
+# data.gov.tw modification dates) and every access link, and reports all
+# findings in one issue. It has no credentials for the data storage and changes
+# no record or file: its only write is that issue.
+#
+# It checks the live site, so scheduled runs start once the site is deployed
+# (the repository variable NETSCIED_DEPLOY_ENABLED=true, as for monthly.yml).
+name: Monthly health check
+
+on:
+  schedule:
+    - cron: '41 20 3 * *' # 04:41 on the 4th in Taipei (20:41 UTC on the 3rd)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  health:
+    if: github.event_name == 'workflow_dispatch' || vars.NETSCIED_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+      - name: Check published files, upstream sources and access links
+        id: check
+        working-directory: curation
+        run: |
+          set +e
+          uv run --frozen netscied health --report "$RUNNER_TEMP/health.md"
+          code=$?
+          set -e
+          if [ "$code" -eq 3 ]; then
+            echo "findings=true" >> "$GITHUB_OUTPUT"
+          elif [ "$code" -ne 0 ]; then
+            exit "$code"
+          fi
+      - name: Open one issue with every finding
+        if: steps.check.outputs.findings == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue create --title "每月健康檢查 $(TZ=Asia/Taipei date +%Y-%m-%d)" --body-file "$RUNNER_TEMP/health.md"
