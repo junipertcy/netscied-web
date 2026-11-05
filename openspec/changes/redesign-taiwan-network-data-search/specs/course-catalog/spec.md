@@ -5,7 +5,7 @@ Defines the catalog of network-related college courses offered in Taiwan: what a
 ## ADDED Requirements
 
 ### Requirement: Course and offering records
-The course catalog SHALL store one record per recurring course and, inside it, one entry per semester offering. A course record SHALL have a permanent ASCII identifier, the university (by a short key that maps to the institution's Mandarin and English names and ROR identifier), the department, the official Mandarin title, a category, a relevance class, an offering type, the level (undergraduate, master, doctoral, mixed, professional or non-credit), the language or languages of instruction, provenance (how it was found, when it was added, when it was last reviewed), and at least one offering. Each credit-course offering SHALL have a term in the form `<學年度>-<學期>` (`114-1`, `114-2`, or `114-S` for summer), the instructors as published by the university, an evidence URL showing that the offering exists, and the date the maintainer last verified that URL. Non-credit offerings SHALL use start and end dates instead of a term. The build SHALL validate every record against the published course JSON Schema and fail on any violation.
+The course catalog SHALL store one record per recurring course and, inside it, one entry per semester offering. A course record SHALL have a permanent ASCII identifier, the university (by a short key that maps to the institution's Mandarin and English names and ROR identifier), the department, the official Mandarin title, a category, a relevance class, an offering type, the level (undergraduate, master, doctoral, mixed, professional or non-credit), the language or languages of instruction, provenance (how it was found, when it was added, when it was last reviewed), and at least one offering. Each credit-course offering SHALL have a term in the form `<學年度>-<學期>` (`114-1`, `114-2`, or `114-S` for summer), the instructors as published by the university, an evidence URL showing that the offering exists, and the date the maintainer last verified that URL. Non-credit offerings SHALL use start and end dates instead of a term. A fact that could not be confirmed at its source (an offering whose evidence page could not be opened, its instructors, its course code, or the languages of instruction) SHALL be left blank or marked unverified with the date of the check, and SHALL NOT be guessed; an unverified offering keeps the evidence URL that was tried. The build SHALL validate every record against the published course JSON Schema and fail on any violation.
 
 #### Scenario: Course without offerings
 - **WHEN** a course record has no offering
@@ -14,6 +14,10 @@ The course catalog SHALL store one record per recurring course and, inside it, o
 #### Scenario: Missing evidence
 - **WHEN** an offering is added without an evidence URL or a verification date
 - **THEN** the build fails and names the course and offering
+
+#### Scenario: Unconfirmed language
+- **WHEN** a university page does not state the language of instruction
+- **THEN** the record leaves the languages blank with an unverified marker and its check date, and the course table shows 「未確認」
 
 #### Scenario: Summer term
 - **WHEN** an offering has term `114-S`

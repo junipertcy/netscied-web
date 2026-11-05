@@ -275,3 +275,32 @@ test('a non-credit offering uses start and end dates instead of a term', () => {
 test('news ids are permanent <YYYY-MM-DD>-<slug> anchors', () => {
   bad(s.news, { id: 'scientific-american', date: '2019-03-12', title: { 'zh-Hant': '科學人' } }, 'id');
 });
+
+// Owner decision A4 (2026-11-04): publish only confirmed course facts; an
+// unconfirmed one is blank or marked unverified, with the date of the check.
+test('unconfirmed languages are blank only with an unverified marker and its check date', () => {
+  const c = clone(COURSE);
+  c.languages = [];
+  bad(s.course, c, 'languages');
+  c.unverified = { fields: ['languages'], checked_on: '2026-11-04', note: { 'zh-Hant': '課程頁未列授課語言。' } };
+  ok(s.course, c);
+  delete c.unverified.checked_on;
+  bad(s.course, c, 'unverified.checked_on');
+});
+
+test('an offering that could not be opened has no verification date but an unverified marker', () => {
+  const c = clone(COURSE);
+  delete c.offerings[0].verified_on;
+  bad(s.course, c, 'offerings[0].verified_on');
+  c.offerings[0].unverified = { fields: ['offering'], checked_on: '2026-11-04' };
+  ok(s.course, c);
+});
+
+test('instructors left blank pending confirmation are marked, not guessed', () => {
+  const c = clone(COURSE);
+  c.offerings[0].instructors = [];
+  c.offerings[0].unverified = { fields: ['instructors'], checked_on: '2026-11-04', note: { 'zh-Hant': '兩處所列教師不同。' } };
+  ok(s.course, c);
+  c.offerings[0].unverified.fields = ['colour'];
+  bad(s.course, c, 'offerings[0].unverified.fields[0]');
+});

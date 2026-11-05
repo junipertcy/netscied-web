@@ -1,25 +1,31 @@
 id: nycu-network-science-social-computing
 university: nycu
-department: { zh-Hant: 資訊管理研究所 }
-title: { zh-Hant: 網路科學與社會計算, en: "Network Science & Social Computing" }
+department: {zh-Hant: 資訊管理研究所}
+title: {zh-Hant: 網路科學與社會計算, en: "Network Science & Social Computing"}
 course_code: MGIM30032
 category: network-science
 relevance: core
 offering_type: credit
 level: master
-languages: [zh]
+languages: []
 inclusion_note:
   zh-Hant: 115-1 週次計畫前半學期講授網絡科學概念（隨機網絡、小世界、無尺度、樞紐、影響擴散），後半學期講授社會網絡分析（中心性、位置與角色、群聚）。
 summary:
   zh-Hant: 研究所課程，先介紹網絡科學的基本概念與模型，再講授社會網絡分析與社會計算方法，最後討論社群媒體與社群電商等應用。
 keywords: [網絡科學, 社會網絡分析, 中心性, 小世界網絡, 無尺度網絡, 社會計算]
-provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
 offerings:
   - term: "115-1"
     code: "537605"
     instructors:
-      - { name: 李永銘 }
+      - {name: 李永銘}
     evidence_url: https://coz.aa.nycu.edu.tw/course/115/1/537605
     verified_on: "2026-11-04"
     note:
       zh-Hant: 當期課號 537605，資訊管理研究所與醫務管理研究所合開；頁面未列授課語言，大綱為英文。
+unverified:
+  fields:
+    - languages
+  checked_on: 2026-11-04
+  note:
+    zh-Hant: 陽明交大課程網頁未列授課語言，待確認。

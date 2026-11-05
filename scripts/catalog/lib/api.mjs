@@ -455,6 +455,7 @@ export function buildCourseRecord(record, ctx) {
       ...(o.syllabus_url ? { syllabus_url: o.syllabus_url } : {}),
       ...(o.archive_url ? { archive_url: o.archive_url } : {}),
       ...(o.note ? { note: joinText(o.note) } : {}),
+      ...(o.unverified ? { unverified: { ...o.unverified, note: joinText(o.unverified.note) } } : {}),
     }));
   const current = termOfDate(today);
   const upcoming = offerings.filter((o) => o.term && termIndex(o.term) <= termIndex(current));
@@ -480,6 +481,7 @@ export function buildCourseRecord(record, ctx) {
     offering_type: label(vocab, 'offering_type', record.offering_type),
     level: label(vocab, 'level', record.level),
     languages: record.languages.map((l) => label(vocab, 'language', l)),
+    ...(record.unverified ? { unverified: { ...record.unverified, note: joinText(record.unverified.note) } } : {}),
     inclusion_note: joinText(record.inclusion_note),
     ...(record.summary ? { summary: joinText(record.summary) } : {}),
     keywords: record.keywords ?? [],
@@ -489,6 +491,7 @@ export function buildCourseRecord(record, ctx) {
     latest: {
       ...(latest.term ? { term: latest.term, term_label: latest.term_label, term_label_en: latest.term_label_en } : { start: latest.start, end: latest.end }),
       instructors: latest.instructors,
+      ...(latest.unverified?.fields.includes('instructors') ? { instructors_unverified: true } : {}),
     },
     freshness: freshLabel,
     offerings,
@@ -509,6 +512,7 @@ export function courseSummary(full) {
     relevance: full.relevance.id,
     level: full.level,
     languages: full.languages,
+    languages_unverified: !!full.unverified?.fields.includes('languages'),
     latest: full.latest,
     freshness: full.freshness,
     historical: full.historical,

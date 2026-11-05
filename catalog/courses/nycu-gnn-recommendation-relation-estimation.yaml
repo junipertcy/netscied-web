@@ -1,25 +1,31 @@
 id: nycu-gnn-recommendation-relation-estimation
 university: nycu
-department: { zh-Hant: 資訊管理與財務金融系 }
-title: { zh-Hant: 圖神經網路之推薦系統與關係推估, en: Graph Neural Networks for Recommendation and Relation Estimation }
+department: {zh-Hant: 資訊管理與財務金融系}
+title: {zh-Hant: 圖神經網路之推薦系統與關係推估, en: Graph Neural Networks for Recommendation and Relation Estimation}
 course_code: MGIF30104
 category: graph-ml
 relevance: core
 offering_type: credit
 level: mixed
-languages: [zh]
+languages: []
 inclusion_note:
   zh-Hant: 114-2 週次計畫以圖上的機器學習為主軸，包括節點嵌入、PageRank、標籤傳播、圖神經網路模型與設計空間及知識圖譜嵌入。
 summary:
   zh-Hant: 以圖表示具關聯性的資料，介紹圖上的傳統機器學習、節點嵌入、連結分析與圖神經網路，並延伸到推薦、影響力最大化與社會網絡分析等應用；以 Colab 實作與研究提案評量。
 keywords: [圖神經網路, 圖機器學習, 節點嵌入, PageRank, 推薦系統, 知識圖譜]
-provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
 offerings:
   - term: "114-2"
     code: "537714"
     instructors:
-      - { name: 蔡詩妤 }
+      - {name: 蔡詩妤}
     evidence_url: https://coz.aa.nycu.edu.tw/course/114/2/537714
     verified_on: "2026-11-04"
     note:
       zh-Hant: 當期課號 537714，資財系學士班、碩博士班合開；頁面未列授課語言，大綱為英文並以 Stanford CS224W 為參考。
+unverified:
+  fields:
+    - languages
+  checked_on: 2026-11-04
+  note:
+    zh-Hant: 陽明交大課程網頁未列授課語言，待確認。

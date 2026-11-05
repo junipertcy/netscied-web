@@ -84,7 +84,7 @@ export function wantedSearchRecord(source, entry, vocab) {
 
 export function courseSearchRecord(source, full, vocab) {
   const concepts = conceptsFor(source, vocab);
-  const instructors = full.latest.instructors.map((i) => i.name).join('、') || '未列出';
+  const instructors = full.latest.instructors.map((i) => i.name).join('、') || (full.latest.instructors_unverified ? '待確認' : '未列出');
   return {
     type: 'course',
     id: full.id,
@@ -108,7 +108,7 @@ export function courseSearchRecord(source, full, vocab) {
       term: full.latest.term_label ?? `${full.latest.start}–${full.latest.end}`,
       term_en: full.latest.term_label_en ?? '',
       level: full.level['zh-Hant'],
-      languages: full.languages.map((l) => l['zh-Hant']).join('、'),
+      languages: [full.languages.map((l) => l['zh-Hant']).join('、'), full.unverified?.fields.includes('languages') ? '未確認' : ''].filter(Boolean).join('（') + (full.languages.length && full.unverified?.fields.includes('languages') ? '）' : ''),
       freshness: full.freshness['zh-Hant'],
     },
   };

@@ -94,7 +94,7 @@
     },
     "languages": {
       "type": "array",
-      "minItems": 1,
+      "minItems": 0,
       "uniqueItems": true,
       "items": {
         "enum": [
@@ -103,7 +103,8 @@
           "nan",
           "hak"
         ]
-      }
+      },
+      "description": "Languages of instruction. Empty only when unverified.fields lists languages (owner decision A4)."
     },
     "inclusion_note": {
       "$ref": "common.schema.json#/$defs/text"
@@ -167,6 +168,9 @@
       "items": {
         "$ref": "#/$defs/offering"
       }
+    },
+    "unverified": {
+      "$ref": "#/$defs/unverified"
     }
   },
   "allOf": [
@@ -213,6 +217,36 @@
           }
         }
       }
+    },
+    {
+      "if": {
+        "not": {
+          "properties": {
+            "unverified": {
+              "properties": {
+                "fields": {
+                  "contains": {
+                    "const": "languages"
+                  }
+                }
+              },
+              "required": [
+                "fields"
+              ]
+            }
+          },
+          "required": [
+            "unverified"
+          ]
+        }
+      },
+      "then": {
+        "properties": {
+          "languages": {
+            "minItems": 1
+          }
+        }
+      }
     }
   ],
   "$defs": {
@@ -221,8 +255,7 @@
       "additionalProperties": false,
       "required": [
         "instructors",
-        "evidence_url",
-        "verified_on"
+        "evidence_url"
       ],
       "properties": {
         "term": {
@@ -241,7 +274,7 @@
           "minLength": 1
         },
         "instructors": {
-          "description": "As published by the university. Empty means 未列出 (removed on request).",
+          "description": "As published by the university. Empty means 未列出 (removed on request), or 待確認 when unverified.fields lists instructors.",
           "type": "array",
           "items": {
             "type": "object",
@@ -273,7 +306,8 @@
           "$ref": "common.schema.json#/$defs/url"
         },
         "verified_on": {
-          "$ref": "common.schema.json#/$defs/date"
+          "$ref": "common.schema.json#/$defs/date",
+          "description": "The date the maintainer last opened evidence_url and confirmed the offering. Absent only when unverified.fields lists offering."
         },
         "syllabus_url": {
           "$ref": "common.schema.json#/$defs/url"
@@ -283,8 +317,41 @@
         },
         "note": {
           "$ref": "common.schema.json#/$defs/text"
+        },
+        "unverified": {
+          "$ref": "#/$defs/unverified"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "properties": {
+                "unverified": {
+                  "properties": {
+                    "fields": {
+                      "contains": {
+                        "const": "offering"
+                      }
+                    }
+                  },
+                  "required": [
+                    "fields"
+                  ]
+                }
+              },
+              "required": [
+                "unverified"
+              ]
+            }
+          },
+          "then": {
+            "required": [
+              "verified_on"
+            ]
+          }
+        }
+      ]
     },
     "internationalList": {
       "description": "catalog/international.yaml: courses and materials from outside Taiwan carried over from the old /refs page, shown at /courses/#international and kept out of the table, the search index and the API.",
@@ -398,6 +465,36 @@
           "note": {
             "type": "string"
           }
+        }
+      }
+    },
+    "unverified": {
+      "description": "Facts that could not be confirmed at their source (owner decision A4, 2026-11-04): they are left blank or kept out, never guessed, and the check date is recorded.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fields",
+        "checked_on"
+      ],
+      "properties": {
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "languages",
+              "offering",
+              "instructors",
+              "code"
+            ]
+          }
+        },
+        "checked_on": {
+          "$ref": "common.schema.json#/$defs/date"
+        },
+        "note": {
+          "$ref": "common.schema.json#/$defs/text"
         }
       }
     }
