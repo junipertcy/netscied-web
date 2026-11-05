@@ -12,6 +12,7 @@ left-out names.
 from __future__ import annotations
 
 import json
+import re
 from collections import Counter
 
 from ..formats import Hypergraph
@@ -20,6 +21,8 @@ from ..version import Product
 # Term dates: LYAPI /legislators?屆=10 gives 到職日 2020/02/01; the term ended 2024-01-31.
 TERMS = {10: ("2020-02-01", "2024-01-31")}
 MEMBER_BILLS = "委員提案"
+# How the LY names a private petitioner in a bill title: 「函，為陳○○君為…」.
+PETITIONER = re.compile(r"為[^，。、\s]{1,8}君")
 
 
 def _bills(n: int) -> str:
@@ -42,6 +45,15 @@ def convert(recipe: dict, files: dict, options: dict) -> Product:
     bills = {b["議案編號"]: b for b in raw}
     if total is not None and len(bills) != int(total):
         raise ValueError(f"LYAPI reported total={total} bills but the pages hold {len(bills)} distinct bills; refetch")
+    # Final review D1: the pages must hold member-proposed bills only. LYAPI's
+    # petitions (提案來源=請願案) have no name lists and name the petitioner in the
+    # title (「函，為○○○君為…」), so the name-list checks below cannot see them.
+    others = sorted({str(b.get("提案來源")) for b in bills.values() if b.get("提案來源") != MEMBER_BILLS})
+    if others:
+        raise ValueError(f"the bill pages hold bills whose 提案來源 is {', '.join(others)}, not only {MEMBER_BILLS}; fetch with 提案來源={MEMBER_BILLS}")
+    named = [b["議案編號"] for b in bills.values() if PETITIONER.search(b.get("議案名稱") or "")]
+    if named:
+        raise ValueError(f"{len(named)} bill titles name a private petitioner (…君); titles are kept verbatim, so these bills cannot be converted: {', '.join(named[:5])}")
     _, roster_items = _items(files["legislators"], "legislators")
     roster = {}
     for m in roster_items:
@@ -91,6 +103,10 @@ def convert(recipe: dict, files: dict, options: dict) -> Product:
         people = {n for b in bills.values() for n in (b.get("提案人") or []) + (b.get("連署人") or []) if n not in roster and not n.endswith("黨團")}
         if people:
             raise ValueError(f"the original bill pages carry {len(people)} names that are neither on the term-{term} roster nor caucuses; set redistribute_original: false for the bills source")
+        # 提案單位/提案委員 names a body of the LY itself: 本院委員…, 本院…黨團, 本院…委員會.
+        outside = [b["議案編號"] for b in bills.values() if (b.get("提案單位/提案委員") or "") and not str(b.get("提案單位/提案委員")).startswith("本院")]
+        if outside:
+            raise ValueError(f"the original bill pages carry {len(outside)} 提案單位/提案委員 values that are not a body of the Legislative Yuan (本院…); set redistribute_original: false for the bills source")
 
     notes = []
     if left_out["caucus_only"]:
