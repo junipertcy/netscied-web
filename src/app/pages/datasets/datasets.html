@@ -1,0 +1,57 @@
+<h1>資料集</h1>
+<p class="lede">
+  本站收錄和台灣有關的網絡資料：圖（網絡）、超圖、單純複形、排名與成對比較等關聯資料。
+  本站可以轉載的資料提供固定版本的下載檔與檢查碼；其他資料提供來源連結與授權說明。
+</p>
+<p class="page-links">
+  <a routerLink="/wanted">資料許願池（{{ index().counts.wanted }} 項徵求中）</a>
+  · <a href="/api/v1/datasets.json">JSON</a>
+  · <a href="/api/v1/datasets.csv">CSV</a>
+  <span class="hint">（CSV 為 UTF-8 編碼；Excel 請用「資料 → 從文字/CSV」匯入）</span>
+</p>
+
+@if (interactive()) {
+  <div class="sort-bar" role="group" aria-label="排序">
+    <span>排序：</span>
+    <button type="button" (click)="sortBy('version')" [attr.aria-pressed]="sort().key === 'version'">最新版本</button>
+    <button type="button" (click)="sortBy('name')" [attr.aria-pressed]="sort().key === 'name'">名稱</button>
+    <button type="button" (click)="sortBy('size')" [attr.aria-pressed]="sort().key === 'size'">規模</button>
+  </div>
+}
+
+<table class="data-table" role="table">
+  <caption>本站收錄的台灣網絡資料集（共 {{ datasets().length }} 筆）</caption>
+  <thead role="rowgroup">
+    <tr role="row">
+      <th scope="col" role="columnheader" [attr.aria-sort]="ariaSort('name')">名稱</th>
+      <th scope="col" role="columnheader">領域</th>
+      <th scope="col" role="columnheader">結構</th>
+      <th scope="col" role="columnheader" [attr.aria-sort]="ariaSort('size')">規模</th>
+      <th scope="col" role="columnheader">時間範圍</th>
+      <th scope="col" role="columnheader">授權</th>
+      <th scope="col" role="columnheader" [attr.aria-sort]="ariaSort('version')">最新版本</th>
+    </tr>
+  </thead>
+  <tbody role="rowgroup">
+    @for (d of rows(); track d.id) {
+      <tr role="row">
+        <th scope="row" role="rowheader" data-label="名稱">
+          <a [routerLink]="['/datasets', d.id]">{{ d.title['zh-Hant'] }}</a>
+          @if (d.title.en) {<span class="en" lang="en">{{ d.title.en }}</span>}
+        </th>
+        <td role="cell" data-label="領域">@for (x of d.domains; track x.id) {<span class="tag">{{ x['zh-Hant'] }}</span>}</td>
+        <td role="cell" data-label="結構">@for (b of d.structure_badges; track b.id) {<span class="badge" [class.badge-kind]="b.group === 'kind'">{{ b['zh-Hant'] }}</span>}</td>
+        <td role="cell" data-label="規模">{{ d.size?.text?.['zh-Hant'] ?? '—' }}</td>
+        <td role="cell" data-label="時間範圍">{{ d.temporal?.['zh-Hant'] ?? '—' }}</td>
+        <td role="cell" data-label="授權">{{ d.license.id === 'NOASSERTION' || d.license.id === 'NONE' ? d.license.name['zh-Hant'] : d.license.id }}</td>
+        <td role="cell" data-label="最新版本">
+          @if (d.latest_version) {
+            {{ d.latest_version.version }}<span class="sub"><time [attr.datetime]="d.latest_version.released">{{ d.latest_version.released }}</time></span>
+          } @else {
+            外部連結
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

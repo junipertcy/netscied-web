@@ -10,7 +10,7 @@
 //
 // The map between the markers is generated from config/redirects.yaml by
 // `pnpm edge:build`. Do not edit it by hand.
-var CONFIG = /* redirects:begin */{"canonicalHost":"netscied.tw","redirectHosts":["www.netscied.tw"],"paths":{}}/* redirects:end */;
+var CONFIG = /* redirects:begin */{"canonicalHost":"netscied.tw","redirectHosts":["www.netscied.tw"],"paths":{"/networks":"/datasets/","/refs":"/courses/","/booklet":"/about/#booklet","/tools":"https://github.com/junipertcy/Network-Code-Repository"}}/* redirects:end */;
 
 // Rebuilds the query string. CloudFront passes values still percent-encoded, so
 // they are copied as received.

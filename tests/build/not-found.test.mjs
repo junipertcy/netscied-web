@@ -18,12 +18,13 @@ test('the 404 page tells search engines not to index it', () => {
   assert.match(readFileSync(html, 'utf8'), /<meta name="robots" content="noindex">/);
 });
 
-test('the 404 page is in Mandarin and links back into the site', () => {
+test('the 404 page is in Mandarin, has the search form, and links to the datasets and courses (Phase 1)', () => {
   const html = readFileSync(distPath('404/index.html'), 'utf8');
   assert.match(html, /找不到這個頁面/);
+  assert.match(html, /<main[\s\S]*<form action="\/search\/" method="get"[\s\S]*<\/main>/);
+  assert.match(html, /href="\/datasets\/"/);
+  assert.match(html, /href="\/courses\/"/);
   assert.match(html, /href="\/"/);
-  assert.match(html, /href="\/networks"/);
-  assert.match(html, /href="\/refs"/);
 });
 
 test('ordinary pages are not marked noindex', () => {

@@ -1,0 +1,216 @@
+@let r = d();
+@if (r.status === 'renamed') {
+  <h1>此資料集已更名</h1>
+  <p>這個識別碼「{{ r.id }}」已改為「{{ r.current_id }}」，請前往 <a [routerLink]="['/datasets', r.current_id]">新的資料集頁面</a>。</p>
+} @else if (r.status === 'withdrawn') {
+  <nav class="crumbs" aria-label="麵包屑"><a routerLink="/datasets">資料集</a> › <span>{{ r.title['zh-Hant'] }}</span></nav>
+  <h1>{{ r.title['zh-Hant'] }}</h1>
+  @if (r.title.en) {<p class="subtitle" lang="en">{{ r.title.en }}</p>}
+  <div class="notice notice-withdrawn" role="note">
+    <p><strong>此資料集已於 <time [attr.datetime]="r.withdrawn.date">{{ zhDate(r.withdrawn.date) }}</time> 下架。</strong></p>
+    <p>原因：{{ r.withdrawn.reason['zh-Hant'] }}</p>
+    <p>本站不再提供這份資料的檔案。下架與更正的程序見<a routerLink="/about" fragment="takedown">關於本站</a>。</p>
+  </div>
+  <p class="machine-links">機器可讀：<a [href]="'/api/v1/datasets/' + r.id + '.json'">JSON 紀錄</a></p>
+} @else {
+  <nav class="crumbs" aria-label="麵包屑"><a routerLink="/datasets">資料集</a> › <span>{{ r.title['zh-Hant'] }}</span></nav>
+  <h1>{{ r.title['zh-Hant'] }}</h1>
+  @if (r.title.en) {<p class="subtitle" lang="en">{{ r.title.en }}</p>}
+
+  <section aria-label="說明" class="description">
+    @for (p of paragraphs(); track $index) {<p>{{ p }}</p>}
+  </section>
+
+  <section aria-labelledby="facts">
+    <h2 id="facts">重點資訊</h2>
+    <dl class="facts">
+      <dt>結構</dt>
+      <dd>
+        {{ r.structure_text['zh-Hant'] }}
+        <span class="badges">@for (b of r.structure_badges; track b.id) {<span class="badge" [class.badge-kind]="b.group === 'kind'">{{ b['zh-Hant'] }}</span>}</span>
+      </dd>
+      <dt>節點代表</dt><dd>{{ r.semantics.node['zh-Hant'] }}</dd>
+      <dt>連結代表</dt><dd>{{ r.semantics.link['zh-Hant'] }}</dd>
+      <dt>規模</dt>
+      <dd>
+        @if (r.size) {
+          {{ r.size.text['zh-Hant'] }}
+          @if (r.size.approximate) {<span class="sub">（約略值{{ r.size.as_of ? '，' + r.size.as_of + ' 查核' : '' }}）</span>}
+        } @else { 尚未計算 }
+      </dd>
+      @if (r.coverage.temporal) {<dt>時間範圍</dt><dd>{{ r.coverage.temporal['zh-Hant'] }}</dd>}
+      <dt>空間範圍</dt><dd>{{ r.coverage.spatial['zh-Hant'] }}</dd>
+      <dt>領域</dt><dd>@for (x of r.domains; track x.id) {<span class="tag">{{ x['zh-Hant'] }}</span>}</dd>
+      <dt>與臺灣的關係</dt>
+      <dd>
+        {{ r.taiwan_relevance.justification }}
+        <span class="sub">（@for (b of r.taiwan_relevance.basis; track b.id; let last = $last) {{{ b['zh-Hant'] }}@if (!last) {、}}）</span>
+        @if (r.taiwan_relevance.subset_note) {<p class="sub">{{ r.taiwan_relevance.subset_note['zh-Hant'] }}</p>}
+      </dd>
+      <dt>最新版本</dt>
+      <dd>
+        @if (r.latest_version) {
+          {{ r.latest_version.version }}，發布於 <time [attr.datetime]="r.latest_version.released">{{ zhDate(r.latest_version.released) }}</time>
+        } @else { 外部連結（本站未轉載檔案） }
+      </dd>
+      <dt>授權</dt>
+      <dd>
+        @if (r.license.url) {<a [href]="r.license.url">{{ r.license.name['zh-Hant'] }}</a>} @else {{{ r.license.name['zh-Hant'] }}}
+        <span class="sub">（{{ r.license.id }}）</span>
+      </dd>
+      <dt>本站可否轉載</dt>
+      <dd>{{ r.redistribution.may_redistribute ? '可以' : '不可以' }}：{{ r.redistribution.label['zh-Hant'] }}
+        @if (r.redistribution.note) {<p class="sub">{{ r.redistribution.note['zh-Hant'] }}</p>}
+      </dd>
+      <dt>DOI</dt><dd>{{ r.latest_version?.doi ? r.latest_version.doi : '尚無（引用時請使用本頁網址）' }}</dd>
+      @if (r.keywords.length) {<dt>關鍵詞</dt><dd>{{ r.keywords.join('、') }}</dd>}
+    </dl>
+    @if (r.structure.notes) {
+      <h3>資料說明</h3>
+      <p>{{ r.structure.notes['zh-Hant'] }}</p>
+    }
+  </section>
+
+  @if (r.latest_version) {
+    <section aria-labelledby="downloads">
+      <h2 id="downloads">下載（版本 {{ r.latest_version.version }}）</h2>
+      <table class="data-table files" role="table">
+        <caption class="visually-hidden">版本 {{ r.latest_version.version }} 的檔案</caption>
+        <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">格式</th><th scope="col" role="columnheader">檔案</th><th scope="col" role="columnheader">大小</th><th scope="col" role="columnheader">SHA-256</th></tr></thead>
+        <tbody role="rowgroup">
+          @for (f of r.latest_version.files; track f.path) {
+            <tr role="row">
+              <td role="cell" data-label="格式">{{ f.format_label['zh-Hant'] }}</td>
+              <th scope="row" role="rowheader" data-label="檔案"><a [href]="f.url">{{ f.path }}</a></th>
+              <td role="cell" data-label="大小">{{ bytes(f.bytes) }}<span class="sub">（{{ number(f.bytes) }} bytes）</span></td>
+              <td role="cell" data-label="SHA-256"><code [attr.title]="f.sha256">{{ shortSha(f.sha256) }}…</code></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <p class="page-links">
+        @if (r.latest_version.checksums_url) {<a [href]="r.latest_version.checksums_url">SHA256SUMS（完整檢查碼）</a>}
+        @if (r.latest_version.zip_url) { · <a [href]="r.latest_version.zip_url">全部檔案（ZIP）</a>}
+      </p>
+      <p class="hint">驗證下載：<code>sha256sum -c SHA256SUMS</code>。在 LINE 內開啟時若無法下載，請改用瀏覽器開啟本頁。</p>
+    </section>
+  } @else {
+    <section aria-labelledby="access">
+      <h2 id="access">取得資料</h2>
+      <p>本站不轉載這份資料，請到來源網站取得：</p>
+      <ul>
+        @for (a of r.access; track a.url) {
+          <li><a [href]="a.url">{{ a.label['zh-Hant'] }}</a>@if (a.format_label) {<span class="sub">（{{ a.format_label['zh-Hant'] }}）</span>}</li>
+        }
+      </ul>
+      @if (r.license.statement) {<p><strong>來源的授權說明：</strong>{{ r.license.statement['zh-Hant'] }}</p>}
+    </section>
+  }
+
+  <section aria-labelledby="cite">
+    <h2 id="cite">如何引用</h2>
+    <p class="citation">{{ r.citation.text }}</p>
+    <details>
+      <summary>BibTeX</summary>
+      <pre><code>{{ r.citation.bibtex }}</code></pre>
+    </details>
+    @if (r.latest_version) {<p class="hint">重現研究請引用版本網址（或版本 DOI）；泛指本資料集可引用本頁網址。</p>}
+  </section>
+
+  <section aria-labelledby="license">
+    <h2 id="license">授權與姓名標示</h2>
+    <p>
+      授權：@if (r.license.url) {<a [href]="r.license.url">{{ r.license.name['zh-Hant'] }}</a>} @else {{{ r.license.name['zh-Hant'] }}}
+      （類別：{{ r.license.class_label['zh-Hant'] }}）
+    </p>
+    <p>使用本資料時請附上以下姓名標示：</p>
+    <pre class="attribution">{{ r.attribution }}</pre>
+  </section>
+
+  <section aria-labelledby="credits">
+    <h2 id="credits">蒐集者與貢獻者</h2>
+    <ul>
+      @for (p of r.credits; track $index) {
+        <li>
+          {{ p.name?.['zh-Hant'] ?? p.name?.en }}@if (p.name?.['zh-Hant'] && p.name?.en) {<span lang="en">（{{ p.name.en }}）</span>}
+          @if (p.affiliation) {，{{ p.affiliation.name['zh-Hant'] ?? p.affiliation.name.en }}}
+          @if (p.orcid) {，<a [href]="p.orcid">ORCID</a>}
+          @if (p.homepage) {，<a [href]="p.homepage">個人網頁</a>}
+        </li>
+      }
+      @if (r.redistribution.basis === 'own-work') {<li>本站整理：台灣網絡科學教育（netscied.tw）</li>}
+      @for (c of creators(); track $index) {
+        <li>@if (c.url) {<a [href]="c.url">{{ c.organization['zh-Hant'] }}</a>} @else {{{ c.organization['zh-Hant'] }}}</li>
+      }
+    </ul>
+    @if (r.references.length) {
+      <h3>參考文獻</h3>
+      <ul>@for (ref of r.references; track $index) {<li>{{ ref.citation }} @if (ref.doi) {<a [href]="'https://doi.org/' + ref.doi">doi:{{ ref.doi }}</a>} @else if (ref.url) {<a [href]="ref.url">連結</a>}</li>}</ul>
+    }
+  </section>
+
+  <section aria-labelledby="source">
+    <h2 id="source">資料來源</h2>
+    <p>
+      <a [href]="r.provenance.source.url">{{ r.provenance.source.name['zh-Hant'] }}</a>
+      @if (r.provenance.source.publisher) {，{{ r.provenance.source.publisher['zh-Hant'] }}}
+    </p>
+    @if (r.provenance.retrieved_at) {<p>來源快照擷取於 <time [attr.datetime]="r.provenance.retrieved_at">{{ zhDate(r.provenance.retrieved_at) }}</time>。</p>}
+    @if (r.provenance.method) {<p>蒐集方法：{{ r.provenance.method['zh-Hant'] }}</p>}
+    @if (r.provenance.checked_on) {<p class="sub">來源最近查核：<time [attr.datetime]="r.provenance.checked_on">{{ r.provenance.checked_on }}</time></p>}
+  </section>
+
+  <section aria-labelledby="versions">
+    <h2 id="versions">版本紀錄</h2>
+    @if (r.versions.length) {
+      <table class="data-table" role="table">
+        <caption class="visually-hidden">所有版本</caption>
+        <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">版本</th><th scope="col" role="columnheader">發布日期</th><th scope="col" role="columnheader">來源快照日期</th><th scope="col" role="columnheader">變更說明</th><th scope="col" role="columnheader">版本 DOI</th><th scope="col" role="columnheader">檔案</th></tr></thead>
+        <tbody role="rowgroup">
+          @for (v of r.versions; track v.version) {
+            <tr role="row" [id]="'v' + v.version">
+              <th scope="row" role="rowheader" data-label="版本">{{ v.version }}</th>
+              <td role="cell" data-label="發布日期">{{ v.released }}</td>
+              <td role="cell" data-label="來源快照日期">{{ v.snapshot_date ?? '—' }}</td>
+              <td role="cell" data-label="變更說明">{{ v.changelog['zh-Hant'] }}</td>
+              <td role="cell" data-label="版本 DOI">{{ v.doi ?? '—' }}</td>
+              <td role="cell" data-label="檔案">
+                @if (v.suspended) { 暫停下載（審查中） } @else if (v.withdrawn) { 已下架 } @else { {{ v.files.length }} 個檔案 }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p>本站不轉載這份資料，因此沒有版本。</p>
+    }
+  </section>
+
+  @if (r.personal_data.level !== 'none') {
+    <section aria-labelledby="personal-data" class="notice">
+      <h2 id="personal-data">個人資料與下架</h2>
+      @if (r.personal_data.level === 'public-role') {
+        <p>此資料包含真實人物的姓名：他們以公開宣布的公共或專業身分出現（{{ r.personal_data.label['zh-Hant'] }}）。本站只收錄與該身分相關的資訊，不加入其他個人資料。</p>
+      } @else {
+        <p>{{ r.personal_data.label['zh-Hant'] }}：本站只提供詮釋資料與來源連結，不收錄個人層級的資料。</p>
+      }
+      @if (r.personal_data.notes) {<p>{{ r.personal_data.notes['zh-Hant'] }}</p>}
+      <p>當事人如對收錄有疑義，請依<a routerLink="/about" fragment="takedown">下架與更正程序</a>提出，或寄信到 hi&#64;netscied.tw。</p>
+      <p class="sub">個資等級最近審查：{{ r.personal_data.reviewed_on }}</p>
+    </section>
+  }
+
+  @if (r.title.en || r.description.en) {
+    <section lang="en" aria-labelledby="in-english" class="in-english">
+      <h2 id="in-english">In English</h2>
+      @if (r.title.en) {<p><strong>{{ r.title.en }}</strong></p>}
+      @if (r.description.en) {<p>{{ r.description.en }}</p>}
+      <p>License: {{ r.license.name.en ?? r.license.id }}. {{ r.redistribution.label.en }}.</p>
+    </section>
+  }
+
+  <p class="machine-links">
+    機器可讀：<a [href]="'/api/v1/datasets/' + r.id + '.json'">JSON 紀錄</a> · <a [href]="'/datasets/' + r.id + '/index.md'">Markdown（index.md）</a>
+    · 記錄更新於 <time [attr.datetime]="r.updated">{{ r.updated }}</time>
+  </p>
+}

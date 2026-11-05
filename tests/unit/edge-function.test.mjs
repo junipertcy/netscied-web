@@ -50,7 +50,8 @@ test('…/index.html redirects to the directory URL', () => {
 });
 
 test('a directory URL is served from its index.html', () => {
-  assertPassThrough(run(handler, '/networks/'), '/networks/index.html');
+  assertPassThrough(run(handler, '/stat1021/'), '/stat1021/index.html');
+  assertPassThrough(run(handler, '/datasets/golden-horse-2018-nominations/'), '/datasets/golden-horse-2018-nominations/index.html');
   assertPassThrough(run(handler, '/'), '/index.html');
 });
 
@@ -109,7 +110,9 @@ test('no crafted path can redirect a browser off the site', () => {
 });
 
 test('repeated slashes redirect to the collapsed path', () => {
-  assertRedirect(run(handler, '//networks/'), `${SITE}/networks/`);
+  assertRedirect(run(handler, '//stat1021/'), `${SITE}/stat1021/`);
+  // A legacy path keeps its redirect when the slashes are doubled.
+  assertRedirect(run(handler, '//networks/'), `${SITE}/datasets/`);
   assertRedirect(run(handler, '/stat1021//index.html'), `${SITE}/stat1021/`);
 });
 

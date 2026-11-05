@@ -37,13 +37,13 @@
 
 ## 5. Pages and navigation
 
-- [ ] 5.1 Replace the navigation with 資料集 · 課程 · 消息 · 關於; add header search on inner pages; add footer links (contribute, takedown, contact) and `lang="zh-Hant-TW"`; enable `TrailingSlashPathLocationStrategy`. Verify: a shell unit test; every internal link in the prerendered HTML ends in `/`.
+- [x] 5.1 Replace the navigation with 資料集 · 課程 · 消息 · 關於; add header search on inner pages; add footer links (contribute, takedown, contact) and `lang="zh-Hant-TW"`; enable `TrailingSlashPathLocationStrategy`. Verify: a shell unit test; every internal link in the prerendered HTML ends in `/`.
 - [ ] 5.2 Build the home page: search form, count line, 3 latest news, and example chips, each omitted with a warning if it returns nothing. Verify: a fixture with an empty catalog builds and shows 0 and no chips.
-- [ ] 5.3 Build `/datasets/`: prerendered table, sort buttons after hydration, cards below 40em, JSON and CSV links, `DataCatalog` JSON-LD. Verify: the no-JS HTML contains one `<tr>` per published dataset and no sort buttons.
+- [x] 5.3 Build `/datasets/`: prerendered table, sort buttons after hydration, cards below 40em, JSON and CSV links, `DataCatalog` JSON-LD. Verify: the no-JS HTML contains one `<tr>` per published dataset and no sort buttons.
 - [ ] 5.4 Build `/datasets/<id>/` in the dataset-catalog spec's section order, with `Dataset` JSON-LD, `rel=alternate` JSON, and a visible `index.md` link. Build tombstones for withdrawn records and redirect pages for aliases. Verify: a schema.org validator passes a hosted and a link-only fixture; a withdrawn fixture renders its reason with no downloads.
-- [ ] 5.5 Build `/wanted/` (including 已收錄 rows), `/courses/` (table, inclusion note, `#international`, ISAC 顯名聲明 when used), `/courses/<id>/` (offerings, freshness label, `Course` and `CourseInstance` JSON-LD), `/news/`, `/about/` (every anchor in the site-structure spec, including the takedown, privacy and disclaimer texts and the CC0 metadata statement), and `/stat1021/` with its archive banner and a link to its course record, its 2018 links unchanged. Verify: page tests check the required sections and anchors.
-- [ ] 5.6 Remove the `tools` and `booklet` pages and the home essay; add `redirectTo` routes; enable the legacy rows of `config/redirects.yaml` for the Phase 1 deploy. Verify: Function tests show `/networks` → `/datasets/`, `/refs` → `/courses/`, `/booklet` → `/about/#booklet`, `/tools` → GitHub.
-- [ ] 5.7 Accessibility pass: labels, a `role="status"` result count, focus, contrast, 24 px targets, `lang="en"` sections. Verify: axe-core reports no WCAG 2.2 AA violations on the home, search, table and detail pages.
+- [x] 5.5 Build `/wanted/` (including 已收錄 rows), `/courses/` (table, inclusion note, `#international`, ISAC 顯名聲明 when used), `/courses/<id>/` (offerings, freshness label, `Course` and `CourseInstance` JSON-LD), `/news/`, `/about/` (every anchor in the site-structure spec, including the takedown, privacy and disclaimer texts and the CC0 metadata statement), and `/stat1021/` with its archive banner and a link to its course record, its 2018 links unchanged. Verify: page tests check the required sections and anchors.
+- [x] 5.6 Remove the `tools` and `booklet` pages and the home essay; add `redirectTo` routes; enable the legacy rows of `config/redirects.yaml` for the Phase 1 deploy. Verify: Function tests show `/networks` → `/datasets/`, `/refs` → `/courses/`, `/booklet` → `/about/#booklet`, `/tools` → GitHub.
+- [x] 5.7 Accessibility pass: labels, a `role="status"` result count, focus, contrast, 24 px targets, `lang="en"` sections. Verify: axe-core reports no WCAG 2.2 AA violations on the home, search, table and detail pages.
 
 ## 6. Search
 

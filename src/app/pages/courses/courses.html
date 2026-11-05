@@ -1,0 +1,55 @@
+<h1>課程</h1>
+<p class="lede">台灣各大學開設的網絡課程，分為網絡科學、社會網絡分析、圖論與圖機器學習四類。</p>
+<div class="note">
+  <p><strong>收錄原則：</strong>網絡或圖是課程的主要主題（核心課程），或佔約三週以上的單元（部分單元）。本站的「網路／網絡」指網絡科學（network science），非電腦網路課程；電腦網路、以網際網路為媒介、電路、類神經網路、張量網路與行動者網絡理論的課程不收錄。</p>
+  <p>課程資訊取自各校公開的課程網頁，每次開課都附查核日期；本站連結到課程大綱，不複製大綱內容。漏列的課程歡迎<a routerLink="/about" fragment="contribute">告訴我們</a>。</p>
+</div>
+<p class="page-links"><a href="/api/v1/courses.json">JSON</a> · <a href="/api/v1/courses.csv">CSV</a> · <a href="#international">國外參考課程與教材</a></p>
+
+<table class="data-table" role="table">
+  <caption>台灣的網絡課程（共 {{ courses().length }} 門）</caption>
+  <thead role="rowgroup">
+    <tr role="row">
+      <th scope="col" role="columnheader">課程名稱</th>
+      <th scope="col" role="columnheader">學校</th>
+      <th scope="col" role="columnheader">系所</th>
+      <th scope="col" role="columnheader">教師</th>
+      <th scope="col" role="columnheader">最近開課</th>
+      <th scope="col" role="columnheader">層級</th>
+      <th scope="col" role="columnheader">授課語言</th>
+    </tr>
+  </thead>
+  <tbody role="rowgroup">
+    @for (c of courses(); track c.id) {
+      <tr role="row" [class.dormant]="c.freshness.id === 'dormant' || c.freshness.id === 'historical'">
+        <th scope="row" role="rowheader" data-label="課程名稱">
+          <a [routerLink]="['/courses', c.id]">{{ c.title['zh-Hant'] }}</a>
+          @if (c.title.en) {<span class="en" lang="en">{{ c.title.en }}</span>}
+          <span class="badge">{{ c.category['zh-Hant'] }}</span>
+        </th>
+        <td role="cell" data-label="學校">{{ c.university.short ?? c.university['zh-Hant'] }}</td>
+        <td role="cell" data-label="系所">{{ c.department['zh-Hant'] }}</td>
+        <td role="cell" data-label="教師">{{ teachers(c) }}</td>
+        <td role="cell" data-label="最近開課">{{ c.latest.term_label ?? c.latest.start }}<span class="sub">{{ c.freshness['zh-Hant'] }}</span></td>
+        <td role="cell" data-label="層級">{{ c.level['zh-Hant'] }}</td>
+        <td role="cell" data-label="授課語言">{{ langs(c) }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+<p class="hint">找不到想要的課程？教育部的<a [href]="site.courseDirectory">大學校院課程資源網</a>收錄各校的歷年課程。</p>
+
+<section id="international" aria-labelledby="international-title">
+  <h2 id="international-title">國外參考課程與教材（非台灣開課）</h2>
+  <p>以下是舊版「參考資料」頁列出的國外課程與教材。它們不是台灣的課程，所以不列入上表、搜尋與 API。</p>
+  <ul class="plain-list">
+    @for (e of international(); track e.url) {
+      <li>
+        <a [href]="e.archived && e.archive_url ? e.archive_url : e.url">{{ e.title['zh-Hant'] ?? e.title.en }}</a>
+        @if (e.archived) {<span class="sub">（網頁封存版本）</span>}
+        @if (e.title.en && e.title['zh-Hant']) {<span class="en" lang="en">{{ e.title.en }}</span>}
+        <span class="sub">{{ e.institution }}@if (e.instructor) {，{{ e.instructor }}}。@if (e.note) {{{ e.note['zh-Hant'] }}}@if (e.doi) { <a [href]="e.doi">DOI</a>}（查核日期 {{ e.checked_on }}）</span>
+      </li>
+    }
+  </ul>
+</section>

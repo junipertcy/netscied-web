@@ -16,7 +16,7 @@ import { readYaml } from './lib/yaml.mjs';
 import { schemaDir } from './lib/schemas.mjs';
 import { ORIGIN, buildCourseRecord, buildDatasetRecord, buildWantedEntry, courseSummary, datasetSummary } from './lib/api.mjs';
 import { courseSearchRecord, datasetSearchRecord, wantedSearchRecord } from './lib/search-records.mjs';
-import { joinLines, toCsv } from './lib/text.mjs';
+import { joinLines, joinText, toCsv } from './lib/text.mjs';
 import { makeNormalizeData } from '../search/normalize-data.mjs';
 import { createSearch } from '../../search/core.ts';
 import { renderOutputs } from './lib/outputs.mjs';
@@ -117,7 +117,13 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, ski
     ...courses.map(({ src, full }) => courseSearchRecord(src, full, vocab)),
   ];
   const corpus = searchRecords.flatMap((r) => [r.title.zh, r.title.en, r.description, r.en, ...r.keywords, ...r.aliases]);
-  const catalogJson = { schema: 1, generated: today, normalize: makeNormalizeData(vocab.concepts, corpus), records: searchRecords };
+  const catalogJson = {
+    schema: 1,
+    generated: today,
+    normalize: makeNormalizeData(vocab.concepts, corpus),
+    labels: { domains: Object.fromEntries(vocab.domains.map((d) => [d.id, d['zh-Hant']])) },
+    records: searchRecords,
+  };
   const catalogText = JSON.stringify(catalogJson);
   const gz = gzipSync(Buffer.from(catalogText)).length;
   if (gz > SEARCH_BUDGET_BYTES) {
@@ -252,6 +258,12 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, ski
   write(
     '_data/home.json',
     stable({ counts, news: news.slice(0, 3).map(({ body_md, ...n }) => n), examples }),
+  );
+  // Foreign courses and materials from the old /refs page: shown at
+  // /courses/#international, never in the course API or the search index.
+  write(
+    '_data/international.json',
+    stable((cat.international?.data ?? []).map((e) => ({ ...e, ...(e.note ? { note: joinText(e.note) } : {}) }))),
   );
   write(
     '_data/routes.json',

@@ -1,0 +1,37 @@
+<h1>資料許願池</h1>
+<p class="lede">這些是大家想要、但本站還沒有的台灣網絡資料。需求次數會決定本站整理資料的先後；如果你知道哪裡有這份資料，也歡迎告訴我們。</p>
+<p class="page-links"><a [href]="links('').issue">提出新的資料需求</a> · <a routerLink="/about" fragment="contribute">其他提供或徵求資料的方式</a> · <a href="/api/v1/wanted.json">JSON</a></p>
+
+<table class="data-table" role="table">
+  <caption>資料許願池（共 {{ wanted().length }} 項）</caption>
+  <thead role="rowgroup">
+    <tr role="row">
+      <th scope="col" role="columnheader">想要的資料</th>
+      <th scope="col" role="columnheader">領域</th>
+      <th scope="col" role="columnheader">說明與原因</th>
+      <th scope="col" role="columnheader">需求次數</th>
+      <th scope="col" role="columnheader">狀態</th>
+      <th scope="col" role="columnheader">我也需要／我有線索</th>
+    </tr>
+  </thead>
+  <tbody role="rowgroup">
+    @for (w of wanted(); track w.id) {
+      <tr role="row" [id]="w.id" [class.done]="w.status === 'published'">
+        <th scope="row" role="rowheader" data-label="想要的資料">{{ w.title['zh-Hant'] }}@if (w.title.en) {<span class="en" lang="en">{{ w.title.en }}</span>}</th>
+        <td role="cell" data-label="領域">@for (x of w.domains; track x.id) {<span class="tag">{{ x['zh-Hant'] }}</span>}</td>
+        <td role="cell" data-label="說明與原因">{{ w.description?.['zh-Hant'] }}<span class="sub">{{ w.reason['zh-Hant'] }}</span></td>
+        <td role="cell" data-label="需求次數">{{ w.requests }}</td>
+        <td role="cell" data-label="狀態">
+          @if (w.status === 'published') {
+            <a [routerLink]="['/datasets', w.id]">已收錄</a>
+          } @else {
+            {{ w.status_label['zh-Hant'] }}@if (w.unavailable_reason) {<span class="sub">{{ w.unavailable_reason['zh-Hant'] }}</span>}
+          }
+        </td>
+        <td role="cell" data-label="我也需要／我有線索">
+          @if (w.status !== 'published') {<a [href]="links(w.title['zh-Hant']).issue">在 GitHub 回應</a> · <a [href]="links(w.title['zh-Hant']).mail">寄信</a>}
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

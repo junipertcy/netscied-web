@@ -1,0 +1,9 @@
+# Example queries on the home page (site-structure spec, "Example queries never
+# dead-end"). The build runs each one and leaves out, with a warning, any that
+# returns nothing. At most five are shown.
+examples:
+  - { q: 捷運, type: datasets }
+  - { q: 超圖, type: datasets }
+  - { q: 金馬獎, type: datasets }
+  - { q: 產業關聯, type: datasets }
+  - { q: 社會網絡分析, type: courses }
