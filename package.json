@@ -5,7 +5,9 @@
     "preinstall": "npx only-allow pnpm",
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build"
+    "build": "ng build",
+    "test": "pnpm build && pnpm test:only",
+    "test:only": "node --test \"tests/**/*.test.mjs\""
   },
   "private": true,
   "packageManager": "pnpm@11.21.0",
@@ -28,6 +30,8 @@
     "@angular/cli": "22.2.5",
     "@angular/compiler-cli": "22.2.4",
     "@types/node": "26.6.6",
-    "typescript": "6.0.3"
+    "robots-parser": "3.0.1",
+    "typescript": "6.0.3",
+    "yaml": "2.9.1"
   }
 }

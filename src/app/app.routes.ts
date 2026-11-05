@@ -17,5 +17,8 @@ export const routes: Routes = [
   { path: 'refs', component: Refs, title: `參考資料 - ${SITE}` },
   { path: 'booklet', component: Booklet, title: `網絡素養小冊 - ${SITE}` },
   { path: 'stat1021', component: Stat1021, title: 'STAT1021: 資料科學導論' },
-  { path: '**', component: NotFound, title: SITE },
+  // Prerendered page that CloudFront serves, with status 404, for any missing path.
+  { path: '404', component: NotFound, title: `找不到頁面 - ${SITE}` },
+  // Client-side navigation to an unknown path renders the same page.
+  { path: '**', component: NotFound, title: `找不到頁面 - ${SITE}` },
 ];
