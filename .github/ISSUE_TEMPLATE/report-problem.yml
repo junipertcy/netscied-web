@@ -1,0 +1,25 @@
+name: 回報問題
+description: 網站上的錯誤、失效的連結，或資料集與課程資訊需要更正。
+title: "[問題] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **如果問題和你的個人資料或著作權有關，請寄信到 hi@netscied.tw**，我們會私下處理，
+        並在 7 天內回覆（下架與更正程序見 https://netscied.tw/about/#takedown）。
+        GitHub 議題是公開的：請不要在這裡留下個人資料。
+  - type: input
+    id: page
+    attributes:
+      label: 頁面網址
+      placeholder: https://netscied.tw/
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 問題說明
+      description: 哪裡有錯？正確的內容是什麼？有出處的話請一併提供。
+    validations:
+      required: true

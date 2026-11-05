@@ -39,3 +39,27 @@ test('the monthly workflow is scheduled and rebuilds the site', () => {
   assert.ok(wf.on.schedule?.length);
   assert.match(wf.on.schedule[0].cron, /^\S+ \S+ \S+ \* \*$/);
 });
+
+test('the issue forms and their config validate against the SchemaStore schemas', () => {
+  const forms = ajv.compile(store('github-issue-forms'));
+  const config = ajv.compile(store('github-issue-config'));
+  const dir = path.join(repoRoot, '.github', 'ISSUE_TEMPLATE');
+  const files = yamlFiles(dir).filter((f) => !f.endsWith('config.yml'));
+  assert.deepEqual(files.map((f) => path.basename(f)).sort(), ['report-problem.yml', 'request-dataset.yml', 'suggest-dataset.yml']);
+  for (const f of files) assert.ok(forms(parse(readFileSync(f, 'utf8'))), `${path.basename(f)}: ${JSON.stringify(forms.errors?.slice(0, 3))}`);
+  assert.ok(config(parse(readFileSync(path.join(dir, 'config.yml'), 'utf8'))), JSON.stringify(config.errors));
+});
+
+test('every issue form sends takedowns to email, and the request form can be prefilled with the query', () => {
+  const dir = path.join(repoRoot, '.github', 'ISSUE_TEMPLATE');
+  for (const f of yamlFiles(dir).filter((x) => !x.endsWith('config.yml'))) {
+    assert.match(readFileSync(f, 'utf8'), /hi@netscied\.tw/, path.basename(f));
+  }
+  const request = parse(readFileSync(path.join(dir, 'request-dataset.yml'), 'utf8'));
+  assert.ok(request.body.some((b) => b.id === 'need'), 'the request form has a field with id "need" for the ?need= prefill');
+});
+
+test('the PR template has the license, Taiwan-basis and personal-data checklist', () => {
+  const t = readFileSync(path.join(repoRoot, '.github', 'pull_request_template.md'), 'utf8');
+  for (const s of ['授權證據', '與臺灣的關係', '個人資料審查']) assert.ok(t.includes(s), s);
+});

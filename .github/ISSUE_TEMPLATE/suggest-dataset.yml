@@ -1,0 +1,62 @@
+name: 推薦資料集
+description: 推薦一份和台灣有關的網絡資料，或提供你自己的資料。
+title: "[推薦] "
+labels: ["suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        謝謝你推薦資料！本站收錄圖（網絡）、超圖、單純複形、排名與成對比較等關聯資料，
+        資料需要在臺灣蒐集、描述臺灣的人事物，或由臺灣的機構或研究者發布。
+        **下架、個資或著作權申訴請寄信到 hi@netscied.tw**，不要用這個表單。
+        GitHub 議題是公開的：請不要在這裡留下電話、地址或任何個人資料；需要授權書時，我們會改用電子郵件聯絡。
+  - type: input
+    id: name
+    attributes:
+      label: 資料集名稱
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: 資料網址
+      description: 資料的下載頁或介紹頁。
+      placeholder: https://
+    validations:
+      required: true
+  - type: textarea
+    id: structure
+    attributes:
+      label: 節點與連結代表什麼？
+      description: 例如「節點是捷運站，連結是兩站之間的旅次」。
+    validations:
+      required: true
+  - type: textarea
+    id: license
+    attributes:
+      label: 授權或使用條款
+      description: 請貼上原文，或說明在哪裡寫著。不清楚也沒關係，我們會再查。
+  - type: textarea
+    id: taiwan
+    attributes:
+      label: 和台灣的關係
+      description: 例如在臺灣蒐集、描述臺灣的機構，或由臺灣的研究者發布。
+    validations:
+      required: true
+  - type: dropdown
+    id: personal-data
+    attributes:
+      label: 資料裡有個人資料嗎？
+      options:
+        - 沒有
+        - 有，但都是公共角色（例如立委、候選人、得獎者）
+        - 有一般人的資料
+        - 不確定
+    validations:
+      required: true
+  - type: checkboxes
+    id: owner
+    attributes:
+      label: 你是資料的蒐集者嗎？
+      options:
+        - label: 是，我願意討論讓本站轉載（我們會用電子郵件聯絡授權細節）
