@@ -225,6 +225,15 @@ def write_version(*, recipe, record, fetch_summary, cache_base, product: Product
     decision = check_recipe(recipe, record)  # refuses before anything is written
     did, ver = recipe["dataset"], recipe["version"]
     out_license = record["license"]["id"]
+    # Final review D4: ATTRIBUTION.txt is bilingual and provenance names the license
+    # by URL; D3: a version states the time span of its data.
+    for i, t in enumerate(recipe.get("transformations") or []):
+        if not t.get("en"):
+            raise VersionError(f"{did}: transformations[{i}] has no en text; ATTRIBUTION.txt is bilingual")
+    if not record["license"].get("url"):
+        raise VersionError(f"{did}: the record's license has no url; provenance.json and ATTRIBUTION.txt name the license by URL")
+    if not (recipe.get("coverage") or {}).get("temporal"):
+        raise VersionError(f"{did}: the recipe has no coverage.temporal; a version states the time span of its data")
     attribution = _attribution(record, recipe, ver, released, out_license, decision)
     stem = f"{did}-{ver}"
     folder = Path(out_dir) / did / ver
@@ -316,6 +325,7 @@ def write_version(*, recipe, record, fetch_summary, cache_base, product: Product
         "version": ver,
         "released": released,
         "snapshot_date": snapshot,
+        "coverage": recipe["coverage"],
         "page": f"{ORIGIN}/datasets/{did}/",
         "license": {"id": out_license, **({"url": record["license"]["url"]} if record["license"].get("url") else {})},
         "redistribution_basis": record["redistribution"]["basis"],
@@ -362,6 +372,7 @@ def write_version(*, recipe, record, fetch_summary, cache_base, product: Product
         "version": ver,
         "released": released,
         "snapshot_date": snapshot,
+        "coverage": recipe["coverage"],
         "changelog": changelog,
         "doi": None,
         "license": out_license,

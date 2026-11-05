@@ -432,3 +432,12 @@ test('task 12.1: a manifest published without a doi key may gain one', () => {
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test('final review D3: a hosted record covers no more than its versions do', () => {
+  // Outside the versions' range.
+  expectFailure((dir) => editYaml(dir, D('hosted-graph'), (r) => (r.coverage.temporal = { start: '2017-01', end: '2026-09' })), 'coverage.temporal', '2017-01');
+  // "ongoing" cannot be true of fixed versions.
+  expectFailure((dir) => editYaml(dir, D('hosted-graph'), (r) => (r.coverage.temporal = { start: '2026-09', ongoing: true })), 'coverage.temporal');
+  // Every live version states its coverage.
+  expectFailure((dir) => editJson(dir, 'catalog/versions/hosted-graph/1.0.0.json', (m) => delete m.coverage), '1.0.0.json', 'coverage');
+});

@@ -151,6 +151,22 @@ export function validateCatalog({ root, baseRef = 'origin/main', requireBase = f
     } else if (hosted && r.status === 'published' && r.license && !mayHost(r, vocab)) {
       err(file, 'license.id', `the license class of ${r.license.id} does not permit hosting`);
     }
+    // Final review D3: a hosted record covers no more than its live versions do.
+    const live = manifests.filter((v) => !v.data.withdrawn);
+    if (hosted && r.status === 'published' && live.length) {
+      const missing = live.filter((v) => !v.data.coverage?.temporal);
+      for (const v of missing) err(v.file, 'coverage', 'a hosted version states the time span of its data (coverage.temporal start and end)');
+      const t = r.coverage?.temporal;
+      if (!missing.length && t) {
+        const lo = (d) => d.padEnd(10, d.length === 4 ? '-01-01' : '-01');
+        const hi = (d) => (d.length === 4 ? `${d}-12-31` : d.length === 7 ? `${d}-31` : d);
+        const start = live.map((v) => lo(v.data.coverage.temporal.start)).sort()[0];
+        const end = live.map((v) => hi(v.data.coverage.temporal.end)).sort().at(-1);
+        if (t.ongoing) err(file, 'coverage.temporal.ongoing', 'a hosted record covers its versions, which are fixed; say in coverage.temporal.note that upstream continues');
+        if (t.start && lo(t.start) < start) err(file, 'coverage.temporal.start', `${t.start} is before the hosted versions begin (${live.map((v) => v.data.coverage.temporal.start).sort()[0]})`);
+        if (t.end && hi(t.end) > end) err(file, 'coverage.temporal.end', `${t.end} is after the hosted versions end`);
+      }
+    }
     if (r.status === 'withdrawn') {
       for (const v of manifests) {
         if (!v.data.withdrawn) err(file, 'status', `the record is withdrawn but ${v.file} still lists live files; add "withdrawn" to that manifest`);

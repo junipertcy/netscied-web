@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "released": "2026-11-05",
   "snapshot_date": "2026-11-01",
+  "coverage": { "temporal": { "start": "2026-09", "end": "2026-09" } },
   "changelog": { "zh-Hant": "第一版。" },
   "doi": null,
   "license": "CC-BY-4.0",

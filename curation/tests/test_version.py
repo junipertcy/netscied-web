@@ -40,6 +40,7 @@ RECIPE = {
     "changelog": {"zh-Hant": "第一版。", "en": "First version."},
     "operations": ["convert", "aggregate"],
     "transformations": [{"zh-Hant": "依起訖加總。", "en": "Summed per pair."}],
+    "coverage": {"temporal": {"start": "2026-09", "end": "2026-09"}},
     "sources": [
         {
             "id": "raw",
@@ -290,3 +291,24 @@ def test_a_snapshot_series_explains_repeated_pairs_as_one_link_per_snapshot(tmp_
     assert "重複出現" not in zh
     assert "2 個月份快照" in zh and "同一快照內沒有重複的配對" in zh
     assert "2 monthly snapshots" in en
+
+
+def test_final_review_d4_a_transformation_without_english_is_refused(tmp_path):
+    recipe = {**RECIPE, "transformations": [{"zh-Hant": "依起訖加總。"}]}
+    with pytest.raises(VersionError, match="en"):
+        build(tmp_path, "a", recipe=recipe)
+
+
+def test_final_review_d4_a_license_without_a_url_is_refused(tmp_path):
+    rec = record(license={"id": "CC-BY-4.0", "attribution": "x"}, redistribution={"basis": "own-work"})
+    recipe = {**RECIPE, "sources": [{k: v for k, v in RECIPE["sources"][0].items() if k != "license"}]}
+    with pytest.raises(VersionError, match="url"):
+        build(tmp_path, "a", rec=rec, recipe=recipe)
+
+
+def test_final_review_d3_the_version_states_its_coverage_from_the_recipe(tmp_path):
+    m = build(tmp_path, "a")
+    assert m["coverage"] == {"temporal": {"start": "2026-09", "end": "2026-09"}}
+    assert schema_errors("version", m) == []
+    with pytest.raises(VersionError, match="coverage"):
+        build(tmp_path, "b", recipe={k: v for k, v in RECIPE.items() if k != "coverage"})

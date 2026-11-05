@@ -10,6 +10,8 @@ version: "1.0.0"
 changelog:
   zh-Hant: 第一版：2025 年 10 月至 2026 年 9 月共 12 個月的站間起訖月彙總網絡。
   en: First version, monthly station-to-station OD networks for the 12 months from October 2025 to September 2026.
+coverage:
+  temporal: { start: "2025-10", end: "2026-09" }
 sources:
   - id: monthly-index
     method: get

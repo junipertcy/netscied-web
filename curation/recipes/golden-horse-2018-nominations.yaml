@@ -7,6 +7,8 @@ version: "1.0.0"
 changelog:
   zh-Hant: 第一版：依金馬獎官方入圍得獎資料庫（2018 年）自行整理的入圍者–影片網絡。
   en: First version, compiled by this site from the official Golden Horse nominee database (2018).
+coverage:
+  temporal: { start: "2018", end: "2018" }
 sources:
   - id: official-nominee-list
     method: manual
@@ -40,8 +42,13 @@ convert:
 operations: [convert]
 transformations:
   - zh-Hant: 每一列（獎項、影片、入圍者）成為一條入圍者–影片連結，標示獎項與是否得獎；同一人以同一部影片入圍兩個獎項時保留兩條連結（多重邊，不合併）。
+    en: Each row (category, film, nominee) becomes one nominee–film link marked with the category and whether it won; a person nominated in two categories for the same film keeps two links (multi-edges, not merged).
   - zh-Hant: 最佳劇情長片的入圍對象是影片：官方名單列出的出品公司與製片（例如《大象席地而坐》的楚延華、胡永振）不列為入圍者，這五部影片在該獎項沒有連結（網站主人 2026-11-04 決定）。
+    en: "Best Feature Film honours the film: the companies and producers on the official list (for example 楚延華 and 胡永振 for An Elephant Sitting Still) are not nominees, so the five films have no link for that category (owner decision 2026-11-04)."
   - zh-Hant: 其他影片類獎項（紀錄片、動畫與短片）官方名單列出的個人姓名收為入圍者；公司不列為節點。
+    en: In the other film categories (documentary, animation and shorts) the persons the official list names are nominees; companies are not nodes.
   - zh-Hant: 最佳原創電影歌曲依 2018 年規章，作詞、作曲與演唱者都是入圍者。
+    en: Under the 2018 rules, the lyricist, composer and singer of a Best Original Film Song nomination are all nominees.
   - zh-Hant: 片名與姓名照官方寫法保留，包括全形空白（當　一個人）與異體字（鄭思藴）。
+    en: Titles and names are kept as officially printed, including the full-width space (當　一個人) and variant characters (鄭思藴).
 outputs: [csv-bundle, graphml]

@@ -57,9 +57,13 @@ structure:
       Circular Line stations have no exit records, so in the network they have
       outgoing edges only.
 coverage:
+  # The hosted range (version 1.0.0); upstream reaches back to 2017-01 (final review D3).
   temporal:
-    start: "2017-01"
-    ongoing: true
+    start: "2025-10"
+    end: "2026-09"
+    note:
+      zh-Hant: 本站託管的版本 1.0.0 涵蓋 2025 年 10 月至 2026 年 9 月；上游自 2017 年 1 月起每月發布一個檔案，較早的月份可至上游下載。
+      en: Version 1.0.0 hosted here covers October 2025 to September 2026; upstream publishes one file per month since January 2017, and earlier months can be downloaded there.
   spatial: { zh-Hant: 臺北都會區, en: Taipei metropolitan area }
 domains: [transport]
 tags: [metro, public-transport, commuting]

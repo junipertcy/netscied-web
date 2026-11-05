@@ -10,6 +10,8 @@ version: "1.0.0"
 changelog:
   zh-Hant: 第一版：第10屆立法院委員提案的提案人與連署人超圖，取自 LYAPI（2026 年 11 月 5 日擷取）。
   en: First version, the sponsor and co-signer hypergraph of member-proposed bills of the 10th Legislative Yuan, from LYAPI (retrieved 2026-11-05, Taipei time).
+coverage:
+  temporal: { start: "2020-02", end: "2024-01" }
 sources:
   - id: bills
     method: api
