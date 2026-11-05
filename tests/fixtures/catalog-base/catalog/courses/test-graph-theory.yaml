@@ -1,0 +1,17 @@
+id: test-graph-theory
+university: ntu
+department: { zh-Hant: 數學系 }
+title: { zh-Hant: 測試圖論, en: Test Graph Theory }
+category: graph-theory
+relevance: core
+offering_type: credit
+level: master
+languages: [zh]
+inclusion_note: { zh-Hant: 整學期講授圖論。 }
+summary: { zh-Hant: 測試課程。 }
+provenance: { found_via: manual, added: 2026-11-01, reviewed: 2026-11-01 }
+offerings:
+  - term: 114-1
+    instructors: [{ name: 測試老師 }]
+    evidence_url: https://example.org/course
+    verified_on: 2026-11-01

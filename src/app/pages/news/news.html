@@ -1,0 +1,13 @@
+<h1>消息</h1>
+<p class="page-links"><a href="/news/feed.xml">Atom 訂閱</a> · <a href="/api/v1/news.json">JSON</a></p>
+<ol class="news-list">
+  @for (n of news(); track n.id) {
+    <li [id]="n.id">
+      <article>
+        <h2><a [href]="'/news/#' + n.id">{{ n.title['zh-Hant'] }}</a></h2>
+        <p class="sub"><time [attr.datetime]="n.date">{{ zhDate(n.date) }}</time>@if (n.title.en) { · <span lang="en">{{ n.title.en }}</span>}</p>
+        <div class="news-body" [innerHTML]="n.body_html"></div>
+      </article>
+    </li>
+  }
+</ol>

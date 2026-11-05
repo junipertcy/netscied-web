@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/course-record.schema.json",
+  "title": "A course record at /api/v1/courses/<id>.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "url", "api_url", "markdown_url", "title", "university", "department", "category", "relevance", "offering_type", "level", "languages", "inclusion_note", "keywords", "historical", "latest", "freshness", "offerings", "provenance", "updated"],
+  "properties": {
+    "id": { "type": "string" },
+    "url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+    "api_url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+    "markdown_url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+    "title": { "$ref": "api-common.schema.json#/$defs/title" },
+    "university": { "$ref": "api-common.schema.json#/$defs/university" },
+    "department": { "$ref": "api-common.schema.json#/$defs/text" },
+    "course_code": { "type": "string" },
+    "category": { "$ref": "api-common.schema.json#/$defs/label" },
+    "relevance": { "$ref": "api-common.schema.json#/$defs/label" },
+    "offering_type": { "$ref": "api-common.schema.json#/$defs/label" },
+    "level": { "$ref": "api-common.schema.json#/$defs/label" },
+    "languages": { "type": "array", "items": { "$ref": "api-common.schema.json#/$defs/label" } },
+    "unverified": { "$ref": "api-common.schema.json#/$defs/unverified" },
+    "inclusion_note": { "$ref": "api-common.schema.json#/$defs/text" },
+    "summary": { "$ref": "api-common.schema.json#/$defs/text" },
+    "keywords": { "type": "array", "items": { "type": "string" } },
+    "historical": { "type": "boolean" },
+    "related_page": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+    "disclosure": { "$ref": "api-common.schema.json#/$defs/text" },
+    "latest": { "$ref": "api-common.schema.json#/$defs/latestOffering" },
+    "freshness": { "$ref": "api-common.schema.json#/$defs/freshness" },
+    "offerings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["instructors", "evidence_url"],
+        "properties": {
+          "term": { "type": "string" },
+          "term_label": { "type": "string" },
+          "term_label_en": { "type": "string" },
+          "start": { "$ref": "api-common.schema.json#/$defs/date" },
+          "end": { "$ref": "api-common.schema.json#/$defs/date" },
+          "code": { "type": "string" },
+          "instructors": { "type": "array", "items": { "$ref": "api-common.schema.json#/$defs/instructor" } },
+          "evidence_url": { "$ref": "api-common.schema.json#/$defs/url" },
+          "verified_on": { "$ref": "api-common.schema.json#/$defs/date" },
+          "syllabus_url": { "$ref": "api-common.schema.json#/$defs/url" },
+          "archive_url": { "$ref": "api-common.schema.json#/$defs/url" },
+          "note": { "$ref": "api-common.schema.json#/$defs/text" },
+          "unverified": { "$ref": "api-common.schema.json#/$defs/unverified" }
+        }
+      }
+    },
+    "provenance": { "type": "object", "required": ["found_via", "added", "reviewed"] },
+    "updated": { "$ref": "api-common.schema.json#/$defs/date" }
+  }
+}

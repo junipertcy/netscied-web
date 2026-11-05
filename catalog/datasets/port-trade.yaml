@@ -1,0 +1,15 @@
+id: port-trade
+status: wanted
+added: 2026-11-04
+title:
+  zh-Hant: 港口貿易網絡
+  en: Port trade network
+description:
+  zh-Hant: 臺灣各港口與國外港口之間的貨物往來，例如貨櫃或貨物的航線與運量。
+domains: [economy]
+tags: [trade, ports]
+wanted:
+  reason:
+    zh-Hant: 舊版網站「生活中的網絡」列為搜集中的項目。
+  status: seeking
+  requests: 0

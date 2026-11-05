@@ -1,0 +1,31 @@
+id: nycu-network-biology-implementation
+university: nycu
+department: {zh-Hant: 生物資訊及系統生物研究所}
+title: {zh-Hant: 網路生物學實作及應用, en: Implementation and Application of Network Biology}
+course_code: BTBI30082
+category: network-science
+relevance: core
+offering_type: credit
+level: master
+languages: []
+inclusion_note:
+  zh-Hant: 課程概述與大綱以生物網絡的建構、分群、富集分析與資料整合為主軸。
+summary:
+  zh-Hant: 實作導向課程，以 Cytoscape 建構並分析基因調控、蛋白質交互作用與模組交互網絡，並把生物網絡與基因體、蛋白體資料整合，用於探討疾病機制與生物標記。
+keywords: [網絡生物學, 生物網絡, Cytoscape, 蛋白質交互作用網絡, 基因調控網絡]
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
+offerings:
+  - term: "114-2"
+    code: "430106"
+    instructors:
+      - {name: 林峻宇}
+    evidence_url: https://coz.aa.nycu.edu.tw/course/114/2/430106
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 當期課號 430106，博愛校區，生資所與生科系等多個系所學程合開。
+unverified:
+  fields:
+    - languages
+  checked_on: 2026-11-04
+  note:
+    zh-Hant: 陽明交大課程網頁未列授課語言，待確認。

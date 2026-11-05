@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/news-item.schema.json",
+  "title": "An item of /api/v1/news.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "date", "url", "title", "body_html", "body_md", "related", "generated"],
+  "properties": {
+    "id": { "type": "string", "description": "The permanent anchor on /news/." },
+    "date": { "$ref": "api-common.schema.json#/$defs/date" },
+    "url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+    "title": { "$ref": "api-common.schema.json#/$defs/title" },
+    "body_html": { "type": "string" },
+    "body_md": { "type": "string" },
+    "related": { "type": "object", "additionalProperties": false, "properties": { "datasets": { "type": "array", "items": { "type": "string" } }, "courses": { "type": "array", "items": { "type": "string" } } } },
+    "generated": { "type": "boolean", "description": "true for the item written automatically when a dataset is first published." }
+  }
+}

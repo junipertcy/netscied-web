@@ -1,0 +1,15 @@
+id: food-web
+status: wanted
+added: 2026-11-04
+title:
+  zh-Hant: 生物食物鏈網絡
+  en: Food web
+description:
+  zh-Hant: 臺灣生態系中物種之間的捕食關係，例如溪流、珊瑚礁或潟湖的食物網。
+domains: [life]
+tags: [food-web, ecology]
+wanted:
+  reason:
+    zh-Hant: 舊版網站「生活中的網絡」列為搜集中的項目。
+  status: seeking
+  requests: 0

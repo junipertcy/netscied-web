@@ -1,0 +1,57 @@
+id: nccu-tigp-intro-social-networks
+university: nccu
+department: {zh-Hant: 社群網路與人智計算國際研究生博士學位學程, en: Social Networks and Human-Centered Computing (SNHCC)}
+title: {zh-Hant: 社群網路, en: Introduction to Social Networks}
+course_code: "761014"
+category: social-network-analysis
+relevance: core
+offering_type: credit
+level: doctoral
+languages: [en]
+inclusion_note:
+  zh-Hant: 課程簡介與週次進度涵蓋社群網絡的統計性質、社群發現、節點分類、連結預測與社群影響力，以社群網絡資料為分析對象。
+summary:
+  zh-Hant: 中研院 TIGP 社群網路與人智計算學程的核心課，政大以此課號開設；內容涵蓋社群網絡資料探勘、社群偵測、連結預測、隱私保護的圖探勘與社群影響力等主題。
+keywords: [社群網絡, 社群偵測, 連結預測, 圖探勘, TIGP]
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
+offerings:
+  - term: "115-1"
+    code: "761014001"
+    instructors: []
+    evidence_url: https://newdoc.nccu.edu.tw/teaschm/1151/schmPrv.jsp-yy=115&smt=1&num=761014&gop=00&s=1.html
+    verified_on: "2026-11-04"
+    syllabus_url: https://tigpsnhcc.iis.sinica.edu.tw/course.html
+    note:
+      zh-Hant: 政大與 TIGP 兩處所列的教師與時段不同，見待確認說明。
+    unverified:
+      fields:
+        - instructors
+      checked_on: 2026-11-04
+      note:
+        zh-Hant: 政大課程頁列鄧雅文（週五上午），TIGP 課程頁列陳宜欣（週二下午），待確認。
+  - term: "114-1"
+    code: "761014001"
+    instructors:
+      - {name: 郭桐惟, name_en: KUO TUNG-WEI}
+    evidence_url: https://newdoc.nccu.edu.tw/teaschm/1141/schmPrv.jsp-yy=114&smt=1&num=761014&gop=00&s=1.html
+    verified_on: "2026-11-04"
+    syllabus_url: https://tigpsnhcc.iis.sinica.edu.tw/download/SN_Fall_2025.pdf
+    note:
+      zh-Hant: TIGP 2025 Fall 課綱列主持人 Tung-Wei Kuo，講者另有 Chih-Ya Shen、De-Nian Yang。
+  - term: "113-1"
+    code: "761014001"
+    instructors:
+      - {name: 蔡銘峰, name_en: TSAI MING-FENG}
+    evidence_url: https://newdoc.nccu.edu.tw/teaschm/1131/schmPrv.jsp-yy=113&smt=1&num=761014&gop=00&s=1.html
+    verified_on: "2026-11-04"
+    syllabus_url: https://tigpsnhcc.iis.sinica.edu.tw/download/SN_Fall_2024.pdf
+    note:
+      zh-Hant: TIGP 2024 Fall 課綱列主持人 Yi-Shin Chen，講者另有 Mi-Yen Yeh、Ming-Feng Tsai。
+# Final review D12: no source states the language of instruction (owner answer A4).
+unverified:
+  fields:
+    - languages
+  checked_on: "2026-11-05"
+  note:
+    zh-Hant: 政大 115-1、114-1 課程頁、TIGP 課程頁與 2025 年課綱都未列授課語言；英語為學程慣例，待確認。
+    en: The NCCU 115-1 and 114-1 course pages, the TIGP course page and the 2025 syllabus do not state the language of instruction; English is the programme's practice, to be confirmed.

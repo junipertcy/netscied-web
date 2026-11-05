@@ -1,0 +1,3 @@
+id,title_zh,title_en,kinds,domains,license,redistribution,latest_version,released,nodes,edges,hyperedges,size_approximate,temporal_start,temporal_end,personal_data,url,api_url
+hosted-graph,測試用託管網絡,Hosted test network,graph,transport,OGDL-Taiwan-1.0,license-permits,1.0.0,2026-11-05,3,2,,false,2026-09,2026-09,none,https://netscied.tw/datasets/hosted-graph/,https://netscied.tw/api/v1/datasets/hosted-graph.json
+link-only-graph,測試用外部連結網絡,Link-only test network,graph,technology,NOASSERTION,link-only,,,10,20,,true,2020,,none,https://netscied.tw/datasets/link-only-graph/,https://netscied.tw/api/v1/datasets/link-only-graph.json

@@ -1,0 +1,3 @@
+# fixture: an example query that cannot return anything in an empty catalog
+examples:
+  - { q: 捷運, type: datasets }

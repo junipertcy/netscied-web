@@ -1,0 +1,30 @@
+id: ntu-special-topics-graph-algorithms
+university: ntu
+department: {zh-Hant: 資訊工程學系}
+title: {zh-Hant: 圖形演算法特論, en: Special Topics on Graph Algorithms}
+category: graph-theory
+relevance: core
+offering_type: credit
+level: master
+languages: [en]
+inclusion_note:
+  zh-Hant: 授課教師的課程網頁顯示本課以圖形演算法為題，講義依序為生成樹計數、最小生成樹、最短路徑與 Steiner 樹等主題。
+summary:
+  zh-Hant: 研究所圖形演算法專題，以生成樹（計數、最小生成樹及其驗證）、最短路徑與 Steiner 樹等樹狀結構問題為核心，搭配近似演算法與近年論文的口頭報告或實作。
+keywords: [圖演算法, 生成樹, 最小生成樹, 最短路徑, Steiner 樹, 近似演算法]
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
+offerings:
+  - term: "115-1"
+    instructors:
+      - {name: 趙坤茂, name_en: Kun-Mao Chao}
+    evidence_url: https://www.csie.ntu.edu.tw/~kmchao/tree26fall/index.htm
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 教師課程頁「Fall semester, 2026」，週二 9:10–12:10、資訊系館 105，3 學分；教師課程列表標註「台大資訊學群」。臺大課程網流水號未查得（站內搜尋經 /api/，依 robots.txt 不使用）。
+  - term: "112-2"
+    instructors:
+      - {name: 趙坤茂, name_en: Kun-Mao Chao}
+    evidence_url: https://www.csie.ntu.edu.tw/~kmchao/tree24spr/
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 教師課程頁「Spring semester, 2024」；教師課程列表（https://www.csie.ntu.edu.tw/~kmchao/course.html）標註為英語授課。

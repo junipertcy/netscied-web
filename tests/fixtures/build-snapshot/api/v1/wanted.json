@@ -1,0 +1,29 @@
+[
+  {
+    "id": "wanted-thing",
+    "url": "https://netscied.tw/wanted/#wanted-thing",
+    "title": {
+      "zh-Hant": "測試徵求項目"
+    },
+    "description": {
+      "zh-Hant": "測試用的徵求項目。"
+    },
+    "domains": [
+      {
+        "id": "society",
+        "zh-Hant": "社會關係",
+        "en": "Society and relationships"
+      }
+    ],
+    "reason": {
+      "zh-Hant": "測試。"
+    },
+    "status": "seeking",
+    "status_label": {
+      "id": "seeking",
+      "zh-Hant": "徵求中",
+      "en": "seeking"
+    },
+    "requests": 2
+  }
+]

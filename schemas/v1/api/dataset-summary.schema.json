@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/dataset-summary.schema.json",
+  "title": "A dataset in /api/v1/datasets.json (summary form)",
+  "description": "One published dataset. Shared fields have the same shape as in the full record at api_url.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "url", "api_url", "title", "summary", "kinds", "structure_badges", "domains", "size", "temporal", "license", "redistribution", "hosted", "latest_version", "personal_data", "added", "updated"],
+  "properties": {
+    "id": { "type": "string" },
+    "url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+    "api_url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+    "title": { "$ref": "api-common.schema.json#/$defs/title" },
+    "summary": { "$ref": "api-common.schema.json#/$defs/text" },
+    "kinds": { "type": "array", "items": { "enum": ["graph", "hypergraph", "simplicial-complex", "cell-complex", "ranking", "pairwise-comparison", "other-relational"] } },
+    "structure_badges": { "type": "array", "items": { "$ref": "api-common.schema.json#/$defs/label" } },
+    "domains": { "type": "array", "items": { "$ref": "api-common.schema.json#/$defs/label" } },
+    "size": { "$ref": "api-common.schema.json#/$defs/size" },
+    "temporal": { "$ref": "api-common.schema.json#/$defs/temporal" },
+    "license": { "$ref": "api-common.schema.json#/$defs/license" },
+    "redistribution": { "$ref": "api-common.schema.json#/$defs/redistribution" },
+    "hosted": { "type": "boolean" },
+    "latest_version": { "anyOf": [{ "type": "null" }, { "$ref": "api-common.schema.json#/$defs/version" }] },
+    "personal_data": { "$ref": "api-common.schema.json#/$defs/personalData" },
+    "added": { "$ref": "api-common.schema.json#/$defs/date" },
+    "updated": { "$ref": "api-common.schema.json#/$defs/date" }
+  }
+}

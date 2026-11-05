@@ -1,0 +1,135 @@
+<h1>搜尋結果</h1>
+<app-search-form inputId="search-q" [q]="query()" [type]="mode()" />
+<app-noscript-catalog ngSkipHydration [datasets]="datasets()" />
+
+<!-- One live region for the whole page, so a screen reader hears each change of
+     its text (final review W9): 搜尋中…, then the count. -->
+<p class="status" role="status" aria-live="polite">
+  @switch (state()) {
+    @case ('loading') {搜尋中…}
+    @case ('ready') {
+      @let rs = result();
+      @if (!rs.query.empty) {
+        @if (mode() === 'datasets') {找到 {{ hits().length }} 筆資料集} @else {找到 {{ hits().length }} 門課程}
+        @if (rs.otherCount) {
+          ；另有 {{ rs.otherCount }} {{ mode() === 'datasets' ? '門課程' : '筆資料集' }}符合，<a [href]="otherHref()">看{{ mode() === 'datasets' ? '課程' : '資料集' }}結果</a>
+        }
+      }
+    }
+  }
+</p>
+
+@switch (state()) {
+  @case ('error') {
+    <div class="notice" role="alert">
+      <p><strong>搜尋暫時無法使用。</strong>請稍後再試，或直接瀏覽：</p>
+      <p><a routerLink="/datasets">資料集</a> · <a routerLink="/courses">課程</a> · <a routerLink="/wanted">資料許願池</a></p>
+    </div>
+  }
+  @case ('ready') {
+    @let r = result();
+    @if (r.query.truncated) {
+      <p class="notice" role="note">搜尋字詞超過 100 個字，只使用了前 100 個字。</p>
+    }
+    @if (r.query.empty) {
+      <div class="empty-query">
+        <p>請輸入想找的資料或課程，例如「捷運」「超圖」「社會網絡分析」。也可以直接瀏覽：</p>
+        <ul>
+          <li><a routerLink="/datasets">全部資料集（{{ index().counts.datasets }} 筆）</a></li>
+          <li><a routerLink="/courses">全部課程（{{ index().counts.courses }} 門）</a></li>
+        </ul>
+      </div>
+    } @else {
+      @if (r.hints.networking) {
+        <p class="hint" role="note">
+          @if (mode() === 'datasets') {
+            你在找電腦網路嗎？本站的「網路」指網絡科學；與網際網路有關的資料會列在下面。<a [href]="href(query(), 'courses')">改搜尋課程</a>
+          } @else {
+            本站的課程目錄不收錄電腦網路課程，只收錄網絡科學、社會網絡分析、圖論與圖機器學習課程。<a [href]="href(query(), 'datasets')">改搜尋資料</a>
+          }
+        </p>
+      }
+      @if (r.hints.mode) {
+        <p class="hint" role="note">看起來你在找{{ r.hints.mode === 'courses' ? '課程' : '資料集' }}：<a [href]="href(query(), r.hints.mode)">改搜尋{{ r.hints.mode === 'courses' ? '課程' : '資料' }}</a></p>
+      }
+
+      @if (r.hits.length > 10 && mode() === 'datasets' && facetEntries().length > 1) {
+        <div class="facets" role="group" aria-label="依領域篩選">
+          <button type="button" (click)="facet.set(null)" [attr.aria-pressed]="facet() === null">全部</button>
+          @for (f of facetEntries(); track f[0]) {
+            <button type="button" (click)="facet.set(f[0])" [attr.aria-pressed]="facet() === f[0]">{{ domainLabels()[f[0]] ?? f[0] }}（{{ f[1] }}）</button>
+          }
+        </div>
+      }
+
+      @if (hits().length) {
+        <ol class="results">
+          @for (h of hits(); track h.id) {
+            @let d = h.record;
+            <li class="result">
+              <h2 class="result-title"><a [href]="d.url">{{ d.title.zh }}</a></h2>
+              @if (d.title.en) {<p class="en" lang="en">{{ d.title.en }}</p>}
+              @if (mode() === 'datasets') {
+                <p class="result-summary">{{ d.display.summary }}</p>
+                <p class="result-meta">
+                  @for (b of d.display.badges; track $index) {<span class="badge">{{ b }}</span>}
+                  @for (x of d.display.domains; track $index) {<span class="tag">{{ x }}</span>}
+                  @if (d.display.size) {<span>{{ d.display.size }}</span>}
+                  <span>授權：{{ d.display.license }}</span>
+                  <span>最新版本：{{ d.display.version }}</span>
+                </p>
+              } @else {
+                <p class="result-meta">
+                  <span>{{ d.display.university }}</span>
+                  <span>教師：{{ d.display.instructors }}</span>
+                  <span>最近開課：{{ d.display.term }}</span>
+                  <span>{{ d.display.level }}</span>
+                  <span>授課語言：{{ d.display.languages || '—' }}</span>
+                </p>
+              }
+            </li>
+          }
+        </ol>
+      } @else if (mode() === 'datasets') {
+        <div class="empty-state">
+          <p class="empty-lead">本站目前還沒有與「{{ r.query.text }}」有關的資料集。</p>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <p class="empty-lead">本站目前還沒有與「{{ r.query.text }}」有關的課程。</p>
+          <ul>
+            <li><a routerLink="/courses">瀏覽全部課程</a></li>
+            <li>知道台灣有這樣的課程？<a [href]="courseMail(r.query.text)">寄信推薦課程</a> 或 <a [href]="site.github + '/issues/new?template=suggest-dataset.yml'">在 GitHub 告訴我們</a></li>
+            <li>教育部<a [href]="site.courseDirectory">大學校院課程資源網</a>收錄各校的歷年課程</li>
+          </ul>
+        </div>
+      }
+
+      @if (r.wanted.length) {
+        <section class="wanted-group" aria-labelledby="wanted-title">
+          <h2 id="wanted-title">許願池裡有相符的需求（徵求中）</h2>
+          <ul>
+            @for (w of r.wanted; track w.id) {
+              <li><a [href]="w.record.url">{{ w.record.title.zh }}</a><span class="sub">{{ w.record.display.status }} · 已有 {{ w.record.display.requests }} 次需求</span></li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (mode() === 'datasets' && hits().length < 3) {
+        <section class="request" aria-labelledby="request-title">
+          <h2 id="request-title">告訴我們你需要什麼資料</h2>
+          <p>
+            @if (links().form) {<a [href]="links().form">填寫資料需求表</a>（不需帳號）· }
+            <a [href]="links().mail">寄信</a> · <a [href]="links().issue">在 GitHub 提出</a>（已帶入「{{ r.query.text }}」）
+          </p>
+          <h2>到其他資料庫找找看</h2>
+          <ul class="inline-list">
+            @for (c of catalogs(); track c.name) {<li><a [href]="c.url">{{ c.name }}</a></li>}
+          </ul>
+          <p><a routerLink="/datasets">瀏覽全部資料集</a> · <a routerLink="/wanted">看看許願池</a></p>
+        </section>
+      }
+    }
+  }
+}

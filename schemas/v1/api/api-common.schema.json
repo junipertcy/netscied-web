@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/api-common.schema.json",
+  "title": "Shared definitions of the netscied.tw API responses",
+  "$comment": "Each shared field has one shape everywhere it appears (summaries and full records).",
+  "$defs": {
+    "date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+    "url": { "type": "string", "pattern": "^https?://" },
+    "siteUrl": { "type": "string", "pattern": "^https://netscied\\.tw/" },
+    "text": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "zh-Hant": { "type": "string" }, "en": { "type": "string" } }
+    },
+    "label": {
+      "description": "A controlled value with its Mandarin and English labels.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "zh-Hant", "en"],
+      "properties": { "id": { "type": "string" }, "zh-Hant": { "type": "string" }, "en": { "type": "string" }, "group": { "enum": ["kind", "property"] } }
+    },
+    "title": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["zh-Hant"],
+      "properties": { "zh-Hant": { "type": "string" }, "en": { "type": "string" } }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "class"],
+      "properties": {
+        "id": { "type": "string", "description": "SPDX id, LicenseRef-*, NOASSERTION or NONE." },
+        "name": { "$ref": "#/$defs/text" },
+        "url": { "type": ["string", "null"] },
+        "class": { "enum": ["permissive", "share-alike", "non-commercial", "no-derivatives", "link-only"] },
+        "class_label": { "$ref": "#/$defs/label" },
+        "statement": { "$ref": "#/$defs/text" },
+        "evidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["url", "checked_on"],
+          "properties": { "url": { "$ref": "#/$defs/url" }, "checked_on": { "$ref": "#/$defs/date" } }
+        }
+      }
+    },
+    "redistribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basis", "label", "may_redistribute"],
+      "properties": {
+        "basis": { "enum": ["license-permits", "written-permission", "own-work", "link-only"] },
+        "label": { "$ref": "#/$defs/label" },
+        "may_redistribute": { "type": "boolean" },
+        "effective_class": { "enum": ["permissive", "share-alike", "non-commercial", "no-derivatives", "link-only", "permission"] },
+        "permission_ref": { "type": "string" },
+        "note": { "$ref": "#/$defs/text" }
+      }
+    },
+    "personalData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "label", "reviewed_on"],
+      "properties": {
+        "level": { "enum": ["none", "public-role", "private-individuals", "sensitive"] },
+        "label": { "$ref": "#/$defs/label" },
+        "reviewed_on": { "$ref": "#/$defs/date" },
+        "notes": { "$ref": "#/$defs/text" },
+        "small_cell_threshold": { "type": "integer" }
+      }
+    },
+    "size": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["approximate", "text"],
+      "properties": {
+        "nodes": { "type": "integer" },
+        "edges": { "type": "integer" },
+        "hyperedges": { "type": "integer" },
+        "incidences": { "type": "integer" },
+        "layers": { "type": "integer" },
+        "snapshots": { "type": "integer" },
+        "alternatives": { "type": "integer" },
+        "rankings": { "type": "integer" },
+        "comparisons": { "type": "integer" },
+        "partitions": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "approximate": { "type": "boolean" },
+        "as_of": { "$ref": "#/$defs/date" },
+        "text": { "$ref": "#/$defs/text" }
+      }
+    },
+    "temporal": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "start": { "type": ["string", "null"] },
+        "end": { "type": ["string", "null"] },
+        "ongoing": { "type": "boolean" },
+        "zh-Hant": { "type": "string" },
+        "en": { "type": "string" },
+        "note": { "$ref": "#/$defs/text" }
+      }
+    },
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "url", "format", "media_type", "role", "bytes", "sha256"],
+      "properties": {
+        "path": { "type": "string" },
+        "url": { "type": "string", "pattern": "^https://netscied\\.tw/data/" },
+        "format": { "type": "string" },
+        "format_label": { "$ref": "#/$defs/label" },
+        "media_type": { "type": "string" },
+        "role": { "enum": ["canonical", "convenience", "original", "metadata", "checksums", "bundle"] },
+        "bytes": { "type": "integer" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "conforms_to": { "type": "string" }
+      }
+    },
+    "version": {
+      "description": "A version of a hosted dataset. Suspended or withdrawn versions list no files, URLs or checksums.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "released", "doi"],
+      "properties": {
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "released": { "$ref": "#/$defs/date" },
+        "snapshot_date": { "type": ["string", "null"] },
+        "changelog": { "$ref": "#/$defs/text" },
+        "doi": { "type": ["string", "null"] },
+        "license": { "type": ["string", "null"] },
+        "files": { "type": "array", "items": { "$ref": "#/$defs/file" } },
+        "checksums_url": { "type": ["string", "null"] },
+        "zip_url": { "type": ["string", "null"] },
+        "statistics": { "type": "object" },
+        "computed_by": { "type": "object", "additionalProperties": false, "properties": { "tool": { "type": "string" }, "version": { "type": "string" } } },
+        "suspended": { "const": true },
+        "withdrawn": { "type": "object", "required": ["date", "reason"], "properties": { "date": { "$ref": "#/$defs/date" }, "reason": { "$ref": "#/$defs/text" } } }
+      }
+    },
+    "university": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "zh-Hant", "en"],
+      "properties": { "id": { "type": "string" }, "zh-Hant": { "type": "string" }, "short": { "type": "string" }, "en": { "type": "string" }, "ror": { "type": "string" } }
+    },
+    "instructor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": { "name": { "type": "string" }, "name_en": { "type": "string" }, "role": { "type": "string" } }
+    },
+    "unverified": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fields", "checked_on"],
+      "properties": { "fields": { "type": "array", "items": { "type": "string" } }, "checked_on": { "$ref": "#/$defs/date" }, "note": { "$ref": "#/$defs/text" } }
+    },
+    "latestOffering": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instructors"],
+      "properties": {
+        "term": { "type": "string" },
+        "term_label": { "type": "string" },
+        "term_label_en": { "type": "string" },
+        "start": { "$ref": "#/$defs/date" },
+        "end": { "$ref": "#/$defs/date" },
+        "instructors": { "type": "array", "items": { "$ref": "#/$defs/instructor" } },
+        "instructors_unverified": { "const": true }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "zh-Hant", "en"],
+      "properties": { "id": { "enum": ["current", "recent", "dormant", "historical"] }, "zh-Hant": { "type": "string" }, "en": { "type": "string" } }
+    }
+  }
+}

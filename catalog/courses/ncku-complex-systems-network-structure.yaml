@@ -1,0 +1,47 @@
+id: ncku-complex-systems-network-structure
+university: ncku
+department: {zh-Hant: 通識教育中心（模組化課程）}
+title: {zh-Hant: 複雜系統中的網路結構、模型和特性, en: "Network Structure, Modeling, and Properties for Complex Systems"}
+category: network-science
+relevance: core
+offering_type: credit
+level: mixed
+languages: [en]
+inclusion_note:
+  zh-Hant: 課程概述與每日進度皆以網絡科學為主題：圖論基礎、隨機網絡、小世界與無尺度模型、度相關性、中心性與核心—邊陲結構。
+summary:
+  zh-Hant: 為期五天的密集模組化課程（1.5 學分），上午講授、下午以 Python 實作，帶領學生掌握網絡的結構、模型與量化指標，並分組完成網絡研究專題。
+keywords: [網絡科學, 複雜系統, 隨機網絡, 小世界網絡, 無尺度網絡, 中心性, NetworkX]
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
+offerings:
+  - term: "114-S"
+    start: "2026-06-29"
+    end: "2026-07-03"
+    instructors:
+      - {name: 朱書賢}
+    evidence_url: https://modular-course.web2.ncku.edu.tw/p/412-1100-27226.php?Lang=zh-tw
+    verified_on: "2026-11-04"
+    syllabus_url: https://modular-course.web2.ncku.edu.tw/var/file/100/1100/img/4397/118499032.pdf
+    note:
+      zh-Hant: 成大將 2026 暑假的模組化課程列為「115學年第1學期」，本站依學年度曆法（114 學年度至 2026 年 7 月 31 日）記為 114-S；授課教師為外聘的 Intel EDA 軟體工程師。
+    unverified:
+      fields:
+        - code
+      checked_on: 2026-11-04
+      note:
+        zh-Hant: 科目序號只見於未能直接開啟的成大選課系統頁，待確認。
+  - term: "113-1"
+    start: "2024-08-05"
+    end: "2024-08-09"
+    instructors:
+      - {name: 朱書賢}
+    evidence_url: https://modular-course.web2.ncku.edu.tw/p/412-1100-26257.php?Lang=zh-tw
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 「113學年第1學期(2024暑假)」列表標示 Lecture in English，授課教師所屬 Intel Corporation。
+unverified:
+  fields:
+    - languages
+  checked_on: 2026-11-04
+  note:
+    zh-Hant: 113-1 列為英語授課；114-S 的授課語言只見於未能直接開啟的選課系統頁，待確認。

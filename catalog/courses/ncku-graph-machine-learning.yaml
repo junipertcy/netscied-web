@@ -1,0 +1,49 @@
+id: ncku-graph-machine-learning
+university: ncku
+department: {zh-Hant: 資訊所, en: Computer Science and Information Engineering}
+title: {zh-Hant: 圖機器學習專論, en: Graph Machine Learning}
+course_code: CSIE7647
+category: graph-ml
+relevance: core
+offering_type: credit
+level: master
+languages: []
+inclusion_note:
+  zh-Hant: 課程概述以圖資料上的機器學習為主題，內容包括節點嵌入、圖神經網路的基礎與進階、圖生成模型與可信任圖機器學習。
+summary:
+  zh-Hant: 在機器學習與深度學習的基礎上，介紹如何在圖資料上建立 AI 模型，涵蓋節點嵌入、圖神經網路、可信任圖機器學習，以及在推薦系統、資料科學與社群媒體的應用，以論文報告與期末專題評量。
+keywords: [圖機器學習, 圖神經網路, 節點嵌入, 圖表示學習, 推薦系統]
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
+offerings:
+  - term: "114-1"
+    code: P75L600
+    instructors:
+      - {name: 李政德, name_en: "Li, Cheng-Te"}
+    evidence_url: https://class-qry.acad.ncku.edu.tw/syllabus/online_display.php?syear=0114&sem=1&co_no=P75L600&class_code=
+    note:
+      zh-Hant: 課程系統碼 P75L600、開課序號 079，課程語言中文；成大伺服器對本機直接連線回應 403，本頁經 Exa 擷取核對，建議自臺灣網路重新開啟確認。
+    unverified:
+      fields:
+        - offering
+      checked_on: 2026-11-04
+      note:
+        zh-Hant: 成大課程頁對本站的連線回應 403，未能直接開啟查核。
+  - term: "112-1"
+    code: P75L600
+    instructors:
+      - {name: 李政德, name_en: "Li, Cheng-Te"}
+    evidence_url: https://class-qry.acad.ncku.edu.tw/syllabus/online_display.php?syear=0112&sem=1&co_no=P75L600&class_code=
+    note:
+      zh-Hant: 開課序號 084，課程語言中文；同上，經 Exa 擷取核對。
+    unverified:
+      fields:
+        - offering
+      checked_on: 2026-11-04
+      note:
+        zh-Hant: 成大課程頁對本站的連線回應 403，未能直接開啟查核。
+unverified:
+  fields:
+    - languages
+  checked_on: 2026-11-04
+  note:
+    zh-Hant: 授課語言只見於未能直接開啟的成大課程頁，待確認。

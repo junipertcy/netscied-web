@@ -1,0 +1,37 @@
+# Open subject tags with bilingual labels (dataset-catalog spec). Add a tag here
+# before using it in a record; validation rejects unknown tags. Structural
+# properties (bipartite, temporal, weighted ...) are fields, never tags.
+- { id: film, zh-Hant: 電影, en: film }
+- { id: awards, zh-Hant: 獎項, en: awards }
+- { id: legislature, zh-Hant: 國會, en: legislature }
+- { id: bills, zh-Hant: 法案, en: bills }
+- { id: elections, zh-Hant: 選舉, en: elections }
+- { id: internet, zh-Hant: 網際網路, en: internet }
+- { id: telecommunications, zh-Hant: 電信, en: telecommunications }
+- { id: metro, zh-Hant: 捷運, en: metro }
+- { id: public-transport, zh-Hant: 大眾運輸, en: public transport }
+- { id: bicycle-sharing, zh-Hant: 公共自行車, en: bicycle sharing }
+- { id: aviation, zh-Hant: 航空, en: aviation }
+- { id: roads, zh-Hant: 道路, en: roads }
+- { id: commuting, zh-Hant: 通勤, en: commuting }
+- { id: migration, zh-Hant: 人口遷徙, en: migration }
+- { id: trade, zh-Hant: 貿易, en: trade }
+- { id: ports, zh-Hant: 港口, en: ports }
+- { id: input-output, zh-Hant: 產業關聯, en: input–output }
+- { id: industry, zh-Hant: 產業, en: industry }
+- { id: energy, zh-Hant: 能源, en: energy }
+- { id: power-grid, zh-Hant: 電網, en: power grid }
+- { id: sport, zh-Hant: 體育, en: sport }
+- { id: baseball, zh-Hant: 棒球, en: baseball }
+- { id: food-web, zh-Hant: 食物網, en: food web }
+- { id: ecology, zh-Hant: 生態, en: ecology }
+- { id: citations, zh-Hant: 引用, en: citations }
+- { id: scholarship, zh-Hant: 學術, en: scholarship }
+- { id: education, zh-Hant: 教育, en: education }
+- { id: law, zh-Hant: 法律, en: law }
+- { id: open-government-data, zh-Hant: 政府開放資料, en: open government data }
+- { id: cosponsorship, zh-Hant: 連署, en: co-sponsorship }
+- { id: roll-call-votes, zh-Hant: 記名表決, en: roll-call votes }
+- { id: committees, zh-Hant: 委員會, en: committees }
+- { id: light-rail, zh-Hant: 輕軌, en: light rail }
+- { id: electricity, zh-Hant: 電力, en: electricity }

@@ -1,0 +1,19 @@
+{
+    "IndexDocument": {
+        "Suffix": "index.html"
+    },
+    "ErrorDocument": {
+        "Key": "error.html"
+    },
+    "RoutingRules": [
+        {
+            "Condition": {
+                "HttpErrorCodeReturnedEquals": "404"
+            },
+            "Redirect": {
+                "HostName": "netscied.tw",
+                "ReplaceKeyPrefixWith": "/"
+            }
+        }
+    ]
+}

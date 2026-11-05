@@ -1,0 +1,66 @@
+# How version 1.0.0 of ly-bill-cosponsorship-10th is rebuilt (data-curation
+# spec, "Reproducible fetch recipes"). Both sources are LYAPI list endpoints,
+# fetched page by page with explicit output fields. LYAPI's robots.txt asks for
+# Crawl-delay: 3, which the fetcher obeys; its guide asks heavy users to prefer
+# the Hugging Face export, and these 9 small requests stay well within that.
+# Owner decision 2026-11-04 (A1): host under CC BY 4.0 with attribution,
+# crediting LYAPI and OpenFun.
+dataset: ly-bill-cosponsorship-10th
+version: "1.0.0"
+changelog:
+  zh-Hant: 第一版：第10屆立法院委員提案的提案人與連署人超圖，取自 LYAPI（2026 年 11 月 5 日擷取）。
+  en: First version, the sponsor and co-signer hypergraph of member-proposed bills of the 10th Legislative Yuan, from LYAPI (retrieved 2026-11-05, Taipei time).
+coverage:
+  temporal: { start: "2020-02", end: "2024-01" }
+sources:
+  - id: bills
+    method: api
+    url: https://ly.govapi.tw/v2/bills
+    params:
+      屆: 10
+      提案來源: 委員提案
+      output_fields: [議案編號, 提案日期, 提案人, 連署人, 議案類別, 提案單位/提案委員, 會期, 議案名稱]
+    pagination: { page_param: page, size_param: limit, size: 1000, items: bills, max_pages: 20 }
+    landing_page: https://ly.govapi.tw/v2/
+    archived_landing_page: https://web.archive.org/web/20261105044605/https://ly.govapi.tw/v2/
+    # SHA-256 of the page listing (8 pages). Fetched twice on 2026-11-05 with the same bytes; the version uses the second fetch.
+    expected: { sha256: 7184cef0dcc142e6c13f5ec8161a857b71eb6c391951b1fad869e818ba63472e, bytes: 4329024 }
+    retrieved_at: "2026-11-05T04:50:00Z"
+    license: CC-BY-4.0
+    license_evidence:
+      url: https://ly.govapi.tw/v2/
+      checked_on: "2026-11-04"
+      quote: CC-BY-4.0
+    redistribute_original: true
+  - id: legislators
+    method: api
+    url: https://ly.govapi.tw/v2/legislators
+    params:
+      屆: 10
+      # Only the fields the hypergraph uses: no education, career or photo (record personal_data notes).
+      output_fields: [委員姓名, 委員英文姓名, 黨籍, 黨團, 歷屆立法委員編號]
+    pagination: { page_param: page, size_param: limit, size: 1000, items: legislators, max_pages: 2 }
+    landing_page: https://ly.govapi.tw/v2/
+    archived_landing_page: https://web.archive.org/web/20261105044605/https://ly.govapi.tw/v2/
+    expected: { sha256: d15e8e66b67ac2b204ff1ee883fab7cd7bfe88118469d9880514050f893aad10, bytes: 19464 }
+    retrieved_at: "2026-11-05T04:50:25Z"
+    license: CC-BY-4.0
+    license_evidence:
+      url: https://ly.govapi.tw/v2/
+      checked_on: "2026-11-04"
+      quote: CC-BY-4.0
+    redistribute_original: true
+convert:
+  converter: ly_cosponsorship
+  kind: hypergraph
+  options:
+    term: 10
+operations: [convert, subset]
+transformations:
+  - zh-Hant: 以「屆=10」與「提案來源=委員提案」向 LYAPI 取得議案列表；每件議案（依議案編號）成為一條超邊，超邊屬性為議案名稱、提案日期、會期、議案類別與「提案單位/提案委員」原文。
+    en: Bills are requested from LYAPI with 屆=10 and 提案來源=委員提案; each bill (by 議案編號) is one hyperedge, with its title, 提案日期, session, bill type and the original 提案單位/提案委員 text as attributes.
+  - zh-Hant: 超邊成員只收名列第10屆立法委員名單（LYAPI 委員資料，屆=10）的提案人與連署人，角色分別標為 proposer 與 cosigner；不在名單上的姓名不收錄，數量記在變更說明。
+    en: Only sponsors and co-signers on the 10th-term legislator roster (LYAPI legislators, 屆=10) become members, with role proposer or cosigner; names not on the roster are left out, and their number is given in the change note.
+  - zh-Hant: 節點為第10屆立法委員，以 LYAPI 的「歷屆立法委員編號」識別，屬性為委員姓名、英文姓名、黨籍與黨團；不收錄學歷、經歷與照片。
+    en: Nodes are 10th-term legislators, identified by LYAPI's 歷屆立法委員編號, with name, English name, party and caucus; education, career and photos are not included.
+outputs: [hif]

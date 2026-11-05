@@ -1,0 +1,8 @@
+Pinned copy of the official HIF (Hypergraph Interchange Format) JSON Schema.
+
+Source: https://github.com/HIF-org/HIF-standard/blob/6ffdb48e7238f8317e0bc394b02879a1893c8415/schemas/hif_schema.json
+Commit: 6ffdb48e7238f8317e0bc394b02879a1893c8415 (2025-05-02), the latest commit touching the file on main when checked
+git blob: 5651f07b93a67b04ec4b5dbe628a57f5c35b0ba0 (git hash-object of this copy)
+Checked: 2026-11-05, with the GitHub contents API (read only)
+
+Replace the copy and this note together; tests/test_formats.py checks that they agree.

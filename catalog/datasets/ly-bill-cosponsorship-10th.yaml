@@ -1,0 +1,135 @@
+id: ly-bill-cosponsorship-10th
+status: published
+added: "2026-11-04"
+announce: false
+title:
+  zh-Hant: 第10屆立法院委員提案連署超圖
+  en: Bill co-sponsorship hypergraph of the 10th Legislative Yuan
+description:
+  zh-Hant: |-
+    第10屆立法院（2020 年 2 月至 2024 年 1 月）由立法委員提出的議案，
+    每件議案的「提案人」與「連署人」合為一條超邊，
+    可用來分析委員之間的合作、跨黨派連署與提案群聚。
+    資料取自歐噴有限公司的 LYAPI，其內容彙整自立法院議事暨公報資訊網；
+    本站依 CC BY 4.0 授權轉載整理後的版本。
+  en: >-
+    Member-proposed bills of the 10th Legislative Yuan of Taiwan (February 2020
+    to January 2024) as a hypergraph: each bill is a hyperedge joining its
+    sponsors (提案人) and co-signers (連署人). Built from OpenFun Ltd.'s LYAPI,
+    which compiles the Legislative Yuan's parliamentary information system, and
+    hosted here under CC BY 4.0.
+keywords: [立法院, 立法委員, 提案, 連署, 共同提案, 超圖, LYAPI, co-sponsorship, cosponsorship, Legislative Yuan]
+semantics:
+  node:
+    zh-Hant: 第10屆立法委員
+    en: a member of the 10th Legislative Yuan
+  link:
+    zh-Hant: 一件委員提案的議案；超邊的成員為該案的提案人與連署人，並標示各自的角色
+    en: one member-proposed bill; the hyperedge joins its sponsors and co-signers, each marked with their role
+structure:
+  kinds: [hypergraph]
+  layers: single
+  temporal: { form: event-times, resolution: day }
+  spatial: { form: none }
+  notes:
+    zh-Hant: |-
+      時間取 LYAPI 的「提案日期」欄位（依上游說明，通常是議案排入院會的日期）。
+      上游「提案單位/提案委員」欄寫的人數（例如「本院委員吳思瑤等16人」）
+      不一定等於「提案人」加「連署人」名單的人數，使用時請留意。
+      由黨團提出、沒有個別委員列名的議案不在超圖中；各版本不收錄的件數記在變更說明。
+    en: >-
+      Times are LYAPI's 提案日期 field (per the upstream documentation, usually the
+      date the bill was placed on a plenary agenda). The head count in the
+      提案單位/提案委員 field (for example "等16人") does not always equal the
+      number of names in the sponsor and co-signer lists. Bills filed by a caucus
+      with no individual legislator listed are not in the hypergraph; each
+      version's change note gives how many bills were left out.
+coverage:
+  temporal:
+    start: "2020-02"
+    end: "2024-01"
+  spatial: { zh-Hant: 臺灣, en: Taiwan }
+domains: [politics]
+tags: [legislature, bills, cosponsorship]
+taiwan_relevance:
+  basis: [about-taiwanese-entities, taiwanese-publisher]
+  justification: 資料記錄臺灣第10屆立法委員的提案與連署，由臺灣的歐噴有限公司整理發布。
+provenance:
+  source:
+    name: { zh-Hant: LYAPI 立法院 API v2, en: LYAPI (Legislative Yuan API v2) }
+    url: https://ly.govapi.tw/v2/
+    publisher: { zh-Hant: 歐噴有限公司, en: OpenFun Ltd. }
+  method:
+    zh-Hant: |-
+      LYAPI 定期整理立法院議事暨公報資訊網的議案資料，轉為結構化 JSON。
+      本站以「屆=10」與「提案來源=委員提案」篩選議案，
+      以「議案編號」識別每件議案，將其「提案人」與「連署人」名單合為一條超邊。
+    en: >-
+      LYAPI regularly compiles bill records from the Legislative Yuan's
+      parliamentary information system into structured JSON. This site selects
+      bills with 屆=10 and 提案來源=委員提案, identifies each by its 議案編號, and
+      joins its 提案人 and 連署人 lists into one hyperedge.
+  access:
+    - label: { zh-Hant: LYAPI 議案列表（第10屆委員提案）, en: LYAPI bill list (10th term member bills) }
+      url: https://ly.govapi.tw/v2/bills?%E5%B1%86=10&%E6%8F%90%E6%A1%88%E4%BE%86%E6%BA%90=%E5%A7%94%E5%93%A1%E6%8F%90%E6%A1%88
+      format: api
+    - label: { zh-Hant: LYAPI Swagger 文件, en: LYAPI Swagger documentation }
+      url: https://ly.govapi.tw/v2/swagger
+      format: web
+    - label: { zh-Hant: Hugging Face 整批下載（openfun/tw-ly-bill）, en: Hugging Face bulk copy (openfun/tw-ly-bill) }
+      url: https://huggingface.co/datasets/openfun/tw-ly-bill
+      format: web
+  checked_on: "2026-11-04"
+license:
+  id: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  attribution: |-
+    資料來源：歐噴有限公司 LYAPI（https://ly.govapi.tw/），依 CC BY 4.0 授權；原始資料出自立法院議事暨公報資訊網。本站將議案整理為超圖。
+  statement:
+    zh-Hant: |-
+      LYAPI v2 首頁頁尾「Dataset Collection」欄列有「CC-BY-4.0」連結，指向創用 CC 姓名標示 4.0 國際授權；
+      同欄的「免責聲明」連結沒有內容。Hugging Face 上的 openfun/tw-ly-bill 資料集也標示 license: cc-by-4.0。
+    en: >-
+      The footer of the LYAPI v2 home page lists, under "Dataset Collection", a
+      link "CC-BY-4.0" to the CC BY 4.0 deed; the "免責聲明" link next to it is
+      empty. The Hugging Face dataset openfun/tw-ly-bill also declares
+      license: cc-by-4.0.
+  evidence:
+    url: https://ly.govapi.tw/v2/
+    checked_on: "2026-11-04"
+    quote: CC-BY-4.0
+redistribution:
+  basis: license-permits
+  note:
+    zh-Hant: |-
+      LYAPI 的資料集以 CC BY 4.0 釋出。上游的立法院開放資料服務平台
+      也以「立法院網站資料開放宣告」與政府資料開放授權條款開放利用。
+personal_data:
+  level: public-role
+  reviewed_on: "2026-11-04"
+  notes:
+    zh-Hant: |-
+      託管檔案的節點只有第10屆立法委員：姓名、英文姓名、黨籍與黨團，以及其職務上的提案、連署行為。
+      本站只收錄「委員提案」，不收錄一般民眾提出的請願案；提案人與連署人只保留名列第10屆立法委員名單者。
+      議案名稱照上游原文保留，可能提及公職人員、公共職務的被提名人，或公務事件中的已故者（例如殉職軍人的姓氏、階級與單位）。
+      LYAPI 委員資料中的學歷、經歷與照片不收錄。
+    en: >-
+      The nodes of the hosted files are only 10th-term legislators: name,
+      English name, party and caucus, with their official sponsoring and
+      co-signing. Only member-proposed bills (委員提案) are included, no
+      petitions from private citizens; only sponsors and co-signers on the
+      10th-term roster are kept. Bill titles are kept verbatim and may name
+      public officials, nominees to public posts, or deceased persons in
+      official matters (for example soldiers who died on duty, by surname,
+      rank and unit). Education, career and photos from LYAPI's legislator
+      data are not included.
+creators:
+  - organization: { zh-Hant: 立法院, en: Legislative Yuan }
+    url: https://data.ly.gov.tw/
+    role: collector
+  - organization: { zh-Hant: 歐噴有限公司, en: OpenFun Ltd. }
+    url: https://openfun.tw/
+    role: publisher
+references:
+  - citation: "OpenFun Ltd. (歐噴有限公司). Taiwan Legislative Yuan Bill Data (tw-ly-bill). Hugging Face dataset, 2025."
+    url: https://huggingface.co/datasets/openfun/tw-ly-bill

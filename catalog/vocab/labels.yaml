@@ -1,0 +1,107 @@
+# Mandarin and English labels for the controlled values in the schemas
+# (design D5: one small vocabulary of zh/en labels for badges, JSON-LD and search).
+# tests/unit/vocab.test.mjs checks that every enum in schemas/v1 has a label here.
+kinds:
+  graph: { zh-Hant: 圖（網絡）, en: graph }
+  hypergraph: { zh-Hant: 超圖, en: hypergraph }
+  simplicial-complex: { zh-Hant: 單純複形, en: simplicial complex }
+  cell-complex: { zh-Hant: 胞腔複形, en: cell complex }
+  ranking: { zh-Hant: 排名, en: ranking }
+  pairwise-comparison: { zh-Hant: 成對比較, en: pairwise comparison }
+  other-relational: { zh-Hant: 其他關聯資料, en: other relational data }
+properties:
+  directed: { zh-Hant: 有向, en: directed }
+  undirected: { zh-Hant: 無向, en: undirected }
+  weighted: { zh-Hant: 加權, en: weighted }
+  signed: { zh-Hant: 帶正負號, en: signed }
+  multi_edges: { zh-Hant: 多重邊, en: multi-edges }
+  self_loops: { zh-Hant: 自環, en: self-loops }
+  bipartite: { zh-Hant: 二分, en: bipartite }
+  multipartite: { zh-Hant: 多分, en: multipartite }
+  temporal: { zh-Hant: 時序, en: temporal }
+  spatial: { zh-Hant: 空間, en: spatial }
+layers:
+  single: { zh-Hant: 單層, en: single layer }
+  multiplex: { zh-Hant: 多重網絡, en: multiplex }
+  multilayer: { zh-Hant: 多層網絡, en: multilayer }
+temporal:
+  none: { zh-Hant: 無時間資訊, en: none }
+  snapshots: { zh-Hant: 快照序列, en: snapshots }
+  event-times: { zh-Hant: 事件時間, en: event times }
+  intervals: { zh-Hant: 時間區間, en: intervals }
+spatial:
+  none: { zh-Hant: 無空間資訊, en: none }
+  node-coordinates: { zh-Hant: 節點座標, en: node coordinates }
+  areal-units: { zh-Hant: 面域單元, en: areal units }
+  edge-geometry: { zh-Hant: 連結幾何, en: edge geometry }
+ranking_data_type:
+  soc: { zh-Hant: 完整嚴格排序（SOC）, en: "strict orders, complete (SOC)" }
+  soi: { zh-Hant: 不完整嚴格排序（SOI）, en: "strict orders, incomplete (SOI)" }
+  toc: { zh-Hant: 完整含並列排序（TOC）, en: "orders with ties, complete (TOC)" }
+  toi: { zh-Hant: 不完整含並列排序（TOI）, en: "orders with ties, incomplete (TOI)" }
+  cat: { zh-Hant: 分類偏好（CAT）, en: categorical preferences (CAT) }
+comparison_outcome:
+  win-loss: { zh-Hant: 勝負, en: win–loss }
+  win-loss-draw: { zh-Hant: 勝負和, en: win–loss–draw }
+  score: { zh-Hant: 比分, en: score }
+  margin: { zh-Hant: 差距, en: margin }
+  preference-strength: { zh-Hant: 偏好強度, en: preference strength }
+taiwan_relevance:
+  collected-in-taiwan: { zh-Hant: 在臺灣蒐集, en: collected in Taiwan }
+  about-taiwanese-entities: { zh-Hant: 描述臺灣的人、地方、組織或物種, en: describes Taiwanese entities }
+  taiwanese-publisher: { zh-Hant: 由臺灣的機構或研究者發布, en: published by a Taiwanese institution or researcher }
+  taiwan-based-creators: { zh-Hant: 由在臺灣的研究者建立, en: created by Taiwan-based researchers }
+  taiwan-subset: { zh-Hant: 大型資料集中的臺灣部分, en: Taiwan-specific subset of a larger dataset }
+personal_data:
+  none: { zh-Hant: 不含個人資料, en: no personal data }
+  public-role: { zh-Hant: 含公共角色人物的資料, en: people in public roles }
+  private-individuals: { zh-Hant: 含一般個人的資料（僅提供連結）, en: private individuals (link only) }
+  sensitive: { zh-Hant: 敏感個人資料（本站不收錄檔案）, en: sensitive (not hosted) }
+redistribution:
+  license-permits: { zh-Hant: 授權允許本站轉載, en: the license permits redistribution }
+  written-permission: { zh-Hant: 經權利人書面同意轉載, en: redistributed with written permission }
+  own-work: { zh-Hant: 本站自行整理，以 CC BY 4.0 釋出, en: "compiled by this site, released under CC BY 4.0" }
+  link-only: { zh-Hant: 本站不轉載，僅提供連結, en: link only; not redistributed here }
+license_class:
+  permissive: { zh-Hant: 寬鬆授權, en: permissive }
+  share-alike: { zh-Hant: 相同方式分享, en: share-alike }
+  non-commercial: { zh-Hant: 非商業使用, en: non-commercial }
+  no-derivatives: { zh-Hant: 禁止改作, en: no derivatives }
+  link-only: { zh-Hant: 不可轉載, en: link only }
+  permission: { zh-Hant: 依書面同意, en: by written permission }
+wanted_status:
+  seeking: { zh-Hant: 徵求中, en: seeking }
+  source-found: { zh-Hant: 找到來源, en: source found }
+  in-progress: { zh-Hant: 整理中, en: in progress }
+  unavailable: { zh-Hant: 無法提供, en: unavailable }
+  published: { zh-Hant: 已收錄, en: published }
+course_category:
+  network-science: { zh-Hant: 網絡科學, en: network science }
+  social-network-analysis: { zh-Hant: 社會網絡分析, en: social network analysis }
+  graph-theory: { zh-Hant: 圖論, en: graph theory }
+  graph-ml: { zh-Hant: 圖機器學習, en: graph machine learning }
+relevance:
+  core: { zh-Hant: 核心課程, en: core }
+  partial: { zh-Hant: 部分單元, en: partial }
+offering_type:
+  credit: { zh-Hant: 學分課程, en: credit course }
+  module: { zh-Hant: 課程中的單元, en: unit within a course }
+  non-credit: { zh-Hant: 非學分課程, en: non-credit course }
+  ocw: { zh-Hant: 開放式課程, en: open courseware }
+level:
+  undergraduate: { zh-Hant: 大學部, en: undergraduate }
+  master: { zh-Hant: 碩士班, en: master's }
+  doctoral: { zh-Hant: 博士班, en: doctoral }
+  mixed: { zh-Hant: 大學部與研究所, en: undergraduate and graduate }
+  professional: { zh-Hant: 在職專班, en: professional }
+  non-credit: { zh-Hant: 非學分, en: non-credit }
+language:
+  zh: { zh-Hant: 華語, en: Mandarin }
+  en: { zh-Hant: 英語, en: English }
+  nan: { zh-Hant: 臺灣台語, en: Taiwanese Hokkien }
+  hak: { zh-Hant: 客語, en: Hakka }
+freshness:
+  current: { zh-Hant: 本學期開課, en: offered this term }
+  recent: { zh-Hant: 最近開課, en: offered recently }
+  dormant: { zh-Hant: 近年未開課, en: not offered recently }
+  historical: { zh-Hant: 歷史紀錄, en: historical record }

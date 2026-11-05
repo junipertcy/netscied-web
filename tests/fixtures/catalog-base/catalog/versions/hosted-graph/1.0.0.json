@@ -1,0 +1,23 @@
+{
+  "dataset": "hosted-graph",
+  "version": "1.0.0",
+  "released": "2026-11-05",
+  "snapshot_date": "2026-11-01",
+  "coverage": { "temporal": { "start": "2026-09", "end": "2026-09" } },
+  "changelog": { "zh-Hant": "第一版。" },
+  "doi": null,
+  "license": "CC-BY-4.0",
+  "files": [
+    {
+      "path": "hosted-graph-1.0.0.graphml",
+      "url": "https://netscied.tw/data/hosted-graph/1.0.0/hosted-graph-1.0.0.graphml",
+      "bytes": 1234,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000001",
+      "media_type": "application/graphml+xml",
+      "format": "graphml",
+      "role": "convenience"
+    }
+  ],
+  "statistics": { "graph": { "nodes": 3, "edges": 2, "components": 1 } },
+  "computed_by": { "tool": "netscied", "version": "0.1.0" }
+}

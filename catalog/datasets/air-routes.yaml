@@ -1,0 +1,15 @@
+id: air-routes
+status: wanted
+added: 2026-11-04
+title:
+  zh-Hant: 航空路線網絡
+  en: Air route network
+description:
+  zh-Hant: 臺灣機場與國內外機場之間的航線與班次。
+domains: [transport]
+tags: [aviation]
+wanted:
+  reason:
+    zh-Hant: 舊版網站「生活中的網絡」列為搜集中的項目。
+  status: seeking
+  requests: 0

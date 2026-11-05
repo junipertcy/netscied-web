@@ -1,0 +1,18 @@
+# netscied.tw — 台灣網絡科學教育
+# Everything on this site is meant to be found: search engines, AI search,
+# and AI assistants fetching pages for their users are all welcome.
+# /search/ stays crawlable so crawlers can read its noindex.
+
+User-agent: *
+Allow: /
+
+# AI-training crawlers are allowed too (owner decision, 2026-11-04).
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: CCBot
+User-agent: Applebot-Extended
+User-agent: meta-externalagent
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://netscied.tw/sitemap.xml

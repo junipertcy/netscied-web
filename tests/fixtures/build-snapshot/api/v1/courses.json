@@ -1,0 +1,61 @@
+[
+  {
+    "id": "test-graph-theory",
+    "url": "https://netscied.tw/courses/test-graph-theory/",
+    "api_url": "https://netscied.tw/api/v1/courses/test-graph-theory.json",
+    "title": {
+      "zh-Hant": "測試圖論",
+      "en": "Test Graph Theory"
+    },
+    "university": {
+      "id": "ntu",
+      "zh-Hant": "國立臺灣大學",
+      "short": "臺大",
+      "en": "National Taiwan University",
+      "ror": "https://ror.org/05bqach95"
+    },
+    "department": {
+      "zh-Hant": "數學系"
+    },
+    "category": {
+      "id": "graph-theory",
+      "zh-Hant": "圖論",
+      "en": "graph theory"
+    },
+    "relevance": {
+      "id": "core",
+      "zh-Hant": "核心課程",
+      "en": "core"
+    },
+    "level": {
+      "id": "master",
+      "zh-Hant": "碩士班",
+      "en": "master's"
+    },
+    "languages": [
+      {
+        "id": "zh",
+        "zh-Hant": "華語",
+        "en": "Mandarin"
+      }
+    ],
+    "languages_unverified": false,
+    "latest": {
+      "term": "114-1",
+      "term_label": "114-1（2025 秋）",
+      "term_label_en": "114-1 (fall 2025)",
+      "instructors": [
+        {
+          "name": "測試老師"
+        }
+      ]
+    },
+    "freshness": {
+      "id": "recent",
+      "zh-Hant": "最近開課：114-1",
+      "en": "offered recently: 114-1"
+    },
+    "historical": false,
+    "updated": "2026-11-01"
+  }
+]

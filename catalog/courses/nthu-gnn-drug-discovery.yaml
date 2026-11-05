@@ -1,0 +1,31 @@
+id: nthu-gnn-drug-discovery
+university: nthu
+department: { zh-Hant: 生物資訊與結構生物研究所 }
+title: { zh-Hant: 圖神經網路與藥物探索特論一, en: Special Topics in Graph Neural Network for Drug Discovery I }
+course_code: LSBS 574500
+category: graph-ml
+relevance: core
+offering_type: credit
+level: master
+languages: [zh]
+inclusion_note:
+  zh-Hant: 官方中英文課名即以圖神經網路（Graph Neural Network）於藥物探索的應用為主題；清大課程大綱無法直接連結，週次內容未能核對。
+keywords: [圖神經網路, 藥物探索, 生物資訊]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "114-1"
+    code: LSBS 574500
+    instructors:
+      - { name: 葉善茹 }
+    evidence_url: https://curricul.site.nthu.edu.tw/var/file/208/1208/img/1350/11410_course_data_fin.xlsx
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 清大課務組 114-1 課程資料檔，科號 11410LSBS574500，2 學分，需與授課教師討論後加簽。
+  - term: "113-1"
+    code: LSBS 574500
+    instructors:
+      - { name: 葉善茹 }
+    evidence_url: https://curricul.site.nthu.edu.tw/var/file/208/1208/img/1657/111all-113all_courses_redo.xlsx
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 111–113 學年課程資料檔（工作表 11310），科號 11310LSBS574500，授課語言中。同一教師另開「特論二」（LSBS 574200，112-2、113-2），未納入本紀錄。

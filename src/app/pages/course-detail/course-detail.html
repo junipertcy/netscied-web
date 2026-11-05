@@ -1,0 +1,63 @@
+@let r = c();
+<nav class="crumbs" aria-label="麵包屑"><a routerLink="/courses">課程</a> › <span>{{ r.title['zh-Hant'] }}</span></nav>
+<h1>{{ r.title['zh-Hant'] }}</h1>
+@if (r.title.en) {<p class="subtitle" lang="en">{{ r.title.en }}</p>}
+<p class="freshness" [class.dormant]="r.freshness.id === 'dormant' || r.freshness.id === 'historical'">{{ r.freshness['zh-Hant'] }}</p>
+
+<dl class="facts">
+  <dt>學校</dt><dd>{{ r.university['zh-Hant'] }}<span class="sub" lang="en">（{{ r.university.en }}）</span></dd>
+  <dt>系所</dt><dd>{{ r.department['zh-Hant'] }}</dd>
+  @if (r.course_code) {<dt>課號</dt><dd>{{ r.course_code }}</dd>}
+  <dt>類別</dt><dd>{{ r.category['zh-Hant'] }}（{{ r.relevance['zh-Hant'] }}）</dd>
+  <dt>層級</dt><dd>{{ r.level['zh-Hant'] }}</dd>
+  <dt>授課語言</dt>
+  <dd>
+    @for (l of r.languages; track l.id; let last = $last) {{{ l['zh-Hant'] }}@if (!last) {、}}
+    @if (r.unverified?.fields?.includes('languages')) {<span class="sub">{{ r.languages.length ? '（' : '' }}未確認：{{ r.unverified.note?.['zh-Hant'] }}（{{ r.unverified.checked_on }} 查核）{{ r.languages.length ? '）' : '' }}</span>}
+  </dd>
+  <dt>收錄原因</dt><dd>{{ r.inclusion_note['zh-Hant'] }}</dd>
+</dl>
+
+@if (r.summary) {<p>{{ r.summary['zh-Hant'] }}</p>}
+@if (r.disclosure) {<p class="note">{{ r.disclosure['zh-Hant'] }}</p>}
+@if (r.related_page) {<p><a [href]="r.related_page">本站的課程封存頁</a></p>}
+
+<section aria-labelledby="offerings">
+  <h2 id="offerings">開課紀錄</h2>
+  <table class="data-table" role="table">
+    <caption class="visually-hidden">各學期開課</caption>
+    <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">學期</th><th scope="col" role="columnheader">教師</th><th scope="col" role="columnheader">出處</th><th scope="col" role="columnheader">查核日期</th></tr></thead>
+    <tbody role="rowgroup">
+      @for (o of r.offerings; track $index) {
+        <tr role="row">
+          <th scope="row" role="rowheader" data-label="學期">{{ o.term_label ?? (o.start + '–' + o.end) }}@if (o.code) {<span class="sub">課號 {{ o.code }}</span>}</th>
+          <td role="cell" data-label="教師">{{ instructors(o) }}</td>
+          <td role="cell" data-label="出處">
+            <a [href]="o.evidence_url">課程頁</a>
+            @if (o.syllabus_url) { · <a [href]="o.syllabus_url">課程大綱</a>}
+            @if (o.archive_url) { · <a [href]="o.archive_url">網頁封存</a>}
+            @if (o.note) {<span class="sub">{{ o.note['zh-Hant'] }}</span>}
+          </td>
+          <td role="cell" data-label="查核日期">
+            @if (o.verified_on) {<time [attr.datetime]="o.verified_on">{{ o.verified_on }}</time>}
+            @if (o.unverified) {<span class="sub">未確認（{{ o.unverified.checked_on }}）：{{ o.unverified.note?.['zh-Hant'] }}</span>}
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>
+
+@if (r.title.en || r.summary?.en) {
+  <section lang="en" aria-labelledby="in-english" class="in-english">
+    <h2 id="in-english">In English</h2>
+    @if (r.title.en) {<p><strong>{{ r.title.en }}</strong>, {{ r.university.en }}@if (r.department.en) {, {{ r.department.en }}}.</p>}
+    @if (r.summary?.en) {<p>{{ r.summary.en }}</p>}
+    @if (r.inclusion_note.en) {<p>{{ r.inclusion_note.en }}</p>}
+  </section>
+}
+
+<p class="machine-links">
+  機器可讀：<a [href]="'/api/v1/courses/' + r.id + '.json'">JSON 紀錄</a> · <a [href]="'/courses/' + r.id + '/index.md'">Markdown（index.md）</a>
+  · 記錄更新於 <time [attr.datetime]="r.updated">{{ r.updated }}</time>
+</p>

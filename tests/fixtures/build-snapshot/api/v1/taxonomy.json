@@ -1,0 +1,1793 @@
+{
+  "domains": [
+    {
+      "id": "society",
+      "zh-Hant": "社會關係",
+      "en": "Society and relationships",
+      "crosswalk": {
+        "icon": "Social",
+        "netzschleuder": "Social",
+        "netscied_2018": "社會與文化"
+      }
+    },
+    {
+      "id": "politics",
+      "zh-Hant": "政治與治理",
+      "en": "Politics and governance",
+      "crosswalk": {
+        "icon": "Social",
+        "netzschleuder": "Social",
+        "netscied_2018": "社會與文化"
+      }
+    },
+    {
+      "id": "culture",
+      "zh-Hant": "文化、媒體與運動",
+      "en": "Culture, media and sport",
+      "crosswalk": {
+        "icon": "Social",
+        "netzschleuder": "Social",
+        "netscied_2018": "社會與文化"
+      }
+    },
+    {
+      "id": "economy",
+      "zh-Hant": "經濟與產業",
+      "en": "Economy and industry",
+      "crosswalk": {
+        "icon": "Economic",
+        "netzschleuder": "Economic",
+        "netscied_2018": "經濟"
+      }
+    },
+    {
+      "id": "transport",
+      "zh-Hant": "交通與移動",
+      "en": "Transport and mobility",
+      "crosswalk": {
+        "icon": "Transportation",
+        "netzschleuder": "Transportation",
+        "netscied_2018": "基礎建設"
+      }
+    },
+    {
+      "id": "technology",
+      "zh-Hant": "科技與基礎設施",
+      "en": "Technology and infrastructure",
+      "crosswalk": {
+        "icon": "Technological",
+        "netzschleuder": "Technological",
+        "netscied_2018": "科技"
+      }
+    },
+    {
+      "id": "information",
+      "zh-Hant": "資訊與知識",
+      "en": "Information and knowledge",
+      "crosswalk": {
+        "icon": "Informational",
+        "netzschleuder": "Informational",
+        "netscied_2018": "資訊"
+      }
+    },
+    {
+      "id": "life",
+      "zh-Hant": "生物與生態",
+      "en": "Life and ecology",
+      "crosswalk": {
+        "icon": "Biological",
+        "netzschleuder": "Biological",
+        "netscied_2018": "自然界"
+      }
+    },
+    {
+      "id": "health",
+      "zh-Hant": "健康與醫療",
+      "en": "Health and medicine",
+      "crosswalk": {
+        "icon": "Biological",
+        "netzschleuder": "Biological"
+      }
+    }
+  ],
+  "tags": [
+    {
+      "id": "film",
+      "zh-Hant": "電影",
+      "en": "film"
+    },
+    {
+      "id": "awards",
+      "zh-Hant": "獎項",
+      "en": "awards"
+    },
+    {
+      "id": "legislature",
+      "zh-Hant": "國會",
+      "en": "legislature"
+    },
+    {
+      "id": "bills",
+      "zh-Hant": "法案",
+      "en": "bills"
+    },
+    {
+      "id": "elections",
+      "zh-Hant": "選舉",
+      "en": "elections"
+    },
+    {
+      "id": "internet",
+      "zh-Hant": "網際網路",
+      "en": "internet"
+    },
+    {
+      "id": "telecommunications",
+      "zh-Hant": "電信",
+      "en": "telecommunications"
+    },
+    {
+      "id": "metro",
+      "zh-Hant": "捷運",
+      "en": "metro"
+    },
+    {
+      "id": "public-transport",
+      "zh-Hant": "大眾運輸",
+      "en": "public transport"
+    },
+    {
+      "id": "bicycle-sharing",
+      "zh-Hant": "公共自行車",
+      "en": "bicycle sharing"
+    },
+    {
+      "id": "aviation",
+      "zh-Hant": "航空",
+      "en": "aviation"
+    },
+    {
+      "id": "roads",
+      "zh-Hant": "道路",
+      "en": "roads"
+    },
+    {
+      "id": "commuting",
+      "zh-Hant": "通勤",
+      "en": "commuting"
+    },
+    {
+      "id": "migration",
+      "zh-Hant": "人口遷徙",
+      "en": "migration"
+    },
+    {
+      "id": "trade",
+      "zh-Hant": "貿易",
+      "en": "trade"
+    },
+    {
+      "id": "ports",
+      "zh-Hant": "港口",
+      "en": "ports"
+    },
+    {
+      "id": "input-output",
+      "zh-Hant": "產業關聯",
+      "en": "input–output"
+    },
+    {
+      "id": "industry",
+      "zh-Hant": "產業",
+      "en": "industry"
+    },
+    {
+      "id": "energy",
+      "zh-Hant": "能源",
+      "en": "energy"
+    },
+    {
+      "id": "power-grid",
+      "zh-Hant": "電網",
+      "en": "power grid"
+    },
+    {
+      "id": "sport",
+      "zh-Hant": "體育",
+      "en": "sport"
+    },
+    {
+      "id": "baseball",
+      "zh-Hant": "棒球",
+      "en": "baseball"
+    },
+    {
+      "id": "food-web",
+      "zh-Hant": "食物網",
+      "en": "food web"
+    },
+    {
+      "id": "ecology",
+      "zh-Hant": "生態",
+      "en": "ecology"
+    },
+    {
+      "id": "citations",
+      "zh-Hant": "引用",
+      "en": "citations"
+    },
+    {
+      "id": "scholarship",
+      "zh-Hant": "學術",
+      "en": "scholarship"
+    },
+    {
+      "id": "education",
+      "zh-Hant": "教育",
+      "en": "education"
+    },
+    {
+      "id": "law",
+      "zh-Hant": "法律",
+      "en": "law"
+    },
+    {
+      "id": "open-government-data",
+      "zh-Hant": "政府開放資料",
+      "en": "open government data"
+    },
+    {
+      "id": "cosponsorship",
+      "zh-Hant": "連署",
+      "en": "co-sponsorship"
+    },
+    {
+      "id": "roll-call-votes",
+      "zh-Hant": "記名表決",
+      "en": "roll-call votes"
+    },
+    {
+      "id": "committees",
+      "zh-Hant": "委員會",
+      "en": "committees"
+    },
+    {
+      "id": "light-rail",
+      "zh-Hant": "輕軌",
+      "en": "light rail"
+    },
+    {
+      "id": "electricity",
+      "zh-Hant": "電力",
+      "en": "electricity"
+    }
+  ],
+  "kinds": [
+    {
+      "id": "graph",
+      "zh-Hant": "圖（網絡）",
+      "en": "graph"
+    },
+    {
+      "id": "hypergraph",
+      "zh-Hant": "超圖",
+      "en": "hypergraph"
+    },
+    {
+      "id": "simplicial-complex",
+      "zh-Hant": "單純複形",
+      "en": "simplicial complex"
+    },
+    {
+      "id": "cell-complex",
+      "zh-Hant": "胞腔複形",
+      "en": "cell complex"
+    },
+    {
+      "id": "ranking",
+      "zh-Hant": "排名",
+      "en": "ranking"
+    },
+    {
+      "id": "pairwise-comparison",
+      "zh-Hant": "成對比較",
+      "en": "pairwise comparison"
+    },
+    {
+      "id": "other-relational",
+      "zh-Hant": "其他關聯資料",
+      "en": "other relational data"
+    }
+  ],
+  "properties": [
+    {
+      "id": "directed",
+      "zh-Hant": "有向",
+      "en": "directed"
+    },
+    {
+      "id": "undirected",
+      "zh-Hant": "無向",
+      "en": "undirected"
+    },
+    {
+      "id": "weighted",
+      "zh-Hant": "加權",
+      "en": "weighted"
+    },
+    {
+      "id": "signed",
+      "zh-Hant": "帶正負號",
+      "en": "signed"
+    },
+    {
+      "id": "multi_edges",
+      "zh-Hant": "多重邊",
+      "en": "multi-edges"
+    },
+    {
+      "id": "self_loops",
+      "zh-Hant": "自環",
+      "en": "self-loops"
+    },
+    {
+      "id": "bipartite",
+      "zh-Hant": "二分",
+      "en": "bipartite"
+    },
+    {
+      "id": "multipartite",
+      "zh-Hant": "多分",
+      "en": "multipartite"
+    },
+    {
+      "id": "temporal",
+      "zh-Hant": "時序",
+      "en": "temporal"
+    },
+    {
+      "id": "spatial",
+      "zh-Hant": "空間",
+      "en": "spatial"
+    }
+  ],
+  "layers": [
+    {
+      "id": "single",
+      "zh-Hant": "單層",
+      "en": "single layer"
+    },
+    {
+      "id": "multiplex",
+      "zh-Hant": "多重網絡",
+      "en": "multiplex"
+    },
+    {
+      "id": "multilayer",
+      "zh-Hant": "多層網絡",
+      "en": "multilayer"
+    }
+  ],
+  "temporal": [
+    {
+      "id": "none",
+      "zh-Hant": "無時間資訊",
+      "en": "none"
+    },
+    {
+      "id": "snapshots",
+      "zh-Hant": "快照序列",
+      "en": "snapshots"
+    },
+    {
+      "id": "event-times",
+      "zh-Hant": "事件時間",
+      "en": "event times"
+    },
+    {
+      "id": "intervals",
+      "zh-Hant": "時間區間",
+      "en": "intervals"
+    }
+  ],
+  "spatial": [
+    {
+      "id": "none",
+      "zh-Hant": "無空間資訊",
+      "en": "none"
+    },
+    {
+      "id": "node-coordinates",
+      "zh-Hant": "節點座標",
+      "en": "node coordinates"
+    },
+    {
+      "id": "areal-units",
+      "zh-Hant": "面域單元",
+      "en": "areal units"
+    },
+    {
+      "id": "edge-geometry",
+      "zh-Hant": "連結幾何",
+      "en": "edge geometry"
+    }
+  ],
+  "ranking_data_types": [
+    {
+      "id": "soc",
+      "zh-Hant": "完整嚴格排序（SOC）",
+      "en": "strict orders, complete (SOC)"
+    },
+    {
+      "id": "soi",
+      "zh-Hant": "不完整嚴格排序（SOI）",
+      "en": "strict orders, incomplete (SOI)"
+    },
+    {
+      "id": "toc",
+      "zh-Hant": "完整含並列排序（TOC）",
+      "en": "orders with ties, complete (TOC)"
+    },
+    {
+      "id": "toi",
+      "zh-Hant": "不完整含並列排序（TOI）",
+      "en": "orders with ties, incomplete (TOI)"
+    },
+    {
+      "id": "cat",
+      "zh-Hant": "分類偏好（CAT）",
+      "en": "categorical preferences (CAT)"
+    }
+  ],
+  "comparison_outcomes": [
+    {
+      "id": "win-loss",
+      "zh-Hant": "勝負",
+      "en": "win–loss"
+    },
+    {
+      "id": "win-loss-draw",
+      "zh-Hant": "勝負和",
+      "en": "win–loss–draw"
+    },
+    {
+      "id": "score",
+      "zh-Hant": "比分",
+      "en": "score"
+    },
+    {
+      "id": "margin",
+      "zh-Hant": "差距",
+      "en": "margin"
+    },
+    {
+      "id": "preference-strength",
+      "zh-Hant": "偏好強度",
+      "en": "preference strength"
+    }
+  ],
+  "taiwan_relevance": [
+    {
+      "id": "collected-in-taiwan",
+      "zh-Hant": "在臺灣蒐集",
+      "en": "collected in Taiwan"
+    },
+    {
+      "id": "about-taiwanese-entities",
+      "zh-Hant": "描述臺灣的人、地方、組織或物種",
+      "en": "describes Taiwanese entities"
+    },
+    {
+      "id": "taiwanese-publisher",
+      "zh-Hant": "由臺灣的機構或研究者發布",
+      "en": "published by a Taiwanese institution or researcher"
+    },
+    {
+      "id": "taiwan-based-creators",
+      "zh-Hant": "由在臺灣的研究者建立",
+      "en": "created by Taiwan-based researchers"
+    },
+    {
+      "id": "taiwan-subset",
+      "zh-Hant": "大型資料集中的臺灣部分",
+      "en": "Taiwan-specific subset of a larger dataset"
+    }
+  ],
+  "personal_data": [
+    {
+      "id": "none",
+      "zh-Hant": "不含個人資料",
+      "en": "no personal data"
+    },
+    {
+      "id": "public-role",
+      "zh-Hant": "含公共角色人物的資料",
+      "en": "people in public roles"
+    },
+    {
+      "id": "private-individuals",
+      "zh-Hant": "含一般個人的資料（僅提供連結）",
+      "en": "private individuals (link only)"
+    },
+    {
+      "id": "sensitive",
+      "zh-Hant": "敏感個人資料（本站不收錄檔案）",
+      "en": "sensitive (not hosted)"
+    }
+  ],
+  "redistribution": [
+    {
+      "id": "license-permits",
+      "zh-Hant": "授權允許本站轉載",
+      "en": "the license permits redistribution"
+    },
+    {
+      "id": "written-permission",
+      "zh-Hant": "經權利人書面同意轉載",
+      "en": "redistributed with written permission"
+    },
+    {
+      "id": "own-work",
+      "zh-Hant": "本站自行整理，以 CC BY 4.0 釋出",
+      "en": "compiled by this site, released under CC BY 4.0"
+    },
+    {
+      "id": "link-only",
+      "zh-Hant": "本站不轉載，僅提供連結",
+      "en": "link only; not redistributed here"
+    }
+  ],
+  "license_classes": [
+    {
+      "id": "permissive",
+      "zh-Hant": "寬鬆授權",
+      "en": "permissive"
+    },
+    {
+      "id": "share-alike",
+      "zh-Hant": "相同方式分享",
+      "en": "share-alike"
+    },
+    {
+      "id": "non-commercial",
+      "zh-Hant": "非商業使用",
+      "en": "non-commercial"
+    },
+    {
+      "id": "no-derivatives",
+      "zh-Hant": "禁止改作",
+      "en": "no derivatives"
+    },
+    {
+      "id": "link-only",
+      "zh-Hant": "不可轉載",
+      "en": "link only"
+    },
+    {
+      "id": "permission",
+      "zh-Hant": "依書面同意",
+      "en": "by written permission"
+    }
+  ],
+  "licenses": [
+    {
+      "id": "CC0-1.0",
+      "class": "permissive",
+      "name": {
+        "zh-Hant": "CC0 1.0 公眾領域貢獻宣告",
+        "en": "CC0 1.0 Universal"
+      },
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    {
+      "id": "PDDL-1.0",
+      "class": "permissive",
+      "name": {
+        "zh-Hant": "ODC 公眾領域貢獻與授權條款 1.0",
+        "en": "Open Data Commons Public Domain Dedication & License 1.0"
+      },
+      "url": "https://opendatacommons.org/licenses/pddl/1-0/"
+    },
+    {
+      "id": "CC-BY-4.0",
+      "class": "permissive",
+      "name": {
+        "zh-Hant": "創用 CC 姓名標示 4.0 國際",
+        "en": "Creative Commons Attribution 4.0 International"
+      },
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "CC-BY-3.0",
+      "class": "permissive",
+      "name": {
+        "zh-Hant": "創用 CC 姓名標示 3.0",
+        "en": "Creative Commons Attribution 3.0 Unported"
+      },
+      "url": "https://creativecommons.org/licenses/by/3.0/"
+    },
+    {
+      "id": "ODC-By-1.0",
+      "class": "permissive",
+      "name": {
+        "zh-Hant": "ODC 姓名標示授權條款 1.0",
+        "en": "Open Data Commons Attribution License 1.0"
+      },
+      "url": "https://opendatacommons.org/licenses/by/1-0/"
+    },
+    {
+      "id": "CDLA-Permissive-2.0",
+      "class": "permissive",
+      "name": {
+        "zh-Hant": "社群資料授權協議－寬鬆版 2.0",
+        "en": "Community Data License Agreement – Permissive 2.0"
+      },
+      "url": "https://cdla.dev/permissive-2-0/"
+    },
+    {
+      "id": "OGDL-Taiwan-1.0",
+      "class": "permissive",
+      "name": {
+        "zh-Hant": "政府資料開放授權條款－第1版",
+        "en": "Taiwan Open Government Data License, version 1.0"
+      },
+      "url": "https://data.gov.tw/license"
+    },
+    {
+      "id": "LicenseRef-TW-LY-Open-Data-Declaration",
+      "class": "permissive",
+      "name": {
+        "zh-Hant": "立法院網站資料開放宣告",
+        "en": "Legislative Yuan open data declaration"
+      },
+      "url": "https://data.ly.gov.tw/copyprotection.action"
+    },
+    {
+      "id": "CC-BY-SA-4.0",
+      "class": "share-alike",
+      "name": {
+        "zh-Hant": "創用 CC 姓名標示–相同方式分享 4.0 國際",
+        "en": "Creative Commons Attribution-ShareAlike 4.0 International"
+      },
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    {
+      "id": "CC-BY-SA-3.0",
+      "class": "share-alike",
+      "name": {
+        "zh-Hant": "創用 CC 姓名標示–相同方式分享 3.0",
+        "en": "Creative Commons Attribution-ShareAlike 3.0 Unported"
+      },
+      "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+    },
+    {
+      "id": "ODbL-1.0",
+      "class": "share-alike",
+      "name": {
+        "zh-Hant": "開放資料庫授權條款 1.0",
+        "en": "Open Data Commons Open Database License 1.0"
+      },
+      "url": "https://opendatacommons.org/licenses/odbl/1-0/"
+    },
+    {
+      "id": "CDLA-Sharing-1.0",
+      "class": "share-alike",
+      "name": {
+        "zh-Hant": "社群資料授權協議－分享版 1.0",
+        "en": "Community Data License Agreement – Sharing 1.0"
+      },
+      "url": "https://cdla.dev/sharing-1-0/"
+    },
+    {
+      "id": "CC-BY-NC-4.0",
+      "class": "non-commercial",
+      "name": {
+        "zh-Hant": "創用 CC 姓名標示–非商業性 4.0 國際",
+        "en": "Creative Commons Attribution-NonCommercial 4.0 International"
+      },
+      "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "id": "CC-BY-NC-SA-4.0",
+      "class": "non-commercial",
+      "name": {
+        "zh-Hant": "創用 CC 姓名標示–非商業性–相同方式分享 4.0 國際",
+        "en": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International"
+      },
+      "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+    },
+    {
+      "id": "CC-BY-ND-4.0",
+      "class": "no-derivatives",
+      "name": {
+        "zh-Hant": "創用 CC 姓名標示–禁止改作 4.0 國際",
+        "en": "Creative Commons Attribution-NoDerivatives 4.0 International"
+      },
+      "url": "https://creativecommons.org/licenses/by-nd/4.0/"
+    },
+    {
+      "id": "CC-BY-NC-ND-4.0",
+      "class": "no-derivatives",
+      "name": {
+        "zh-Hant": "創用 CC 姓名標示–非商業性–禁止改作 4.0 國際",
+        "en": "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International"
+      },
+      "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+    },
+    {
+      "id": "NOASSERTION",
+      "class": "link-only",
+      "name": {
+        "zh-Hant": "未載明授權",
+        "en": "No license stated"
+      }
+    },
+    {
+      "id": "NONE",
+      "class": "link-only",
+      "name": {
+        "zh-Hant": "保留所有權利",
+        "en": "All rights reserved"
+      }
+    }
+  ],
+  "formats": [
+    {
+      "id": "csv-bundle",
+      "zh-Hant": "CSV 檔案組（節點表與連結表）",
+      "en": "CSV bundle (nodes and edges)",
+      "media_type": "text/csv",
+      "conforms_to": "https://datapackage.org/standard/data-package/"
+    },
+    {
+      "id": "datapackage",
+      "zh-Hant": "Frictionless 資料包描述",
+      "en": "Frictionless Data Package descriptor",
+      "media_type": "application/json",
+      "conforms_to": "https://datapackage.org/profiles/2.0/datapackage.json"
+    },
+    {
+      "id": "graphml",
+      "zh-Hant": "GraphML",
+      "en": "GraphML",
+      "media_type": "application/graphml+xml",
+      "conforms_to": "http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"
+    },
+    {
+      "id": "hif",
+      "zh-Hant": "HIF 超圖交換格式",
+      "en": "Hypergraph Interchange Format (HIF)",
+      "media_type": "application/json",
+      "conforms_to": "https://github.com/HIF-org/HIF-standard"
+    },
+    {
+      "id": "gml",
+      "zh-Hant": "GML",
+      "en": "GML",
+      "media_type": "text/plain"
+    },
+    {
+      "id": "csv",
+      "zh-Hant": "CSV",
+      "en": "CSV",
+      "media_type": "text/csv"
+    },
+    {
+      "id": "json",
+      "zh-Hant": "JSON",
+      "en": "JSON",
+      "media_type": "application/json"
+    },
+    {
+      "id": "xlsx",
+      "zh-Hant": "Excel 試算表",
+      "en": "Excel workbook",
+      "media_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    },
+    {
+      "id": "zip",
+      "zh-Hant": "ZIP 壓縮檔（全部檔案）",
+      "en": "ZIP archive (all files)",
+      "media_type": "application/zip"
+    },
+    {
+      "id": "sha256sums",
+      "zh-Hant": "SHA-256 檢查碼清單",
+      "en": "SHA-256 checksum list",
+      "media_type": "text/plain"
+    },
+    {
+      "id": "attribution",
+      "zh-Hant": "姓名標示說明",
+      "en": "attribution notice",
+      "media_type": "text/plain"
+    },
+    {
+      "id": "provenance",
+      "zh-Hant": "來源與處理紀錄",
+      "en": "provenance record",
+      "media_type": "application/json"
+    },
+    {
+      "id": "api",
+      "zh-Hant": "網路 API",
+      "en": "web API",
+      "media_type": "application/json"
+    },
+    {
+      "id": "web",
+      "zh-Hant": "網頁",
+      "en": "web page",
+      "media_type": "text/html"
+    }
+  ],
+  "wanted_status": [
+    {
+      "id": "seeking",
+      "zh-Hant": "徵求中",
+      "en": "seeking"
+    },
+    {
+      "id": "source-found",
+      "zh-Hant": "找到來源",
+      "en": "source found"
+    },
+    {
+      "id": "in-progress",
+      "zh-Hant": "整理中",
+      "en": "in progress"
+    },
+    {
+      "id": "unavailable",
+      "zh-Hant": "無法提供",
+      "en": "unavailable"
+    },
+    {
+      "id": "published",
+      "zh-Hant": "已收錄",
+      "en": "published"
+    }
+  ],
+  "course_categories": [
+    {
+      "id": "network-science",
+      "zh-Hant": "網絡科學",
+      "en": "network science"
+    },
+    {
+      "id": "social-network-analysis",
+      "zh-Hant": "社會網絡分析",
+      "en": "social network analysis"
+    },
+    {
+      "id": "graph-theory",
+      "zh-Hant": "圖論",
+      "en": "graph theory"
+    },
+    {
+      "id": "graph-ml",
+      "zh-Hant": "圖機器學習",
+      "en": "graph machine learning"
+    }
+  ],
+  "relevance": [
+    {
+      "id": "core",
+      "zh-Hant": "核心課程",
+      "en": "core"
+    },
+    {
+      "id": "partial",
+      "zh-Hant": "部分單元",
+      "en": "partial"
+    }
+  ],
+  "offering_types": [
+    {
+      "id": "credit",
+      "zh-Hant": "學分課程",
+      "en": "credit course"
+    },
+    {
+      "id": "module",
+      "zh-Hant": "課程中的單元",
+      "en": "unit within a course"
+    },
+    {
+      "id": "non-credit",
+      "zh-Hant": "非學分課程",
+      "en": "non-credit course"
+    },
+    {
+      "id": "ocw",
+      "zh-Hant": "開放式課程",
+      "en": "open courseware"
+    }
+  ],
+  "levels": [
+    {
+      "id": "undergraduate",
+      "zh-Hant": "大學部",
+      "en": "undergraduate"
+    },
+    {
+      "id": "master",
+      "zh-Hant": "碩士班",
+      "en": "master's"
+    },
+    {
+      "id": "doctoral",
+      "zh-Hant": "博士班",
+      "en": "doctoral"
+    },
+    {
+      "id": "mixed",
+      "zh-Hant": "大學部與研究所",
+      "en": "undergraduate and graduate"
+    },
+    {
+      "id": "professional",
+      "zh-Hant": "在職專班",
+      "en": "professional"
+    },
+    {
+      "id": "non-credit",
+      "zh-Hant": "非學分",
+      "en": "non-credit"
+    }
+  ],
+  "languages": [
+    {
+      "id": "zh",
+      "zh-Hant": "華語",
+      "en": "Mandarin"
+    },
+    {
+      "id": "en",
+      "zh-Hant": "英語",
+      "en": "English"
+    },
+    {
+      "id": "nan",
+      "zh-Hant": "臺灣台語",
+      "en": "Taiwanese Hokkien"
+    },
+    {
+      "id": "hak",
+      "zh-Hant": "客語",
+      "en": "Hakka"
+    }
+  ],
+  "freshness": [
+    {
+      "id": "current",
+      "zh-Hant": "本學期開課",
+      "en": "offered this term"
+    },
+    {
+      "id": "recent",
+      "zh-Hant": "最近開課",
+      "en": "offered recently"
+    },
+    {
+      "id": "dormant",
+      "zh-Hant": "近年未開課",
+      "en": "not offered recently"
+    },
+    {
+      "id": "historical",
+      "zh-Hant": "歷史紀錄",
+      "en": "historical record"
+    }
+  ],
+  "universities": [
+    {
+      "id": "ntu",
+      "zh-Hant": "國立臺灣大學",
+      "short": "臺大",
+      "en": "National Taiwan University",
+      "ror": "https://ror.org/05bqach95"
+    },
+    {
+      "id": "ncku",
+      "zh-Hant": "國立成功大學",
+      "short": "成大",
+      "en": "National Cheng Kung University",
+      "ror": "https://ror.org/01b8kcc49"
+    },
+    {
+      "id": "nthu",
+      "zh-Hant": "國立清華大學",
+      "short": "清大",
+      "en": "National Tsing Hua University",
+      "ror": "https://ror.org/00zdnkx70"
+    },
+    {
+      "id": "nycu",
+      "zh-Hant": "國立陽明交通大學",
+      "short": "陽明交大",
+      "also": [
+        "交大"
+      ],
+      "en": "National Yang Ming Chiao Tung University",
+      "ror": "https://ror.org/00se2k293"
+    },
+    {
+      "id": "nccu",
+      "zh-Hant": "國立政治大學",
+      "short": "政大",
+      "en": "National Chengchi University",
+      "ror": "https://ror.org/03rqk8h36"
+    },
+    {
+      "id": "ntnu",
+      "zh-Hant": "國立臺灣師範大學",
+      "short": "臺師大",
+      "also": [
+        "師大"
+      ],
+      "en": "National Taiwan Normal University",
+      "ror": "https://ror.org/059dkdx38"
+    },
+    {
+      "id": "ncu",
+      "zh-Hant": "國立中央大學",
+      "short": "中央",
+      "en": "National Central University",
+      "ror": "https://ror.org/00944ve71"
+    },
+    {
+      "id": "nsysu",
+      "zh-Hant": "國立中山大學",
+      "short": "中山",
+      "en": "National Sun Yat-sen University",
+      "ror": "https://ror.org/00mjawt10"
+    },
+    {
+      "id": "nchu",
+      "zh-Hant": "國立中興大學",
+      "short": "中興",
+      "en": "National Chung Hsing University",
+      "ror": "https://ror.org/05vn3ca78"
+    },
+    {
+      "id": "ccu",
+      "zh-Hant": "國立中正大學",
+      "short": "中正",
+      "en": "National Chung Cheng University",
+      "ror": "https://ror.org/0028v3876"
+    },
+    {
+      "id": "ntust",
+      "zh-Hant": "國立臺灣科技大學",
+      "short": "臺科大",
+      "en": "National Taiwan University of Science and Technology",
+      "ror": "https://ror.org/00q09pe49"
+    },
+    {
+      "id": "nuk",
+      "zh-Hant": "國立高雄大學",
+      "short": "高大",
+      "en": "National University of Kaohsiung",
+      "ror": "https://ror.org/013zjb662"
+    },
+    {
+      "id": "thu",
+      "zh-Hant": "東海大學",
+      "short": "東海",
+      "en": "Tunghai University",
+      "ror": "https://ror.org/00zhvdn11"
+    },
+    {
+      "id": "scu",
+      "zh-Hant": "東吳大學",
+      "short": "東吳",
+      "en": "Soochow University (Taiwan)",
+      "ror": "https://ror.org/05kvm7n82"
+    },
+    {
+      "id": "tku",
+      "zh-Hant": "淡江大學",
+      "short": "淡江",
+      "en": "Tamkang University",
+      "ror": "https://ror.org/04tft4718"
+    },
+    {
+      "id": "cycu",
+      "zh-Hant": "中原大學",
+      "short": "中原",
+      "en": "Chung Yuan Christian University",
+      "ror": "https://ror.org/02w8ws377"
+    },
+    {
+      "id": "fju",
+      "zh-Hant": "輔仁大學",
+      "short": "輔大",
+      "en": "Fu Jen Catholic University",
+      "ror": "https://ror.org/04je98850"
+    },
+    {
+      "id": "cgu",
+      "zh-Hant": "長庚大學",
+      "short": "長庚",
+      "en": "Chang Gung University",
+      "ror": "https://ror.org/00d80zx46"
+    },
+    {
+      "id": "tmu",
+      "zh-Hant": "臺北醫學大學",
+      "short": "北醫",
+      "en": "Taipei Medical University",
+      "ror": "https://ror.org/05031qk94"
+    },
+    {
+      "id": "sinica",
+      "zh-Hant": "中央研究院",
+      "short": "中研院",
+      "en": "Academia Sinica",
+      "ror": "https://ror.org/05bxb3784"
+    }
+  ],
+  "concepts": [
+    {
+      "id": "kind:graph",
+      "zh-Hant": "圖",
+      "en": "graph",
+      "aliases": [
+        "網絡圖",
+        "簡單圖"
+      ]
+    },
+    {
+      "id": "kind:hypergraph",
+      "zh-Hant": "超圖",
+      "en": "hypergraph",
+      "aliases": [
+        "超圖",
+        "超網路",
+        "超網絡",
+        "高階網路",
+        "高階網絡",
+        "高階",
+        "hypergraph",
+        "hypergraphs",
+        "higher-order network",
+        "higher-order"
+      ]
+    },
+    {
+      "id": "kind:simplicial-complex",
+      "zh-Hant": "單純複形",
+      "en": "simplicial complex",
+      "aliases": [
+        "單純複形",
+        "單形複形",
+        "單純形",
+        "simplicial complex",
+        "simplicial",
+        "higher-order"
+      ]
+    },
+    {
+      "id": "kind:cell-complex",
+      "zh-Hant": "胞腔複形",
+      "en": "cell complex",
+      "aliases": [
+        "胞腔複形",
+        "cell complex",
+        "cw complex"
+      ]
+    },
+    {
+      "id": "kind:other-relational",
+      "zh-Hant": "其他關聯資料",
+      "en": "other relational data",
+      "aliases": [
+        "關聯資料",
+        "關聯表",
+        "relational data"
+      ]
+    },
+    {
+      "id": "kind:ranking",
+      "zh-Hant": "排名",
+      "en": "ranking",
+      "aliases": [
+        "排名",
+        "排序",
+        "排行",
+        "名次",
+        "偏好",
+        "ranking",
+        "rankings",
+        "preference",
+        "preflib"
+      ]
+    },
+    {
+      "id": "kind:pairwise-comparison",
+      "zh-Hant": "成對比較",
+      "en": "pairwise comparison",
+      "aliases": [
+        "成對比較",
+        "兩兩比較",
+        "對戰",
+        "勝負",
+        "比賽結果",
+        "pairwise comparison",
+        "pairwise",
+        "tournament",
+        "bradley-terry",
+        "elo"
+      ]
+    },
+    {
+      "id": "property:bipartite",
+      "zh-Hant": "二分網絡",
+      "en": "bipartite network",
+      "aliases": [
+        "二分網路",
+        "二分網絡",
+        "二分圖",
+        "二部圖",
+        "雙模網絡",
+        "雙模",
+        "二元網絡",
+        "隸屬網絡",
+        "bipartite",
+        "two-mode",
+        "affiliation network"
+      ]
+    },
+    {
+      "id": "property:multipartite",
+      "zh-Hant": "多分網絡",
+      "en": "multipartite network",
+      "aliases": [
+        "多分圖",
+        "多部圖",
+        "multipartite",
+        "k-partite"
+      ]
+    },
+    {
+      "id": "property:directed",
+      "zh-Hant": "有向網絡",
+      "en": "directed network",
+      "aliases": [
+        "有向",
+        "有向圖",
+        "directed",
+        "digraph"
+      ]
+    },
+    {
+      "id": "property:weighted",
+      "zh-Hant": "加權網絡",
+      "en": "weighted network",
+      "aliases": [
+        "加權",
+        "權重",
+        "weighted"
+      ]
+    },
+    {
+      "id": "property:signed",
+      "zh-Hant": "帶正負號網絡",
+      "en": "signed network",
+      "aliases": [
+        "正負號",
+        "符號網絡",
+        "贊成反對",
+        "signed"
+      ]
+    },
+    {
+      "id": "property:temporal",
+      "zh-Hant": "時序網絡",
+      "en": "temporal network",
+      "aliases": [
+        "時序",
+        "時序網絡",
+        "動態網絡",
+        "時變",
+        "時間序列",
+        "temporal",
+        "dynamic network",
+        "time-varying",
+        "longitudinal"
+      ]
+    },
+    {
+      "id": "property:multilayer",
+      "zh-Hant": "多層網絡",
+      "en": "multilayer network",
+      "aliases": [
+        "多層",
+        "多層網絡",
+        "多重網絡",
+        "multilayer",
+        "multiplex"
+      ]
+    },
+    {
+      "id": "property:spatial",
+      "zh-Hant": "空間網絡",
+      "en": "spatial network",
+      "aliases": [
+        "空間",
+        "地理",
+        "空間網絡",
+        "spatial",
+        "geographic",
+        "geospatial"
+      ]
+    },
+    {
+      "id": "domain:society",
+      "zh-Hant": "社會關係",
+      "en": "society",
+      "aliases": [
+        "社會",
+        "人際",
+        "社會網絡",
+        "society"
+      ]
+    },
+    {
+      "id": "domain:politics",
+      "zh-Hant": "政治與治理",
+      "en": "politics",
+      "aliases": [
+        "政治",
+        "治理",
+        "政府",
+        "political",
+        "politics",
+        "governance"
+      ]
+    },
+    {
+      "id": "domain:culture",
+      "zh-Hant": "文化",
+      "en": "culture",
+      "aliases": [
+        "文化",
+        "藝術",
+        "娛樂",
+        "culture",
+        "arts",
+        "entertainment"
+      ]
+    },
+    {
+      "id": "domain:economy",
+      "zh-Hant": "經濟與產業",
+      "en": "economy",
+      "aliases": [
+        "經濟",
+        "產業",
+        "金融",
+        "企業",
+        "economy",
+        "economic",
+        "industry",
+        "finance"
+      ]
+    },
+    {
+      "id": "domain:transport",
+      "zh-Hant": "交通與移動",
+      "en": "transport",
+      "aliases": [
+        "交通",
+        "運輸",
+        "移動",
+        "基礎建設",
+        "transport",
+        "transportation",
+        "mobility"
+      ]
+    },
+    {
+      "id": "domain:technology",
+      "zh-Hant": "科技與基礎設施",
+      "en": "technology",
+      "aliases": [
+        "科技",
+        "基礎設施",
+        "技術",
+        "technology",
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "domain:information",
+      "zh-Hant": "資訊與知識",
+      "en": "information",
+      "aliases": [
+        "資訊",
+        "知識",
+        "文獻",
+        "information",
+        "knowledge"
+      ]
+    },
+    {
+      "id": "domain:life",
+      "zh-Hant": "生物與生態",
+      "en": "life",
+      "aliases": [
+        "生物",
+        "生態",
+        "物種",
+        "biology",
+        "biological",
+        "ecology"
+      ]
+    },
+    {
+      "id": "domain:health",
+      "zh-Hant": "健康與醫療",
+      "en": "health",
+      "aliases": [
+        "健康",
+        "醫療",
+        "疾病",
+        "公衛",
+        "health",
+        "medicine",
+        "medical"
+      ]
+    },
+    {
+      "id": "topic:metro",
+      "zh-Hant": "捷運",
+      "en": "metro",
+      "aliases": [
+        "捷運",
+        "北捷",
+        "高捷",
+        "桃捷",
+        "地鐵",
+        "地下鐵",
+        "旅次",
+        "運量",
+        "起訖",
+        "客流",
+        "進出站",
+        "mrt",
+        "metro",
+        "subway",
+        "ridership",
+        "origin-destination",
+        "od"
+      ]
+    },
+    {
+      "id": "topic:public-transport",
+      "zh-Hant": "大眾運輸",
+      "en": "public transport",
+      "aliases": [
+        "大眾運輸",
+        "公共運輸",
+        "公車",
+        "客運",
+        "public transport",
+        "transit",
+        "bus"
+      ]
+    },
+    {
+      "id": "topic:bicycle-sharing",
+      "zh-Hant": "公共自行車",
+      "en": "bicycle sharing",
+      "aliases": [
+        "youbike",
+        "微笑單車",
+        "公共自行車",
+        "共享單車",
+        "自行車",
+        "單車",
+        "bike sharing",
+        "bicycle",
+        "bike"
+      ]
+    },
+    {
+      "id": "topic:aviation",
+      "zh-Hant": "航空",
+      "en": "aviation",
+      "aliases": [
+        "航空",
+        "航線",
+        "班機",
+        "機場",
+        "飛航",
+        "flight",
+        "flights",
+        "airline",
+        "airport",
+        "aviation"
+      ]
+    },
+    {
+      "id": "topic:legislature",
+      "zh-Hant": "立法院",
+      "en": "legislature",
+      "aliases": [
+        "立法院",
+        "立委",
+        "立法委員",
+        "國會",
+        "議員",
+        "連署",
+        "共同提案",
+        "提案",
+        "法案",
+        "議案",
+        "表決",
+        "記名表決",
+        "委員會",
+        "legislator",
+        "legislators",
+        "legislature",
+        "parliament",
+        "cosponsorship",
+        "co-sponsorship",
+        "bill",
+        "bills",
+        "roll-call vote",
+        "roll call",
+        "committee"
+      ]
+    },
+    {
+      "id": "topic:elections",
+      "zh-Hant": "選舉",
+      "en": "elections",
+      "aliases": [
+        "選舉",
+        "投票",
+        "候選人",
+        "得票",
+        "election",
+        "elections",
+        "voting",
+        "candidates"
+      ]
+    },
+    {
+      "id": "topic:internet",
+      "zh-Hant": "網際網路",
+      "en": "internet",
+      "aliases": [
+        "網際網路",
+        "網路基礎設施",
+        "網路節點",
+        "骨幹",
+        "頻寬",
+        "拓樸",
+        "網路拓樸",
+        "互連",
+        "交換中心",
+        "isp",
+        "autonomous system",
+        "internet",
+        "internet topology",
+        "peering",
+        "bandwidth",
+        "backbone"
+      ]
+    },
+    {
+      "id": "topic:film",
+      "zh-Hant": "電影",
+      "en": "film",
+      "aliases": [
+        "電影",
+        "影片",
+        "影展",
+        "影人",
+        "演員",
+        "導演",
+        "金馬",
+        "金馬獎",
+        "film",
+        "films",
+        "movie",
+        "movies",
+        "cinema",
+        "golden horse"
+      ]
+    },
+    {
+      "id": "topic:awards",
+      "zh-Hant": "獎項",
+      "en": "awards",
+      "aliases": [
+        "獎項",
+        "入圍",
+        "提名",
+        "得獎",
+        "award",
+        "awards",
+        "nomination",
+        "nominations",
+        "nominee",
+        "nominees"
+      ]
+    },
+    {
+      "id": "topic:baseball",
+      "zh-Hant": "棒球",
+      "en": "baseball",
+      "aliases": [
+        "棒球",
+        "中職",
+        "職棒",
+        "中華職棒",
+        "打者",
+        "投手",
+        "cpbl",
+        "baseball"
+      ]
+    },
+    {
+      "id": "topic:sport",
+      "zh-Hant": "體育",
+      "en": "sport",
+      "aliases": [
+        "體育",
+        "球賽",
+        "sport",
+        "sports"
+      ]
+    },
+    {
+      "id": "topic:input-output",
+      "zh-Hant": "產業關聯",
+      "en": "input–output",
+      "aliases": [
+        "產業關聯",
+        "產業關聯表",
+        "投入產出",
+        "投入產出表",
+        "交易表",
+        "input-output",
+        "input–output",
+        "leontief"
+      ]
+    },
+    {
+      "id": "topic:trade",
+      "zh-Hant": "貿易",
+      "en": "trade",
+      "aliases": [
+        "貿易",
+        "進出口",
+        "出口",
+        "進口",
+        "trade",
+        "export",
+        "exports",
+        "import",
+        "imports"
+      ]
+    },
+    {
+      "id": "topic:energy",
+      "zh-Hant": "能源",
+      "en": "energy",
+      "aliases": [
+        "能源",
+        "電力",
+        "電網",
+        "潮流",
+        "輸電",
+        "台電",
+        "energy",
+        "electricity",
+        "power grid",
+        "power flow"
+      ]
+    },
+    {
+      "id": "topic:migration",
+      "zh-Hant": "人口遷徙",
+      "en": "migration",
+      "aliases": [
+        "遷徙",
+        "遷移",
+        "遷入",
+        "遷出",
+        "人口移動",
+        "migration"
+      ]
+    },
+    {
+      "id": "topic:citations",
+      "zh-Hant": "引用",
+      "en": "citations",
+      "aliases": [
+        "引用",
+        "引文",
+        "文獻引用",
+        "共同作者",
+        "合著",
+        "citation",
+        "citations",
+        "co-authorship",
+        "coauthorship",
+        "bibliometric"
+      ]
+    },
+    {
+      "id": "category:network-science",
+      "zh-Hant": "網絡科學",
+      "en": "network science",
+      "aliases": [
+        "網絡科學",
+        "網路科學",
+        "複雜網絡",
+        "複雜網路",
+        "複雜系統",
+        "生物網路",
+        "網路生物學",
+        "network science",
+        "complex networks",
+        "complex systems"
+      ]
+    },
+    {
+      "id": "category:social-network-analysis",
+      "zh-Hant": "社會網絡分析",
+      "en": "social network analysis",
+      "aliases": [
+        "社會網絡分析",
+        "社會網路分析",
+        "社群網路分析",
+        "社會網絡",
+        "社群網路",
+        "網絡分析",
+        "sna",
+        "social network analysis",
+        "social networks",
+        "social network"
+      ]
+    },
+    {
+      "id": "category:graph-theory",
+      "zh-Hant": "圖論",
+      "en": "graph theory",
+      "aliases": [
+        "圖論",
+        "圖形理論",
+        "圖演算法",
+        "組合數學",
+        "graph theory",
+        "graph algorithms",
+        "combinatorics"
+      ]
+    },
+    {
+      "id": "category:graph-ml",
+      "zh-Hant": "圖機器學習",
+      "en": "graph machine learning",
+      "aliases": [
+        "圖神經網路",
+        "圖神經網絡",
+        "圖機器學習",
+        "圖探勘",
+        "圖表示學習",
+        "圖學習",
+        "gnn",
+        "graph neural network",
+        "graph neural networks",
+        "graph machine learning",
+        "graph mining",
+        "graph representation learning"
+      ]
+    }
+  ]
+}

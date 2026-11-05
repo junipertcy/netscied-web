@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/course-list.schema.json",
+  "title": "/api/v1/courses.json: All courses offered in Taiwan, summary form",
+  "description": "The whole file: an array of course-summary objects (each item is described by course-summary.schema.json).",
+  "type": "array",
+  "items": {
+    "$ref": "course-summary.schema.json"
+  }
+}

@@ -1,0 +1,34 @@
+id: ntnu-geography-social-network-analysis
+university: ntnu
+department: { zh-Hant: 地理學系 }
+title: { zh-Hant: 社會網路分析, en: Social Network Analysis }
+course_code: GEC9002
+category: social-network-analysis
+relevance: core
+offering_type: credit
+level: mixed
+languages: [en]
+inclusion_note:
+  zh-Hant: 授課教師的課程網頁所列單元全為社會網絡分析方法，從網絡建構、自我網絡、中心性、社群偵測到 QAP 與 ERGM。
+summary:
+  zh-Hant: 地理學系的社會網絡分析課，涵蓋網絡資料蒐集與建構、自我網絡與結構洞、中心性、群體與社群偵測、位置與角色、雙模網絡、網絡自相關、QAP 與 ERGM，採講授加實作與專題導向學習。
+keywords: [社會網絡分析, 中心性, 社群偵測, QAP, ERGM, NetworkX]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "114-2"
+    code: GEC9002
+    instructors:
+      - { name: 詹竣翔, name_en: Chun-Hsiang Chan }
+    evidence_url: https://www.geo.ntnu.edu.tw/wp-content/uploads/2026/06/%E5%9C%B0%E7%90%86%E5%AD%B8%E7%B3%BB%E5%AD%B8%E5%A3%AB%E7%8F%AD%E9%96%8B%E8%AA%B2%E6%95%B4%E7%90%86-%E4%BF%AE%E6%94%B91150615.pdf
+    verified_on: "2026-11-04"
+    syllabus_url: https://toodou.github.io/SNA/index.html
+    note:
+      zh-Hant: 地理學系「學士班開課整理」（115-06-15 修訂）列 GEC9002 社會網路分析、詹竣翔、不定期開課、最後一次開課學期 114-2；114 學年課程架構表標示 E（全英語授課）。
+  - term: "112-2"
+    code: GEC9002
+    instructors:
+      - { name: 詹竣翔, name_en: Chun-Hsiang Chan }
+    evidence_url: https://www.geo.ntnu.edu.tw/index.php/2024/02/23/m20240223-1/
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 系網 112-2 教室異動公告列「【大碩合】社會網路分析／詹竣翔 一6-8」，改至地理系 10 樓電腦教室。

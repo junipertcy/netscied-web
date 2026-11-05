@@ -45,3 +45,19 @@ Thumbs.db
 
 # Deploy script (holds infrastructure ids), as on the old site
 deploy.sh
+
+# Build directories (generated catalog, API and hosted-data copies; never committed)
+/build
+
+# Playwright
+/test-results
+/playwright-report
+/blob-report
+
+# Python (curation pipeline)
+/curation/.venv/
+__pycache__/
+.pytest_cache/
+
+# Unredacted AWS config backups (account id); kept local only
+infra/rollback/local/

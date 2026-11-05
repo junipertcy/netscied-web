@@ -1,0 +1,54 @@
+# How version 1.0.0 of golden-horse-2018-nominations is rebuilt (data-curation
+# spec, "Reproducible fetch recipes"). The source is a manual transcription of
+# the official nominee list, committed in curation/inputs/; automated jobs only
+# verify its hash, never re-fetch it.
+dataset: golden-horse-2018-nominations
+version: "1.0.0"
+changelog:
+  zh-Hant: 第一版：依金馬獎官方入圍得獎資料庫（2018 年）自行整理的入圍者–影片網絡。
+  en: First version, compiled by this site from the official Golden Horse nominee database (2018).
+coverage:
+  temporal: { start: "2018", end: "2018" }
+sources:
+  - id: official-nominee-list
+    method: manual
+    steps:
+      zh-Hant: |-
+        開啟金馬獎官方網站「入圍得獎」資料庫，選擇 2018 年、依獎項查看（landing_page）。
+        逐項轉錄 23 個競賽獎項的入圍影片、入圍者姓名（照官方寫法）與得獎標記，
+        存成 nominations.csv（欄位 category_zh, category_en, film_zh, film_en, nominee_zh, nominee_original, is_winner, source_url）。
+        再與 2018 年 10 月 1 日的入圍名單新聞稿、2018 年 12 月 4 日的網頁封存版本交叉核對；比對紀錄見 SOURCE-NOTES.md。
+      en: >-
+        Transcribe every competitive category of the official 2018 nominee and winner database
+        (films, nominees as printed, winner marks) into nominations.csv, then cross-check with the
+        2018-10-01 press release and the 2018-12-04 archived copy (see SOURCE-NOTES.md).
+    file: golden-horse-2018-nominations/nominations.csv
+    landing_page: https://www.goldenhorse.org.tw/awards/nw/?serach_type=award&sc=10&search_regist_year=2018&ins=53
+    archived_landing_page: http://web.archive.org/web/20181204005717/http://www.goldenhorse.org.tw/awards/nw/?serach_type=award&sc=8&search_regist_year=2018&ins=47
+    expected:
+      sha256: 1a6f1bacfccb542f3e3e98310913fcd8a878fa50d61130cf9a6572f9f310136b
+      bytes: 27931
+    retrieved_at: "2026-11-04"
+    # No upstream license: the site compiled the facts itself (redistribution
+    # basis own-work), and the transcription is released under CC BY 4.0.
+    license_evidence:
+      url: https://www.goldenhorse.org.tw/news/detail/1023
+      checked_on: 2026-11-04
+      quote: 第55屆金馬獎入圍名單公布
+    redistribute_original: true
+convert:
+  converter: golden_horse
+  kind: graph
+operations: [convert]
+transformations:
+  - zh-Hant: 每一列（獎項、影片、入圍者）成為一條入圍者–影片連結，標示獎項與是否得獎；同一人以同一部影片入圍兩個獎項時保留兩條連結（多重邊，不合併）。
+    en: Each row (category, film, nominee) becomes one nominee–film link marked with the category and whether it won; a person nominated in two categories for the same film keeps two links (multi-edges, not merged).
+  - zh-Hant: 最佳劇情長片的入圍對象是影片：官方名單列出的出品公司與製片（例如《大象席地而坐》的楚延華、胡永振）不列為入圍者，這五部影片在該獎項沒有連結（網站主人 2026-11-04 決定）。
+    en: "Best Feature Film honours the film: the companies and producers on the official list (for example 楚延華 and 胡永振 for An Elephant Sitting Still) are not nominees, so the five films have no link for that category (owner decision 2026-11-04)."
+  - zh-Hant: 其他影片類獎項（紀錄片、動畫與短片）官方名單列出的個人姓名收為入圍者；公司不列為節點。
+    en: In the other film categories (documentary, animation and shorts) the persons the official list names are nominees; companies are not nodes.
+  - zh-Hant: 最佳原創電影歌曲依 2018 年規章，作詞、作曲與演唱者都是入圍者。
+    en: Under the 2018 rules, the lyricist, composer and singer of a Best Original Film Song nomination are all nominees.
+  - zh-Hant: 片名與姓名照官方寫法保留，包括全形空白（當　一個人）與異體字（鄭思藴）。
+    en: Titles and names are kept as officially printed, including the full-width space (當　一個人) and variant characters (鄭思藴).
+outputs: [csv-bundle, graphml]

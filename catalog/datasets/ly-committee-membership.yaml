@@ -1,0 +1,109 @@
+id: ly-committee-membership
+status: published
+added: "2026-11-04"
+announce: false
+title:
+  zh-Hant: 立法院委員會成員網絡
+  en: Legislative Yuan committee membership
+description:
+  zh-Hant: |-
+    立法院開放資料服務平台的「各委員會-委員名單資料」，
+    記錄自第4屆第1會期（1999 年）起，每個會期各委員會的委員名單，並標示召集委員。
+    可視為立法委員與委員會之間的二分網絡，依屆別與會期形成時間序列，
+    適合觀察委員的專業分工與跨會期的委員會流動。本站只提供連結。
+  en: >-
+    The Legislative Yuan open data platform's committee membership lists: for
+    every session since the first session of the 4th term (1999), which
+    legislators sat on which committee, with co-chairs flagged. A legislator–
+    committee bipartite network with one snapshot per session. This site links
+    to the data; it does not host it.
+keywords: [立法院, 委員會, 召集委員, 立法委員, 二分網絡, committee assignments, Legislative Yuan]
+semantics:
+  node:
+    zh-Hant: 立法委員與立法院的委員會（二分）
+    en: legislators and Legislative Yuan committees (two node sets)
+  link:
+    zh-Hant: 某位委員在某屆某會期擔任某委員會的委員；isCoChairman 欄位標示是否為召集委員
+    en: a legislator sitting on a committee in a given term and session; the isCoChairman field marks co-chairs
+structure:
+  kinds: [graph]
+  directed: false
+  weighted: false
+  partitions:
+    count: 2
+    names:
+      - { id: legislators, zh-Hant: 立法委員, en: legislators }
+      - { id: committees, zh-Hant: 委員會, en: committees }
+  layers: single
+  temporal: { form: snapshots, resolution: session }
+  spatial: { form: none }
+  edge_attributes:
+    - name: isCoChairman
+      description: { zh-Hant: 是否為召集委員（Y 或 N）, en: whether the member is a co-chair (Y or N) }
+  node_attributes:
+    - name: lgno
+      description: { zh-Hant: 委員編號, en: legislator number }
+counts:
+  approximate: true
+  as_of: "2026-11-04"
+  edges: 11834
+  note:
+    zh-Hant: |-
+      取自資料集頁面的「資料筆數」11,834；每筆為一位委員在一個會期的一個委員會席次，
+      所以這是所有會期加總的連結數。
+coverage:
+  temporal:
+    start: "1999-02"
+    ongoing: true
+    note:
+      zh-Hant: 自第4屆第1會期起，每日更新。
+  spatial: { zh-Hant: 臺灣, en: Taiwan }
+domains: [politics]
+tags: [legislature, committees]
+taiwan_relevance:
+  basis: [about-taiwanese-entities, taiwanese-publisher]
+  justification: 由立法院發布，記錄臺灣立法委員在各委員會的任職。
+provenance:
+  source:
+    name: { zh-Hant: 各委員會-委員名單資料, en: committee membership lists }
+    url: https://data.ly.gov.tw/getds.action?id=14
+    publisher: { zh-Hant: 立法院, en: Legislative Yuan }
+  method:
+    zh-Hant: |-
+      資料提供者為立法院全球資訊網（資訊處），每日 02:45 更新。
+      API 參數為委員名稱（name）、委員會名稱（committee）與檔案類型（fileType，可為 json、xml、csv、txt、xls）。
+  access:
+    - label: { zh-Hant: 立法院開放資料服務平台資料集頁, en: dataset page on the LY open data platform }
+      url: https://data.ly.gov.tw/getds.action?id=14
+      format: web
+    - label: { zh-Hant: API 範例（內政委員會，CSV）, en: API example for 內政委員會 as CSV }
+      url: https://data.ly.gov.tw/odw/ID14Action.action?committee=%E5%85%A7%E6%94%BF%E5%A7%94%E5%93%A1%E6%9C%83&name=&fileType=csv
+      format: csv
+  checked_on: "2026-11-04"
+license:
+  id: LicenseRef-TW-LY-Open-Data-Declaration
+  name: { zh-Hant: 立法院網站資料開放宣告, en: Legislative Yuan open data declaration }
+  url: https://data.ly.gov.tw/copyprotection.action
+  statement:
+    zh-Hant: |-
+      平台頁尾連結「立法院網站資料開放宣告」，允許無償、非專屬、得再授權的利用，使用時應註明出處；
+      平台選單的「授權條款」頁（principle.action）則刊載政府資料開放授權條款－第1版全文。
+  evidence:
+    url: https://data.ly.gov.tw/copyprotection.action
+    checked_on: "2026-11-04"
+    quote: 為利各界廣為利用網站資料，「立法院開放資料服務平台」網站（以下簡稱本網站）上刊載之所有資料與素材，其得受著作權保護之範圍，以無償、非專屬，得再授權之方式提供公眾使用，使用者得不限時間及地域，重製、改作、編輯、公開傳輸或為其他方式之利用，開發各種產品或服務（簡稱加值衍生物），此一授權行為不會嗣後撤回，使用者亦無須取得本院之書面或其他方式授權；然使用時，應註明出處。
+redistribution:
+  basis: link-only
+  note:
+    zh-Hant: 授權允許轉載；本站目前只提供連結。
+personal_data:
+  level: public-role
+  reviewed_on: "2026-11-04"
+  notes:
+    zh-Hant: |-
+      只含立法委員的姓名、委員編號與委員會職務，屬公職身分資訊。
+      宣告第二點（二）提醒使用者自行依個人資料保護法處理依法公開的個人資料。
+creators:
+  - organization: { zh-Hant: 立法院, en: Legislative Yuan }
+    url: https://data.ly.gov.tw/
+    role: publisher

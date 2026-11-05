@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/wanted-entry.schema.json",
+  "title": "An entry of /api/v1/wanted.json (the 許願池)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "url", "title", "domains", "reason", "status", "status_label", "requests"],
+  "properties": {
+    "id": { "type": "string" },
+    "url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+    "title": { "$ref": "api-common.schema.json#/$defs/title" },
+    "description": { "$ref": "api-common.schema.json#/$defs/text" },
+    "domains": { "type": "array", "items": { "$ref": "api-common.schema.json#/$defs/label" } },
+    "reason": { "$ref": "api-common.schema.json#/$defs/text" },
+    "status": { "enum": ["seeking", "source-found", "in-progress", "unavailable", "published"] },
+    "status_label": { "$ref": "api-common.schema.json#/$defs/label" },
+    "requests": { "type": "integer", "minimum": 0 },
+    "unavailable_reason": { "$ref": "api-common.schema.json#/$defs/text" },
+    "dataset_url": { "$ref": "api-common.schema.json#/$defs/siteUrl" }
+  }
+}

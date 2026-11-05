@@ -1,0 +1,84 @@
+# License identifiers the catalog uses, each mapped to one license class
+# (design D3; data-curation spec, "License classes decide permitted operations").
+# The class is looked up here by code (scripts/catalog/lib/licenses.mjs and
+# curation/netscied/licenses.py); an id missing from this file counts as
+# link-only. SPDX ids must also be in spdx-licenses.json (the pinned SPDX list).
+#
+# Classes: permissive | share-alike | non-commercial | no-derivatives | link-only.
+# The permission class is not a license: a record reaches it through
+# redistribution.basis written-permission.
+- id: CC0-1.0
+  class: permissive
+  name: { zh-Hant: CC0 1.0 公眾領域貢獻宣告, en: CC0 1.0 Universal }
+  url: https://creativecommons.org/publicdomain/zero/1.0/
+- id: PDDL-1.0
+  class: permissive
+  name: { zh-Hant: ODC 公眾領域貢獻與授權條款 1.0, en: Open Data Commons Public Domain Dedication & License 1.0 }
+  url: https://opendatacommons.org/licenses/pddl/1-0/
+- id: CC-BY-4.0
+  class: permissive
+  name: { zh-Hant: 創用 CC 姓名標示 4.0 國際, en: Creative Commons Attribution 4.0 International }
+  url: https://creativecommons.org/licenses/by/4.0/
+- id: CC-BY-3.0
+  class: permissive
+  name: { zh-Hant: 創用 CC 姓名標示 3.0, en: Creative Commons Attribution 3.0 Unported }
+  url: https://creativecommons.org/licenses/by/3.0/
+- id: ODC-By-1.0
+  class: permissive
+  name: { zh-Hant: ODC 姓名標示授權條款 1.0, en: Open Data Commons Attribution License 1.0 }
+  url: https://opendatacommons.org/licenses/by/1-0/
+- id: CDLA-Permissive-2.0
+  class: permissive
+  name: { zh-Hant: 社群資料授權協議－寬鬆版 2.0, en: Community Data License Agreement – Permissive 2.0 }
+  url: https://cdla.dev/permissive-2-0/
+- id: OGDL-Taiwan-1.0
+  class: permissive
+  name: { zh-Hant: 政府資料開放授權條款－第1版, en: "Taiwan Open Government Data License, version 1.0" }
+  url: https://data.gov.tw/license
+  # §3(2): attribution must follow the 附件「顯名聲明」; §4(2): one-way compatible with CC BY 4.0.
+  attribution_template: |-
+    {提供機關} {年份} {開放資料名稱與版本}
+    此開放資料依政府資料開放授權條款 (Open Government Data License) 進行公眾釋出，使用者於遵守本條款各項規定之前提下，得利用之。
+    政府資料開放授權條款：https://data.gov.tw/license
+- id: LicenseRef-TW-LY-Open-Data-Declaration
+  class: permissive
+  name: { zh-Hant: 立法院網站資料開放宣告, en: Legislative Yuan open data declaration }
+  url: https://data.ly.gov.tw/copyprotection.action
+- id: CC-BY-SA-4.0
+  class: share-alike
+  name: { zh-Hant: 創用 CC 姓名標示–相同方式分享 4.0 國際, en: Creative Commons Attribution-ShareAlike 4.0 International }
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+- id: CC-BY-SA-3.0
+  class: share-alike
+  name: { zh-Hant: 創用 CC 姓名標示–相同方式分享 3.0, en: Creative Commons Attribution-ShareAlike 3.0 Unported }
+  url: https://creativecommons.org/licenses/by-sa/3.0/
+- id: ODbL-1.0
+  class: share-alike
+  name: { zh-Hant: 開放資料庫授權條款 1.0, en: Open Data Commons Open Database License 1.0 }
+  url: https://opendatacommons.org/licenses/odbl/1-0/
+- id: CDLA-Sharing-1.0
+  class: share-alike
+  name: { zh-Hant: 社群資料授權協議－分享版 1.0, en: Community Data License Agreement – Sharing 1.0 }
+  url: https://cdla.dev/sharing-1-0/
+- id: CC-BY-NC-4.0
+  class: non-commercial
+  name: { zh-Hant: 創用 CC 姓名標示–非商業性 4.0 國際, en: Creative Commons Attribution-NonCommercial 4.0 International }
+  url: https://creativecommons.org/licenses/by-nc/4.0/
+- id: CC-BY-NC-SA-4.0
+  class: non-commercial
+  name: { zh-Hant: 創用 CC 姓名標示–非商業性–相同方式分享 4.0 國際, en: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International }
+  url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+- id: CC-BY-ND-4.0
+  class: no-derivatives
+  name: { zh-Hant: 創用 CC 姓名標示–禁止改作 4.0 國際, en: Creative Commons Attribution-NoDerivatives 4.0 International }
+  url: https://creativecommons.org/licenses/by-nd/4.0/
+- id: CC-BY-NC-ND-4.0
+  class: no-derivatives
+  name: { zh-Hant: 創用 CC 姓名標示–非商業性–禁止改作 4.0 國際, en: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International }
+  url: https://creativecommons.org/licenses/by-nc-nd/4.0/
+- id: NOASSERTION
+  class: link-only
+  name: { zh-Hant: 未載明授權, en: No license stated }
+- id: NONE
+  class: link-only
+  name: { zh-Hant: 保留所有權利, en: All rights reserved }

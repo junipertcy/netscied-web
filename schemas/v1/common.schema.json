@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/source/common.schema.json",
+  "title": "Source record: Shared definitions for netscied.tw records",
+  "$defs": {
+    "slug": {
+      "description": "A permanent identifier: lowercase ASCII kebab-case, 3 to 64 characters.",
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 64,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "vocabId": {
+      "description": "A key in one of the catalog/vocab files.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[-:][a-z0-9]+)*$"
+    },
+    "personId": {
+      "description": "An opaque public person id: p- and 8 Crockford base32 characters.",
+      "type": "string",
+      "pattern": "^p-[0-9A-HJKMNP-TV-Z]{8}$"
+    },
+    "permissionRef": {
+      "description": "An opaque reference to a permission in the private researcher log.",
+      "type": "string",
+      "pattern": "^perm-[0-9]{4}-[0-9]{4}$"
+    },
+    "date": {
+      "description": "A calendar date, YYYY-MM-DD.",
+      "type": "string",
+      "format": "date"
+    },
+    "semver": {
+      "description": "A semantic version string (always quoted in YAML).",
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "httpsUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "text": {
+      "description": "Text in Traditional Mandarin, with an optional English version.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "zh-Hant"
+      ],
+      "properties": {
+        "zh-Hant": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "textAny": {
+      "description": "Text in Traditional Mandarin, English, or both.",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "zh-Hant": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "evidence": {
+      "description": "Where a fact was checked, and when.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "checked_on"
+      ],
+      "properties": {
+        "url": {
+          "$ref": "#/$defs/url"
+        },
+        "checked_on": {
+          "$ref": "#/$defs/date"
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "$comment": "Describes the human-edited source files in the repository (catalog/, content/), not the API responses; those are described by /api/v1/schema/*-record.schema.json and friends."
+}

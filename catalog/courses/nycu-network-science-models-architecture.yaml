@@ -1,0 +1,31 @@
+id: nycu-network-science-models-architecture
+university: nycu
+department: {zh-Hant: 資訊工程學系}
+title: {zh-Hant: 網路科學與架構, en: "Network Science, Models, and Architecture"}
+course_code: CSCS20039
+category: network-science
+relevance: core
+offering_type: credit
+level: undergraduate
+languages: []
+inclusion_note:
+  zh-Hant: 課程概述明言本課探討網絡科學與複雜網絡，週次計畫涵蓋網絡的數學表示、隨機圖、小世界、無尺度、社群結構、強健性與擴散現象。
+summary:
+  zh-Hant: 大學部網絡科學課程，從真實網絡的實證研究與圖論基礎出發，介紹 Erdős–Rényi、小世界與 Barabási–Albert 等模型，再談社群偵測、滲流與串聯失效，以及網絡上的流行病擴散。
+keywords: [網絡科學, 複雜網絡, 隨機圖, 小世界網絡, 無尺度網絡, 社群偵測, 滲流]
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
+offerings:
+  - term: "112-1"
+    code: "515622"
+    instructors:
+      - {name: 樓洋}
+    evidence_url: https://coz.aa.nycu.edu.tw/course/112/1/515622
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 當期課號 515622；大綱中英對照，頁面未列授課語言。
+unverified:
+  fields:
+    - languages
+  checked_on: 2026-11-04
+  note:
+    zh-Hant: 陽明交大課程網頁未列授課語言，待確認。

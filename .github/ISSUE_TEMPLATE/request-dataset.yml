@@ -1,0 +1,39 @@
+name: 徵求資料集
+description: 告訴我們你需要、但本站還沒有的台灣網絡資料。
+title: "[徵求] "
+labels: ["wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        謝謝你提出需求。我們會把它整理進[資料許願池](https://netscied.tw/wanted/)，並記錄需求次數。
+        **下架、個資或著作權申訴請不要用這個表單**，請寄信到 tcy@inferweave.com（只有信件會私下處理）。
+        GitHub 議題是公開的：請不要在這裡留下電話、地址或任何個人資料。
+  - type: textarea
+    id: need
+    attributes:
+      label: 需要的資料
+      description: 例如「縣市之間的人口遷徙流量」。從搜尋結果進來時，這裡會帶入你的搜尋字詞。
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: 用途
+      description: 研究、教學、報導或其他用途？知道用途能幫我們判斷該找哪一種資料。
+  - type: textarea
+    id: sources
+    attributes:
+      label: 可能的來源
+      description: 你知道哪裡可能有這份資料嗎？例如政府開放資料平臺、論文附件或研究者的網站。
+  - type: dropdown
+    id: credit
+    attributes:
+      label: 願意公開具名嗎？
+      description: 預設不具名。許願池只顯示主題與需求次數。
+      options:
+        - 否，不要顯示我的名字
+        - 可以，顯示我的 GitHub 帳號
+      default: 0
+    validations:
+      required: true

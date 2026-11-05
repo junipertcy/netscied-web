@@ -1,0 +1,111 @@
+id: dgbas-input-output-2021
+status: published
+added: "2026-11-04"
+announce: false
+title:
+  zh-Hant: 110年產業關聯交易表（163部門）
+  en: Taiwan 2021 input–output transactions table (163 product sectors)
+description:
+  zh-Hant: |-
+    行政院主計總處編製的「產業關聯統計-產品對產品(CXC)110年163部門生產者價格交易表(進口品按C.I.F.計值)」，
+    記錄 2021 年 163 個產品部門之間的中間投入交易值。
+    可視為有向加權網絡：由投入的產品指向使用它的產品部門，權重為交易值（新臺幣百萬元）。
+    檔案另含最終需要與原始投入的欄列。本站只提供連結。
+  en: >-
+    The 2021 product-by-product input–output transactions table at producer
+    prices (imports valued c.i.f.) for 163 product sectors, compiled by
+    Taiwan's national statistics agency (行政院主計總處, DGBAS). Read as a directed
+    weighted network: a link runs from an input product to the product sector
+    that uses it, weighted by the transaction value in NT$ million. The file also
+    holds final-demand columns and primary-input rows. Link only.
+keywords: [產業關聯, 投入產出, 交易表, 主計總處, 163部門, input-output, IO table, inter-industry]
+semantics:
+  node:
+    zh-Hant: 產業關聯表的 163 個產品部門（例如「001_稻作」「076_半導體」）
+    en: one of the table's 163 product sectors (for example 001_稻作 rice or 076_半導體 semiconductors)
+  link:
+    zh-Hant: 產品 i 作為中間投入、用於生產產品 j 的交易值；XML 中 INPUT_IO 為 i、OUTPUT_IO 為 j
+    en: the value of product i used as an intermediate input to produce product j; in the XML, INPUT_IO is i and OUTPUT_IO is j
+structure:
+  kinds: [graph]
+  directed: true
+  weighted: true
+  weight:
+    meaning:
+      zh-Hant: 交易值（生產者價格，進口品按 C.I.F. 計值，含國產品與進口品）
+      en: transaction value at producer prices, imports valued c.i.f. (domestic and imported products together)
+    unit: NT$ million
+  self_loops: true
+  layers: single
+  temporal: { form: none }
+  spatial: { form: none }
+  notes:
+    zh-Hant: |-
+      XML 每筆 OBS 含 OUTPUT_IO、INPUT_IO 與 ItemValue 三個欄位。
+      INPUT_IO 另含「P1_勞動報酬」等原始投入列，OUTPUT_IO 另含「C1_民間消費」等最終需要欄，
+      這些合計列欄不是部門節點。主計總處另以同樣格式發布國產品交易表、進口品交易表等版本。
+coverage:
+  temporal:
+    start: "2021"
+    end: "2021"
+  spatial: { zh-Hant: 臺灣, en: Taiwan }
+counts:
+  approximate: true
+  as_of: "2026-11-04"
+  nodes: 163
+  edges: 12568
+  note:
+    zh-Hant: |-
+      由 2026-11-04 下載的 XML 檔（3.7 MB）計算：163×163 個部門格中有 12,568 格非零，
+      其中 155 格為同部門的自環。
+domains: [economy]
+tags: [input-output, industry, open-government-data]
+taiwan_relevance:
+  basis: [collected-in-taiwan, about-taiwanese-entities, taiwanese-publisher]
+  justification: 由行政院主計總處編製，描述 2021 年臺灣各產品部門之間的投入產出關係。
+provenance:
+  source:
+    name: { zh-Hant: 產業關聯統計-產品對產品(CXC)110年163部門生產者價格交易表(進口品按C.I.F.計值) }
+    url: https://data.gov.tw/dataset/173546
+    publisher: { zh-Hant: 行政院主計總處 }
+  method:
+    zh-Hant: |-
+      依資料集說明，主要參考每五年辦理的工業及服務業普查與各項相關統計資料編製；
+      以生產者的出廠價格計價，不含國內運費、商業加價、加值型營業稅及進口稅淨額。
+  access:
+    - label: { zh-Hant: 政府資料開放平臺資料集頁, en: data.gov.tw dataset page }
+      url: https://data.gov.tw/dataset/173546
+      format: web
+    - label: { zh-Hant: 交易表 XML 檔, en: transactions table (XML) }
+      url: https://ws.dgbas.gov.tw/001/Upload/461/relfile/11525/234912/f110c04.xml
+    - label: { zh-Hant: 110年產業關聯統計編製報告, en: compilation report for the 2021 tables }
+      url: https://www.stat.gov.tw/News_Content.aspx?n=2782&s=234646
+      format: web
+  checked_on: "2026-11-04"
+license:
+  id: OGDL-Taiwan-1.0
+  url: https://data.gov.tw/license
+  statement:
+    zh-Hant: |-
+      政府資料開放平臺資料集頁的「授權方式」為「政府資料開放授權條款-第1版」，
+      備註欄另寫「授權說明網址: http://data.gov.tw/license」。
+  evidence:
+    url: https://data.gov.tw/dataset/173546
+    checked_on: "2026-11-04"
+    quote: 授權方式 政府資料開放授權條款-第1版
+redistribution:
+  basis: link-only
+  note:
+    zh-Hant: 授權允許轉載；本站目前只提供連結。
+personal_data:
+  level: none
+  reviewed_on: "2026-11-04"
+  notes:
+    zh-Hant: 部門層級的總體統計，不含個人或個別廠商資料。
+creators:
+  - organization: { zh-Hant: 行政院主計總處 }
+    url: https://www.stat.gov.tw/
+    role: publisher
+references:
+  - citation: "行政院主計總處. 110年產業關聯統計編製報告. 中華民國統計資訊網."
+    url: https://www.stat.gov.tw/News_Content.aspx?n=2782&s=234646

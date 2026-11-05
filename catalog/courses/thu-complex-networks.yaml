@@ -1,0 +1,25 @@
+id: thu-complex-networks
+university: thu
+department: { zh-Hant: 應用物理學系, en: Department of Applied Physics }
+title: { zh-Hant: 複雜網路專題, en: Special Topics on Complex Networks }
+course_code: "5325"
+category: network-science
+relevance: core
+offering_type: credit
+level: mixed
+languages: [en]
+inclusion_note:
+  zh-Hant: "教育目標即探討複雜網路理論的最新發展並進行專題研究，參考書為 Newman《Networks: An Introduction》。"
+summary:
+  zh-Hant: 應用物理學系的英語授課專題課，研讀複雜網路理論的近期文獻並進行研究專題，以出席討論、文獻報告與研究成果評量。
+keywords: [複雜網絡, 網絡科學, 統計物理]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "103-1"
+    code: "5325"
+    instructors:
+      - { name: 施奇廷 }
+    evidence_url: https://national.service.thu.edu.tw/view/103/1/5325
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 頁面標示「英授 Taught in English」，修課班級應物 3–4 年級與碩博；查核的 106-1、108-1、110-1、111-1、112-1、113-1、114-1、114-2、115-1 應物系課程列表均未再見此課。英文課名為本站翻譯。

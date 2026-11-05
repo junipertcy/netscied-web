@@ -1,0 +1,180 @@
+[
+  {
+    "id": "hosted-graph",
+    "url": "https://netscied.tw/datasets/hosted-graph/",
+    "api_url": "https://netscied.tw/api/v1/datasets/hosted-graph.json",
+    "title": {
+      "zh-Hant": "測試用託管網絡",
+      "en": "Hosted test network"
+    },
+    "summary": {
+      "zh-Hant": "這是驗證器測試用的託管資料集，節點是車站，連結是兩站之間的旅次。",
+      "en": "A hosted test network used by the validator tests."
+    },
+    "kinds": [
+      "graph"
+    ],
+    "structure_badges": [
+      {
+        "id": "graph",
+        "zh-Hant": "圖（網絡）",
+        "en": "graph",
+        "group": "kind"
+      },
+      {
+        "id": "directed",
+        "zh-Hant": "有向",
+        "en": "directed",
+        "group": "property"
+      },
+      {
+        "id": "weighted",
+        "zh-Hant": "加權",
+        "en": "weighted",
+        "group": "property"
+      }
+    ],
+    "domains": [
+      {
+        "id": "transport",
+        "zh-Hant": "交通與移動",
+        "en": "Transport and mobility"
+      }
+    ],
+    "size": {
+      "nodes": 3,
+      "edges": 2,
+      "approximate": false,
+      "text": {
+        "zh-Hant": "3 個節點、2 條連結",
+        "en": "3 nodes, 2 edges"
+      }
+    },
+    "temporal": {
+      "start": "2026-09",
+      "end": "2026-09",
+      "ongoing": false,
+      "zh-Hant": "2026-09",
+      "en": "2026-09"
+    },
+    "license": {
+      "id": "OGDL-Taiwan-1.0",
+      "name": {
+        "zh-Hant": "政府資料開放授權條款－第1版",
+        "en": "Taiwan Open Government Data License, version 1.0"
+      },
+      "url": "https://data.gov.tw/license",
+      "class": "permissive"
+    },
+    "redistribution": {
+      "basis": "license-permits",
+      "label": {
+        "id": "license-permits",
+        "zh-Hant": "授權允許本站轉載",
+        "en": "the license permits redistribution"
+      },
+      "may_redistribute": true
+    },
+    "hosted": true,
+    "latest_version": {
+      "version": "1.0.0",
+      "released": "2026-11-05",
+      "doi": null
+    },
+    "personal_data": {
+      "level": "none",
+      "label": {
+        "id": "none",
+        "zh-Hant": "不含個人資料",
+        "en": "no personal data"
+      },
+      "reviewed_on": "2026-11-01"
+    },
+    "added": "2026-11-01",
+    "updated": "2026-11-01"
+  },
+  {
+    "id": "link-only-graph",
+    "url": "https://netscied.tw/datasets/link-only-graph/",
+    "api_url": "https://netscied.tw/api/v1/datasets/link-only-graph.json",
+    "title": {
+      "zh-Hant": "測試用外部連結網絡",
+      "en": "Link-only test network"
+    },
+    "summary": {
+      "zh-Hant": "這是驗證器測試用的外部連結資料集，節點是網路，連結是兩個網路之間的連線。",
+      "en": "A link-only test network."
+    },
+    "kinds": [
+      "graph"
+    ],
+    "structure_badges": [
+      {
+        "id": "graph",
+        "zh-Hant": "圖（網絡）",
+        "en": "graph",
+        "group": "kind"
+      },
+      {
+        "id": "undirected",
+        "zh-Hant": "無向",
+        "en": "undirected",
+        "group": "property"
+      }
+    ],
+    "domains": [
+      {
+        "id": "technology",
+        "zh-Hant": "科技與基礎設施",
+        "en": "Technology and infrastructure"
+      }
+    ],
+    "size": {
+      "nodes": 10,
+      "edges": 20,
+      "approximate": true,
+      "text": {
+        "zh-Hant": "約 10 個節點、約 20 條連結",
+        "en": "about 10 nodes, about 20 edges"
+      }
+    },
+    "temporal": {
+      "start": "2020",
+      "end": null,
+      "ongoing": false,
+      "zh-Hant": "2020–",
+      "en": "2020–"
+    },
+    "license": {
+      "id": "NOASSERTION",
+      "name": {
+        "zh-Hant": "未載明授權",
+        "en": "No license stated"
+      },
+      "url": null,
+      "class": "link-only"
+    },
+    "redistribution": {
+      "basis": "link-only",
+      "label": {
+        "id": "link-only",
+        "zh-Hant": "本站不轉載，僅提供連結",
+        "en": "link only; not redistributed here"
+      },
+      "may_redistribute": false
+    },
+    "hosted": false,
+    "latest_version": null,
+    "personal_data": {
+      "level": "none",
+      "label": {
+        "id": "none",
+        "zh-Hant": "不含個人資料",
+        "en": "no personal data"
+      },
+      "reviewed_on": "2026-11-02"
+    },
+    "added": "2026-11-02",
+    "updated": "2026-11-02"
+  }
+]

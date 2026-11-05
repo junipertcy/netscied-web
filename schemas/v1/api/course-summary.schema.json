@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/course-summary.schema.json",
+  "title": "A course in /api/v1/courses.json (summary form)",
+  "description": "One course offered in Taiwan. Shared fields have the same shape as in the full record at api_url.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "url", "api_url", "title", "university", "department", "category", "relevance", "level", "languages", "languages_unverified", "latest", "freshness", "historical", "updated"],
+  "properties": {
+    "id": { "type": "string" },
+    "url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+    "api_url": { "$ref": "api-common.schema.json#/$defs/siteUrl" },
+    "title": { "$ref": "api-common.schema.json#/$defs/title" },
+    "university": { "$ref": "api-common.schema.json#/$defs/university" },
+    "department": { "$ref": "api-common.schema.json#/$defs/text" },
+    "category": { "$ref": "api-common.schema.json#/$defs/label" },
+    "relevance": { "$ref": "api-common.schema.json#/$defs/label" },
+    "level": { "$ref": "api-common.schema.json#/$defs/label" },
+    "languages": { "type": "array", "items": { "$ref": "api-common.schema.json#/$defs/label" }, "description": "Empty when unconfirmed (languages_unverified)." },
+    "languages_unverified": { "type": "boolean" },
+    "latest": { "$ref": "api-common.schema.json#/$defs/latestOffering" },
+    "freshness": { "$ref": "api-common.schema.json#/$defs/freshness" },
+    "historical": { "type": "boolean" },
+    "updated": { "$ref": "api-common.schema.json#/$defs/date" }
+  }
+}

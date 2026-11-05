@@ -1,0 +1,150 @@
+<h1>關於本站</h1>
+<p class="lede">
+  台灣網絡科學教育（NetSciEd）收集和台灣有關的網絡資料與網絡科學課程，讓人們和他們使用的 AI 助理都能找到、判斷、下載與引用。
+  我們希望網絡科學更親近實際生活，也讓蒐集資料的人得到應有的肯定。
+</p>
+<nav class="toc" aria-label="本頁目錄">
+  <a href="/about/#network-science">什麼是網絡科學</a> · <a href="/about/#contribute">提供或徵求資料</a> · <a href="/about/#cite">引用與授權</a> ·
+  <a href="/about/#takedown">下架與更正</a> · <a href="/about/#privacy">隱私權聲明</a> · <a href="/about/#disclaimer">免責聲明</a> ·
+  <a href="/about/#booklet">出版品</a> · <a href="/about/#history">網站沿革</a> · <a href="/about/#contact">維護者與聯絡</a> · <a href="/about/#machine-access">給程式與 AI 代理</a>
+</nav>
+
+<section id="network-science" aria-labelledby="network-science-title">
+  <h2 id="network-science-title">什麼是網絡科學</h2>
+  <p>
+    網絡是由節點和節點間的關聯所構成的集合。它可以描述實體的結構，如各台電腦經由電纜關聯起來的網際網路；它也可以描述抽象的系統，如人際網絡，其中的關聯雖然看不見，但是可以藉由問卷、社交網站互動紀錄等推估出來。像化學環繞著研究化合物的特性一樣，網絡科學希望理解網絡的特性，如一個網絡是否在統計上特別、是否存在社群結構等，或發生在網絡上的動態現象，如謠言如何傳播、為什麼會形成「同溫層」等等。
+  </p>
+  <p>
+    本站的「網路」與「網絡」都指網絡科學（network science）意義下的網絡；收錄的資料包含圖、超圖、單純複形、排名與成對比較等關聯資料，只要它在臺灣蒐集、描述臺灣的人事物，或由臺灣的機構或研究者發布。
+  </p>
+</section>
+
+<section id="contribute" aria-labelledby="contribute-title">
+  <h2 id="contribute-title">提供或徵求資料</h2>
+  <p>你需要某一份資料、知道哪裡有台灣的網絡資料，或願意讓本站轉載你蒐集的資料，都歡迎告訴我們：</p>
+  <ul>
+    @if (links.form) {
+      <li><a [href]="links.form">資料需求表</a>：不需要任何帳號；電子郵件可不填。表單由 Google 處理。</li>
+    } @else {
+      <li>不需要帳號的資料需求表：準備中，開放前請用電子郵件。</li>
+    }
+    <li>電子郵件：<a [href]="'mailto:' + site.contactEmail">{{ site.contactEmail }}</a>（下架、個資申訴與授權書，請一律寄信）</li>
+    <li>GitHub：<a [href]="site.github + '/issues/new?template=request-dataset.yml'">徵求資料集</a>、<a [href]="site.github + '/issues/new?template=suggest-dataset.yml'">推薦資料集</a>、<a [href]="site.github + '/issues/new?template=report-problem.yml'">回報問題</a>（需要 GitHub 帳號，內容公開）</li>
+  </ul>
+  <p>
+    收到的需求會整理到<a routerLink="/wanted">資料許願池</a>，並記錄需求次數；許願池只顯示主題與次數，不顯示提出者的姓名或電子郵件。課程也一樣：漏列的台灣網絡課程，請寄信或在 GitHub 告訴我們。
+  </p>
+  <p>
+    含有個人資料的資料，本站依個資等級處理：一般人的資料只提供詮釋資料與來源連結；健康、性生活、犯罪紀錄、位置軌跡、未成年人等敏感資料，以及從社群平台擷取的私人互動網絡，本站不收錄檔案。
+  </p>
+</section>
+
+<section id="cite" aria-labelledby="cite-title">
+  <h2 id="cite-title">引用與授權</h2>
+  <p>引用資料集時，請使用各資料集頁面「如何引用」的格式：本站託管的資料請引用其版本網址（日後有版本 DOI 時改用 DOI）；外部連結的資料請引用原始來源。</p>
+  <p>引用本站：台灣網絡科學教育（netscied.tw）。https://netscied.tw/</p>
+  <p>
+    <strong>本站撰寫的目錄詮釋資料</strong>（資料集與課程紀錄、API 與搜尋索引的內容）以
+    <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh-hant">CC0 1.0</a> 釋出，任何人都可以自由使用。
+    不包括：紀錄中引用的授權條款原文，以及從上游來源照錄的詮釋資料（例如政府資料開放平臺依政府資料開放授權條款提供的內容），這些依其原來的條款。
+    各資料集本身依其頁面標示的授權；本站自行整理的資料以 CC BY 4.0 釋出。
+  </p>
+</section>
+
+<section id="takedown" aria-labelledby="takedown-title">
+  <h2 id="takedown-title">下架與更正</h2>
+  <p>任何被資料集或課程紀錄提到的人，以及任何權利人，都可以請本站更正或下架內容：</p>
+  <ol>
+    <li>寄信到 <a [href]="'mailto:' + site.contactEmail">{{ site.contactEmail }}</a>，說明頁面網址、需要更正或下架的內容與理由。也可以使用資料需求表或 GitHub，但與個資有關的事請寄信，因為 GitHub 是公開的。</li>
+    <li>我們會在 <strong>7 天內</strong>回覆確認收到。</li>
+    <li>與個人資料有關、且有合理依據的請求，本站會在 <strong>3 天內</strong>暫停相關檔案的下載：刪除儲存的檔案、清除快取、在 API 標示該版本暫停下載，並請典藏單位限制已寄存的副本。</li>
+    <li>本站會在 <strong>30 天內</strong>作出決定；需要更多時間時，會通知你並延長一次，最多再 30 天。</li>
+    <li>下架的資料集或版本會留下「墓碑」頁：保留識別碼、名稱、下架日期與原因，但不再提供檔案。</li>
+  </ol>
+  <p>課程教師請求移除姓名時，課程仍會列出，教師欄改為「未列出」。來源網站撤下本站轉載的資料時，本站也會跟著撤下。</p>
+  <div lang="en" class="in-english">
+    <h3>Takedown and correction (summary)</h3>
+    <p>
+      Anyone named in a record, and any rights holder, can ask for a correction or removal by email to {{ site.contactEmail }}.
+      We acknowledge within 7 days; on a credible personal-data request we suspend downloads within 3 days; we decide within 30 days
+      (extendable once by 30 days, with notice). Removed datasets leave a tombstone with the date and reason, and no files.
+    </p>
+  </div>
+</section>
+
+<section id="privacy" aria-labelledby="privacy-title">
+  <h2 id="privacy-title">隱私權聲明</h2>
+  <p>本站由個人維護，依個人資料保護法處理以下個人資料：</p>
+  <ul>
+    <li><strong>資料需求與來信：</strong>你在需求表或來信中留下的電子郵件與內容，只用來回覆你，不會公開；需求表由 Google 表單處理。GitHub 上的議題是公開的，依 GitHub 的條款處理。</li>
+    <li><strong>網站存取紀錄：</strong>本站預計使用的 CloudFront 方案不提供存取紀錄。若日後改用提供紀錄的方案，紀錄最多保存 90 天，只用於維運與彙總分析搜尋需求（例如哪些資料常被找卻找不到），並會先更新本聲明。本站不使用第三方分析或廣告追蹤。</li>
+    <li><strong>研究者紀錄：</strong>為了取得轉載授權、並在資料集頁面致謝，本站會聯絡蒐集資料的研究者；聯絡方式、聯絡紀錄與同意紀錄保存在一個不公開的 GitHub 儲存庫（伺服器位於美國），不放在本站或任何公開的地方。只有同意公開致謝的人，才會出現在資料集頁面，且只顯示他同意的欄位。</li>
+  </ul>
+  <p>
+    保存期間：未獲回覆的聯絡方式，自最後一次聯絡起保存 24 個月；同意與授權的證明，在相關資料公開期間及其後 5 年內保存。
+  </p>
+  <p>
+    你可以依個人資料保護法第 3 條，請求查詢或閱覽、製給複製本、補充或更正、停止蒐集處理或利用，以及刪除你的個人資料：請寄信到
+    <a [href]="'mailto:' + site.contactEmail">{{ site.contactEmail }}</a>。查詢、閱覽與複製本的請求於 15 日內回覆；更正、停止與刪除的請求於 30 日內回覆，必要時可延長一次並通知你。
+  </p>
+</section>
+
+<section id="disclaimer" aria-labelledby="disclaimer-title">
+  <h2 id="disclaimer-title">免責聲明</h2>
+  <p>
+    本站整理來自各來源的資料與課程資訊，但不保證上游資料的正確性、完整性或即時性；使用前請查核原始來源。
+    本站對授權條款與個人資料的說明，是為了方便使用者判斷，不構成法律意見。本站連結的外部網站，其內容由各網站自行負責。
+  </p>
+</section>
+
+<section id="booklet" aria-labelledby="booklet-title">
+  <h2 id="booklet-title">出版品</h2>
+  <h3>《網絡素養》小冊</h3>
+  <p>
+    翻譯自 NETWORK LITERACY: Essential Concepts and Core Ideas，源於網絡科學教育計畫（Network Science in Education，NetSciEd），以七個簡潔的例子介紹網絡科學的基本概念，適合大小朋友閱讀。
+  </p>
+  <ul>
+    @for (p of booklet; track p.label) {
+      <li>
+        @if (p.url) {<a [href]="p.url">{{ p.label }}</a>}
+        @else if (p.archived) {<a [href]="p.archived">{{ p.label }}</a><span class="sub">（網際網路檔案館的封存副本）</span>}
+        @else {{{ p.label }}<span class="sub">（原始檔案的網址已失效，目前沒有可提供的副本）</span>}
+      </li>
+    }
+  </ul>
+  <h3>《複雜系統：沒說你不知道》</h3>
+  <p>翻譯自 <a href="https://complexityexplained.github.io/">#ComplexityExplained</a> 計畫，介紹複雜系統科學；網絡也是複雜科學研究的對象。</p>
+  <ul>
+    @for (p of complexity; track p.label) {<li><a [href]="p.url">{{ p.label }}</a></li>}
+  </ul>
+</section>
+
+<section id="history" aria-labelledby="history-title">
+  <h2 id="history-title">網站沿革</h2>
+  <ul>
+    <li>2016 年起：以「台灣網絡科學教育」為名，介紹網絡科學，並收集和台灣有關的網絡資料與課程資料。</li>
+    <li>2018 年：在成功大學統計系《資料科學導論》課程介紹網絡科學（<a routerLink="/stat1021">課程封存頁</a>）。</li>
+    <li>2019 年：整理的電腦工具清單刊載於 PLOS《複雜》頻道；這份清單現在由 GitHub 上的 <a href="https://github.com/junipertcy/Network-Code-Repository">Network-Code-Repository</a> 維護。</li>
+    <li>2026 年：改版為搜尋台灣網絡資料與課程的網站，並提供給程式與 AI 代理使用的 API。</li>
+  </ul>
+</section>
+
+<section id="contact" aria-labelledby="contact-title">
+  <h2 id="contact-title">維護者與聯絡</h2>
+  <p>
+    本站由<a [href]="site.maintainer.url">{{ site.maintainer.name }}</a>（<span lang="en">{{ site.maintainer.nameEn }}</span>）維護，經費自理，不收費、不刊登廣告。
+    聯絡：<a [href]="'mailto:' + site.contactEmail">{{ site.contactEmail }}</a> · 原始碼：<a [href]="site.github">GitHub</a>
+  </p>
+</section>
+
+<section id="machine-access" aria-labelledby="machine-title">
+  <h2 id="machine-title">給程式與 AI 代理</h2>
+  <p>本站的內容也以機器可讀的形式提供，不需要執行 JavaScript：</p>
+  <ul>
+    <li><a href="/api/v1/index.json">/api/v1/index.json</a>：API 總覽，列出所有檔案；目前共 {{ index().counts.datasets }} 筆資料集、{{ index().counts.courses }} 門課程。</li>
+    <li><a href="/api/v1/datasets.json">datasets.json</a>、<a href="/api/v1/courses.json">courses.json</a>、<a href="/api/v1/wanted.json">wanted.json</a>、<a href="/api/v1/taxonomy.json">taxonomy.json</a>，以及每筆紀錄的 JSON；每個檔案的 JSON Schema 列在 index.json 的 <code>schema</code> 欄（例如 <a href="/api/v1/schema/dataset-record.schema.json">dataset-record.schema.json</a>）。</li>
+    <li>每個資料集與課程頁面都有 Markdown 版本：在網址後加上 <code>index.md</code>。</li>
+    <li><a href="/llms.txt">llms.txt</a>：給 AI 代理的網站說明；<a href="/sitemap.xml">sitemap.xml</a>；<a href="/news/feed.xml">Atom 訂閱</a>。</li>
+    <li>本站歡迎所有搜尋引擎與 AI 爬蟲，包括用於訓練模型的爬蟲（見 <a href="/robots.txt">robots.txt</a>）。詮釋資料以 CC0 1.0 釋出。</li>
+  </ul>
+</section>

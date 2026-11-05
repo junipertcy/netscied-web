@@ -1,0 +1,37 @@
+id: link-only-graph
+status: published
+added: 2026-11-02
+announce: false
+title: { zh-Hant: 測試用外部連結網絡, en: Link-only test network }
+description:
+  zh-Hant: |-
+    這是驗證器測試用的外部連結資料集，節點是網路，連結是兩個網路之間的連線。
+    內容純屬虛構，只用來檢查驗證規則，本站不轉載任何檔案，只提供連結。
+  en: A link-only test network.
+keywords: [測試]
+semantics:
+  node: { zh-Hant: 網路 }
+  link: { zh-Hant: 連線 }
+structure: { kinds: [graph], directed: false, weighted: false }
+counts: { approximate: true, nodes: 10, edges: 20 }
+coverage:
+  temporal: { start: "2020" }
+  spatial: { zh-Hant: 臺灣, en: Taiwan }
+domains: [technology]
+tags: [internet]
+taiwan_relevance:
+  basis: [taiwanese-publisher]
+  justification: 測試資料。
+provenance:
+  source: { name: { zh-Hant: 測試來源 }, url: "https://example.org/other" }
+  access:
+    - { label: { zh-Hant: 下載 }, url: "https://example.org/other/download", format: gml }
+license:
+  id: NOASSERTION
+  evidence: { url: "https://example.org/other", checked_on: 2026-11-02 }
+redistribution: { basis: link-only }
+personal_data: { level: none, reviewed_on: 2026-11-02 }
+creators:
+  - organization: { zh-Hant: 測試機構 }
+references:
+  - citation: 測試作者（2026）。測試論文。測試期刊。

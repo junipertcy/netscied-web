@@ -1,0 +1,2 @@
+id,title_zh,title_en,university,department,category,relevance,level,languages,latest_term,instructors,freshness,url,api_url
+test-graph-theory,測試圖論,Test Graph Theory,ntu,數學系,graph-theory,core,master,zh,114-1,測試老師,recent,https://netscied.tw/courses/test-graph-theory/,https://netscied.tw/api/v1/courses/test-graph-theory.json

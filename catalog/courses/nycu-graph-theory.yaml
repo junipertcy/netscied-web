@@ -1,0 +1,31 @@
+id: nycu-graph-theory
+university: nycu
+department: {zh-Hant: 應用數學系}
+title: {zh-Hant: 圖論, en: Graph Theory}
+course_code: SCMA30010
+category: graph-theory
+relevance: core
+offering_type: credit
+level: master
+languages: []
+inclusion_note:
+  zh-Hant: 本課即研究所層級的圖論課，週次計畫列出子圖分解、連通度、著色、虧格、極值圖、隨機圖、圖特徵值與圖標號等主題，各約兩週。
+summary:
+  zh-Hant: 應用數學系組合理論組的研究所圖論課，討論圖的結構、圖模型與其應用，使用授課教師自編講義並以 West《Introduction to Graph Theory》為參考書。
+keywords: [圖論, 圖著色, 連通度, 極值圖論, 隨機圖, 圖譜]
+provenance: {found_via: research, added: "2026-11-04", reviewed: "2026-11-04"}
+offerings:
+  - term: "114-1"
+    code: "536702"
+    instructors:
+      - {name: 傅恒霖}
+    evidence_url: https://coz.aa.nycu.edu.tw/course/114/1/536702
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 當期課號 536702；頁面列為應數系必修。
+unverified:
+  fields:
+    - languages
+  checked_on: 2026-11-04
+  note:
+    zh-Hant: 陽明交大課程網頁未列授課語言，待確認。

@@ -1,0 +1,103 @@
+id: golden-horse-2018-nominations
+status: published
+added: 2026-11-04
+announce: false
+title:
+  zh-Hant: 第55屆金馬獎入圍者–電影網絡
+  en: 55th Golden Horse Awards nominee–film network (2018)
+description:
+  zh-Hant: |-
+    2018 年第 55 屆金馬獎所有競賽獎項的入圍名單，整理成影片與入圍者之間的二分網絡。
+    每一條連結代表某人以某部影片入圍某個獎項，並標示獎項名稱與是否得獎；
+    同一人以同一部影片入圍兩個獎項時，會有兩條連結。
+    本站依金馬獎官方入圍得獎資料庫自行整理，以 CC BY 4.0 釋出。
+  en: >-
+    Every nomination in the competitive categories of the 55th Golden Horse
+    Awards (2018), as a bipartite network of films and nominees. Each link is
+    one nomination of a person for a film in a category, with the category and
+    whether it won. Compiled by this site from the official nominee database and
+    released under CC BY 4.0.
+keywords: [金馬獎, 金馬, 入圍名單, 電影, 影人, Golden Horse Awards]
+semantics:
+  node:
+    zh-Hant: 入圍影片，或以影片入圍的人（導演、演員、編劇、攝影、音樂、剪輯等）
+    en: a nominated film, or a person nominated for a film (director, actor, writer, cinematographer, composer, editor and others)
+  link:
+    zh-Hant: 某人以某部影片入圍某個獎項（一項提名一條連結）
+    en: one nomination of a person for a film in one category
+structure:
+  kinds: [graph]
+  directed: false
+  weighted: false
+  multi_edges: true
+  self_loops: false
+  partitions:
+    count: 2
+    names:
+      - { id: film, zh-Hant: 影片, en: film }
+      - { id: person, zh-Hant: 入圍者, en: nominee }
+  layers: single
+  temporal: { form: none }
+  spatial: { form: none }
+  node_attributes:
+    - { name: kind, description: { zh-Hant: film 或 person, en: film or person } }
+    - { name: label, description: { zh-Hant: 官方名單上的中文片名或姓名, en: title or name as printed on the official list } }
+    - { name: label_en, description: { zh-Hant: 官方英文版的片名，或外籍入圍者的原文姓名, en: "official English title, or the original-script name of a non-Chinese nominee" } }
+  edge_attributes:
+    - { name: category, description: { zh-Hant: 獎項名稱（例如 最佳導演）, en: award category in Mandarin } }
+    - { name: category_en, description: { zh-Hant: 獎項英文名稱, en: award category in English } }
+    - { name: winner, description: { zh-Hant: 該提名是否得獎, en: whether the nomination won } }
+  notes:
+    zh-Hant: |-
+      影片類獎項（最佳劇情長片、最佳紀錄片、最佳動畫長片、最佳劇情短片、最佳動畫短片）的得獎對象是影片。
+      官方名單在紀錄片、動畫與短片獎項列出的個人姓名收為入圍者；最佳劇情長片名單上的出品公司與製片
+      （例如《大象席地而坐》的楚延華、胡永振）刻意不列為入圍者，因此這五部影片在該獎項沒有連結。
+      公司不列為節點。最佳原創電影歌曲依當屆規章，作詞、作曲與演唱者都是入圍者。
+coverage:
+  temporal: { start: "2018", end: "2018" }
+  spatial: { zh-Hant: 臺灣, en: Taiwan }
+domains: [culture]
+tags: [film, awards]
+taiwan_relevance:
+  basis: [about-taiwanese-entities, taiwanese-publisher]
+  justification: 金馬獎在臺灣舉辦，名單取自台北金馬影展的官方入圍得獎資料庫。
+provenance:
+  source:
+    name: { zh-Hant: 金馬獎官方網站 入圍得獎資料庫（2018 年）, en: Golden Horse Awards official nominee and winner database (2018) }
+    url: https://www.goldenhorse.org.tw/awards/nw/?serach_type=award&sc=10&search_regist_year=2018&ins=53
+    publisher: { zh-Hant: 台北金馬影展執行委員會（金馬執委會）, en: Taipei Golden Horse Film Festival Executive Committee }
+  method:
+    zh-Hant: |-
+      本站依官方入圍得獎資料庫逐項轉錄 23 個競賽獎項的入圍影片、入圍者與得獎標記，
+      並與 2018 年 10 月 1 日的入圍名單公布新聞稿、2018 年 12 月 4 日的網頁封存版本交叉核對。
+  access:
+    - label: { zh-Hant: 官方入圍得獎資料庫（2018 年）, en: official nominee database (2018) }
+      url: https://www.goldenhorse.org.tw/awards/nw/?serach_type=award&sc=10&search_regist_year=2018&ins=53
+      format: web
+    - label: { zh-Hant: 第55屆金馬獎入圍名單公布（新聞稿）, en: nominee announcement (press release) }
+      url: https://www.goldenhorse.org.tw/news/detail/1023
+      format: web
+  checked_on: 2026-11-04
+license:
+  id: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  evidence:
+    url: https://www.goldenhorse.org.tw/awards/nw/?serach_type=award&sc=10&search_regist_year=2018&ins=53
+    checked_on: 2026-11-04
+redistribution:
+  basis: own-work
+  note:
+    zh-Hant: |-
+      舊版網站的 relations.json 來源與授權不明（jinma.today 未載明整理者或授權），
+      本站改依官方名單重新整理，不沿用該檔案。
+personal_data:
+  level: public-role
+  reviewed_on: 2026-11-04
+  notes:
+    zh-Hant: |-
+      資料含公開宣布的入圍者姓名，只記錄其以專業身分入圍的獎項與影片，不加入其他個人資料。
+      當事人如對收錄有疑義，可依下架與更正程序提出。
+creators:
+  - organization: { zh-Hant: 台灣網絡科學教育（netscied.tw）, en: Network Science Education in Taiwan (netscied.tw) }
+    url: https://netscied.tw/
+    role: curator

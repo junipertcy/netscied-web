@@ -1,0 +1,6 @@
+id: p-7K3M9QX2
+name: { zh-Hant: 測試研究者, en: Test Researcher }
+affiliation: { name: { zh-Hant: 測試大學 } }
+orcid: https://orcid.org/0000-0002-1825-0097
+consented_on: 2026-11-01
+display: [name, affiliation]

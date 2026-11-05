@@ -1,0 +1,11 @@
+{
+  "datasets": [
+    "hosted-graph",
+    "link-only-graph",
+    "withdrawn-thing"
+  ],
+  "dataset_aliases": [],
+  "courses": [
+    "test-graph-theory"
+  ]
+}

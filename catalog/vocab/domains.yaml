@@ -1,0 +1,40 @@
+# The nine controlled domains (dataset-catalog spec, "Controlled bilingual domains").
+# Every dataset carries one to three. Crosswalks map each domain to the top-level
+# domains of ICON and Netzschleuder and to the old site's six headings, for
+# migration and for agents comparing catalogs. Structure never goes here.
+- id: society
+  zh-Hant: 社會關係
+  en: Society and relationships
+  crosswalk: { icon: Social, netzschleuder: Social, netscied_2018: 社會與文化 }
+- id: politics
+  zh-Hant: 政治與治理
+  en: Politics and governance
+  crosswalk: { icon: Social, netzschleuder: Social, netscied_2018: 社會與文化 }
+- id: culture
+  zh-Hant: 文化、媒體與運動
+  en: Culture, media and sport
+  crosswalk: { icon: Social, netzschleuder: Social, netscied_2018: 社會與文化 }
+- id: economy
+  zh-Hant: 經濟與產業
+  en: Economy and industry
+  crosswalk: { icon: Economic, netzschleuder: Economic, netscied_2018: 經濟 }
+- id: transport
+  zh-Hant: 交通與移動
+  en: Transport and mobility
+  crosswalk: { icon: Transportation, netzschleuder: Transportation, netscied_2018: 基礎建設 }
+- id: technology
+  zh-Hant: 科技與基礎設施
+  en: Technology and infrastructure
+  crosswalk: { icon: Technological, netzschleuder: Technological, netscied_2018: 科技 }
+- id: information
+  zh-Hant: 資訊與知識
+  en: Information and knowledge
+  crosswalk: { icon: Informational, netzschleuder: Informational, netscied_2018: 資訊 }
+- id: life
+  zh-Hant: 生物與生態
+  en: Life and ecology
+  crosswalk: { icon: Biological, netzschleuder: Biological, netscied_2018: 自然界 }
+- id: health
+  zh-Hant: 健康與醫療
+  en: Health and medicine
+  crosswalk: { icon: Biological, netzschleuder: Biological }

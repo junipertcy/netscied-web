@@ -1,0 +1,62 @@
+# 國外參考課程與教材（非台灣開課）— entries carried over from the old /refs page.
+# Not course records: kept outside the table, search index and API (course-catalog spec).
+# status = what this research run observed on 2026-11-04 (curl, no cookies, default user agent).
+- title:
+    zh-Hant: 網絡（UCLA Math 168，2018 春季）課程教材
+    en: "Math 168: Networks (UCLA, Spring 2018) course materials"
+  institution: University of California, Los Angeles (UCLA)
+  instructor: Mason A. Porter
+  url: https://www.math.ucla.edu/~mason/course-materials/networks-math168-ucla-spring2018.zip
+  kind: course
+  note:
+    zh-Hant: Porter 在 UCLA 開設的網絡課程教材，以 zip 壓縮檔提供下載（本次未解壓檢視內容）。
+  checked_on: "2026-11-04"
+  status: 200 (ranged GET answered 206, application/zip; no redirect)
+- title:
+    zh-Hant: 一門大學部的網絡數學課
+    en: An Undergraduate Mathematics Course on Networks
+  institution: Springer, in Network Science In Education (2018)
+  instructor: Mason A. Porter
+  url: https://link.springer.com/content/pdf/10.1007%2F978-3-319-77237-0_1.pdf
+  doi: https://doi.org/10.1007/978-3-319-77237-0_1
+  kind: material
+  note:
+    zh-Hant: Porter 談大學部網絡數學課設計的專書章節（收於《Network Science In Education》）；舊 PDF 連結現轉到章節頁，建議改用 DOI 連結。
+  checked_on: "2026-11-04"
+  status: 301 to https://link.springer.com/chapter/10.1007/978-3-319-77237-0_1 (then cookie redirects; 200 on the chapter landing page; PDF not served without cookies)
+- title:
+    zh-Hant: 網絡理論（密西根大學 CSCS 535 / Physics 508，2017 秋季）
+    en: "Complex Systems 535/Physics 508, Fall 2017: Network Theory"
+  institution: University of Michigan
+  instructor: Mark Newman
+  url: http://www-personal.umich.edu/~mejn/courses/2017/cscs535/index.html
+  archived: true
+  archive_url: https://web.archive.org/web/20231203112111/https://public.websites.umich.edu/~mejn/courses/2017/cscs535/index.html
+  kind: course
+  note:
+    zh-Hant: Newman 的研究所網絡理論課，涵蓋網絡的數學理論、分析演算法、隨機圖與偏好依附模型、社群結構與滲流；原頁已失效，請用存檔版（標示為存檔）。
+  checked_on: "2026-11-04"
+  status: 302 to https://public.websites.umich.edu/~mejn/courses/2017/cscs535/index.html, which returns 403; Wayback snapshot 2023-12-03 returns 200
+- title:
+    zh-Hant: 圖機器學習（Stanford CS224W）
+    en: "CS224W: Machine Learning with Graphs"
+  institution: Stanford University
+  instructor: Jure Leskovec
+  url: http://web.stanford.edu/class/cs224w/index.html
+  kind: course
+  note:
+    zh-Hant: Leskovec 的圖機器學習課，課程首頁目前為 Stanford 2026 秋季版。
+  checked_on: "2026-11-04"
+  status: 200 (ranged GET answered 206, text/html; page title "CS224W | Home", shows "Stanford / Fall 2026")
+- title:
+    zh-Hant: 給國中生的網絡科學
+    en: "Commentary: Teach network science to teenagers"
+  institution: Network Science (Cambridge University Press), vol. 1, issue 2, 2013
+  instructor: Heather A. Harrington, Mariano Beguerisse-Díaz, M. Puck Rombach, Laura M. Keating, Mason A. Porter
+  url: https://www.math.ucla.edu/~mason/papers/teach-final.pdf
+  doi: https://doi.org/10.1017/nws.2013.11
+  kind: material
+  note:
+    zh-Hant: 作者們向中學生推廣網絡科學的教學報告，介紹所設計的教學模組與成敗經驗；中文標題沿用舊 /refs 頁。
+  checked_on: "2026-11-04"
+  status: 200 (application/pdf, 506,889 bytes)

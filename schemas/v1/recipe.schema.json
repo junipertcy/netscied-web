@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netscied.tw/api/v1/schema/source/recipe.schema.json",
+  "title": "Source record: netscied.tw fetch-and-convert recipe (curation/recipes/<id>.yaml)",
+  "description": "How the curation pipeline rebuilds one hosted version from its upstream sources (data-curation spec, Reproducible fetch recipes).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "dataset",
+    "version",
+    "sources",
+    "convert"
+  ],
+  "properties": {
+    "dataset": {
+      "$ref": "common.schema.json#/$defs/slug"
+    },
+    "version": {
+      "$ref": "common.schema.json#/$defs/semver"
+    },
+    "released": {
+      "$ref": "common.schema.json#/$defs/date"
+    },
+    "changelog": {
+      "$ref": "common.schema.json#/$defs/text"
+    },
+    "coverage": {
+      "description": "Time span of the data in this version (final review D3); the record's coverage must lie within its versions'.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "temporal"
+      ],
+      "properties": {
+        "temporal": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "start",
+            "end"
+          ],
+          "properties": {
+            "start": {
+              "type": "string",
+              "pattern": "^[0-9]{4}(-[0-9]{2}(-[0-9]{2})?)?$"
+            },
+            "end": {
+              "type": "string",
+              "pattern": "^[0-9]{4}(-[0-9]{2}(-[0-9]{2})?)?$"
+            }
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "method",
+          "landing_page",
+          "license_evidence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          },
+          "method": {
+            "enum": [
+              "get",
+              "api",
+              "git",
+              "manual"
+            ]
+          },
+          "url": {
+            "$ref": "common.schema.json#/$defs/url"
+          },
+          "params": {
+            "type": "object"
+          },
+          "pagination": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "page_param": {
+                "type": "string"
+              },
+              "size_param": {
+                "type": "string"
+              },
+              "size": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "items": {
+                "type": "string",
+                "description": "JSON key holding the page's items."
+              },
+              "max_pages": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          },
+          "ref": {
+            "type": "string",
+            "description": "git: commit to check out."
+          },
+          "path": {
+            "type": "string",
+            "description": "git: file inside the repository."
+          },
+          "steps": {
+            "$ref": "common.schema.json#/$defs/text"
+          },
+          "file": {
+            "type": "string",
+            "description": "manual: path of the maintainer's downloaded file, relative to curation/inputs/."
+          },
+          "landing_page": {
+            "$ref": "common.schema.json#/$defs/url"
+          },
+          "archived_landing_page": {
+            "$ref": "common.schema.json#/$defs/url"
+          },
+          "expected": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "sha256",
+              "bytes"
+            ],
+            "properties": {
+              "sha256": {
+                "$ref": "common.schema.json#/$defs/sha256"
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "retrieved_at": {
+            "type": "string"
+          },
+          "license": {
+            "type": "string"
+          },
+          "license_evidence": {
+            "$ref": "common.schema.json#/$defs/evidence"
+          },
+          "redistribute_original": {
+            "description": "Publish the upstream file byte-for-byte under original/ (only when its license permits and it fits the per-file ceiling).",
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "method": {
+                  "enum": [
+                    "get",
+                    "api",
+                    "git"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "url"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "method": {
+                  "const": "manual"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "steps",
+                "file"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "convert": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "converter",
+        "kind"
+      ],
+      "properties": {
+        "converter": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
+        },
+        "kind": {
+          "enum": [
+            "graph",
+            "hypergraph"
+          ]
+        },
+        "options": {
+          "type": "object"
+        }
+      }
+    },
+    "operations": {
+      "description": "What the conversion does, for the license-class check: lossless conversion, or cleaning/subsetting/aggregation.",
+      "type": "array",
+      "items": {
+        "enum": [
+          "convert",
+          "clean",
+          "subset",
+          "aggregate",
+          "merge"
+        ]
+      }
+    },
+    "transformations": {
+      "description": "Human-readable list of every change made to the upstream data.",
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/text"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "csv-bundle",
+          "graphml",
+          "hif"
+        ]
+      }
+    }
+  },
+  "$comment": "Describes the human-edited source files in the repository (catalog/, content/), not the API responses; those are described by /api/v1/schema/*-record.schema.json and friends."
+}

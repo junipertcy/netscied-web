@@ -1,0 +1,6 @@
+# fixture
+dataset withdrawn-thing 2026-10-01
+dataset hosted-graph 2026-11-01
+dataset link-only-graph 2026-11-02
+dataset wanted-thing 2026-11-03
+course test-graph-theory 2026-11-01

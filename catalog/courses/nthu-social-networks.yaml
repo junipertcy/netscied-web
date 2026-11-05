@@ -1,0 +1,50 @@
+id: nthu-social-networks
+university: nthu
+department: { zh-Hant: 資訊工程學系 }
+title: { zh-Hant: 社群網路, en: Social Networks }
+course_code: CS 530600
+category: network-science
+relevance: core
+offering_type: credit
+level: mixed
+languages: [zh]
+inclusion_note:
+  zh-Hant: 通訊所公布的課程大綱以社會網絡、圖論與賽局為關鍵詞，講授網絡的表示與測量、策略性網絡形成、網絡上的擴散與網絡賽局，教科書為 Easley 與 Kleinberg《Networks, Crowds, and Markets》。
+summary:
+  zh-Hant: 跨領域的網絡課程，介紹網絡的表示與測量、策略性網絡形成、網絡上的擴散與學習、網絡上的決策與賽局、網絡化市場，以及在經濟、投票選舉與醫療健康研究上的應用。
+keywords: [社會網絡, 網絡賽局, 網絡形成, 擴散, 網絡經濟學]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "114-1"
+    code: CS 530600
+    instructors:
+      - { name: 李端興 }
+    evidence_url: https://curricul.site.nthu.edu.tw/var/file/208/1208/img/1350/11410_course_data_fin.xlsx
+    verified_on: "2026-11-04"
+    syllabus_url: https://com.site.nthu.edu.tw/var/file/173/1173/img/4233/COM5306.pdf
+    note:
+      zh-Hant: 清大課務組 114-1 課程資料檔，科號 11410CS 530600，資工系開課並列入通訊所必選修班別。系所網站的課程大綱為 107-1 版，當期大綱未能直接連結。
+  - term: "113-2"
+    code: COM 530600
+    instructors:
+      - { name: 李端興 }
+    evidence_url: https://curricul.site.nthu.edu.tw/var/file/208/1208/img/1657/111all-113all_courses_redo.xlsx
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 111–113 學年課程資料檔（工作表 11320），科號 11320COM 530600，通訊所開課，授課語言中。
+  - term: "112-1"
+    code: CS 530600
+    instructors:
+      - { name: 李端興 }
+    evidence_url: https://curricul.site.nthu.edu.tw/var/file/208/1208/img/1657/111all-113all_courses_redo.xlsx
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 同一資料檔（工作表 111全及112全），科號 11210CS 530600。
+  - term: "111-1"
+    code: COM 530600
+    instructors:
+      - { name: 李端興 }
+    evidence_url: https://curricul.site.nthu.edu.tw/var/file/208/1208/img/1657/111all-113all_courses_redo.xlsx
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 同一資料檔（工作表 111全及112全），科號 11110COM 530600。

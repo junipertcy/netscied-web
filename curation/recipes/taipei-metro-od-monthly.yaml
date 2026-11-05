@@ -1,0 +1,197 @@
+# How version 1.0.0 of taipei-metro-od-monthly is rebuilt (data-curation spec,
+# "Reproducible fetch recipes"). Upstream publishes one hourly OD file per month
+# (about 300 MB) and an index CSV of their URLs. Version 1.0.0 covers the 12
+# months 2025-10 to 2026-09; earlier months can follow as MINOR versions. The
+# hourly files exceed the 100 MB per-file ceiling and stay upstream: only their
+# URLs, hashes, headers and retrieval dates are kept (provenance.json).
+# The index lists http:// URLs; the same paths are fetched over https://.
+dataset: taipei-metro-od-monthly
+version: "1.0.0"
+changelog:
+  zh-Hant: 第一版：2025 年 10 月至 2026 年 9 月共 12 個月的站間起訖月彙總網絡。
+  en: First version, monthly station-to-station OD networks for the 12 months from October 2025 to September 2026.
+coverage:
+  temporal: { start: "2025-10", end: "2026-09" }
+sources:
+  - id: monthly-index
+    method: get
+    url: https://data.taipei/api/dataset/63f31c7e-7fc3-418b-bd82-b95158755b4d/resource/eb481f58-1238-4cff-8caa-fa7bb20cb4f4/download
+    landing_page: https://data.taipei/dataset/detail?id=63f31c7e-7fc3-418b-bd82-b95158755b4d
+    archived_landing_page: https://web.archive.org/web/20261105045332/https://data.taipei/dataset/detail?id=63f31c7e-7fc3-418b-bd82-b95158755b4d
+    expected: { sha256: f9c45551bc9c4c8126a5feeabab65067682fa3a3d33b3dd1820a07f3ea63cebc, bytes: 25462 }
+    retrieved_at: "2026-11-05T04:57:32Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.taipei/dataset/detail?id=63f31c7e-7fc3-418b-bd82-b95158755b4d
+      checked_on: "2026-11-04"
+      quote: 依政府資料開放授權條款-第1版
+  - id: od-2025-10
+    method: get
+    url: https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202510.csv
+    landing_page: https://data.gov.tw/dataset/128506
+    archived_landing_page: https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506
+    expected: { sha256: 0730e6f828efc8d058349ab4080a5c79217d42ac712b419fa848af6dfd6276fc, bytes: 305990626 }
+    retrieved_at: "2026-11-05T05:00:13Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.gov.tw/dataset/128506
+      checked_on: "2026-11-04"
+      quote: 授權方式 政府資料開放授權條款-第1版
+  - id: od-2025-11
+    method: get
+    url: https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202511.csv
+    landing_page: https://data.gov.tw/dataset/128506
+    archived_landing_page: https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506
+    expected: { sha256: 229228633a9fb167e5b663a8b6fefac1136e45cf89ca7b744bc6ad9a5478f229, bytes: 297158626 }
+    retrieved_at: "2026-11-05T05:03:20Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.gov.tw/dataset/128506
+      checked_on: "2026-11-04"
+      quote: 授權方式 政府資料開放授權條款-第1版
+  - id: od-2025-12
+    method: get
+    url: https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202512.csv
+    landing_page: https://data.gov.tw/dataset/128506
+    archived_landing_page: https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506
+    expected: { sha256: 00fce70b3411ea9c251e14f962db54a53186c72d1be7cea1c33792f99867560b, bytes: 307999434 }
+    retrieved_at: "2026-11-05T05:05:52Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.gov.tw/dataset/128506
+      checked_on: "2026-11-04"
+      quote: 授權方式 政府資料開放授權條款-第1版
+  - id: od-2026-01
+    method: get
+    url: https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202601.csv
+    landing_page: https://data.gov.tw/dataset/128506
+    archived_landing_page: https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506
+    expected: { sha256: 74d2374f526e0ab06164820a428242ada24291187b5fd2d06a6dfb91e291abad, bytes: 305559351 }
+    retrieved_at: "2026-11-05T05:08:17Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.gov.tw/dataset/128506
+      checked_on: "2026-11-04"
+      quote: 授權方式 政府資料開放授權條款-第1版
+  - id: od-2026-02
+    method: get
+    url: https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202602.csv
+    landing_page: https://data.gov.tw/dataset/128506
+    archived_landing_page: https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506
+    expected: { sha256: 24541ac5fbff78306fbd5dfc0133fc5572ee8a5a78f0fd37e30b485e7d7fa4a4, bytes: 276259378 }
+    retrieved_at: "2026-11-05T05:10:29Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.gov.tw/dataset/128506
+      checked_on: "2026-11-04"
+      quote: 授權方式 政府資料開放授權條款-第1版
+  - id: od-2026-03
+    method: get
+    url: https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202603.csv
+    landing_page: https://data.gov.tw/dataset/128506
+    archived_landing_page: https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506
+    expected: { sha256: d291dfe222315f71b1854d530547efc29ec2ad05d9e4b3c54be7514ea1ad7b29, bytes: 306105901 }
+    retrieved_at: "2026-11-05T05:12:57Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.gov.tw/dataset/128506
+      checked_on: "2026-11-04"
+      quote: 授權方式 政府資料開放授權條款-第1版
+  - id: od-2026-04
+    method: get
+    url: https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202604.csv
+    landing_page: https://data.gov.tw/dataset/128506
+    archived_landing_page: https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506
+    expected: { sha256: 5dae83fe88bc118af289e7a12ae6443c2fab2d928f418554e0cdeb0af04235cc, bytes: 296164318 }
+    retrieved_at: "2026-11-05T05:15:17Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.gov.tw/dataset/128506
+      checked_on: "2026-11-04"
+      quote: 授權方式 政府資料開放授權條款-第1版
+  - id: od-2026-05
+    method: get
+    url: https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202605.csv
+    landing_page: https://data.gov.tw/dataset/128506
+    archived_landing_page: https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506
+    expected: { sha256: c4a7ce82ed748d136e0bd257b904194b77347ba78b7044b24f7447dd1ecbddc8, bytes: 306054906 }
+    retrieved_at: "2026-11-05T05:17:41Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.gov.tw/dataset/128506
+      checked_on: "2026-11-04"
+      quote: 授權方式 政府資料開放授權條款-第1版
+  - id: od-2026-06
+    method: get
+    url: https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202606.csv
+    landing_page: https://data.gov.tw/dataset/128506
+    archived_landing_page: https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506
+    expected: { sha256: efd4a84235dc325f6fa70caa4ce9bf817e144c63c5efe34b7303dc5dbbde9e52, bytes: 296129878 }
+    retrieved_at: "2026-11-05T05:20:08Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.gov.tw/dataset/128506
+      checked_on: "2026-11-04"
+      quote: 授權方式 政府資料開放授權條款-第1版
+  - id: od-2026-07
+    method: get
+    url: https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202607.csv
+    landing_page: https://data.gov.tw/dataset/128506
+    archived_landing_page: https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506
+    expected: { sha256: 1e331e0e4aa704b2f39fe505192ce4d9e9a456d0c822c30d694d8deed24681b9, bytes: 305954434 }
+    retrieved_at: "2026-11-05T05:22:33Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.gov.tw/dataset/128506
+      checked_on: "2026-11-04"
+      quote: 授權方式 政府資料開放授權條款-第1版
+  - id: od-2026-08
+    method: get
+    url: https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202608.csv
+    landing_page: https://data.gov.tw/dataset/128506
+    archived_landing_page: https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506
+    expected: { sha256: fa17140855d4984e1101b42763c34d3dd1e47be912b9d242f24f16efd5bbddae, bytes: 312474694 }
+    retrieved_at: "2026-11-05T05:25:06Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.gov.tw/dataset/128506
+      checked_on: "2026-11-04"
+      quote: 授權方式 政府資料開放授權條款-第1版
+  - id: od-2026-09
+    method: get
+    url: https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202609.csv
+    landing_page: https://data.gov.tw/dataset/128506
+    archived_landing_page: https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506
+    expected: { sha256: ff4878a3b9bf73a7bc4bf3c54ffc165d5876f65fbc88cf7d17103a8b0b2cb86a, bytes: 302444881 }
+    retrieved_at: "2026-11-05T05:27:37Z"
+    license: OGDL-Taiwan-1.0
+    license_evidence:
+      url: https://data.gov.tw/dataset/128506
+      checked_on: "2026-11-04"
+      quote: 授權方式 政府資料開放授權條款-第1版
+convert:
+  converter: metro_od
+  kind: graph
+  options:
+    # The exit column names three transfer stations with a line code. Each of
+    # these names appears only as an exit, its unprefixed form only as an entry,
+    # and their monthly volumes match (October 2025: 大坪林 601,421 entries vs
+    # G大坪林 570,726 exits; 景安 654,361 vs O景安 607,098; 頭前庄 158,823 vs
+    # O頭前庄 147,017; compare 新埔 1,129,190 vs 1,114,326), so they are merged.
+    station_aliases:
+      G大坪林: 大坪林
+      O景安: 景安
+      O頭前庄: 頭前庄
+operations: [convert, clean, aggregate]
+transformations:
+  - zh-Hant: 依（月份，進站，出站）加總原始資料逐日逐時的「人次」，每個月份是一張快照；連結的 month 欄為 YYYY-MM，trips 欄為當月人次。
+    en: The source's daily hourly 人次 counts are summed per (month, entry station, exit station); each month is one snapshot, with month as YYYY-MM and trips as the month's count.
+  - zh-Hant: 當月加總為 0 的起訖配對不列出。
+    en: Pairs whose monthly sum is 0 are not listed.
+  - zh-Hant: 月份依原始檔：檔案中下個月 1 日凌晨 6 時前的列（例如跨年夜通宵營運）計入該檔的月份；下個月的檔案不重複這些時段。
+    en: "Months follow the source files: rows dated the first day of the next month before 06:00 (for example the New Year's Eve all-night service) count for the file's month; the next month's file does not repeat those hours."
+  - zh-Hant: 出站欄的「G大坪林」「O景安」「O頭前庄」併入進站欄的「大坪林」「景安」「頭前庄」：前者只出現在出站欄、後者只出現在進站欄，且兩邊的月人次相近。其他站名照原始資料保留。
+    en: "The exit names G大坪林, O景安 and O頭前庄 are merged into the entry names 大坪林, 景安 and 頭前庄: each appears on one side only, and their monthly volumes match. Other station names are kept as the source gives them."
+  - zh-Hant: 環狀線其他車站（例如十四張、Y板橋）只出現在進站欄：在這些車站出站的旅次不在原始資料中，這些節點只有出邊（節點屬性 appears_as）。
+    en: The other Circular Line stations (for example 十四張, Y板橋) appear only as entries; trips exiting there are not in the source, so these nodes have only outgoing edges (node attribute appears_as).
+outputs: [csv-bundle, graphml]
