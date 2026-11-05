@@ -5,7 +5,7 @@
     "preinstall": "npx only-allow pnpm",
     "ng": "ng",
     "start": "ng serve",
-    "build": "node scripts/catalog/validate.mjs && node scripts/catalog/build.mjs && node scripts/search-eval.mjs && ng build && node scripts/build/sitemap.mjs",
+    "build": "node scripts/catalog/validate.mjs && node scripts/catalog/build.mjs && node scripts/search-eval.mjs && ng build && node scripts/build/sitemap.mjs && node scripts/build/check-site.mjs",
     "test": "pnpm build && pnpm test:only && pnpm test:e2e",
     "test:only": "node --test \"tests/**/*.test.mjs\"",
     "edge:build": "node scripts/edge/build-function.mjs",
