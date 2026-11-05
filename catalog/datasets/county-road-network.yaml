@@ -1,0 +1,15 @@
+id: county-road-network
+status: wanted
+added: 2026-11-04
+title:
+  zh-Hant: 縣市路網
+  en: County and city road network
+description:
+  zh-Hant: 臺灣各縣市的道路網絡，節點是路口，連結是路段。
+domains: [transport]
+tags: [roads]
+wanted:
+  reason:
+    zh-Hant: 舊版網站「生活中的網絡」列為搜集中的項目。
+  status: seeking
+  requests: 0

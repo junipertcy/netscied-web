@@ -1,0 +1,15 @@
+id: advising-network
+status: wanted
+added: 2026-11-04
+title:
+  zh-Hant: 課業諮詢網絡
+  en: Academic advising network
+description:
+  zh-Hant: 學生向同學、學長姊或師長請教課業所形成的網絡，例如誰曾向誰請教問題。
+domains: [society]
+tags: [education]
+wanted:
+  reason:
+    zh-Hant: 舊版網站「生活中的網絡」列為搜集中的項目。
+  status: seeking
+  requests: 0

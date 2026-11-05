@@ -162,6 +162,8 @@ const ownWork = (r) => r.redistribution?.basis === 'own-work';
 
 // Organisations and consented people, for the citation's author list.
 function citationAuthors(record, people) {
+  // The site's own compilations are credited to the site.
+  if (ownWork(record)) return [`${SITE['zh-Hant']}（netscied.tw）`];
   const names = [];
   for (const c of record.creators ?? []) {
     if (c.organization) names.push(c.organization['zh-Hant'] ?? c.organization.en);
@@ -170,7 +172,7 @@ function citationAuthors(record, people) {
       names.push(p.name['zh-Hant'] ?? p.name.en);
     }
   }
-  if (ownWork(record) || !names.length) names.push(`${SITE['zh-Hant']}（netscied.tw）`);
+  if (!names.length) names.push(`${SITE['zh-Hant']}（netscied.tw）`);
   return [...new Set(names)];
 }
 

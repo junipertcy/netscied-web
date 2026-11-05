@@ -6,3 +6,10 @@
 dataset twnic-interconnection-bandwidth 2026-11-04
 dataset population-migration 2026-11-04
 course ncku-stat-intro-data-science 2026-11-04
+dataset advising-network 2026-11-04
+dataset port-trade 2026-11-04
+dataset food-web 2026-11-04
+dataset county-road-network 2026-11-04
+dataset air-routes 2026-11-04
+dataset citation-network 2026-11-04
+dataset golden-horse-2018-nominations 2026-11-04
