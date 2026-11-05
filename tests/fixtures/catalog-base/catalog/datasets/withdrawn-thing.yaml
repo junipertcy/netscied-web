@@ -1,0 +1,7 @@
+id: withdrawn-thing
+status: withdrawn
+added: 2026-10-01
+title: { zh-Hant: 測試下架項目, en: Withdrawn test dataset }
+withdrawn:
+  date: 2026-10-20
+  reason: { zh-Hant: 依當事人請求下架。 }

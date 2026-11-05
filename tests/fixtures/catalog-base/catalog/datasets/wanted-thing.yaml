@@ -1,0 +1,10 @@
+id: wanted-thing
+status: wanted
+added: 2026-11-03
+title: { zh-Hant: 測試徵求項目 }
+description: { zh-Hant: 測試用的徵求項目。 }
+domains: [society]
+wanted:
+  reason: { zh-Hant: 測試。 }
+  status: seeking
+  requests: 2

@@ -1,0 +1,40 @@
+id: hosted-graph
+status: published
+added: 2026-11-01
+announce: false
+title: { zh-Hant: 測試用託管網絡, en: Hosted test network }
+description:
+  zh-Hant: |-
+    這是驗證器測試用的託管資料集，節點是車站，連結是兩站之間的旅次。
+    內容純屬虛構，只用來檢查驗證規則是否正確運作，並不對應任何真實資料。
+  en: A hosted test network used by the validator tests.
+keywords: [測試]
+semantics:
+  node: { zh-Hant: 車站 }
+  link: { zh-Hant: 兩站之間的旅次 }
+structure:
+  kinds: [graph]
+  directed: true
+  weighted: true
+  weight: { meaning: { zh-Hant: 旅次數 }, unit: trips }
+coverage:
+  temporal: { start: "2026-09", end: "2026-09" }
+  spatial: { zh-Hant: 臺北市, en: Taipei }
+domains: [transport]
+tags: [metro]
+taiwan_relevance:
+  basis: [collected-in-taiwan]
+  justification: 測試資料。
+provenance:
+  source: { name: { zh-Hant: 測試來源 }, url: "https://example.org/source" }
+license:
+  id: OGDL-Taiwan-1.0
+  attribution: 測試機關 2026 測試資料 v1
+  evidence: { url: "https://example.org/license", checked_on: 2026-11-01 }
+redistribution: { basis: license-permits }
+personal_data: { level: none, reviewed_on: 2026-11-01 }
+creators:
+  - person: p-7K3M9QX2
+    role: collector
+references:
+  - citation: 測試作者（2026）。測試論文。測試期刊。

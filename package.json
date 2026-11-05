@@ -10,7 +10,8 @@
     "test:only": "node --test \"tests/**/*.test.mjs\"",
     "edge:build": "node scripts/edge/build-function.mjs",
     "test:e2e": "playwright test",
-    "preview": "node scripts/preview.mjs"
+    "preview": "node scripts/preview.mjs",
+    "catalog:validate": "node scripts/catalog/validate.mjs"
   },
   "private": true,
   "packageManager": "pnpm@11.21.0",
