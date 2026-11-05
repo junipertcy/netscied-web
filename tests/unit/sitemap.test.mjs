@@ -41,9 +41,16 @@ test('XML special characters in a URL are escaped', () => {
   assert.match(xml, /<loc>https:\/\/netscied\.tw\/a&amp;b\/<\/loc>/);
 });
 
-test('a page route maps to its page directory; the home route maps to home', () => {
-  assert.deepEqual(sourcesForRoute('/networks'), ['src/app/pages/networks']);
-  assert.deepEqual(sourcesForRoute('/'), ['src/app/pages/home']);
+test('a page is dated by the sources it is built from (task 7.1: records date their own pages)', () => {
+  assert.deepEqual(sourcesForRoute('/'), ['src/app/pages/home', 'content/news', 'catalog/datasets', 'catalog/courses']);
+  assert.deepEqual(sourcesForRoute('/datasets/golden-horse-2018-nominations'), ['catalog/datasets/golden-horse-2018-nominations.yaml', 'catalog/versions/golden-horse-2018-nominations']);
+  assert.deepEqual(sourcesForRoute('/courses/nthu-network-science'), ['catalog/courses/nthu-network-science.yaml']);
+  assert.deepEqual(sourcesForRoute('/datasets'), ['src/app/pages/datasets', 'catalog/datasets', 'catalog/versions']);
+  assert.deepEqual(sourcesForRoute('/courses'), ['src/app/pages/courses', 'catalog/courses', 'catalog/international.yaml']);
+  assert.deepEqual(sourcesForRoute('/wanted'), ['src/app/pages/wanted', 'catalog/datasets']);
+  assert.deepEqual(sourcesForRoute('/news'), ['src/app/pages/news', 'content/news']);
+  assert.deepEqual(sourcesForRoute('/about'), ['src/app/pages/about']);
+  assert.deepEqual(sourcesForRoute('/stat1021'), ['src/app/pages/stat1021']);
 });
 
 // Task 11.2 — Angular prerenders redirectTo routes (meta-refresh pages) and lists

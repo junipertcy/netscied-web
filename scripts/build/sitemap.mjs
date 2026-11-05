@@ -41,10 +41,28 @@ export function buildSitemap({ routes, origin = ORIGIN, lastmod, exclude = [] })
   );
 }
 
-// The source files a route's page is built from.
+// The source files a route's page is built from; the page's lastmod is the last
+// commit that touched any of them (agent-access spec: a record's page carries the
+// record's update date).
 export function sourcesForRoute(route) {
-  const name = route === '/' ? 'home' : route.replace(/^\/+|\/+$/g, '');
-  return [`src/app/pages/${name}`];
+  const path = route.replace(/^\/+|\/+$/g, '');
+  const [section, id] = path.split('/');
+  if (section === 'datasets' && id) return [`catalog/datasets/${id}.yaml`, `catalog/versions/${id}`];
+  if (section === 'courses' && id) return [`catalog/courses/${id}.yaml`];
+  switch (path) {
+    case '':
+      return ['src/app/pages/home', 'content/news', 'catalog/datasets', 'catalog/courses'];
+    case 'datasets':
+      return ['src/app/pages/datasets', 'catalog/datasets', 'catalog/versions'];
+    case 'courses':
+      return ['src/app/pages/courses', 'catalog/courses', 'catalog/international.yaml'];
+    case 'wanted':
+      return ['src/app/pages/wanted', 'catalog/datasets'];
+    case 'news':
+      return ['src/app/pages/news', 'content/news'];
+    default:
+      return [`src/app/pages/${path}`];
+  }
 }
 
 const git = (repoRoot, args) =>
