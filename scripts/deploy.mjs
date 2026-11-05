@@ -87,19 +87,26 @@ export function planDeploy({ buildDir, files, bucket, distributionId }) {
 export async function missingDataFiles(buildDir, { origin = 'https://netscied.tw', fetchImpl = fetch } = {}) {
   const dir = path.join(buildDir, 'api', 'v1', 'datasets');
   if (!existsSync(dir)) return [];
-  const urls = [];
+  const files = [];
   for (const name of readdirSync(dir).filter((n) => n.endsWith('.json')).sort()) {
     const record = JSON.parse(readFileSync(path.join(dir, name), 'utf8'));
-    for (const v of record.versions ?? []) for (const f of v.files ?? []) urls.push(f.url);
+    for (const v of record.versions ?? []) for (const f of v.files ?? []) files.push(f);
   }
+  // A missing key can answer 200 with an HTML page (the old site's error
+  // mapping sends 403 to /index.html), so a served file must also have the
+  // manifest's size and must not be HTML (final review W14).
   const missing = [];
-  for (const url of urls) {
-    const target = url.replace(/^https:\/\/netscied\.tw/, origin);
+  for (const f of files) {
+    const target = f.url.replace(/^https:\/\/netscied\.tw/, origin);
     try {
       const res = await fetchImpl(target, { method: 'HEAD', redirect: 'manual' });
-      if (res.status !== 200) missing.push(`${url} (HTTP ${res.status})`);
+      const type = res.headers.get('content-type') ?? '';
+      const length = res.headers.get('content-length');
+      if (res.status !== 200) missing.push(`${f.url} (HTTP ${res.status})`);
+      else if (/^text\/html\b/i.test(type)) missing.push(`${f.url} (answers ${type}: a page, not the file)`);
+      else if (typeof f.bytes === 'number' && Number(length) !== f.bytes) missing.push(`${f.url} (${length ?? 'no'} bytes, the manifest says ${f.bytes})`);
     } catch (err) {
-      missing.push(`${url} (${err.message})`);
+      missing.push(`${f.url} (${err.message})`);
     }
   }
   return missing;
