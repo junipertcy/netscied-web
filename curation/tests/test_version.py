@@ -247,3 +247,10 @@ def test_own_work_credits_the_site_and_claims_no_upstream_license(tmp_path):
     source_line = next(line for line in text.splitlines() if line.startswith("Source:"))
     assert " under " not in source_line
     assert "台灣網絡科學教育（netscied.tw）（2026）" in text
+
+
+def test_converter_notes_are_added_to_the_change_note(tmp_path):
+    p = Product(kind="graph", graph=graph(), weight="trips", notes=[{"zh-Hant": "有 3 件議案不收錄。", "en": "3 bills are left out."}])
+    m = build(tmp_path, "a", product=p)
+    assert "有 3 件議案不收錄。" in m["changelog"]["zh-Hant"]
+    assert "3 bills are left out." in m["changelog"]["en"]

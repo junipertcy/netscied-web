@@ -258,3 +258,15 @@ def test_a_failed_capture_returns_none_instead_of_failing_the_fetch(server, cloc
     server.flaky["/save/https://example.org/x"] = [(503, 1)] * 10
     f = fetcher(clock, max_retries=1)
     assert capture_landing_page(f, "https://example.org/x", endpoint=server.base + "/save/") is None
+
+
+def test_fetch_recipe_writes_fetch_json_and_captures_each_landing_page_once(server, clock, tmp_path):
+    from netscied.fetch import fetch_recipe
+
+    page = "https://example.org/landing"
+    recipe = {"dataset": "d", "version": "1.0.0", "sources": [source(server.base + "/data.csv", id="a", landing_page=page), source(server.base + "/data.csv", id="b", landing_page=page)]}
+    summary = fetch_recipe(recipe, tmp_path, fetcher(clock), archive_endpoint=server.base + "/save/")
+    assert [s["archived_landing_page"] for s in summary["sources"]] == [server.base + "/web/20261104080000/" + page] * 2
+    assert sum(1 for p in server.paths() if p.startswith("/save/")) == 1
+    on_disk = json.loads((tmp_path / "d" / "1.0.0" / "fetch.json").read_text(encoding="utf-8"))
+    assert on_disk["sources"][0]["files"] == ["sources/a/data.csv"]

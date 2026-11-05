@@ -377,16 +377,20 @@ def capture_landing_page(fetcher: Fetcher, url: str, *, endpoint: str = ARCHIVE_
     return None
 
 
-def fetch_recipe(recipe: dict, cache_dir, fetcher: Fetcher, *, inputs_dir=None, capture: bool = True) -> dict:
+def fetch_recipe(recipe: dict, cache_dir, fetcher: Fetcher, *, inputs_dir=None, capture: bool = True, archive_endpoint: str = ARCHIVE_SAVE) -> dict:
     """Fetches every source of a recipe into cache_dir/<dataset>/<version>/sources/
     and writes fetch.json there. Fails on the first upstream change."""
     base = Path(cache_dir) / recipe["dataset"] / recipe["version"]
     sources_dir = base / "sources"
     results = []
+    captures: dict[str, str | None] = {}  # one capture per landing page per run
     for src in recipe["sources"]:
         res = fetch_source(src, sources_dir, fetcher, inputs_dir=inputs_dir)
         if capture and src["method"] != "manual" and not src.get("archived_landing_page"):
-            res.archived_landing_page = capture_landing_page(fetcher, src["landing_page"])
+            page = src["landing_page"]
+            if page not in captures:
+                captures[page] = capture_landing_page(fetcher, page, endpoint=archive_endpoint)
+            res.archived_landing_page = captures[page]
         results.append(res)
     summary = {"dataset": recipe["dataset"], "version": recipe["version"], "sources": [r.to_json(base) for r in results]}
     (base / "fetch.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

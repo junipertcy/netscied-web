@@ -25,7 +25,7 @@ import platform
 import re
 import shutil
 import zipfile
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from importlib import metadata
 from pathlib import Path
 
@@ -60,6 +60,9 @@ class Product:
     partition: str | None = None
     weight: str | None = None
     network_type: str = "undirected"
+    # Data-driven findings of the conversion (for example how many names were
+    # left out), added to the version's change note as {"zh-Hant": ..., "en": ...}.
+    notes: list = field(default_factory=list)
 
 
 def _formats() -> dict:
@@ -278,6 +281,8 @@ def write_version(*, recipe, record, fetch_summary, cache_base, product: Product
         sources.append(entry)
     snapshot = max(s["retrieved_at"][:10] for s in sources)
     zh_notes, en_notes = _quality_notes(stats)
+    zh_notes = [n["zh-Hant"] for n in product.notes] + zh_notes
+    en_notes = [n.get("en", "") for n in product.notes] + en_notes
     changelog = dict(recipe.get("changelog") or {"zh-Hant": f"版本 {ver}。"})
     if zh_notes:
         changelog["zh-Hant"] = "".join([changelog["zh-Hant"], *zh_notes])

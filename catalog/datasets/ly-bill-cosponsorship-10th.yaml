@@ -36,11 +36,14 @@ structure:
       時間取 LYAPI 的「提案日期」欄位（依上游說明，通常是議案排入院會的日期）。
       上游「提案單位/提案委員」欄寫的人數（例如「本院委員吳思瑤等16人」）
       不一定等於「提案人」加「連署人」名單的人數，使用時請留意。
+      由黨團提出、沒有個別委員列名的議案不在超圖中；各版本不收錄的件數記在變更說明。
     en: >-
       Times are LYAPI's 提案日期 field (per the upstream documentation, usually the
       date the bill was placed on a plenary agenda). The head count in the
       提案單位/提案委員 field (for example "等16人") does not always equal the
-      number of names in the sponsor and co-signer lists.
+      number of names in the sponsor and co-signer lists. Bills filed by a caucus
+      with no individual legislator listed are not in the hypergraph; each
+      version's change note gives how many bills were left out.
 coverage:
   temporal:
     start: "2020-02"
@@ -106,7 +109,7 @@ personal_data:
   reviewed_on: "2026-11-04"
   notes:
     zh-Hant: |-
-      只含立法委員的姓名與其職務上的提案、連署行為。上游的議案資料也有一般民眾提出的請願等案件，
+      只含立法委員的姓名、英文姓名、黨籍與黨團，以及其職務上的提案、連署行為。上游的議案資料也有一般民眾提出的請願等案件，
       本站只收錄「委員提案」，並只保留名列第10屆立法委員名單的提案人與連署人，其他姓名不會進入託管的檔案。
       LYAPI 委員資料中的學歷、經歷與照片不收錄。
 creators:

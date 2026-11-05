@@ -7,10 +7,11 @@ Product. Converters are deterministic and never touch the network.
 from __future__ import annotations
 
 from ..version import Product
-from . import golden_horse
+from . import golden_horse, ly_cosponsorship
 
 CONVERTERS = {
     "golden_horse": golden_horse.convert,
+    "ly_cosponsorship": ly_cosponsorship.convert,
 }
 
 
