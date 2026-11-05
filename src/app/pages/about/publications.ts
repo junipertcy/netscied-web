@@ -2,6 +2,11 @@
 // no longer exist; owner decision A3 (2026-11-04): link labelled Internet Archive
 // copies where they exist, otherwise list the item without a download link.
 // Replace an `archived` link with a /files/ path once the owner provides the file.
+// Internet Archive CDX search, 2026-11-05: no usable copy of either booklet PDF.
+// The Google Sites links (sites.google.com/a/binghamton.edu/netscied/Network-
+// Literacy-*.pdf) were captured only as 302 redirects whose targets were never
+// archived, and wiki.junipertcy.info has no captures of its files. So the two
+// booklet items stay without a download link.
 export interface Publication {
   label: string;
   /** Live link, when the original is still online. */

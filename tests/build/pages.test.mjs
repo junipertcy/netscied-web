@@ -229,3 +229,15 @@ test('task 5.6: the redirect fallback pages send the legacy paths to their new h
   }
   assert.ok(!readFileSync(path.join(browserRoot, 'sitemap.xml'), 'utf8').match(/\/(networks|refs|booklet|tools)\//));
 });
+
+test('task 4.7: the Apr. 18 slides link to Clauset’s original, not to a modified copy; the booklet lists only links that exist', () => {
+  const html = page('stat1021/index.html').body.innerHTML;
+  assert.doesNotMatch(html, /Clauset_2015_SFI_Networks_ShortCourse_Modified\.pdf/);
+  assert.match(html, /href="http:\/\/tuvalu\.santafe\.edu\/~aaronc\/slides\/Clauset_2015_SFI_Networks_ShortCourse\.pdf"/);
+  // The other 2018 class links stay as they are (owner decision 2026-11-04).
+  for (const f of ['Stat1021_2018_hw3.pdf', 'Stat1021_2018_syllabus_special.pdf', 'Stat1021_special_2018_L1.pdf', 'In-class_network.txt']) assert.match(html, new RegExp(f.replace(/\./g, '\\.')), f);
+  const booklet = page('about/index.html').querySelector('#booklet');
+  const hrefs = [...booklet.querySelectorAll('a[href]')].map((a) => a.getAttribute('href'));
+  assert.ok(hrefs.every((h) => h.startsWith('https://complexityexplained.github.io/') || h.startsWith('/') || h.startsWith('#')), hrefs.join(' '));
+  assert.ok(!hrefs.some((h) => /wiki\.junipertcy\.info|sites\.google\.com/.test(h)));
+});
