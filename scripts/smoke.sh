@@ -59,9 +59,11 @@ content_type() {
 }
 
 # header URL NAME PREFIX: the response carries header NAME starting with PREFIX.
+# header URL NAME EXPECTED [REQUEST-HEADER]: an optional request header, for
+# example the Origin a browser sends, without which CORS headers are not added.
 header() {
-  local url=$1 name=$2 expected=$3 got
-  got=$(curl -s -o /dev/null -D - --max-time 20 "$url" | tr -d '\r' | awk -v n="$(echo "$name" | tr '[:upper:]' '[:lower:]')" 'BEGIN{IGNORECASE=1} tolower($0) ~ "^"n":" {sub(/^[^:]*: */, ""); print; exit}')
+  local url=$1 name=$2 expected=$3 extra=${4:-} got
+  got=$(curl -s -o /dev/null -D - --max-time 20 ${extra:+-H "$extra"} "$url" | tr -d '\r' | awk -v n="$(echo "$name" | tr '[:upper:]' '[:lower:]')" 'BEGIN{IGNORECASE=1} tolower($0) ~ "^"n":" {sub(/^[^:]*: */, ""); print; exit}')
   [ "${got#"$expected"}" != "$got" ] && pass "$url $name: $got" || fail "$url $name: ${got:-<missing>} (expected $expected)"
 }
 
@@ -90,7 +92,8 @@ content_type "$BASE/news/feed.xml" "application/atom+xml"
 content_type "$BASE/api/v1/index.json" "application/json"
 content_type "$BASE/api/v1/datasets.csv" "text/csv"
 content_type "$BASE/datasets/golden-horse-2018-nominations/index.md" "text/markdown"
-header "$BASE/api/v1/index.json" "Access-Control-Allow-Origin" "*"
+header "$BASE/api/v1/index.json" "Access-Control-Allow-Origin" "*" "Origin: https://example.org"
+header "$BASE/data/golden-horse-2018-nominations/1.0.0/SHA256SUMS" "Access-Control-Allow-Origin" "*" "Origin: https://example.org"
 status "$BASE/datasets/" 200
 status "$BASE/courses/" 200
 redirect "$BASE/networks" "$CANONICAL/datasets/"

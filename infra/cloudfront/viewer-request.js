@@ -12,6 +12,9 @@
 // `pnpm edge:build`. Do not edit it by hand.
 var CONFIG = /* redirects:begin */{"canonicalHost":"netscied.tw","redirectHosts":["www.netscied.tw"],"paths":{"/networks":"/datasets/","/refs":"/courses/","/booklet":"/about/#booklet","/tools":"https://github.com/junipertcy/Network-Code-Repository"}}/* redirects:end */;
 
+// Folders of the owner's earlier projects in the site bucket (infra/s3/README.md).
+var LEGACY = ['/greenpeace/', '/data_taipei/', '/sensoro/'];
+
 // Rebuilds the query string. CloudFront passes values still percent-encoded, so
 // they are copied as received.
 function queryString(querystring) {
@@ -56,7 +59,16 @@ function handler(event) {
     var path = uri.replace(/\/{2,}/g, '/');
     var target = null;
 
-    var key = path.replace(/\/index\.html$/, '/').replace(/\/+$/, '') || '/';
+    // The owner's older projects (decision A7) are served exactly as before the
+    // relaunch: no slash rule, no index.html rules; only the host is canonical.
+    for (var i = 0; i < LEGACY.length; i++) {
+      if (path.indexOf(LEGACY[i]) === 0) {
+        if (path !== uri || CONFIG.redirectHosts.indexOf(host) >= 0) return redirect(path + query);
+        return request;
+      }
+    }
+
+    var key =path.replace(/\/index\.html$/, '/').replace(/\/+$/, '') || '/';
     if (Object.prototype.hasOwnProperty.call(CONFIG.paths, key)) {
       target = withQuery(CONFIG.paths[key], query);
     } else if (/\/index\.html$/.test(path)) {
