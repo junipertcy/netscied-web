@@ -36,10 +36,23 @@ export function sourcesForRoute(route) {
   return [`src/app/pages/${name}`];
 }
 
-function gitLastmod(repoRoot, sources) {
+const git = (repoRoot, args) =>
+  execFileSync('git', args, { cwd: repoRoot, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+
+// The date of the last commit that touched the page's sources. Needs full history:
+// in a shallow clone every page would get HEAD's date, so the build stops instead.
+export function gitLastmod(repoRoot, sources) {
+  let shallow;
+  try {
+    shallow = git(repoRoot, ['rev-parse', '--is-shallow-repository']);
+  } catch {
+    throw new Error(`sitemap: page dates (lastmod) needs git history, but ${repoRoot} is not a git clone`);
+  }
+  if (shallow === 'true') {
+    throw new Error('sitemap: this clone is shallow, so page dates would be wrong; fetch full history (git fetch --unshallow, or actions/checkout with fetch-depth: 0)');
+  }
   const existing = sources.filter((s) => existsSync(path.join(repoRoot, s)));
-  const args = ['log', '-1', '--format=%cs', '--', ...(existing.length ? existing : ['src/app'])];
-  const date = execFileSync('git', args, { cwd: repoRoot, encoding: 'utf8' }).trim();
+  const date = git(repoRoot, ['log', '-1', '--format=%cs', '--', ...(existing.length ? existing : ['src/app'])]);
   // A page with no commit yet (new, uncommitted) is dated today.
   return date || new Date().toISOString().slice(0, 10);
 }
