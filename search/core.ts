@@ -36,6 +36,8 @@ export interface SearchRecord {
   kinds: string[];
   category?: string;
   university?: string;
+  /** Score multiplier, below 1 for historical or dormant courses. Default 1. */
+  boost?: number;
   display: Record<string, unknown>;
 }
 
@@ -205,7 +207,7 @@ export function createSearch(catalog: CatalogFile) {
   const index = new MiniSearch<Record<string, unknown>>({
     idField: 'key',
     fields: ['title', 'keywords', 'aliases', 'en', 'description'],
-    storeFields: ['type'],
+    storeFields: ['type', 'boost'],
     tokenize: (text: string) => norm.tokenize(text),
     processTerm: (term: string) => term,
   });
@@ -213,6 +215,7 @@ export function createSearch(catalog: CatalogFile) {
     records.map((r) => ({
       key: `${r.type}:${r.id}`,
       type: r.type,
+      boost: r.boost ?? 1,
       title: [r.title.zh, r.title.en ?? ''].join(' '),
       keywords: r.keywords.join(' '),
       aliases: r.aliases.join(' '),
@@ -239,6 +242,7 @@ export function createSearch(catalog: CatalogFile) {
           prefix: (term: string) => Array.from(term).length === 1 && HAN.test(term),
           fuzzy: (term: string) => (/^[a-z]{6,}$/.test(term) ? 0.2 : false),
           filter: (res) => res['type'] === type,
+          boostDocument: (_id: unknown, _term: string, stored?: Record<string, unknown>) => Number(stored?.['boost'] ?? 1),
         })
         .filter((res) => res.queryTerms.filter((t) => specific.has(t)).length >= need)
         .map((res) => {
@@ -246,7 +250,10 @@ export function createSearch(catalog: CatalogFile) {
           return { id: record.id, type, score: res.score, record };
         });
     }
+    // Computer-networking intent: in data mode only internet datasets stay; the
+    // course catalog excludes computer-networking courses, so nothing stays there.
     if (q.networking && type === 'dataset') hits = hits.filter((h) => h.record.internet);
+    if (q.networking && type === 'course') hits = [];
     return hits.sort((a, b) => b.score - a.score || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   };
 

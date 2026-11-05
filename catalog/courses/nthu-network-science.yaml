@@ -1,0 +1,42 @@
+id: nthu-network-science
+university: nthu
+department: { zh-Hant: 通訊工程研究所 }
+title: { zh-Hant: 網路科學, en: Network Science }
+course_code: COM 530500
+category: network-science
+relevance: core
+offering_type: credit
+level: master
+languages: [zh]
+inclusion_note:
+  zh-Hant: "通訊所公布的課程綱要以網絡的數學表示、測度與中心性、圖分割與社群偵測、隨機圖、網絡形成模型、滲流與網絡上的流行病為內容，教科書為 Newman《Networks: An Introduction》。"
+summary:
+  zh-Hant: 研究所網絡科學課，以網絡結構與動態分析的理論整合網際網路、電力、社會與生物等不同領域的網絡知識，內容依 Newman 教科書從網絡的數學、測度與演算法到隨機圖、網絡形成模型與網絡上的動態過程。
+keywords: [網絡科學, 中心性, 社群偵測, 隨機圖, 偏好依附, 滲流, 流行病模型]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "113-1"
+    code: COM 530500
+    instructors:
+      - { name: 張正尚 }
+    evidence_url: https://curricul.site.nthu.edu.tw/var/file/208/1208/img/1657/111all-113all_courses_redo.xlsx
+    verified_on: "2026-11-04"
+    syllabus_url: https://com.site.nthu.edu.tw/var/file/173/1173/img/4233/860496062.pdf
+    note:
+      zh-Hant: 清大課務組公布的 111–113 學年課程資料檔（工作表 11310），科號 11310COM 530500，授課語言中。課綱表列授課教師「張正尚或李端興」。
+  - term: "112-1"
+    code: COM 530500
+    instructors:
+      - { name: 張正尚 }
+    evidence_url: https://curricul.site.nthu.edu.tw/var/file/208/1208/img/1657/111all-113all_courses_redo.xlsx
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 同一資料檔（工作表 111全及112全），科號 11210COM 530500。
+  - term: "111-1"
+    code: COM 530500
+    instructors:
+      - { name: 張正尚 }
+    evidence_url: https://curricul.site.nthu.edu.tw/var/file/208/1208/img/1657/111all-113all_courses_redo.xlsx
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 同一資料檔（工作表 111全及112全），科號 11110COM 530500。

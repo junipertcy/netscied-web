@@ -1,0 +1,25 @@
+id: nycu-fundamental-graph-theory
+university: nycu
+department: { zh-Hant: 應用數學系 }
+title: { zh-Hant: 基礎圖論, en: Fundamental Graph Theory }
+course_code: SCMA20015
+category: graph-theory
+relevance: core
+offering_type: credit
+level: undergraduate
+languages: [zh]
+inclusion_note:
+  zh-Hant: 115-1 課程大綱的每個單元都是圖論主題（樹、配對、連通度、著色、平面圖等）。
+summary:
+  zh-Hant: 大學部入門圖論，從圖的基本概念、樹與距離、配對、連通度、著色到平面圖，並視修課學生興趣補充網路流、Hamilton 圈、圖譜與極值圖論等主題。
+keywords: [圖論, 樹, 配對, 平面圖, 圖著色]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "115-1"
+    code: "516711"
+    instructors:
+      - { name: 阮志豪 }
+    evidence_url: https://coz.aa.nycu.edu.tw/course/115/1/516711
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 當期課號 516711，應數系與應數跨域學程合開。

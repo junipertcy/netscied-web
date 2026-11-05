@@ -1,0 +1,25 @@
+id: ntu-social-media-social-network-analysis
+university: ntu
+department: { zh-Hant: 新聞研究所, en: Graduate Institute of Journalism }
+title: { zh-Hant: 社群媒體與社會網絡分析, en: Social Media and Social Network Analysis }
+course_code: JOUR7094
+category: social-network-analysis
+relevance: partial
+offering_type: credit
+level: master
+languages: [en]
+inclusion_note:
+  zh-Hant: 課程概述表明本課以社會網絡分析為重點分析社群媒體資料；未公布週次進度，網絡單元所占比例待確認，暫列 partial。
+summary:
+  zh-Hant: 以 R 語言蒐集、處理與分析社群媒體上的數位足跡資料，課程概述表示重點在社會網絡分析，另含文字探勘與以 transformer 模型做文本分類的單元，期末完成個人專題。
+keywords: [社會網絡分析, 社群媒體, 數位足跡資料, R, 計算傳播]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "114-2"
+    code: "28289"
+    instructors:
+      - { name: 劉好迪, name_en: Adrian Rauchfleisch }
+    evidence_url: https://course.ntu.edu.tw/courses/114-2/28289
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 流水號 28289，課程識別碼 342 M3100；頁面標示英文授課、限碩士班以上、屬計算傳播領域專長。

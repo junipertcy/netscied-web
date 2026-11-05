@@ -7,7 +7,7 @@ category: network-science
 relevance: partial
 offering_type: module
 level: undergraduate
-languages: [zh, en]
+languages: [zh]
 historical: true
 related_page: /stat1021/
 inclusion_note:
@@ -27,8 +27,12 @@ offerings:
   - term: 106-2
     code: H212200
     instructors:
+      - { name: 李政德, name_en: "Li, Cheng-Te", role: instructor }
       - { name: 顏子祺, name_en: Tzu-Chi Yen, role: guest }
     evidence_url: http://class-qry.acad.ncku.edu.tw/syllabus/online_display.php?syear=0106&sem=2&co_no=H212200&class_code=
+    archive_url: https://web.archive.org/web/20180526110905/http://class-qry.acad.ncku.edu.tw/syllabus/online_display.php?syear=0106&sem=2&co_no=H212200&class_code=
     verified_on: "2026-11-04"
     note:
-      zh-Hant: 講授日期為 2018 年 4 月 11 日與 18 日（星期三）。
+      zh-Hant: |-
+        官方課綱列授課教師為李政德、授課語言為中文；2026-11-04 本站無法直接連線，改以 2018 與 2024 年的網頁封存核對。
+        兩次客座講授（2018 年 4 月 11 日與 18 日，星期三）未列於官方課綱，見本站的封存頁。

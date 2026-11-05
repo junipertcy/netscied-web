@@ -100,6 +100,8 @@ export function courseSearchRecord(source, full, vocab) {
     kinds: [],
     category: source.category,
     university: source.university,
+    // Current courses rank above dormant ones, and both above historical records.
+    ...(full.freshness.id === 'historical' ? { boost: 0.7 } : full.freshness.id === 'dormant' ? { boost: 0.85 } : {}),
     display: {
       university: `${full.university.short ?? full.university['zh-Hant']} ${full.department['zh-Hant']}`,
       instructors,

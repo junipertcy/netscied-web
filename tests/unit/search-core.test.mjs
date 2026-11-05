@@ -175,3 +175,21 @@ test('a hostile query is treated as text and does not throw', () => {
   assert.deepEqual(res.hits, []);
   assert.doesNotThrow(() => search.search('\u0000\uD800)(*&^%$#@!~`\\', 'datasets'));
 });
+
+test('rule 2 in course mode: the catalog has no computer-networking courses, so such a query returns none', () => {
+  const extra = [...RECORDS, rec({ id: 'social-computing', type: 'course', url: '/courses/social-computing/', title: { zh: '網路科學與社會計算', en: 'Network Science and Social Computing' }, kinds: [] })];
+  const s = createSearch({ schema: 1, normalize: makeNormalizeData(concepts, extra.flatMap((r) => [r.title.zh, r.title.en, ...r.aliases])), records: extra });
+  const res = s.search('計算機網路', 'courses');
+  assert.deepEqual(res.hits, []);
+  assert.equal(res.hints.networking, true);
+});
+
+test('a record boost demotes historical courses below current ones with the same match', () => {
+  const two = [
+    rec({ id: 'a-old', type: 'course', url: '/courses/a-old/', title: { zh: '網絡科學導論', en: '' }, kinds: [], boost: 0.7 }),
+    rec({ id: 'b-new', type: 'course', url: '/courses/b-new/', title: { zh: '網絡科學導論', en: '' }, kinds: [] }),
+  ];
+  const s = createSearch({ schema: 1, normalize: makeNormalizeData(concepts, two.map((r) => r.title.zh)), records: two });
+  // Ids chosen so the alphabetical tie-break alone would put the historical one first.
+  assert.deepEqual(s.search('網絡科學', 'courses').hits.map((h) => h.id), ['b-new', 'a-old']);
+});

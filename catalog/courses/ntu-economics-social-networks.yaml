@@ -1,0 +1,25 @@
+id: ntu-economics-social-networks
+university: ntu
+department: { zh-Hant: 經濟學研究所, en: Graduate Institute of Economics }
+title: { zh-Hant: 社會網絡的經濟學分析, en: Economic Analysis of Social Networks }
+course_code: ECON7217
+category: network-science
+relevance: core
+offering_type: credit
+level: master
+languages: [en]
+inclusion_note:
+  zh-Hant: 課程概述以社會（經濟）網絡的理論與實證分析為主題，涵蓋網絡的刻畫、網絡賽局與網絡資料的計量方法。
+summary:
+  zh-Hant: 經濟所英語授課課程，先介紹網絡的刻畫方式與網絡上的賽局理論，再討論網絡抽樣、社群偵測、網絡外溢效果與網絡形成等實證方法，並以 R 蒐集與分析網絡資料。
+keywords: [經濟網絡, 社會網絡, 網絡賽局, 網絡形成, 同儕效果, R]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "114-2"
+    code: "49615"
+    instructors:
+      - { name: 謝志昇, name_en: CHIH-SHENG HSIEH }
+    evidence_url: https://course.ntu.edu.tw/courses/114-2/49615
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 流水號 49615，課程識別碼 323 M3760；頁面標示英文授課、限碩士班以上。

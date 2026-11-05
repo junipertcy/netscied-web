@@ -1,0 +1,25 @@
+id: nycu-network-strategies
+university: nycu
+department: { zh-Hant: 經營管理研究所 }
+title: { zh-Hant: 網路策略：方法與應用, en: "Network Strategies: Method and Applications" }
+course_code: MGBM30055
+category: social-network-analysis
+relevance: core
+offering_type: credit
+level: master
+languages: [en]
+inclusion_note:
+  zh-Hant: 課名的「網路」指社會網絡；課程目標明言介紹組織情境中社會網絡分析的理論、研究與方法，週次計畫涵蓋 SNA 基礎、網絡視覺化與關係連結理論。
+summary:
+  zh-Hant: 從企業策略與組織研究的角度介紹社會網絡分析，包括網絡的定義與測量、以 NodeXL 等軟體做網絡視覺化，以及網絡觀點在產業與企業策略上的應用。
+keywords: [社會網絡分析, 組織網絡, 網絡策略, NodeXL, 弱連結]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "115-1"
+    code: "230020"
+    instructors:
+      - { name: 姜真秀 }
+    evidence_url: https://coz.aa.nycu.edu.tw/course/115/1/230020
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 當期課號 230020，北門校區，經營管理研究所、IMBA 等管理學院學程合開；頁面未列授課語言，英語授課依研究資料與全英文大綱推定。

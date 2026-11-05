@@ -188,6 +188,15 @@ export function validateCatalog({ root, baseRef = 'origin/main', requireBase = f
     if (data?.dataset && !datasetIds.has(data.dataset)) err(file, 'dataset', `unknown dataset "${data.dataset}"`);
   }
 
+  // --- International and rejected course lists ------------------------------------
+  if (cat.international?.data) for (const e of schemaErrors(schemas.international, cat.international.data)) err(cat.international.file, e.field, e.message);
+  if (cat.rejected?.data) {
+    for (const e of schemaErrors(schemas.rejected, cat.rejected.data)) err(cat.rejected.file, e.field, e.message);
+    (cat.rejected.data ?? []).forEach((r, i) => {
+      if (r.university && !vocab.byId.universities.has(r.university)) err(cat.rejected.file, `[${i}].university`, `unknown university "${r.university}"`);
+    });
+  }
+
   // --- PII scan over every public text -------------------------------------------
   const scan = (file, record) => {
     for (const hit of scanRecord(record)) err(file, hit.field, `looks like ${hit.kind === 'email' ? 'an email address' : 'a phone number'} ("${hit.value}"); public files must not hold contact details`);

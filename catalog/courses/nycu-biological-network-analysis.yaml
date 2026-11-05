@@ -1,0 +1,26 @@
+id: nycu-biological-network-analysis
+university: nycu
+department: { zh-Hant: 生物醫學資訊研究所 }
+title: { zh-Hant: 生物網路分析, en: Biological Network Analysis }
+course_code: MDBI30088
+category: network-science
+relevance: core
+offering_type: credit
+level: master
+languages: [zh]
+inclusion_note:
+  zh-Hant: 113-1 週次計畫全為網絡分析主題，從圖論基礎、網絡測度與模型、中心性、網絡隨機化到社群與子網絡偵測。
+summary:
+  zh-Hant: 介紹圖的表示與測度、網絡模型與視覺化、中心性及其生物意義、網絡隨機化與社群結構，最後應用於基因共表現網絡（WGCNA）。
+keywords: [生物網絡, 中心性, 網絡社群, 基因共表現網絡, WGCNA]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "113-1"
+    code: "131010"
+    instructors:
+      - { name: 林振慶 }
+      - { name: 黃宣誠 }
+    evidence_url: https://coz.aa.nycu.edu.tw/course/113/1/131010
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 當期課號 131010，陽明校區；頁面未提供概述，週次計畫有列。

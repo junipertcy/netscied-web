@@ -315,3 +315,12 @@ test('the real catalog validates', () => {
   const res = spawnSync(process.execPath, [cli], { cwd: repoRoot, encoding: 'utf8' });
   assert.equal(res.status, 0, res.stdout + res.stderr);
 });
+
+test('the rejected-course list is validated, with known universities', () => {
+  expectFailure((d) => writeFileSync(path.join(d, 'catalog', 'courses-rejected.yaml'), '- { title: 計算機網路, university: nowhere, reason: 電腦網路, url: "https://example.org/x", checked_on: 2026-11-04 }\n'), 'courses-rejected.yaml', '[0].university');
+  expectFailure((d) => writeFileSync(path.join(d, 'catalog', 'courses-rejected.yaml'), '- { title: 計算機網路, university: ntu, url: "https://example.org/x", checked_on: 2026-11-04 }\n'), 'courses-rejected.yaml', '[0].reason');
+});
+
+test('the international list is validated: an archived entry needs its archive URL', () => {
+  expectFailure((d) => writeFileSync(path.join(d, 'catalog', 'international.yaml'), '- { title: { en: Network Theory }, institution: UMich, url: "https://example.org/x", kind: course, checked_on: 2026-11-04, archived: true }\n'), 'international.yaml', '[0].archive_url');
+});

@@ -63,5 +63,15 @@ queries:
   # No dataset yet: the wanted entry shows in its own group
   - { q: 人口遷徙, mode: datasets, lang: zh-Hant, expect_zero: true, expected_wanted: [population-migration] }
   # Courses
+  - { q: 社會網絡分析, mode: courses, lang: zh-Hant, expected: [ntnu-geography-social-network-analysis, nccu-social-networks-social-capital] }
+  - { q: social network analysis, mode: courses, lang: en, expected: [ntnu-geography-social-network-analysis, nccu-tigp-intro-social-networks] }
+  - { q: 網路科學 課程, mode: courses, lang: zh-Hant, expected: [nthu-network-science, nycu-network-science-social-computing] }
+  - { q: network science, mode: courses, lang: en, first: nthu-network-science, expected: [nycu-network-science-social-computing], note: the historical STAT1021 record may match but ranks below current courses }
+  - { q: graph theory, mode: courses, lang: en, first: nycu-graph-theory, expected: [nycu-fundamental-graph-theory, ntu-graph-theory-with-applications] }
+  - { q: 圖論, mode: courses, lang: zh-Hant, expected: [nycu-graph-theory, ntu-graph-theory-with-applications, nycu-fundamental-graph-theory] }
+  - { q: 圖神經網路, mode: courses, lang: zh-Hant, expected: [ncku-graph-machine-learning, nycu-gnn-recommendation-relation-estimation, nthu-gnn-drug-discovery] }
+  - { q: GNN, mode: courses, lang: en, expected: [ncku-graph-machine-learning] }
+  - { q: 生物網路, mode: courses, lang: zh-Hant, expected: [nycu-biological-network-analysis, nycu-network-biology-implementation] }
+  - { q: 资料科学导论, mode: courses, lang: zh-Hans, first: ncku-stat-intro-data-science }
   - { q: 計算機網路, mode: courses, lang: zh-Hant, expect_zero: true, note: the course catalog excludes computer networking }
   - { q: CS224W, mode: courses, lang: en, expect_zero: true, note: foreign courses are outside search }

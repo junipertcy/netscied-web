@@ -29,6 +29,8 @@ export function loadSchemas() {
     version: get('version.schema.json'),
     person: get('person.schema.json'),
     course: get('course.schema.json'),
+    international: get('course.schema.json#/$defs/internationalList'),
+    rejected: get('course.schema.json#/$defs/rejectedList'),
     news: get('news.schema.json'),
     recipe: get('recipe.schema.json'),
     vocab: (part) => get(`vocab.schema.json#/$defs/${part}`),

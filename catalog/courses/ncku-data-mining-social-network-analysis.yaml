@@ -1,0 +1,25 @@
+id: ncku-data-mining-social-network-analysis
+university: ncku
+department: { zh-Hant: 通訊所, en: Communications Engineering }
+title: { zh-Hant: 資料探勘與社群網路分析, en: Data Mining and Social Network Analysis }
+course_code: CCE 8440
+category: social-network-analysis
+relevance: partial
+offering_type: credit
+level: master
+languages: [zh]
+inclusion_note:
+  zh-Hant: 111-2 課程進度第 8 至 13 週為社群網絡單元（網絡性質與模型、社群偵測、社群影響力、擴散模型、推薦、社群媒體探勘），約六週。
+summary:
+  zh-Hant: 前半學期介紹關聯規則、序列樣式、分類與分群等資料探勘技術，後半學期轉向社群網絡的性質與模型、社群偵測、影響力與擴散，並以口頭報告與期末專題評量。
+keywords: [資料探勘, 社群網絡分析, 社群偵測, 擴散模型]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "111-2"
+    code: Q370100
+    instructors:
+      - { name: 黃仁暐, name_en: "Huang, Jen-Wei" }
+    evidence_url: https://class-qry.acad.ncku.edu.tw/syllabus/online_display.php?syear=0111&sem=2&co_no=Q370100&class_code=
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 課程系統碼 Q370100、開課序號 144，課程語言中文；英文課名為本站翻譯；成大伺服器對本機回應 403，本頁經 Exa 擷取核對。

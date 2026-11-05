@@ -1,0 +1,25 @@
+id: nccu-social-networks-social-capital
+university: nccu
+department: { zh-Hant: 社會學系, en: Sociology }
+title: { zh-Hant: 社會網絡與社會資本, en: Social Networks and Social Capital }
+course_code: "204780"
+category: social-network-analysis
+relevance: core
+offering_type: credit
+level: undergraduate
+languages: [zh]
+inclusion_note:
+  zh-Hant: 113-2 週次進度全學期皆為社會網絡的概念與分析方法（網絡資料、視覺化、凝聚子群、角色與位置、中心性、中介與擴散）。
+summary:
+  zh-Hant: 社會學系大學部課程，介紹社會網絡的視角與基礎概念，並循序練習網絡資料處理、視覺化、群體與凝聚、角色與位置、中心與邊陲、中介與橋梁及擴散等分析。
+keywords: [社會網絡分析, 社會資本, 中心性, 結構洞, Pajek]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "113-2"
+    code: "204780001"
+    instructors:
+      - { name: 鄭力軒, name_en: CHENG LI-HSUAN }
+    evidence_url: https://newdoc.nccu.edu.tw/teaschm/1132/schmPrv.jsp-yy=113&smt=2&num=204780&gop=00&s=1.html
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 開課單位社會三，選修 3 學分；大綱未列授課語言，依中文大綱推定。114-2 同一網址樣式回應 404。

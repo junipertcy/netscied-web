@@ -1,0 +1,25 @@
+id: nycu-research-social-network-analysis
+university: nycu
+department: { zh-Hant: 傳播與科技學系 }
+title: { zh-Hant: 社會網絡研究, en: Research on Social Network Analysis }
+course_code: HKCT30019
+category: social-network-analysis
+relevance: core
+offering_type: credit
+level: master
+languages: [zh]
+inclusion_note:
+  zh-Hant: 課程概述說明本課介紹社會網絡分析的理論與技術，並以 UCINET、Gephi 與 R 進行網絡分析實作。
+summary:
+  zh-Hant: 介紹同質性、三元閉合、網絡演化與網絡資料的相依性等社會網絡理論概念，搭配基礎與進階網絡分析實作，期末完成一篇運用社會網絡理論與方法的研究論文。
+keywords: [社會網絡分析, 同質性, 三元閉合, UCINET, Gephi]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "111-2"
+    code: "330104"
+    instructors:
+      - { name: 賴至慧 }
+    evidence_url: https://coz.aa.nycu.edu.tw/course/111/2/330104
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 當期課號 330104，六家校區；112-2 之後未在相同當期課號找到開課紀錄。

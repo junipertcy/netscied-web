@@ -1,0 +1,25 @@
+id: nycu-criminal-network-big-data-analytics
+university: nycu
+department: { zh-Hant: 資訊學院科技犯罪偵查資通訊碩士在職專班 }
+title: { zh-Hant: 犯罪網絡與大數據分析, en: Criminal Network and Big Data Analytics }
+course_code: CSCM30033
+category: social-network-analysis
+relevance: core
+offering_type: credit
+level: professional
+languages: [zh]
+inclusion_note:
+  zh-Hant: 課程概述以社會網絡分析理解犯罪組織結構為主軸，週次計畫前九週為社會網絡分析、網絡模型與各類犯罪網絡建構，後段再以 AI 分析犯罪網絡。
+summary:
+  zh-Hant: 在職專班課程，以 Gephi、UCINET、NodeXL 與 Python 進行網絡建構、指標計算、社群偵測與關鍵節點辨識，並結合大數據與機器學習方法分析通訊、金流與加密貨幣等犯罪網絡。
+keywords: [社會網絡分析, 犯罪網絡, Gephi, UCINET, 小世界網絡, 無尺度網絡]
+provenance: { found_via: research, added: "2026-11-04", reviewed: "2026-11-04" }
+offerings:
+  - term: "115-1"
+    code: "555900"
+    instructors:
+      - { name: 張伊君 }
+    evidence_url: https://coz.aa.nycu.edu.tw/course/115/1/555900
+    verified_on: "2026-11-04"
+    note:
+      zh-Hant: 當期課號 555900；115-1 為新開課程（研究資料所述），頁面未列校區。
