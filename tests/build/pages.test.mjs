@@ -244,3 +244,27 @@ test('task 4.7: the Apr. 18 slides link to Clauset’s original, not to a modifi
   assert.ok(hrefs.every((h) => h.startsWith('https://complexityexplained.github.io/') || h.startsWith('/') || h.startsWith('#')), hrefs.join(' '));
   assert.ok(!hrefs.some((h) => /wiki\.junipertcy\.info|sites\.google\.com/.test(h)));
 });
+
+// Final review W8: every internal link in the built HTML and in llms.txt names a
+// file the build serves. /data/ is uploaded separately (task 8.6), so it is skipped.
+test('final review W8: internal links in the pages and in llms.txt resolve to files in the build', () => {
+  const missing = [];
+  const check = (from, href) => {
+    let p = href.startsWith('https://netscied.tw') ? href.slice('https://netscied.tw'.length) : href;
+    if (!p.startsWith('/') || p.startsWith('//') || p.startsWith('/data/') || p.includes('<')) return;
+    p = decodeURIComponent(p.split(/[?#]/)[0]);
+    const rel = p.endsWith('/') ? `${p}index.html` : p;
+    try {
+      statSync(path.join(browserRoot, rel));
+    } catch {
+      missing.push(`${from}: ${href}`);
+    }
+  };
+  for (const f of htmlFiles()) {
+    const doc = page(f);
+    for (const a of doc.querySelectorAll('a[href], link[href]')) check(f, a.getAttribute('href'));
+    for (const el of doc.querySelectorAll('img[src], script[src]')) check(f, el.getAttribute('src'));
+  }
+  for (const m of readDist('llms.txt').matchAll(/https:\/\/netscied\.tw[^\s)>\]]*/g)) check('llms.txt', m[0].replace(/[.,;:]$/, ''));
+  assert.deepEqual(missing, []);
+});

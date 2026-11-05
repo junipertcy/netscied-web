@@ -142,7 +142,7 @@
   <p>本站的內容也以機器可讀的形式提供，不需要執行 JavaScript：</p>
   <ul>
     <li><a href="/api/v1/index.json">/api/v1/index.json</a>：API 總覽，列出所有檔案；目前共 {{ index().counts.datasets }} 筆資料集、{{ index().counts.courses }} 門課程。</li>
-    <li><a href="/api/v1/datasets.json">datasets.json</a>、<a href="/api/v1/courses.json">courses.json</a>、<a href="/api/v1/wanted.json">wanted.json</a>、<a href="/api/v1/taxonomy.json">taxonomy.json</a>，以及每筆紀錄的 JSON；JSON Schema 在 <a href="/api/v1/schema/dataset.schema.json">/api/v1/schema/</a>。</li>
+    <li><a href="/api/v1/datasets.json">datasets.json</a>、<a href="/api/v1/courses.json">courses.json</a>、<a href="/api/v1/wanted.json">wanted.json</a>、<a href="/api/v1/taxonomy.json">taxonomy.json</a>，以及每筆紀錄的 JSON；每個檔案的 JSON Schema 列在 index.json 的 <code>schema</code> 欄（例如 <a href="/api/v1/schema/dataset-record.schema.json">dataset-record.schema.json</a>）。</li>
     <li>每個資料集與課程頁面都有 Markdown 版本：在網址後加上 <code>index.md</code>。</li>
     <li><a href="/llms.txt">llms.txt</a>：給 AI 代理的網站說明；<a href="/sitemap.xml">sitemap.xml</a>；<a href="/news/feed.xml">Atom 訂閱</a>。</li>
     <li>本站歡迎所有搜尋引擎與 AI 爬蟲，包括用於訓練模型的爬蟲（見 <a href="/robots.txt">robots.txt</a>）。詮釋資料以 CC0 1.0 釋出。</li>

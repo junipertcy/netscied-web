@@ -186,7 +186,7 @@ Currently ${index.counts.datasets} datasets (${index.counts.hosted} with files h
 - [datasets.json](${ORIGIN}/api/v1/datasets.json) / datasets.csv: all published datasets in summary form; full records at /api/v1/datasets/<id>.json.
 - [courses.json](${ORIGIN}/api/v1/courses.json) / courses.csv; full records at /api/v1/courses/<id>.json.
 - [wanted.json](${ORIGIN}/api/v1/wanted.json), [news.json](${ORIGIN}/api/v1/news.json), [taxonomy.json](${ORIGIN}/api/v1/taxonomy.json) (every controlled vocabulary with Mandarin and English labels).
-- JSON Schemas of these responses: ${ORIGIN}/api/v1/schema/ (for example dataset-record.schema.json).
+- JSON Schemas of these responses: each file in ${ORIGIN}/api/v1/index.json names its schema in its \`schema\` field (for example ${ORIGIN}/api/v1/schema/dataset-record.schema.json).
 - catalog.json is internal (the browser's search payload); do not depend on its shape.
 
 ## 欄位 / Field meanings (dataset records)
