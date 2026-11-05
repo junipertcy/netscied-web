@@ -111,3 +111,17 @@ def test_hif_is_byte_identical_when_rebuilt(hyper, tmp_path):
     a = write_hif(hyper, tmp_path / "a.json", metadata={"title": "測試"})
     b = write_hif(hyper, tmp_path / "b.json", metadata={"title": "測試"})
     assert a.read_bytes() == b.read_bytes()
+
+
+def test_the_pinned_hif_schema_names_its_source_commit_and_matches_it():
+    """Task 12.12: the copy's provenance sits next to it, and the git blob id it records is the copy's."""
+    import hashlib
+    import re
+
+    from netscied.formats import HIF_SCHEMA
+
+    note = HIF_SCHEMA.with_name("hif_schema.SOURCE.txt").read_text(encoding="utf-8")
+    assert re.search(r"https://github\.com/HIF-org/HIF-standard/blob/[0-9a-f]{40}/schemas/hif_schema\.json", note)
+    blob = re.search(r"git blob: ([0-9a-f]{40})", note).group(1)
+    data = HIF_SCHEMA.read_bytes()
+    assert hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest() == blob  # noqa: S324 (git's object id)
