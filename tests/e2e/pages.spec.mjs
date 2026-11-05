@@ -38,11 +38,17 @@ test('the dataset table gains sort buttons once interactive, and sorting by name
   const byName = page.getByRole('button', { name: '名稱' });
   await expect(byName).toBeVisible();
   await byName.click();
-  const first = await page.locator('table.data-table tbody tr th a').first().textContent();
-  const names = await page.locator('table.data-table tbody tr th a').allTextContents();
-  const sorted = [...names].sort(new Intl.Collator('zh-Hant-TW').compare);
-  expect(names).toEqual(sorted);
-  expect(first).toBe(sorted[0]);
+  // Wait for the re-render: reading the rows right after the click raced it.
+  const collator = new Intl.Collator('zh-Hant-TW');
+  const rows = page.locator('table.data-table tbody tr th a');
+  await expect
+    .poll(async () => {
+      const names = await rows.allTextContents();
+      return names.length > 1 && names.join('|') === [...names].sort(collator.compare).join('|');
+    })
+    .toBe(true);
+  const names = await rows.allTextContents();
+  expect(await rows.first().textContent()).toBe([...names].sort(collator.compare)[0]);
 });
 
 test('client-side navigation from the table to a detail page renders the record', async ({ page }) => {
