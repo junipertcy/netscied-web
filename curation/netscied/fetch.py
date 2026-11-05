@@ -441,3 +441,26 @@ def fetch_recipe(recipe: dict, cache_dir, fetcher: Fetcher, *, inputs_dir=None, 
     summary = {"dataset": recipe["dataset"], "version": recipe["version"], "sources": [r.to_json(base) for r in results]}
     (base / "fetch.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return summary
+
+
+def verify_fetched(recipe: dict, summary: dict, base: Path) -> None:
+    """Final review D2: before a conversion, every cached file must still be the
+    bytes fetch.json recorded, and every source the bytes the recipe expects.
+    Raises FetchError naming the first mismatch."""
+    base = Path(base)
+    got = {s["id"]: s for s in summary.get("sources", [])}
+    for src in recipe["sources"]:
+        s = got.get(src["id"])
+        if s is None:
+            raise FetchError(f"source {src['id']}: not in fetch.json; run `netscied fetch {recipe['dataset']}` again")
+        files = [base / rel for rel in s["files"]]
+        for p in files:
+            if not p.is_file():
+                raise FetchError(f"source {src['id']}: cached file {p} is missing; run `netscied fetch {recipe['dataset']}` again")
+        sha = file_sha256(files[0]) if len(files) == 1 and src["method"] != "api" else listing_digest(files)
+        n = sum(p.stat().st_size for p in files)
+        if (sha, n) != (s["sha256"], s["bytes"]):
+            raise FetchError(f"source {src['id']}: the cached files ({sha}, {n} bytes) no longer match fetch.json ({s['sha256']}, {s['bytes']} bytes); fetch again")
+        exp = src.get("expected")
+        if exp and (exp["sha256"], exp["bytes"]) != (sha, n):
+            raise FetchError(f"source {src['id']}: the cached files ({sha}, {n} bytes) differ from the recipe's expected {exp['sha256']} ({exp['bytes']} bytes)")

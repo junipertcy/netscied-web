@@ -35,3 +35,26 @@ def test_fetch_then_manifest_builds_the_golden_horse_version(tmp_path, capsys):
     # A second run would overwrite a manifest: refused without --force.
     assert main(args) == 1
     assert "immutable" in capsys.readouterr().err
+
+
+def test_final_review_d2_manifest_refuses_a_cache_that_no_longer_matches_what_was_fetched(tmp_path, capsys):
+    import hashlib
+
+    cache, data, catalog = tmp_path / "cache", tmp_path / "data", tmp_path / "catalog"
+    assert main(["fetch", "golden-horse-2018-nominations", "--cache", str(cache), "--no-capture"]) == 0
+    base = cache / "golden-horse-2018-nominations" / "1.0.0"
+    csv = base / "sources" / "official-nominee-list" / "nominations.csv"
+    text = csv.read_text(encoding="utf-8")
+    csv.write_text(text.replace(",true,", ",false,", 1), encoding="utf-8")  # flip one winner
+    args = ["manifest", "golden-horse-2018-nominations", "--cache", str(cache), "--data", str(data), "--catalog", str(catalog), "--released", "2026-11-04", "--allow-dirty"]
+    assert main(args) == 1
+    assert "fetch.json" in capsys.readouterr().err
+    assert not (catalog / "versions").exists()
+    # Rewriting fetch.json to the tampered bytes does not help: the recipe's expected hash still differs.
+    summary = json.loads((base / "fetch.json").read_text(encoding="utf-8"))
+    summary["sources"][0]["sha256"] = hashlib.sha256(csv.read_bytes()).hexdigest()
+    summary["sources"][0]["bytes"] = csv.stat().st_size
+    (base / "fetch.json").write_text(json.dumps(summary), encoding="utf-8")
+    assert main(args) == 1
+    assert "recipe" in capsys.readouterr().err
+    assert main(["stats", "golden-horse-2018-nominations", "--cache", str(cache)]) == 1

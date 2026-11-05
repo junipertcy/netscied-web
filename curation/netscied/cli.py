@@ -22,7 +22,7 @@ from pathlib import Path
 
 from . import __version__
 from .converters import convert as run_converter
-from .fetch import Fetcher, FetchError, fetch_recipe
+from .fetch import Fetcher, FetchError, fetch_recipe, verify_fetched
 from .health import render, run_health
 from .licenses import LicenseRefused, check_recipe
 from .recipes import REPO, RecipeError, dataset_record, load_recipe, recipe_path
@@ -123,6 +123,7 @@ def main(argv=None) -> int:
                 print(f"{s['id']}: {s['bytes']} bytes, sha256 {s['sha256']}, retrieved {s['retrieved_at']}" + (f", archived {s['archived_landing_page']}" if s.get("archived_landing_page") else ""))
             return 0
         summary, base = _fetched(recipe, args.cache)
+        verify_fetched(recipe, summary, base)
         product = run_converter(recipe, _files(summary, base))
         if args.command in ("convert", "stats"):
             print(json.dumps(_stats(product), ensure_ascii=False, indent=2))
