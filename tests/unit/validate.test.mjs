@@ -416,3 +416,19 @@ test('task 12.5: a list of places that includes China is not flagged', () => {
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test('task 12.1: a manifest published without a doi key may gain one', () => {
+  const dir = fixture();
+  const git = (...args) => execFileSync('git', args, { cwd: dir, stdio: 'pipe' });
+  try {
+    editJson(dir, 'catalog/versions/hosted-graph/1.0.0.json', (m) => delete m.doi);
+    git('init', '-q', '-b', 'main');
+    git('-c', 'user.name=t', '-c', 'user.email=t@example.org', 'add', '.');
+    git('-c', 'user.name=t', '-c', 'user.email=t@example.org', 'commit', '-q', '-m', 'base');
+    editJson(dir, 'catalog/versions/hosted-graph/1.0.0.json', (m) => (m.doi = '10.5281/zenodo.1234567'));
+    const { code, out } = run(dir, ['--base-ref', 'main']);
+    assert.equal(code, 0, out);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

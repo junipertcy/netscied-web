@@ -260,7 +260,11 @@ export function validateCatalog({ root, baseRef = 'origin/main', requireBase = f
         }
         const a = structuredClone(before);
         const b = structuredClone(now);
-        if (a.doi == null && typeof b.doi === 'string') b.doi = a.doi;
+        if (a.doi == null && typeof b.doi === 'string') {
+          // A DOI may be added once minted, whether the manifest had "doi": null or no key.
+          if ('doi' in a) b.doi = a.doi;
+          else delete b.doi;
+        }
         delete a.suspended;
         delete b.suspended;
         if (!a.withdrawn) delete b.withdrawn;

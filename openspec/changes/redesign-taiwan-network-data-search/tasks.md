@@ -95,7 +95,7 @@
 
 ## 12. Milestone A review follow-ups (2026-11-04)
 
-- [ ] 12.1 Adding a DOI to a manifest that had no `doi` key fails the immutability check (validate.mjs; the fixture's `doi: null` hides it). Verify: a fixture manifest without `doi` gains one and validates.
+- [x] 12.1 Adding a DOI to a manifest that had no `doi` key fails the immutability check (validate.mjs; the fixture's `doi: null` hides it). Verify: a fixture manifest without `doi` gains one and validates.
 - [ ] 12.2 Reject person records that hold `orcid` or `homepage` without listing them in `display`. Verify: a failing fixture.
 - [x] 12.3 Cross-check `alias` lines of `ids.lock` against the records' `aliases`. Verify: a fixture with a stray alias line fails.
 - [ ] 12.4 Add a small-cell rule for hosted aggregates (`small_cell_threshold`), for example taipei-metro-od-monthly. Verify: a fixture aggregate below the threshold fails.
