@@ -17,7 +17,7 @@
 
 ## 3. Content model and validation
 
-- [ ] 3.1 Set up test tooling (a unit test runner, Playwright, axe-core) with pinned versions. Verify: `pnpm test` runs one sample test of each kind in CI.
+- [x] 3.1 Set up test tooling (a unit test runner, Playwright, axe-core) with pinned versions. Verify: `pnpm test` runs one sample test of each kind in CI. Verified 2026-11-05 in CI run 42001741720 (PR #44): node:test, Playwright and axe ran in "Build and test".
 - [x] 3.2 Add `schemas/v1/` (dataset record, version manifest, person, course, news, recipe), starting from the tested prototype in research, updated to design D3: the personal-data levels none/public-role/private-individuals/sensitive with `reviewed_on`, `p-` + 8 Crockford base32 person ids, and `/data/` URLs on the apex. Verify: ajv 2020 compiles them, and a fixture suite of good and deliberately bad records passes.
 - [x] 3.3 Add `catalog/vocab/` (9 domains with crosswalks, tags, licenses with class mapping, formats, concepts) and `catalog/ids.lock`. Verify: the vocabulary files validate.
 - [x] 3.4 Implement `scripts/catalog/validate.mjs`. Rules: schema; file name = id; unique ids; `ids.lock` coverage; SPDX membership (pinned list); person references; link-only versus hosted; license class versus redistribution basis; personal-data rules including `reviewed_on`; manifest immutability against `origin/main`; PII regex scan; warnings for recommended fields. Verify: each rule has a failing fixture, and `pnpm catalog:validate` exits non-zero on each.
@@ -62,7 +62,7 @@
 
 ## 8. Minimum curation pipeline
 
-- [ ] 8.1 Create `curation/` with `pyproject.toml` and `uv.lock` (networkx, xgi, frictionless, pyyaml) and a CLI `netscied` with `fetch`, `convert`, `stats`, `manifest` and `upload` subcommands. Verify: `uv run netscied --help` works in CI.
+- [x] 8.1 Create `curation/` with `pyproject.toml` and `uv.lock` (networkx, xgi, frictionless, pyyaml) and a CLI `netscied` with `fetch`, `convert`, `stats`, `manifest` and `upload` subcommands. Verify: `uv run netscied --help` works in CI. Verified 2026-11-05 in CI run 42001741720 (PR #44): `uv run --frozen netscied --help` and the curation tests passed.
 - [x] 8.2 Implement the recipe schema and the fetch methods `get`, `api`, `git` and `manual`, with the politeness rules, expected-hash checks, and Internet Archive landing-page capture. Verify: tests against a local HTTP server, including 429 backoff and hash-mismatch failure.
 - [x] 8.3 Implement the converters needed at launch: graph → csv-bundle + datapackage + GraphML, and hypergraph → HIF. Add round-trip and schema checks (the official HIF schema; Frictionless validate). Verify: fixtures round-trip with equal counts and attributes.
 - [x] 8.4 Implement stats per kind, the manifest writer, `SHA256SUMS`, a zip of all files, `provenance.json`, and a bilingual `ATTRIBUTION.txt` that includes the OGDL 顯名聲明. Verify: a rebuild from the same inputs gives byte-identical canonical files, and the zip contains `ATTRIBUTION.txt`.
