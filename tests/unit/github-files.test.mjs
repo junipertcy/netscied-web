@@ -108,3 +108,56 @@ test('final review W2: the monthly deploy receives the site-check stamp with the
   const deployStep = wf.jobs.deploy.steps.findIndex((s) => /scripts\/deploy\.mjs/.test(s.run ?? ''));
   assert.ok(deployStep > wf.jobs.deploy.steps.indexOf(download));
 });
+
+// Task 8.6: the gated data-publish job.
+test('task 8.6: publish.yml runs only on dispatch, in the approved publish environment, with the least permissions', () => {
+  const file = path.join(repoRoot, '.github', 'workflows', 'publish.yml');
+  const text = readFileSync(file, 'utf8');
+  const wf = parse(text);
+  assert.deepEqual(Object.keys(wf.on), ['workflow_dispatch']);
+  assert.deepEqual(Object.keys(wf.on.workflow_dispatch.inputs).sort(), ['dataset', 'version']);
+  for (const i of Object.values(wf.on.workflow_dispatch.inputs)) assert.equal(i.required, true);
+  assert.deepEqual(Object.keys(wf.jobs), ['publish']);
+  const job = wf.jobs.publish;
+  assert.equal(job.environment, 'publish');
+  assert.deepEqual(job.permissions, { contents: 'read', 'id-token': 'write' });
+  assert.match(String(wf.permissions ? JSON.stringify(wf.permissions) : '{}'), /^\{\}$|contents/);
+  // One run per dataset at a time, never cancelled half-way.
+  assert.match(job.concurrency.group, /\$\{\{ inputs\.dataset \}\}/);
+  assert.equal(job.concurrency['cancel-in-progress'], false);
+  // Inputs reach the shell only through env, never interpolated into a script.
+  for (const s of job.steps) assert.doesNotMatch(s.run ?? '', /\$\{\{/, `${s.name}: no \${{ … }} inside run:`);
+  // The role ARN is a secret (logs are public); the bucket name is a variable.
+  assert.doesNotMatch(text, /vars\.NETSCIED_PUBLISH_ROLE_ARN/);
+  const creds = job.steps.find((s) => /aws-actions\/configure-aws-credentials@/.test(s.uses ?? ''));
+  assert.equal(creds.with['role-to-assume'], '${{ secrets.NETSCIED_PUBLISH_ROLE_ARN }}');
+  assert.equal(creds.with['aws-region'], 'ap-east-2');
+  const publish = job.steps.find((s) => /scripts\/data\/publish\.mjs/.test(s.run ?? ''));
+  assert.equal(publish.env.NETSCIED_DATA_BUCKET, '${{ vars.NETSCIED_DATA_BUCKET }}');
+});
+
+test('task 8.6: publish.yml pins the actions CI uses, checks out full history, and runs fetch → verify → credentials → publish → check', () => {
+  const ci = readFileSync(path.join(repoRoot, '.github', 'workflows', 'ci.yml'), 'utf8') + readFileSync(path.join(repoRoot, '.github', 'workflows', 'monthly.yml'), 'utf8');
+  const pinned = new Map([...ci.matchAll(/uses:\s*([^@\s]+)@([0-9a-f]{40})/g)].map((m) => [m[1], m[2]]));
+  const wf = parse(readFileSync(path.join(repoRoot, '.github', 'workflows', 'publish.yml'), 'utf8'));
+  const steps = wf.jobs.publish.steps;
+  for (const s of steps.filter((x) => x.uses)) {
+    const [name, ref] = s.uses.split('@');
+    assert.equal(ref, pinned.get(name), `${name} uses the SHA pinned in ci.yml or monthly.yml`);
+  }
+  const checkout = steps.find((s) => /actions\/checkout@/.test(s.uses ?? ''));
+  assert.equal(checkout.with['fetch-depth'], 0);
+  const at = (re) => steps.findIndex((s) => re.test(s.run ?? s.uses ?? ''));
+  const order = [/netscied fetch/, /netscied verify/, /configure-aws-credentials/, /scripts\/data\/publish\.mjs/, /sha256sum -c/].map(at);
+  assert.ok(order.every((i) => i >= 0), JSON.stringify(order));
+  assert.deepEqual([...order].sort((a, b) => a - b), order, `steps out of order: ${order}`);
+  assert.match(steps[at(/netscied fetch/)].run, /uv run --frozen netscied fetch "\$DATASET"/);
+  assert.match(steps[at(/netscied verify/)].run, /uv run --frozen netscied verify "\$DATASET" "\$VERSION"/);
+  // The final check reads the files back from the site and fails clearly on a soft 404.
+  const check = steps.at(-1).run;
+  assert.ok(steps.at(-1) === steps[at(/sha256sum -c/)]);
+  assert.match(check, /https:\/\/netscied\.tw\/data\/\$\{DATASET\}\/\$\{VERSION\}/);
+  assert.match(check, /curl /);
+  assert.match(check, /text\/html/);
+  assert.match(check, /bytes/);
+});
