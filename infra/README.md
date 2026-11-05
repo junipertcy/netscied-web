@@ -21,3 +21,35 @@ Notes:
 - zsh reads `$VAR:s…` as a substitution modifier, so write `${ACCT}:subscription:…`
   when building ARNs in this shell.
 - The existing budget "My Monthly Cost Budget" ($5/month) sends the cost alerts (owner decision A9).
+
+## Publishing a version
+
+Dataset files are uploaded only by `.github/workflows/publish.yml`, run from
+`main` and approved by the owner (task 8.6). Nothing on a laptop uploads them:
+`netscied upload` refuses.
+
+1. The version's manifest, `catalog/versions/<id>/<version>.json`, must be on
+   `main`, and its recipe in `curation/recipes/<id>.yaml` must build that version.
+2. Start the run, from the Actions tab (**Publish a dataset version** → **Run
+   workflow**, branch `main`) or with
+   `gh workflow run publish.yml --ref main -f dataset=<id> -f version=<version>`.
+3. The run waits for approval in the `publish` environment. Open it (Actions →
+   the run → **Review deployments**), check the dataset and version, and approve.
+4. The job then:
+   - fetches the sources, which must match the recipe's expected hashes;
+   - runs `netscied verify`, which rebuilds the version and stops unless every
+     file is byte-identical to the committed manifest;
+   - assumes the publish role (environment secret `NETSCIED_PUBLISH_ROLE_ARN`);
+   - uploads to `s3://$NETSCIED_DATA_BUCKET/data/<id>/<version>/` with
+     `scripts/data/publish.mjs` (`SHA256SUMS` last);
+   - reads every file back from `https://netscied.tw/data/<id>/<version>/` and
+     runs `sha256sum -c`.
+
+A re-run is safe: keys that already hold the same SHA-256 are skipped. If a key
+holds different bytes, the run stops before uploading anything. The role cannot
+delete, so a published version is never removed by the job; withdrawing one is
+the takedown procedure (content-governance spec), done by hand.
+
+The site's deploy (`scripts/deploy.mjs`) refuses while any version file the
+pages link does not answer 200, with the manifest's size and not as HTML, so
+publish the data before deploying pages that link it.
