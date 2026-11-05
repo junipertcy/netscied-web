@@ -27,7 +27,8 @@ sources:
       sha256: 1a6f1bacfccb542f3e3e98310913fcd8a878fa50d61130cf9a6572f9f310136b
       bytes: 27931
     retrieved_at: "2026-11-04"
-    license: CC-BY-4.0
+    # No upstream license: the site compiled the facts itself (redistribution
+    # basis own-work), and the transcription is released under CC BY 4.0.
     license_evidence:
       url: https://www.goldenhorse.org.tw/news/detail/1023
       checked_on: 2026-11-04

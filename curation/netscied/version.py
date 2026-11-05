@@ -135,7 +135,7 @@ def _attribution(record, recipe, version, released, out_license, decision) -> st
         "",
         "== 授權 License ==",
         f"本版本的檔案依「{lic['name']['zh-Hant']}」釋出：{lic.get('url', '')}",
-        f"The files of this version are released under the {lic['name'].get('en', out_license)}: {lic.get('url', '')}",
+        f"License of the files in this version: {lic['name'].get('en', out_license)}, {lic.get('url', '')}",
         "",
         "== 資料來源與姓名標示 Sources and attribution ==",
     ]
@@ -147,9 +147,14 @@ def _attribution(record, recipe, version, released, out_license, decision) -> st
     if (record.get("license") or {}).get("attribution"):
         parts.append(_lines(record["license"]["attribution"]))
     if src:
-        names = sorted({(license_entry(s.get("license") or out_license) or {"name": {"en": s.get("license")}})["name"].get("en") for s in recipe["sources"]})
         publisher = (src.get("publisher") or {}).get("en")
-        parts.append(f"Source: {src.get('name', {}).get('en', src.get('name', {}).get('zh-Hant', ''))}" + (f", published by {publisher}" if publisher else "") + f" ({src.get('url', '')}), under the {', '.join(n for n in names if n)}.")
+        line = f"Source: {src.get('name', {}).get('en', src.get('name', {}).get('zh-Hant', ''))}" + (f", published by {publisher}" if publisher else "") + f" ({src.get('url', '')})"
+        if not own:
+            # The upstream license, as the recipe records it per source (the record's license otherwise).
+            ids = list(dict.fromkeys(s.get("license") or out_license for s in recipe["sources"]))
+            names = [(license_entry(i) or {"name": {"en": i}})["name"].get("en", i) for i in ids]
+            line += f", under {'; '.join(names)}"
+        parts.append(line + ".")
     parts.append("來源頁面 Source pages:")
     for s in recipe["sources"]:
         parts.append(f"- {s['landing_page']}")

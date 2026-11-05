@@ -236,3 +236,14 @@ def test_the_license_check_runs_before_anything_is_written(tmp_path):
     with pytest.raises(Exception, match="personal-data"):
         build(tmp_path, "a", rec=rec)
     assert not (tmp_path / "a" / "data").exists()
+
+
+def test_own_work_credits_the_site_and_claims_no_upstream_license(tmp_path):
+    rec = record(license={"id": "CC-BY-4.0", "url": "https://creativecommons.org/licenses/by/4.0/"}, redistribution={"basis": "own-work"})
+    recipe = {**RECIPE, "sources": [{k: v for k, v in RECIPE["sources"][0].items() if k != "license"}]}
+    build(tmp_path, "a", rec=rec, recipe=recipe)
+    text = (tmp_path / "a" / "data" / "test-graph" / "1.0.0" / "ATTRIBUTION.txt").read_text(encoding="utf-8")
+    assert "自行整理" in text and "Compiled by" in text
+    source_line = next(line for line in text.splitlines() if line.startswith("Source:"))
+    assert " under " not in source_line
+    assert "台灣網絡科學教育（netscied.tw）（2026）" in text
