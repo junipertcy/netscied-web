@@ -62,8 +62,8 @@ The production distribution SHALL use a CDN pricing plan with no per-byte overag
 - **THEN** the publish step refuses to upload it and tells the maintainer to publish an aggregate, wait for the archival deposit, or raise the plan
 
 #### Scenario: Download flood
-- **WHEN** one IP address requests `/data/*` files far faster than the configured rate
-- **THEN** further requests from it are blocked for a period, and HTML pages keep serving
+- **WHEN** one IP address sends requests far faster than the configured rate (on the Free plan the rule covers the whole site, because Free does not allow scoping a rule to `/data/`)
+- **THEN** further requests from that address are blocked for a period, and the site keeps serving every other visitor
 
 #### Scenario: Cost alert
 - **WHEN** the forecast monthly AWS cost exceeds the configured threshold

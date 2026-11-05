@@ -89,7 +89,7 @@ YAML records in `catalog/` and Markdown news in `content/` are the source of tru
 4. **Billing:**
    - The **CloudFront flat-rate Free plan** ($0; 100 GB, 1M requests, 5 GB S3 credit; WAF and the Route 53 zone included; no overage charges).
    - **Pro** ($15/month; 50 TB, 10M requests) when traffic is sustained above about 100 GB or 1M requests a month, or when files over 100 MB need hosting.
-   - The plan's mandatory WAF web ACL gets one rate-based rule on `/data/*`, and must be checked so it does not challenge the crawlers agent-access promises to allow.
+   - The plan's mandatory WAF web ACL gets one rate-based rule, and must be checked so it does not challenge the crawlers agent-access promises to allow. On Free it is site-wide (1,000 requests per 5 minutes per IP), because Free refuses byte-match rules, so a scope-down to `/data/*` needs a higher tier (checked 2026-11-05). Free also requires `PriceClass_All` and a cache policy instead of legacy cache settings; custom error responses are allowed.
    - A Budgets alert catches storage creep.
 5. **Per-file ceiling:** 100 MB per hosted file on the Free plan, which leaves room before one popular file exhausts the 100 GB allowance shared with the HTML. On Pro the ceiling is 2 GB. Larger files wait for the archive change and are served from Zenodo. Large raw sources (for example monthly MRT OD at about 300 MB) are hosted as aggregates.
 6. **Lifecycle:** CDN logs, if enabled, expire after 90 days. Noncurrent object versions are kept (owner decision A8, 2026-11-05): the bucket holds 118,026 of them (1.53 GB, back to 2017), they cost about US$0.04 a month, and the new site adds few, because data versions never overwrite. Revisit if storage grows.

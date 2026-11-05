@@ -1,0 +1,9 @@
+[
+  {
+    "Name": "ip-rate-limit",
+    "Priority": 0,
+    "Action": { "Block": {} },
+    "Statement": { "RateBasedStatement": { "Limit": 1000, "EvaluationWindowSec": 300, "AggregateKeyType": "IP" } },
+    "VisibilityConfig": { "SampledRequestsEnabled": true, "CloudWatchMetricsEnabled": true, "MetricName": "ip-rate-limit" }
+  }
+]

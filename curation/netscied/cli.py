@@ -4,7 +4,8 @@
   convert   convert the fetched sources and print the statistics
   stats     the same statistics, as JSON only
   manifest  write the version folder build/data/<id>/<version>/ and catalog/versions/<id>/<version>.json
-  upload    refused here: uploads run only in the approved publish job (task 8.6)
+  verify    rebuild a committed version; copy it to build/data/ only if byte-identical (task 8.6)
+  upload    refused here: uploads run only in .github/workflows/publish.yml (task 8.6)
   health    the monthly health check; prints one report and changes nothing
 
 Nothing here uploads or publishes (data-curation spec, "Human gate on publication").
@@ -27,6 +28,7 @@ from .health import render, run_health
 from .licenses import LicenseRefused, check_recipe
 from .recipes import REPO, RecipeError, dataset_record, load_recipe, recipe_path
 from .stats import graph_stats, hypergraph_stats
+from .verify import VerifyError, verify_version
 from .version import VersionError, write_version
 
 TAIPEI = timezone(timedelta(hours=8))
@@ -93,6 +95,11 @@ def main(argv=None) -> int:
             p.add_argument("--released", help="release date, YYYY-MM-DD (default: today in Taipei)")
             p.add_argument("--allow-dirty", action="store_true", help="allow uncommitted pipeline changes (tests only)")
             p.add_argument("--force", action="store_true", help="overwrite an existing manifest that is not yet on main")
+    vp = sub.add_parser("verify", help="rebuild a committed version and require it to be byte-identical before an upload")
+    vp.add_argument("dataset", help="dataset id")
+    vp.add_argument("version", help="the committed version, for example 1.0.0")
+    vp.add_argument("--cache", type=Path, default=REPO / "build" / "cache", help="where fetched sources are kept (git-ignored)")
+    vp.add_argument("--data", type=Path, default=REPO / "build" / "data", help="where the verified folder is copied for the upload")
     h = sub.add_parser("health", help="monthly health check: re-hash published files, check upstream sources and access links; writes one report")
     h.add_argument("--report", type=Path, help="write the Markdown report (the issue body) here")
     h.add_argument("--data-base", default="https://netscied.tw/data", help="where the published version folders are served")
@@ -107,10 +114,20 @@ def main(argv=None) -> int:
         # 3 = findings to report (the workflow then opens one issue); nothing is ever changed.
         return 3 if report.findings else 0
 
+    if args.command == "verify":
+        try:
+            m = verify_version(args.dataset, args.version, cache_dir=args.cache, data_dir=args.data)
+        except (VerifyError, RecipeError, FetchError, LicenseRefused, VersionError, KeyError, ValueError) as e:
+            print(f"netscied verify: {e}", file=sys.stderr)
+            return 1
+        print(f"{args.dataset} {args.version}: {len(m['files'])} files byte-identical to catalog/versions/{args.dataset}/{args.version}.json; copied to {args.data / args.dataset / args.version}/")
+        return 0
+
     try:
         if args.command == "upload":
             print(
-                "netscied upload: refused. Uploads run only in the approved `publish` job of the protected GitHub Environment (task 8.6); nothing was uploaded.",
+                "netscied upload: refused; nothing was uploaded. Versions are uploaded only by .github/workflows/publish.yml, "
+                "run from main and approved by the owner in the protected `publish` environment (task 8.6).",
                 file=sys.stderr,
             )
             return 2

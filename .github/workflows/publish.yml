@@ -1,0 +1,107 @@
+# Publish one dataset version to the data bucket (task 8.6; data-curation spec,
+# "Human gate on publication"). Nothing else uploads data.
+#
+# Run it from main (Actions → Publish a dataset version → Run workflow, or
+# `gh workflow run publish.yml --ref main -f dataset=<id> -f version=<x.y.z>`);
+# the run waits until the owner approves it in the protected `publish`
+# environment, which only main may deploy to. The job fetches the sources,
+# rebuilds the committed version and refuses unless it is byte-identical to
+# catalog/versions/<id>/<version>.json, uploads it with the environment's role
+# (put and get under data/ only, no delete), and reads every file back from
+# https://netscied.tw/data/<id>/<version>/.
+#
+# Environment `publish`: secret NETSCIED_PUBLISH_ROLE_ARN (a secret because the
+# ARN holds the account id and these logs are public), variable
+# NETSCIED_DATA_BUCKET.
+name: Publish a dataset version
+
+on:
+  workflow_dispatch:
+    inputs:
+      dataset:
+        description: Dataset id, as in catalog/versions/<id>/ (for example golden-horse-2018-nominations)
+        required: true
+        type: string
+      version:
+        description: Version to publish, as in catalog/versions/<id>/<version>.json (for example 1.0.0)
+        required: true
+        type: string
+
+permissions: {}
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    environment: publish
+    permissions:
+      contents: read
+      id-token: write
+    # One run per dataset at a time; a run is never cancelled half-way.
+    concurrency:
+      group: publish-${{ inputs.dataset }}
+      cancel-in-progress: false
+    timeout-minutes: 120
+    env:
+      # Inputs reach the shell only through the environment.
+      DATASET: ${{ inputs.dataset }}
+      VERSION: ${{ inputs.version }}
+    steps:
+      - name: Refuse runs that are not from main, and malformed inputs
+        run: |
+          if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+            echo "::error::publish runs only from main (this run is on $GITHUB_REF)"
+            exit 1
+          fi
+          if ! [[ "$DATASET" =~ ^[a-z0-9][a-z0-9-]*$ ]]; then
+            echo "::error::dataset must match ^[a-z0-9][a-z0-9-]*$"
+            exit 1
+          fi
+          if ! [[ "$VERSION" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "::error::version must be a semantic version like 1.0.0"
+            exit 1
+          fi
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 26
+      - name: Fetch the sources (hashes checked against the recipe)
+        working-directory: curation
+        run: uv run --frozen netscied fetch "$DATASET" --no-capture
+      - name: Rebuild the version and require it to be byte-identical to the committed manifest
+        working-directory: curation
+        run: uv run --frozen netscied verify "$DATASET" "$VERSION"
+      - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: ${{ secrets.NETSCIED_PUBLISH_ROLE_ARN }}
+          aws-region: ap-east-2
+      - name: Upload to the data bucket
+        env:
+          NETSCIED_DATA_BUCKET: ${{ vars.NETSCIED_DATA_BUCKET }}
+        run: node scripts/data/publish.mjs "$DATASET" "$VERSION"
+      - name: Read every file back from the site and check it
+        run: |
+          set -euo pipefail
+          manifest="catalog/versions/${DATASET}/${VERSION}.json"
+          base="https://netscied.tw/data/${DATASET}/${VERSION}"
+          dir="$RUNNER_TEMP/published/${DATASET}/${VERSION}"
+          mkdir -p "$dir"
+          # A missing key can answer 200 with an HTML page (final review W14),
+          # so each file must answer 200, not as text/html, with the manifest's bytes.
+          get() {
+            local rel="$1" want code size type
+            want=$(jq -r --arg p "$rel" '.files[] | select(.path == $p) | .bytes' "$manifest")
+            if [ -z "$want" ]; then echo "::error::SHA256SUMS lists $rel, which the manifest does not"; return 1; fi
+            mkdir -p "$(dirname "$dir/$rel")"
+            read -r code size type < <(curl -sS --retry 3 -o "$dir/$rel" -w '%{http_code} %{size_download} %{content_type}\n' "$base/$rel")
+            if [ "$code" != "200" ]; then echo "::error::$base/$rel answered HTTP $code"; return 1; fi
+            case "$type" in text/html*) echo "::error::$base/$rel answered $type, a page rather than the file: the key is probably missing"; return 1 ;; esac
+            if [ "$size" != "$want" ]; then echo "::error::$base/$rel is $size bytes; the manifest says $want bytes"; return 1; fi
+          }
+          get SHA256SUMS
+          while read -r _ rel; do get "$rel"; done < "$dir/SHA256SUMS"
+          cd "$dir"
+          sha256sum -c SHA256SUMS

@@ -171,3 +171,37 @@ test('the deploy lists every version file the pages link that the data origin do
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+// Final review W14: before stage 3, a missing key under /data/ answers 200
+// text/html (the old home page, through the 403 → /index.html error mapping).
+// A served file must answer 200, with the manifest's size, and not as HTML.
+test('final review W14: a soft 404, a wrong size or an HTML body does not count as a served data file', async () => {
+  const { missingDataFiles } = await import('../../scripts/deploy.mjs');
+  const { createServer } = await import('node:http');
+  const dir = mkdtempSync(path.join(tmpdir(), 'dist-'));
+  const HOME = '<!doctype html><title>old home</title>';
+  const files = { '/data/d1/1.0.0/a.csv': ['text/csv; charset=utf-8', 'id\n'], '/data/d1/1.0.0/short.csv': ['text/csv; charset=utf-8', 'i\n'], '/data/d1/1.0.0/page.json': ['text/html', '{}\n'] };
+  const server = createServer((req, res) => {
+    const hit = files[req.url];
+    const [type, body] = hit ?? ['text/html', HOME]; // the soft 404
+    res.writeHead(200, { 'Content-Type': type, 'Content-Length': Buffer.byteLength(body) });
+    res.end(req.method === 'HEAD' ? undefined : body);
+  });
+  await new Promise((r) => server.listen(0, '127.0.0.1', r));
+  const origin = `http://127.0.0.1:${server.address().port}`;
+  try {
+    mkdirSync(path.join(dir, 'api', 'v1', 'datasets'), { recursive: true });
+    const file = (p, bytes) => ({ path: p, bytes, url: `https://netscied.tw/data/d1/1.0.0/${p}` });
+    const record = { id: 'd1', versions: [{ version: '1.0.0', files: [file('a.csv', 3), file('missing.csv', 10), file('short.csv', 3), file('page.json', 3)] }] };
+    writeFileSync(path.join(dir, 'api', 'v1', 'datasets', 'd1.json'), JSON.stringify(record));
+    const missing = await missingDataFiles(dir, { origin });
+    assert.equal(missing.length, 3, missing.join('\n'));
+    assert.match(missing.find((m) => m.includes('missing.csv')), /text\/html/);
+    assert.match(missing.find((m) => m.includes('short.csv')), /2 bytes.*3/);
+    assert.match(missing.find((m) => m.includes('page.json')), /text\/html/);
+    assert.ok(!missing.some((m) => m.includes('a.csv')));
+  } finally {
+    server.close();
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

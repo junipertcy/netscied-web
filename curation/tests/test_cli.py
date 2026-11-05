@@ -6,7 +6,7 @@ import sys
 
 def test_help_lists_every_subcommand():
     out = subprocess.run([sys.executable, "-m", "netscied.cli", "--help"], capture_output=True, text=True, check=True).stdout
-    for command in ["fetch", "convert", "stats", "manifest", "upload", "health"]:
+    for command in ["fetch", "convert", "stats", "manifest", "verify", "upload", "health"]:
         assert command in out
 
 
@@ -17,7 +17,9 @@ from netscied.cli import main
 
 def test_upload_is_refused_locally(capsys):
     assert main(["upload", "golden-horse-2018-nominations"]) == 2
-    assert "nothing was uploaded" in capsys.readouterr().err
+    err = capsys.readouterr().err
+    assert "nothing was uploaded" in err
+    assert ".github/workflows/publish.yml" in err
 
 
 def test_fetch_then_manifest_builds_the_golden_horse_version(tmp_path, capsys):
