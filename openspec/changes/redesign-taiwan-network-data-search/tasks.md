@@ -58,7 +58,7 @@
 - [x] 7.1 Emit the `index.md` siblings, `llms.txt`, the sitemap with record `lastmod`, and the Atom feed (20 newest, or all if fewer), with `rel=alternate` on every page. Generate a news item on first publication (suppressible). Verify: the feed validates as Atom; the sitemap excludes `/search/` and `/404/`; a fixture moving from wanted to published produces exactly one news entry.
 - [ ] 7.2 Configure response headers: CORS for `/api/*` and `/data/*`; content types set at upload for `.md`, `.json`, `.csv` and `.xml`. Verify: smoke checks of the headers.
 - [ ] 7.3 Verify the domain in Google Search Console and Bing Webmaster Tools (Route 53 TXT records), submit the sitemap, and add an IndexNow ping to the deploy. Verify: both consoles show the sitemap as read.
-- [ ] 7.4 Agent readability: `curl` each page type, convert it to Markdown, and check that the key facts fall within the first 100k characters. Verify: a script asserts that the title, license and downloads appear in the converted text.
+- [x] 7.4 Agent readability: `curl` each page type, convert it to Markdown, and check that the key facts fall within the first 100k characters. Verify: a script asserts that the title, license and downloads appear in the converted text.
 
 ## 8. Minimum curation pipeline
 

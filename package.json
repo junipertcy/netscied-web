@@ -13,7 +13,8 @@
     "preview": "node scripts/preview.mjs",
     "catalog:validate": "node scripts/catalog/validate.mjs",
     "catalog:build": "node scripts/catalog/build.mjs",
-    "search:eval": "node scripts/search-eval.mjs"
+    "search:eval": "node scripts/search-eval.mjs",
+    "agent:readability": "node scripts/agent-readability.mjs"
   },
   "private": true,
   "packageManager": "pnpm@11.21.0",
