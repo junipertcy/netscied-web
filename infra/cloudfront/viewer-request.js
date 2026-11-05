@@ -3,7 +3,7 @@
 // "URL conventions" and "Legacy URLs keep working". Tests: tests/unit/edge-function.test.mjs.
 //
 // Rules, first match wins: the redirect map; …/index.html → …/; add a trailing
-// slash to extensionless paths; collapse repeated slashes; www → apex. Then
+// slash to extensionless paths outside /data/ and /.well-known/; collapse repeated slashes; www → apex. Then
 // directory URLs are served from index.html. Every site redirect is an absolute
 // https://netscied.tw URL, so no crafted path (//host, /\host) can send a browser
 // off the site. Any error lets the request through unchanged rather than failing it.
@@ -61,8 +61,9 @@ function handler(event) {
       target = withQuery(CONFIG.paths[key], query);
     } else if (/\/index\.html$/.test(path)) {
       target = path.slice(0, -'index.html'.length) + query;
-    } else if (path.indexOf('/.well-known/') !== 0) {
-      // Machine paths such as /.well-known/ go to the origin as requested.
+    } else if (path.indexOf('/.well-known/') !== 0 && path.indexOf('/data/') !== 0) {
+      // Machine paths such as /.well-known/ and the hosted data files under
+      // /data/ (SHA256SUMS has no extension) go to the origin as requested.
       var last = path.slice(path.lastIndexOf('/') + 1);
       if (last !== '' && last.indexOf('.') < 0) {
         target = path + '/' + query;

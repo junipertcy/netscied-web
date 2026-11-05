@@ -61,6 +61,11 @@ test('files with an extension pass through unchanged', () => {
   }
 });
 
+test('task 8.8: /data/ files without an extension (SHA256SUMS) reach the origin untouched, not as directories', () => {
+  assertPassThrough(run(handler, '/data/golden-horse-2018-nominations/1.0.0/SHA256SUMS'), '/data/golden-horse-2018-nominations/1.0.0/SHA256SUMS');
+  assertPassThrough(run(handler, '/data/golden-horse-2018-nominations/1.0.0/nodes.csv'), '/data/golden-horse-2018-nominations/1.0.0/nodes.csv');
+});
+
 test('/.well-known/ paths reach the origin untouched, so missing ones are a plain 404', () => {
   assertPassThrough(run(handler, '/.well-known/does-not-exist'), '/.well-known/does-not-exist');
 });
