@@ -120,6 +120,7 @@ test('final review D3: the Taipei Metro record covers the hosted months and says
   assert.equal(full.coverage.temporal.end, '2026-09');
   assert.ok(!full.coverage.temporal.ongoing);
   assert.match(JSON.stringify(full.coverage.temporal.note), /2017/);
-  const ld = JSON.parse(readDist('datasets/taipei-metro-od-monthly/index.html').match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g).map((s) => s.replace(/<\/?script[^>]*>/g, '')).find((s) => s.includes('"Dataset"')));
+  const scripts = [...readDist('datasets/taipei-metro-od-monthly/index.html').matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
+  const ld = scripts.find((j) => j['@type'] === 'Dataset');
   assert.equal(ld.temporalCoverage, '2025-10/2026-09');
 });

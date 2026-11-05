@@ -37,7 +37,7 @@ export function datasetMarkdown(d) {
     ['節點代表', zh(d.semantics.node)],
     ['連結代表', zh(d.semantics.link)],
     ['規模', d.size ? `${zh(d.size.text)}${d.size.approximate ? '（約略值）' : ''}` : '尚未計算'],
-    ['時間範圍', d.coverage.temporal ? zh(d.coverage.temporal) : '—'],
+    ['時間範圍', d.coverage.temporal ? zh(d.coverage.temporal) + (d.coverage.temporal.note ? `（${zh(d.coverage.temporal.note)}）` : '') : '—'],
     ['空間範圍', zh(d.coverage.spatial)],
     ['領域', d.domains.map(zh).join('、')],
     ['與臺灣的關係', d.taiwan_relevance.justification],

@@ -155,6 +155,8 @@ function temporalText(coverage) {
     ongoing: !!t.ongoing,
     'zh-Hant': same ? t.start : `${t.start ?? ''}–${end}`,
     en: same ? t.start : `${t.start ?? ''}–${endEn}`,
+    // For example that the upstream reaches further back than the hosted versions (final review D3).
+    ...(t.note ? { note: t.note } : {}),
   };
 }
 

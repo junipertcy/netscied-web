@@ -38,7 +38,7 @@
           @if (r.size.approximate) {<span class="sub">（約略值{{ r.size.as_of ? '，' + r.size.as_of + ' 查核' : '' }}）</span>}
         } @else { 尚未計算 }
       </dd>
-      @if (r.coverage.temporal) {<dt>時間範圍</dt><dd>{{ r.coverage.temporal['zh-Hant'] }}</dd>}
+      @if (r.coverage.temporal) {<dt>時間範圍</dt><dd>{{ r.coverage.temporal['zh-Hant'] }}@if (r.coverage.temporal.note) {<span class="sub">（{{ r.coverage.temporal.note['zh-Hant'] }}）</span>}</dd>}
       <dt>空間範圍</dt><dd>{{ r.coverage.spatial['zh-Hant'] }}</dd>
       <dt>領域</dt><dd>@for (x of r.domains; track x.id) {<span class="tag">{{ x['zh-Hant'] }}</span>}</dd>
       <dt>與臺灣的關係</dt>

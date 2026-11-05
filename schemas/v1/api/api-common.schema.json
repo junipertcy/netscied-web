@@ -97,7 +97,8 @@
         "end": { "type": ["string", "null"] },
         "ongoing": { "type": "boolean" },
         "zh-Hant": { "type": "string" },
-        "en": { "type": "string" }
+        "en": { "type": "string" },
+        "note": { "$ref": "#/$defs/text" }
       }
     },
     "file": {
