@@ -1,7 +1,7 @@
 // Task 2.2 — agent-access spec, "Crawl policy and sitemap".
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildSitemap, sourcesForRoute } from '../../scripts/build/sitemap.mjs';
+import { buildSitemap, redirectSources, sourcesForRoute } from '../../scripts/build/sitemap.mjs';
 
 const ORIGIN = 'https://netscied.tw';
 const fixedDate = () => '2026-11-04';
@@ -44,4 +44,19 @@ test('XML special characters in a URL are escaped', () => {
 test('a page route maps to its page directory; the home route maps to home', () => {
   assert.deepEqual(sourcesForRoute('/networks'), ['src/app/pages/networks']);
   assert.deepEqual(sourcesForRoute('/'), ['src/app/pages/home']);
+});
+
+// Task 11.2 — Angular prerenders redirectTo routes (meta-refresh pages) and lists
+// them in prerendered-routes.json; a redirect source is not a page to index.
+test('redirect sources are excluded', () => {
+  const xml = buildSitemap({ routes: ['/', '/networks', '/datasets', '/datasets/old-id'], origin: ORIGIN, lastmod: fixedDate, exclude: ['/networks', '/datasets/old-id'] });
+  assert.doesNotMatch(xml, /\/networks\//);
+  assert.doesNotMatch(xml, /old-id/);
+  assert.match(xml, /<loc>https:\/\/netscied\.tw\/datasets\/<\/loc>/);
+});
+
+test('the redirect sources come from the enabled rows of config/redirects.yaml and from dataset aliases', () => {
+  const redirects = 'canonical_host: netscied.tw\npaths:\n  - { from: /networks, to: /datasets/, enabled: true }\n  - { from: /refs, to: /courses/, enabled: false }\n';
+  const routesData = { dataset_aliases: [{ from: 'old-id', to: 'new-id' }] };
+  assert.deepEqual(redirectSources(redirects, routesData).sort(), ['/datasets/old-id', '/networks']);
 });

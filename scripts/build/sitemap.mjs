@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { loadRedirects } from '../edge/build-function.mjs';
 
 const ORIGIN = 'https://netscied.tw';
 // Never indexable: the not-found page and the search results page (noindex).
@@ -15,9 +16,19 @@ const escapeXml = (s) =>
 
 const canonical = (route) => (route === '/' ? '/' : `${route.replace(/\/+$/, '')}/`);
 
-export function buildSitemap({ routes, origin = ORIGIN, lastmod }) {
+// Paths that answer with a redirect (task 11.2): the enabled rows of
+// config/redirects.yaml and renamed dataset ids. Angular prerenders a
+// meta-refresh page for each, but none of them is a page to index.
+export function redirectSources(redirectsYaml, routesData = {}) {
+  const enabled = loadRedirects(redirectsYaml).rows.filter((r) => r.enabled).map((r) => r.from);
+  const aliases = (routesData.dataset_aliases ?? []).map((a) => `/datasets/${a.from}`);
+  return [...enabled, ...aliases];
+}
+
+export function buildSitemap({ routes, origin = ORIGIN, lastmod, exclude = [] }) {
+  const skip = new Set([...EXCLUDED, ...exclude.map((p) => p.replace(/\/+$/, '') || '/')]);
   const entries = routes
-    .filter((r) => !EXCLUDED.has(r.replace(/\/+$/, '') || '/'))
+    .filter((r) => !skip.has(r.replace(/\/+$/, '') || '/'))
     .sort()
     .map(
       (r) => `  <url>\n    <loc>${escapeXml(origin + canonical(r))}</loc>\n    <lastmod>${lastmod(r)}</lastmod>\n  </url>`,
@@ -61,7 +72,10 @@ function main() {
   const repoRoot = fileURLToPath(new URL('../../', import.meta.url));
   const distRoot = path.join(repoRoot, 'dist', 'netscied');
   const routes = Object.keys(JSON.parse(readFileSync(path.join(distRoot, 'prerendered-routes.json'), 'utf8')).routes);
-  const xml = buildSitemap({ routes, lastmod: (r) => gitLastmod(repoRoot, sourcesForRoute(r)) });
+  const routesFile = path.join(distRoot, 'browser', '_data', 'routes.json');
+  const routesData = existsSync(routesFile) ? JSON.parse(readFileSync(routesFile, 'utf8')) : {};
+  const exclude = redirectSources(readFileSync(path.join(repoRoot, 'config', 'redirects.yaml'), 'utf8'), routesData);
+  const xml = buildSitemap({ routes, exclude, lastmod: (r) => gitLastmod(repoRoot, sourcesForRoute(r)) });
   writeFileSync(path.join(distRoot, 'browser', 'sitemap.xml'), xml);
   console.log(`sitemap.xml: ${xml.match(/<url>/g)?.length ?? 0} pages`);
 }
