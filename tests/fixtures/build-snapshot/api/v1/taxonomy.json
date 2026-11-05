@@ -1006,6 +1006,9 @@
       "id": "nycu",
       "zh-Hant": "國立陽明交通大學",
       "short": "陽明交大",
+      "also": [
+        "交大"
+      ],
       "en": "National Yang Ming Chiao Tung University",
       "ror": "https://ror.org/00se2k293"
     },
@@ -1020,6 +1023,9 @@
       "id": "ntnu",
       "zh-Hant": "國立臺灣師範大學",
       "short": "臺師大",
+      "also": [
+        "師大"
+      ],
       "en": "National Taiwan Normal University",
       "ror": "https://ror.org/059dkdx38"
     },

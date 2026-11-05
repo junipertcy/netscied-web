@@ -11,6 +11,7 @@
 #
 # Fields: q, mode (datasets|courses), lang (zh-Hant|zh-Hans|en|mixed),
 # expected (ids that must be in the top 5), first (id that must rank 1),
+# first_any (the first result must be one of these ids),
 # forbidden (ids never in the top 5), expect_zero, expect_nonzero,
 # expected_wanted (wanted entries shown in the separate group), note.
 queries:
@@ -93,3 +94,15 @@ queries:
   - { q: 大數據, mode: courses, lang: zh-Hant, first: nycu-criminal-network-big-data-analytics, forbidden: [ntu-graph-theory-with-applications, nycu-graph-theory], note: 數據 is a filler word but part of 大數據 here (review finding 2) }
   - { q: 計算機網路, mode: courses, lang: zh-Hant, expect_zero: true, forbidden: [nthu-network-science], note: the course catalog excludes computer networking }
   - { q: CS224W, mode: courses, lang: en, expect_zero: true, forbidden: [ncku-graph-machine-learning], note: foreign courses are outside search }
+
+  # Final review W3: university and department names are not topic words.
+  # 交通 is in 陽明交通大學 and 政治 in 政治大學; neither query is about a school.
+  - { q: 交通網絡, mode: courses, lang: zh-Hant, forbidden: [nycu-biological-network-analysis, nycu-criminal-network-big-data-analytics, nycu-fundamental-graph-theory, nycu-gnn-recommendation-relation-estimation, nycu-graph-theory, nycu-network-biology-implementation, nycu-network-science-models-architecture, nycu-network-science-social-computing, nycu-network-strategies, nycu-research-social-network-analysis], note: "W3: 交通 of 陽明交通大學" }
+  - { q: 政治網絡, mode: courses, lang: zh-Hant, forbidden: [nccu-intro-social-media, nccu-personal-networks, nccu-social-networks-social-capital, nccu-tigp-intro-social-networks], note: "W3: 政治 of 政治大學" }
+  # Final review W6: no bigram across a space or across the edge of 網絡; no junk tokens.
+  - { q: 台大 社會網絡, mode: courses, lang: zh-Hant, first_any: [ntu-social-media-social-network-analysis, ntu-economics-social-networks], forbidden: [nycu-graph-theory], note: "W6: the junk bigram 大社 ranked NCCU first" }
+  - { q: 人際網絡, mode: datasets, lang: zh-Hant, forbidden: [twnic-interconnection-bandwidth], note: "W6: 際網 occurs in 網際網路" }
+  - { q: a, mode: datasets, lang: en, expect_zero: true, forbidden: [golden-horse-2018-nominations], note: "W6: a single letter matched every dataset" }
+  - { q: "1", mode: datasets, lang: en, expect_zero: true, forbidden: [ly-bill-cosponsorship-10th] }
+  - { q: "<script>alert(1)</script>", mode: datasets, lang: en, expect_zero: true, forbidden: [ly-committee-membership] }
+  - { q: "javascript:alert(1)", mode: datasets, lang: en, expect_zero: true, forbidden: [taipei-metro-od-monthly] }

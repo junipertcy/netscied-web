@@ -117,7 +117,7 @@ export function buildSite({ root, out, today = taipeiToday(), useGit = true, bas
     ...wanted.filter((w) => w.entry.status !== 'published').map(({ src, entry }) => wantedSearchRecord(src, entry, vocab)),
     ...courses.map(({ src, full }) => courseSearchRecord(src, full, vocab)),
   ];
-  const corpus = searchRecords.flatMap((r) => [r.title.zh, r.title.en, r.description, r.en, ...r.keywords, ...r.aliases]);
+  const corpus = searchRecords.flatMap((r) => [r.title.zh, r.title.en, r.description, r.en, ...r.keywords, ...r.aliases, ...(r.institution ?? [])]);
   const catalogJson = {
     schema: 1,
     generated: today,

@@ -84,6 +84,7 @@ export function wantedSearchRecord(source, entry, vocab) {
 
 export function courseSearchRecord(source, full, vocab) {
   const concepts = conceptsFor(source, vocab);
+  const uni = vocab.byId?.universities?.get(source.university);
   const instructors = full.latest.instructors.map((i) => i.name).join('、') || (full.latest.instructors_unverified ? '待確認' : '未列出');
   return {
     type: 'course',
@@ -91,10 +92,14 @@ export function courseSearchRecord(source, full, vocab) {
     url: `/courses/${full.id}/`,
     status: 'published',
     title: { zh: full.title['zh-Hant'], en: full.title.en ?? '' },
-    keywords: [...full.keywords, full.university['zh-Hant'], full.university.short, full.department['zh-Hant'], ...full.offerings.flatMap((o) => o.instructors.map((i) => i.name))].filter(Boolean),
+    keywords: [...full.keywords, ...full.offerings.flatMap((o) => o.instructors.map((i) => i.name))].filter(Boolean),
     aliases: aliasesOf(concepts),
     description: [full.summary?.['zh-Hant'], full.inclusion_note['zh-Hant']].filter(Boolean).join(' '),
-    en: [full.summary?.en, full.university.en, full.department.en].filter(Boolean).join(' '),
+    en: [full.summary?.en].filter(Boolean).join(' '),
+    // Final review W3: names of the school and department rank, but never match on their own.
+    institution: [full.university['zh-Hant'], full.university.short, ...(uni?.also ?? []), full.university.en, full.department['zh-Hant'], full.department.en].filter(Boolean),
+    // The official name, without 國立 too (陽明交通大學), the short names, and the English name.
+    institutionNames: [...new Set([full.university['zh-Hant'], full.university['zh-Hant']?.replace(/^國立/, ''), full.university.short, ...(uni?.also ?? []), full.university.en].filter(Boolean))],
     internet: false,
     domains: [],
     kinds: [],

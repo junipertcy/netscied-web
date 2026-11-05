@@ -36,9 +36,11 @@ const RECORDS = [
   rec({ id: 'migration', type: 'wanted', status: 'wanted', url: '/wanted/#migration', title: { zh: '人口遷徙網絡', en: '' }, aliases: ['遷徙', 'migration'], domains: ['society'], description: '縣市之間的人口遷入與遷出。' }),
   rec({ id: 'sna-course', type: 'course', url: '/courses/sna-course/', title: { zh: '社會網絡分析', en: 'Social Network Analysis' }, aliases: ['社會網絡分析', 'social network analysis', 'sna'], kinds: [], description: '' }),
   rec({ id: 'gt-course', type: 'course', url: '/courses/gt-course/', title: { zh: '圖論', en: 'Graph Theory' }, aliases: ['圖論', 'graph theory'], kinds: [], description: '' }),
+  // Final review W3: the school's name is in its own field.
+  rec({ id: 'nycu-course', type: 'course', url: '/courses/nycu-course/', title: { zh: '網路策略', en: 'Network Strategies' }, kinds: [], description: '', institution: ['國立陽明交通大學', '陽明交大', '交大', '資訊管理研究所'], institutionNames: ['國立陽明交通大學', '陽明交通大學', '陽明交大', '交大'] }),
 ];
 
-const corpus = RECORDS.flatMap((r) => [r.title.zh, r.title.en, r.description, ...r.aliases, ...r.keywords]);
+const corpus = RECORDS.flatMap((r) => [r.title.zh, r.title.en, r.description, ...r.aliases, ...r.keywords, ...(r.institution ?? [])]);
 const normalize = makeNormalizeData(concepts, corpus);
 const catalog = { schema: 1, normalize, records: RECORDS };
 const search = createSearch(catalog);
@@ -259,4 +261,35 @@ test('a plural query word also matches the singular in the index, and the other 
   const s = createSearch({ schema: 1, normalize: makeNormalizeData(concepts, recs.flatMap((r) => [r.title.zh, r.title.en, ...r.aliases])), records: recs });
   assert.deepEqual(s.search('flight routes', 'datasets').wanted.map((w) => w.id), ['air']);
   assert.deepEqual(s.search('flights route', 'datasets').wanted.map((w) => w.id), ['air']);
+});
+
+
+// Final review W6 (replaces the task 6.1 rule that queries join Han runs across spaces).
+test('W6: a query keeps its spaces, so no bigram crosses one', () => {
+  const q = prepareQuery('台大 社會網絡', 'courses', normalize);
+  assert.ok(!q.tokens.includes(norm.normalize('大社')), q.tokens.join());
+  assert.deepEqual(ids(search.search('金馬 獎', 'datasets')).slice(0, 1), ['film']);
+});
+
+test('W6: a bigram that straddles 網路 never makes a hit on its own', () => {
+  const q = prepareQuery('人際網絡', 'datasets', normalize);
+  assert.deepEqual(q.cross, [norm.normalize('際網')]);
+  assert.ok(!ids(search.search('人際網絡', 'datasets')).includes('twnic'));
+  // The straddling token still ranks when a real word matches with it: 網絡科學.
+  assert.ok(prepareQuery('網絡科學', 'courses', normalize).specific.includes(norm.normalize('科學')));
+});
+
+test('W6: single letters, digits and markup words never match', () => {
+  for (const junk of ['a', '1', '<script>alert(1)</script>', 'javascript:alert(1)']) {
+    assert.deepEqual(ids(search.search(junk, 'datasets')), [], junk);
+  }
+});
+
+test('W3: a university name ranks, but never satisfies coverage on its own', () => {
+  assert.deepEqual(ids(search.search('交通網絡', 'courses')), []);
+  assert.deepEqual(ids(search.search('交大', 'courses')), ['nycu-course']);
+  assert.deepEqual(ids(search.search('陽明交通大學', 'courses')), ['nycu-course']);
+  assert.deepEqual(prepareQuery('交大 網路策略', 'courses', normalize, [norm.normalize('交大')]).institutions, [norm.normalize('交大')]);
+  // In data mode a school name is just text: 交大 does not change a dataset query.
+  assert.deepEqual(prepareQuery('交大', 'datasets', normalize, [norm.normalize('交大')]).institutions, []);
 });

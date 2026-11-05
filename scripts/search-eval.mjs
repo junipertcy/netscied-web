@@ -58,6 +58,10 @@ export function evaluateGold(catalog, queries) {
     if (g.first && published.has(`${mode}:${g.first}`) && res.hits[0]?.id !== g.first) {
       failures.push(`${label}: expected ${g.first} first, got ${res.hits[0]?.id ?? 'nothing'}`);
     }
+    const firstAny = (g.first_any ?? []).filter((id) => published.has(`${mode}:${id}`));
+    if (firstAny.length && !firstAny.includes(res.hits[0]?.id)) {
+      failures.push(`${label}: expected one of ${firstAny.join(', ')} first, got ${res.hits[0]?.id ?? 'nothing'}`);
+    }
     for (const id of g.forbidden ?? []) {
       if (top.includes(id)) failures.push(`${label}: forbidden result ${id} is in the top ${TOP}`);
     }

@@ -36,6 +36,14 @@ export interface SearchRecord {
   kinds: string[];
   category?: string;
   university?: string;
+  /**
+   * University and department names (final review W3). Indexed for ranking only:
+   * a match here never satisfies the coverage rule, so 交通 (in 陽明交通大學) does
+   * not make a course about transport networks.
+   */
+  institution?: string[];
+  /** Whole university names and short names (台大, 政大, 交大): a query naming one ranks that school first. */
+  institutionNames?: string[];
   /** Score multiplier, below 1 for historical or dormant courses. Default 1. */
   boost?: number;
   display: Record<string, unknown>;
@@ -56,6 +64,10 @@ export interface PreparedQuery {
   cleaned: string;
   tokens: string[];
   specific: string[];
+  /** Specific tokens that straddle the edge of a generic word (際網 in 人際網絡): never the only match. */
+  cross: string[];
+  /** Normalized university names the query contains (course mode). */
+  institutions: string[];
   empty: boolean;
   genericOnly: boolean;
   networking: boolean;
@@ -88,14 +100,20 @@ const BOPOMOFO = /[㄀-ㄯㆠ-ㆿˊˇˋ˙]/gu;
 const LATIN_WORD = /^[a-z][a-z0-9-]*$/;
 const SPACE_BETWEEN_HAN = /(\p{Script=Han})\s+(?=\p{Script=Han})/gu;
 const WORD = /[\p{L}\p{N}]+(?:-[\p{L}\p{N}]+)*/gu;
+// Query tokens that never mean a record (final review W6): a single Latin letter
+// or digit, and the words of markup and script injection.
+const JUNK = new Set(['script', 'javascript', 'alert', 'onerror', 'onload', 'iframe', 'img', 'src', 'href', 'http', 'https', 'www', 'html', 'svg']);
+const isJunk = (t: string) => /^[a-z0-9]$/.test(t) || JUNK.has(t);
 
 export function createNormalizer(data: NormalizeData) {
   const fold = data.fold;
-  const normalize = (text: string): string => {
+  // Record text joins Han runs split by a space. A query keeps its spaces, so no
+  // bigram crosses one (台大 社會網絡 has no 大社; final review W6).
+  const normalize = (text: string, keepSpaces = false): string => {
     let s = (text ?? '').normalize('NFKC').toLowerCase();
     let out = '';
     for (const ch of s) out += fold[ch] ?? ch;
-    s = out.replace(SPACE_BETWEEN_HAN, '$1');
+    s = keepSpaces ? out : out.replace(SPACE_BETWEEN_HAN, '$1');
     for (const [from, to] of data.phrases) s = s.split(from).join(to);
     return s;
   };
@@ -183,14 +201,14 @@ function strip(s: string, ranges: [number, number][]): string {
   return s.split('').map((c, i) => (keep[i] ? c : ' ')).join('');
 }
 
-export function prepareQuery(raw: string, mode: Mode, data: NormalizeData): PreparedQuery {
+export function prepareQuery(raw: string, mode: Mode, data: NormalizeData, institutionNames: string[] = []): PreparedQuery {
   const norm = createNormalizer(data);
   const rawText = typeof raw === 'string' ? raw : '';
   const chars = Array.from(rawText);
   const truncated = chars.length > MAX_QUERY_CHARS;
   const text = truncated ? chars.slice(0, MAX_QUERY_CHARS).join('') : rawText;
 
-  const s = norm.normalize(text.replace(BOPOMOFO, ''));
+  const s = norm.normalize(text.replace(BOPOMOFO, ''), true);
   const networking = phraseRanges(s, data.networking).length > 0;
   const other: Mode = mode === 'datasets' ? 'courses' : 'datasets';
   const modeHint = phraseRanges(s, data.modeWords[other]).length > 0 ? other : null;
@@ -200,11 +218,23 @@ export function prepareQuery(raw: string, mode: Mode, data: NormalizeData): Prep
   // rule counts it). Tokens that straddle an edge are optional too, unless the
   // query has characters that no required token covers: then stripping would
   // have cut a word (大數據, 目的地), and the straddling tokens are kept.
-  const ranges = phraseRanges(s, [...data.modeWords.courses, ...data.modeWords.datasets, ...data.fillers]);
+  // In course mode a university name is optional too: it ranks that school's
+  // courses first instead of being matched as topic words (final review W3).
+  const instRanges = mode === 'courses' ? phraseRanges(s, institutionNames) : [];
+  const institutions = [...new Set(instRanges.map(([a, b]) => s.slice(a, b)))];
+  const ranges = [...phraseRanges(s, [...data.modeWords.courses, ...data.modeWords.datasets, ...data.fillers]), ...instRanges];
   const covered = new Uint8Array(s.length);
   for (const [a, b] of ranges) covered.fill(1, a, b);
-  const spans = norm.tokenizeSpans(s);
+  const spans = norm.tokenizeSpans(s).filter((sp) => !isJunk(sp.t));
   const generic = new Set(data.generic.flatMap((g) => norm.tokenizeNormalized(g)));
+  // Han generic words (网路) and the tokens that straddle their edges.
+  const inGeneric = new Uint8Array(s.length);
+  for (const [a, b] of phraseRanges(s, data.generic.map((g) => norm.normalize(g)).filter((g) => HAN.test(g)))) inGeneric.fill(1, a, b);
+  const straddlesGeneric = (sp: Span) => {
+    let n = 0;
+    for (let i = sp.start; i < sp.end; i++) n += inGeneric[i];
+    return n > 0 && n < sp.end - sp.start;
+  };
   const count = (sp: Span) => {
     let n = 0;
     for (let i = sp.start; i < sp.end; i++) n += covered[i];
@@ -228,6 +258,7 @@ export function prepareQuery(raw: string, mode: Mode, data: NormalizeData): Prep
   }
   const tokens = [...new Set(spans.map((sp) => sp.t))];
   const specific = [...new Set(specificSpans.map((sp) => sp.t))];
+  const straddling = [...new Set(specificSpans.filter(straddlesGeneric).map((sp) => sp.t))].filter((t) => !specificSpans.some((sp) => sp.t === t && !straddlesGeneric(sp)));
   return {
     raw: rawText,
     text,
@@ -235,6 +266,8 @@ export function prepareQuery(raw: string, mode: Mode, data: NormalizeData): Prep
     cleaned: norm.normalize(strip(s, ranges).replace(/\s+/g, ' ').trim()),
     tokens,
     specific,
+    cross: straddling,
+    institutions,
     empty: specific.length === 0 && genericCore.length === 0,
     genericOnly: specific.length === 0 && genericCore.length > 0,
     networking,
@@ -259,7 +292,9 @@ export function oneEditApart(a: string, b: string): boolean {
 }
 
 const TYPE_FOR_MODE: Record<Mode, RecordType> = { datasets: 'dataset', courses: 'course' };
-const BOOST = { title: 4, keywords: 2.5, aliases: 1.75, en: 1.5, description: 1 };
+const BOOST = { title: 4, keywords: 2.5, aliases: 1.75, en: 1.5, description: 1, institution: 1 };
+// A course of the school the query names ranks above the others (final review W3).
+const INSTITUTION_BOOST = 3;
 
 export function createSearch(catalog: CatalogFile) {
   const data = catalog.normalize;
@@ -268,7 +303,7 @@ export function createSearch(catalog: CatalogFile) {
   const byId = new Map(records.map((r) => [`${r.type}:${r.id}`, r]));
   const index = new MiniSearch<Record<string, unknown>>({
     idField: 'key',
-    fields: ['title', 'keywords', 'aliases', 'en', 'description'],
+    fields: ['title', 'keywords', 'aliases', 'en', 'description', 'institution'],
     storeFields: ['type', 'boost'],
     tokenize: (text: string) => norm.tokenize(text),
     processTerm: (term: string) => term,
@@ -283,8 +318,20 @@ export function createSearch(catalog: CatalogFile) {
       aliases: r.aliases.join(' '),
       en: r.en,
       description: r.description,
+      institution: (r.institution ?? []).join(' '),
     })),
   );
+  // Normalized whole university names, and the records of each.
+  const recordsByInstitution = new Map<string, Set<string>>();
+  for (const r of records) {
+    for (const n of r.institutionNames ?? []) {
+      const key = norm.normalize(n);
+      if (!recordsByInstitution.has(key)) recordsByInstitution.set(key, new Set());
+      recordsByInstitution.get(key)!.add(`${r.type}:${r.id}`);
+    }
+  }
+  const institutionNames = [...recordsByInstitution.keys()].sort((a, b) => b.length - a.length);
+  const ofInstitutions = (q: PreparedQuery) => new Set(q.institutions.flatMap((n) => [...(recordsByInstitution.get(n) ?? [])]));
 
   // Every Latin word in the index, by first letter, for typo expansion.
   const latinByFirst = new Map<string, Set<string>>();
@@ -316,8 +363,10 @@ export function createSearch(catalog: CatalogFile) {
   };
 
   const run = (q: PreparedQuery, type: RecordType): Hit[] => {
-    if (q.empty) return [];
+    const named = ofInstitutions(q);
     const pool = records.filter((r) => r.type === type);
+    // A query that only names a school lists that school's courses.
+    if (q.empty) return named.size ? pool.filter((r) => named.has(`${r.type}:${r.id}`)).map((record, i, all) => ({ id: record.id, type, score: all.length - i, record })) : [];
     let hits: Hit[];
     if (q.genericOnly) {
       hits = pool.map((record, i) => ({ id: record.id, type, score: pool.length - i, record }));
@@ -328,6 +377,8 @@ export function createSearch(catalog: CatalogFile) {
       const latinOnly = q.specific.every((t) => LATIN_WORD.test(t));
       const need = q.specific.length * (latinOnly ? 2 / 3 : 1 / 3);
       const specific = new Set(q.specific);
+      const cross = new Set(q.cross);
+      const anchored = q.specific.some((t) => !cross.has(t));
       const terms = expand(q.tokens);
       hits = index
         .search([...terms.keys()].join(' '), {
@@ -340,10 +391,21 @@ export function createSearch(catalog: CatalogFile) {
           filter: (res) => res['type'] === type,
           boostDocument: (_id: unknown, _term: string, stored?: Record<string, unknown>) => Number(stored?.['boost'] ?? 1),
         })
-        .filter((res) => new Set(res.queryTerms.map((t) => terms.get(t) ?? t).filter((t) => specific.has(t))).size >= need)
+        .filter((res) => {
+          // Matches in the university and department names never count (W3).
+          const counted = Object.entries(res.match as Record<string, string[]>)
+            .filter(([, fields]) => fields.some((f) => f !== 'institution'))
+            .map(([t]) => terms.get(t) ?? t)
+            .filter((t) => specific.has(t));
+          const matched = new Set(counted);
+          // A token straddling 網路 (際網) never makes a hit on its own (W6).
+          if (anchored && ![...matched].some((t) => !cross.has(t))) return false;
+          return matched.size >= need;
+        })
         .map((res) => {
           const record = byId.get(String(res.id))!;
-          return { id: record.id, type, score: res.score, record };
+          const key = `${record.type}:${record.id}`;
+          return { id: record.id, type, score: res.score * (named.has(key) ? INSTITUTION_BOOST : 1), record };
         });
     }
     // Computer-networking intent: in data mode only internet datasets stay; the
@@ -374,10 +436,10 @@ export function createSearch(catalog: CatalogFile) {
 
   const search = (raw: string, mode: Mode = 'datasets'): SearchResult => {
     const m: Mode = mode === 'courses' ? 'courses' : 'datasets';
-    const q = prepareQuery(raw, m, data);
+    const q = prepareQuery(raw, m, data, institutionNames);
     const hits = run(q, TYPE_FOR_MODE[m]);
     const other: Mode = m === 'datasets' ? 'courses' : 'datasets';
-    const otherQ = prepareQuery(raw, other, data);
+    const otherQ = prepareQuery(raw, other, data, institutionNames);
     return {
       mode: m,
       query: q,

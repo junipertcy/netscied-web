@@ -173,6 +173,14 @@
           "ror": {
             "type": "string",
             "pattern": "^https://ror\\.org/0[a-z0-9]{8}$"
+          },
+          "also": {
+            "description": "Other common short names (交大 for 陽明交大), matched as whole names by search.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
           }
         }
       }

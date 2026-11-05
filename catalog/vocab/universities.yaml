@@ -4,9 +4,9 @@
 - { id: ntu, zh-Hant: 國立臺灣大學, short: 臺大, en: National Taiwan University, ror: "https://ror.org/05bqach95" }
 - { id: ncku, zh-Hant: 國立成功大學, short: 成大, en: National Cheng Kung University, ror: "https://ror.org/01b8kcc49" }
 - { id: nthu, zh-Hant: 國立清華大學, short: 清大, en: National Tsing Hua University, ror: "https://ror.org/00zdnkx70" }
-- { id: nycu, zh-Hant: 國立陽明交通大學, short: 陽明交大, en: National Yang Ming Chiao Tung University, ror: "https://ror.org/00se2k293" }
+- { id: nycu, zh-Hant: 國立陽明交通大學, short: 陽明交大, also: [交大], en: National Yang Ming Chiao Tung University, ror: "https://ror.org/00se2k293" }
 - { id: nccu, zh-Hant: 國立政治大學, short: 政大, en: National Chengchi University, ror: "https://ror.org/03rqk8h36" }
-- { id: ntnu, zh-Hant: 國立臺灣師範大學, short: 臺師大, en: National Taiwan Normal University, ror: "https://ror.org/059dkdx38" }
+- { id: ntnu, zh-Hant: 國立臺灣師範大學, short: 臺師大, also: [師大], en: National Taiwan Normal University, ror: "https://ror.org/059dkdx38" }
 - { id: ncu, zh-Hant: 國立中央大學, short: 中央, en: National Central University, ror: "https://ror.org/00944ve71" }
 - { id: nsysu, zh-Hant: 國立中山大學, short: 中山, en: National Sun Yat-sen University, ror: "https://ror.org/00mjawt10" }
 - { id: nchu, zh-Hant: 國立中興大學, short: 中興, en: National Chung Hsing University, ror: "https://ror.org/05vn3ca78" }
