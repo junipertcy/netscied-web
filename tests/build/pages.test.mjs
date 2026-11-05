@@ -180,6 +180,7 @@ test('task 5.5: /news/ lists every item newest first with <time datetime> and it
   const items = [...doc.querySelectorAll('ol.news-list > li')];
   const news = api('news.json');
   assert.deepEqual(items.map((li) => li.getAttribute('id')), news.map((n) => n.id));
+  assert.equal(items.length, 5, 'task 4.6: the 4 migrated items and the relaunch item');
   for (const li of items) assert.match(li.querySelector('time').getAttribute('datetime'), /^\d{4}-\d{2}-\d{2}$/);
   const dates = news.map((n) => n.date);
   assert.deepEqual(dates, [...dates].sort().reverse());
