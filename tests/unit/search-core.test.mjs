@@ -29,7 +29,7 @@ const rec = (over) => ({
 const RECORDS = [
   rec({ id: 'metro', title: { zh: '臺北捷運起訖站旅次', en: 'Taipei MRT origin–destination trips' }, aliases: ['捷運', 'MRT', 'metro', '地鐵', '旅次', '客流'], domains: ['transport'], description: '臺北捷運各站之間每月的旅次數。' }),
   rec({ id: 'metro-mention', title: { zh: '公共自行車站點', en: 'Bike stations' }, domains: ['transport'], description: '這份資料和捷運站的位置有關，描述自行車站點之間的騎乘。' }),
-  rec({ id: 'ly', title: { zh: '立法院第10屆法案連署超圖', en: 'Legislative Yuan co-sponsorship hypergraph' }, kinds: ['hypergraph'], aliases: ['超圖', 'hypergraph', '立委', '連署', 'cosponsorship', 'legislator'], domains: ['politics'], description: '每個法案的提案人與連署人構成一條超邊。' }),
+  rec({ id: 'ly', title: { zh: '立法院第10屆法案連署超圖', en: 'Legislative Yuan co-sponsorship hypergraph' }, kinds: ['hypergraph'], aliases: ['超圖', 'hypergraph', '立委', '連署', 'cosponsorship', 'co-sponsorship', 'legislator'], domains: ['politics'], description: '每個法案的提案人與連署人構成一條超邊。' }),
   rec({ id: 'film', title: { zh: '第55屆金馬獎入圍者–電影網絡', en: '55th Golden Horse Awards nominee–film network' }, aliases: ['二分網絡', 'bipartite', '電影', '金馬獎', 'film'], domains: ['culture'], description: '入圍者與影片之間的二分網絡。' }),
   rec({ id: 'twnic', title: { zh: 'TWNIC 連線頻寬網絡', en: 'TWNIC inter-network bandwidth network' }, aliases: ['網際網路', 'internet', '頻寬', 'bandwidth', 'internet topology'], internet: true, domains: ['technology'], description: '臺灣各網路之間登錄的連線頻寬。' }),
   rec({ id: 'gone', status: 'withdrawn', title: { zh: '已下架的捷運資料', en: 'Withdrawn metro data' }, aliases: ['捷運'] }),
@@ -192,4 +192,71 @@ test('a record boost demotes historical courses below current ones with the same
   const s = createSearch({ schema: 1, normalize: makeNormalizeData(concepts, two.map((r) => r.title.zh)), records: two });
   // Ids chosen so the alphabetical tie-break alone would put the historical one first.
   assert.deepEqual(s.search('網絡科學', 'courses').hits.map((h) => h.id), ['b-new', 'a-old']);
+});
+
+// Review of Milestone A, finding 1: typo matching was too loose.
+test('review 1: a typo matches only one edit away, with the same first letter, and never when the word exists', () => {
+  const recs = [
+    rec({ id: 'stations', title: { zh: '車站', en: 'Stations' }, aliases: ['station', 'stations'] }),
+    rec({ id: 'rail', title: { zh: '輕軌', en: 'Light rail' }, aliases: ['light rail'] }),
+    rec({ id: 'hyper', title: { zh: '超圖', en: 'Hypergraph' }, aliases: ['hypergraph'] }),
+    rec({ id: 'cites', type: 'wanted', status: 'wanted', url: '/wanted/#cites', title: { zh: '文獻引用網絡', en: 'Citation network' }, aliases: ['citation', 'citations'] }),
+  ];
+  const s = createSearch({ schema: 1, normalize: makeNormalizeData(concepts, recs.flatMap((r) => [r.title.zh, r.title.en, ...r.aliases])), records: recs });
+  const hit = (q) => s.search(q, 'datasets').hits.map((h) => h.id);
+  assert.deepEqual(hit('citation'), [], 'citation is two edits and a different first letter from station');
+  assert.deepEqual(s.search('citation', 'datasets').wanted.map((w) => w.id), ['cites']);
+  assert.deepEqual(hit('flight'), [], 'flight is not light');
+  assert.deepEqual(hit('hypergrahp'), ['hyper'], 'a swapped pair of letters is one edit');
+  assert.deepEqual(s.search('stations', 'datasets').wanted, [], 'stations is in the index, so no typo expansion reaches citations');
+});
+
+// Finding 2: filler stripping cut real words.
+test('review 2: filler words inside a real word do not cut it', () => {
+  const recs = [
+    rec({ id: 'big-data', type: 'course', url: '/courses/big-data/', title: { zh: '犯罪網絡與大數據分析', en: '' }, keywords: ['陽明交大'], kinds: [] }),
+    rec({ id: 'gt', type: 'course', url: '/courses/gt/', title: { zh: '圖論', en: '' }, keywords: ['臺大', '國立臺灣大學'], kinds: [] }),
+    rec({ id: 'ds', type: 'course', url: '/courses/ds/', title: { zh: '資料科學導論', en: '' }, kinds: [] }),
+    rec({ id: 'ns', type: 'course', url: '/courses/ns/', title: { zh: '網路科學', en: '' }, kinds: [] }),
+    rec({ id: 'trip', title: { zh: '旅次目的地統計', en: '' } }),
+  ];
+  const s = createSearch({ schema: 1, normalize: makeNormalizeData(concepts, recs.flatMap((r) => [r.title.zh, ...r.keywords])), records: recs });
+  assert.deepEqual(s.search('大數據', 'courses').hits.map((h) => h.id), ['big-data'], '大數據 is not 大 + the filler 數據');
+  assert.equal(s.search('資料科學', 'courses').hits[0]?.id, 'ds', '資料科學 keeps 資料');
+  assert.deepEqual(s.search('目的地', 'datasets').hits.map((h) => h.id), ['trip'], '目的地 keeps 的');
+});
+
+test('review 2: natural-language fillers at the edges still drop, and an all-filler query is still empty', () => {
+  assert.equal(ids(search.search('有沒有立委連署的網絡資料', 'datasets'))[0], 'ly');
+  assert.equal(search.search('台灣 的 資料', 'datasets').query.empty, true);
+  assert.equal(search.search('台灣 網絡 資料', 'datasets').browseAll, true);
+});
+
+// Finding 3: hyphenated words produced noise tokens (co-authorship matched co-sponsorship).
+test('review 3: hyphenated words do not leak short parts such as "co"', () => {
+  assert.deepEqual(norm.tokenize('co-authorship'), ['co-authorship', 'authorship']);
+  assert.ok(!ids(search.search('co-authorship', 'datasets')).includes('ly'));
+});
+
+test('review 1: an English query needs two thirds of its words, so "flight routes" does not match a record about routes', () => {
+  const recs = [
+    rec({ id: 'metro-stops', title: { zh: '捷運站點相鄰網絡', en: 'Metro stop adjacency' }, en: 'some route stops at one station right after another; weighted by the number of routes' }),
+    rec({ id: 'flights', type: 'wanted', status: 'wanted', url: '/wanted/#flights', title: { zh: '航空路線網絡', en: 'Air routes' }, aliases: ['flight', 'flights'] }),
+  ];
+  const s = createSearch({ schema: 1, normalize: makeNormalizeData(concepts, recs.flatMap((r) => [r.title.zh, r.title.en, r.en, ...r.aliases])), records: recs });
+  assert.deepEqual(s.search('flight routes', 'datasets').hits, []);
+  assert.deepEqual(s.search('flight routes', 'datasets').wanted.map((w) => w.id), ['flights']);
+  assert.deepEqual(s.search('metro routes', 'datasets').hits.map((h) => h.id), ['metro-stops']);
+});
+
+test('a plural query word also matches the singular in the index, and the other way round', () => {
+  // routes and flights are in the index too, so typo expansion (which skips
+  // indexed words) cannot be what bridges routes ↔ route.
+  const recs = [
+    rec({ id: 'air', type: 'wanted', status: 'wanted', url: '/wanted/#air', title: { zh: '航空路線網絡', en: 'Air route network' }, aliases: ['flight'] }),
+    rec({ id: 'other', title: { zh: '其他', en: 'routes of flights' } }),
+  ];
+  const s = createSearch({ schema: 1, normalize: makeNormalizeData(concepts, recs.flatMap((r) => [r.title.zh, r.title.en, ...r.aliases])), records: recs });
+  assert.deepEqual(s.search('flight routes', 'datasets').wanted.map((w) => w.id), ['air']);
+  assert.deepEqual(s.search('flights route', 'datasets').wanted.map((w) => w.id), ['air']);
 });

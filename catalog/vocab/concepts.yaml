@@ -1,4 +1,7 @@
 # Search concepts and aliases (design D4; site-search spec, "Query understanding").
+# Never add a word with several everyday senses as an alias (媒體, 運動, social,
+# media): it attaches unrelated records to queries such as 社群媒體 or 社會運動
+# (review of Milestone A, finding 3). Concept labels count as aliases too.
 # At build time each record gets the labels and aliases of every concept it
 # carries, and the search indexes them as an alias field (boost 1.5–2). This
 # table is what lets an English or mainland-vocabulary query reach a record
@@ -112,9 +115,9 @@ concepts:
     aliases: [空間, 地理, 空間網絡, spatial, geographic, geospatial]
     attach: { property: spatial }
   # Domains
-  - { id: domain:society, zh-Hant: 社會關係, en: society, aliases: [社會, 人際, 社會網絡, social, society], attach: { domain: society } }
+  - { id: domain:society, zh-Hant: 社會關係, en: society, aliases: [社會, 人際, 社會網絡, society], attach: { domain: society } }
   - { id: domain:politics, zh-Hant: 政治與治理, en: politics, aliases: [政治, 治理, 政府, political, politics, governance], attach: { domain: politics } }
-  - { id: domain:culture, zh-Hant: 文化、媒體與運動, en: culture, aliases: [文化, 媒體, 藝術, 娛樂, culture, media, entertainment], attach: { domain: culture } }
+  - { id: domain:culture, zh-Hant: 文化, en: culture, aliases: [文化, 藝術, 娛樂, culture, arts, entertainment], attach: { domain: culture } }
   - { id: domain:economy, zh-Hant: 經濟與產業, en: economy, aliases: [經濟, 產業, 金融, 企業, economy, economic, industry, finance], attach: { domain: economy } }
   - { id: domain:transport, zh-Hant: 交通與移動, en: transport, aliases: [交通, 運輸, 移動, 基礎建設, transport, transportation, mobility], attach: { domain: transport } }
   - { id: domain:technology, zh-Hant: 科技與基礎設施, en: technology, aliases: [科技, 基礎設施, 技術, technology, infrastructure], attach: { domain: technology } }
@@ -173,9 +176,9 @@ concepts:
     aliases: [棒球, 中職, 職棒, 中華職棒, 打者, 投手, cpbl, baseball]
     attach: { tag: baseball }
   - id: topic:sport
-    zh-Hant: 運動
+    zh-Hant: 體育
     en: sport
-    aliases: [運動, 體育, 球賽, 比賽, sport, sports]
+    aliases: [體育, 球賽, sport, sports]
     attach: { tag: sport }
   - id: topic:input-output
     zh-Hant: 產業關聯

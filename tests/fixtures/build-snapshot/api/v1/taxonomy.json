@@ -193,7 +193,7 @@
     },
     {
       "id": "sport",
-      "zh-Hant": "運動",
+      "zh-Hant": "體育",
       "en": "sport"
     },
     {
@@ -1325,7 +1325,6 @@
         "社會",
         "人際",
         "社會網絡",
-        "social",
         "society"
       ]
     },
@@ -1344,15 +1343,14 @@
     },
     {
       "id": "domain:culture",
-      "zh-Hant": "文化、媒體與運動",
+      "zh-Hant": "文化",
       "en": "culture",
       "aliases": [
         "文化",
-        "媒體",
         "藝術",
         "娛樂",
         "culture",
-        "media",
+        "arts",
         "entertainment"
       ]
     },
@@ -1631,13 +1629,11 @@
     },
     {
       "id": "topic:sport",
-      "zh-Hant": "運動",
+      "zh-Hant": "體育",
       "en": "sport",
       "aliases": [
-        "運動",
         "體育",
         "球賽",
-        "比賽",
         "sport",
         "sports"
       ]

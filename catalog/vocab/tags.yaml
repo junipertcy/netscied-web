@@ -21,7 +21,7 @@
 - { id: industry, zh-Hant: 產業, en: industry }
 - { id: energy, zh-Hant: 能源, en: energy }
 - { id: power-grid, zh-Hant: 電網, en: power grid }
-- { id: sport, zh-Hant: 運動, en: sport }
+- { id: sport, zh-Hant: 體育, en: sport }
 - { id: baseball, zh-Hant: 棒球, en: baseball }
 - { id: food-web, zh-Hant: 食物網, en: food web }
 - { id: ecology, zh-Hant: 生態, en: ecology }

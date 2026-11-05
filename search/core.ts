@@ -85,8 +85,9 @@ export const MAX_QUERY_CHARS = 100;
 // Han characters, plus the CJK compatibility and extension blocks NFKC leaves alone.
 const HAN = /\p{Script=Han}/u;
 const BOPOMOFO = /[㄀-ㄯㆠ-ㆿˊˇˋ˙]/gu;
+const LATIN_WORD = /^[a-z][a-z0-9-]*$/;
 const SPACE_BETWEEN_HAN = /(\p{Script=Han})\s+(?=\p{Script=Han})/gu;
-const WORD = /[\p{L}\p{N}]+/gu;
+const WORD = /[\p{L}\p{N}]+(?:-[\p{L}\p{N}]+)*/gu;
 
 export function createNormalizer(data: NormalizeData) {
   const fold = data.fold;
@@ -98,69 +99,88 @@ export function createNormalizer(data: NormalizeData) {
     for (const [from, to] of data.phrases) s = s.split(from).join(to);
     return s;
   };
-  // Tokens of text that is already normalized: overlapping bigrams over each run
-  // of Han characters (a lone character stays a unigram), and Latin/other words.
-  const tokenizeNormalized = (s: string): string[] => {
-    const tokens: string[] = [];
+  // Tokens of text that is already normalized, with their positions: overlapping
+  // bigrams over each run of Han characters (a lone character stays a unigram),
+  // and Latin/other words. A hyphenated word is one token, plus its parts of
+  // three or more letters (co-authorship → co-authorship, authorship).
+  const tokenizeSpans = (s: string): Span[] => {
+    const out: Span[] = [];
     for (const m of s.matchAll(WORD)) {
       const run = m[0];
-      let han: string[] = [];
+      let han: { ch: string; i: number }[] = [];
       let latin = '';
+      let latinStart = -1;
       const flushHan = () => {
-        if (han.length === 1) tokens.push(han[0]);
-        for (let i = 0; i + 1 < han.length; i++) tokens.push(han[i] + han[i + 1]);
+        if (han.length === 1) out.push({ t: han[0].ch, start: han[0].i, end: han[0].i + han[0].ch.length });
+        for (let k = 0; k + 1 < han.length; k++) out.push({ t: han[k].ch + han[k + 1].ch, start: han[k].i, end: han[k + 1].i + han[k + 1].ch.length });
         han = [];
       };
       const flushLatin = () => {
-        if (latin) tokens.push(latin);
+        const word = latin.replace(/^-+|-+$/g, '');
+        if (word) {
+          const at = latinStart + latin.indexOf(word);
+          out.push({ t: word, start: at, end: at + word.length });
+          if (word.includes('-')) {
+            let off = at;
+            for (const part of word.split('-')) {
+              if (part.length >= 3) out.push({ t: part, start: off, end: off + part.length });
+              off += part.length + 1;
+            }
+          }
+        }
         latin = '';
+        latinStart = -1;
       };
+      let i = m.index ?? 0;
       for (const ch of run) {
         if (HAN.test(ch)) {
           flushLatin();
-          han.push(ch);
+          han.push({ ch, i });
         } else {
           flushHan();
+          if (latinStart < 0) latinStart = i;
           latin += ch;
         }
+        i += ch.length;
       }
       flushHan();
       flushLatin();
     }
-    return tokens;
+    return out;
   };
+  const tokenizeNormalized = (s: string): string[] => tokenizeSpans(s).map((x) => x.t);
   const tokenize = (text: string): string[] => tokenizeNormalized(normalize(text));
-  return { normalize, tokenize, tokenizeNormalized };
+  return { normalize, tokenize, tokenizeNormalized, tokenizeSpans };
+}
+
+interface Span {
+  t: string;
+  start: number;
+  end: number;
 }
 
 const isLatinPhrase = (p: string) => !HAN.test(p);
 const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
 
-// Removes each phrase from s: Han phrases anywhere, Latin phrases as whole words.
-function removePhrases(s: string, phrases: string[]): { text: string; found: boolean } {
-  let found = false;
+// Positions of every occurrence of the phrases: Han phrases anywhere, Latin
+// phrases as whole words.
+function phraseRanges(s: string, phrases: string[]): [number, number][] {
+  const ranges: [number, number][] = [];
   for (const p of phrases) {
     if (!p) continue;
-    if (isLatinPhrase(p)) {
-      const re = new RegExp(`(^|[^\\p{L}\\p{N}])${escapeRe(p)}(?=$|[^\\p{L}\\p{N}])`, 'gu');
-      if (re.test(s)) {
-        found = true;
-        s = s.replace(re, '$1 ');
-      }
-    } else if (s.includes(p)) {
-      found = true;
-      s = s.split(p).join(' ');
-    }
+    const re = isLatinPhrase(p)
+      ? new RegExp(`(?<![\\p{L}\\p{N}])${escapeRe(p)}(?![\\p{L}\\p{N}])`, 'gu')
+      : new RegExp(escapeRe(p), 'gu');
+    for (const m of s.matchAll(re)) ranges.push([m.index ?? 0, (m.index ?? 0) + m[0].length]);
   }
-  return { text: s, found };
+  return ranges;
 }
 
-function containsPhrase(s: string, phrases: string[]): boolean {
-  return phrases.some((p) => {
-    if (!p) return false;
-    if (!isLatinPhrase(p)) return s.includes(p);
-    return new RegExp(`(^|[^\\p{L}\\p{N}])${escapeRe(p)}($|[^\\p{L}\\p{N}])`, 'u').test(s);
-  });
+function strip(s: string, ranges: [number, number][]): string {
+  const keep = new Array(s.length).fill(true);
+  for (const [a, b] of ranges) for (let i = a; i < b; i++) keep[i] = false;
+  // Ranges are UTF-16 indices (from RegExp), so work in code units too.
+  return s.split('').map((c, i) => (keep[i] ? c : ' ')).join('');
 }
 
 export function prepareQuery(raw: string, mode: Mode, data: NormalizeData): PreparedQuery {
@@ -170,30 +190,72 @@ export function prepareQuery(raw: string, mode: Mode, data: NormalizeData): Prep
   const truncated = chars.length > MAX_QUERY_CHARS;
   const text = truncated ? chars.slice(0, MAX_QUERY_CHARS).join('') : rawText;
 
-  let s = norm.normalize(text.replace(BOPOMOFO, ''));
-  const networking = containsPhrase(s, data.networking);
+  const s = norm.normalize(text.replace(BOPOMOFO, ''));
+  const networking = phraseRanges(s, data.networking).length > 0;
   const other: Mode = mode === 'datasets' ? 'courses' : 'datasets';
-  const otherWords = removePhrases(s, data.modeWords[other]);
-  s = otherWords.text;
-  s = removePhrases(s, data.modeWords[mode]).text;
-  s = removePhrases(s, data.fillers).text;
-  const cleaned = norm.normalize(s.replace(/\s+/g, ' ').trim());
+  const modeHint = phraseRanges(s, data.modeWords[other]).length > 0 ? other : null;
 
-  const tokens = [...new Set(norm.tokenizeNormalized(cleaned))];
+  // Filler and mode words are optional, never required to match. A token wholly
+  // inside one is optional; a token outside every one is required (the coverage
+  // rule counts it). Tokens that straddle an edge are optional too, unless the
+  // query has characters that no required token covers: then stripping would
+  // have cut a word (大數據, 目的地), and the straddling tokens are kept.
+  const ranges = phraseRanges(s, [...data.modeWords.courses, ...data.modeWords.datasets, ...data.fillers]);
+  const covered = new Uint8Array(s.length);
+  for (const [a, b] of ranges) covered.fill(1, a, b);
+  const spans = norm.tokenizeSpans(s);
   const generic = new Set(data.generic.flatMap((g) => norm.tokenizeNormalized(g)));
-  const specific = tokens.filter((t) => !generic.has(t));
+  const count = (sp: Span) => {
+    let n = 0;
+    for (let i = sp.start; i < sp.end; i++) n += covered[i];
+    return n;
+  };
+  const core = spans.filter((sp) => count(sp) === 0);
+  const cross = spans.filter((sp) => {
+    const n = count(sp);
+    return n > 0 && n < sp.end - sp.start;
+  });
+  const inCore = new Uint8Array(s.length);
+  for (const sp of core) inCore.fill(1, sp.start, sp.end);
+  const orphan = (i: number) => !covered[i] && !inCore[i];
+  let specificSpans = core.filter((sp) => !generic.has(sp.t));
+  const genericCore = core.filter((sp) => generic.has(sp.t));
+  if (!specificSpans.length && !genericCore.length) {
+    specificSpans = cross.filter((sp) => {
+      for (let i = sp.start; i < sp.end; i++) if (orphan(i)) return !generic.has(sp.t);
+      return false;
+    });
+  }
+  const tokens = [...new Set(spans.map((sp) => sp.t))];
+  const specific = [...new Set(specificSpans.map((sp) => sp.t))];
   return {
     raw: rawText,
     text,
     truncated,
-    cleaned,
+    cleaned: norm.normalize(strip(s, ranges).replace(/\s+/g, ' ').trim()),
     tokens,
     specific,
-    empty: tokens.length === 0,
-    genericOnly: tokens.length > 0 && specific.length === 0,
+    empty: specific.length === 0 && genericCore.length === 0,
+    genericOnly: specific.length === 0 && genericCore.length > 0,
     networking,
-    modeHint: otherWords.found ? other : null,
+    modeHint,
   };
+}
+
+// True when a and b are at most one edit apart (insertion, deletion,
+// substitution, or a swap of two adjacent letters).
+export function oneEditApart(a: string, b: string): boolean {
+  if (a === b) return true;
+  const la = a.length;
+  const lb = b.length;
+  if (Math.abs(la - lb) > 1) return false;
+  let i = 0;
+  while (i < la && i < lb && a[i] === b[i]) i++;
+  if (la === lb) {
+    if (a.slice(i + 1) === b.slice(i + 1)) return true;
+    return a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(i + 2) === b.slice(i + 2);
+  }
+  return la > lb ? a.slice(i + 1) === b.slice(i) : a.slice(i) === b.slice(i + 1);
 }
 
 const TYPE_FOR_MODE: Record<Mode, RecordType> = { datasets: 'dataset', courses: 'course' };
@@ -224,6 +286,35 @@ export function createSearch(catalog: CatalogFile) {
     })),
   );
 
+  // Every Latin word in the index, by first letter, for typo expansion.
+  const latinByFirst = new Map<string, Set<string>>();
+  const latinWords = new Set<string>();
+  for (const r of records) {
+    for (const t of norm.tokenize([r.title.zh, r.title.en ?? '', r.keywords.join(' '), r.aliases.join(' '), r.en, r.description].join(' '))) {
+      if (!LATIN_WORD.test(t)) continue;
+      latinWords.add(t);
+      if (!latinByFirst.has(t[0])) latinByFirst.set(t[0], new Set());
+      latinByFirst.get(t[0])!.add(t);
+    }
+  }
+  // Rule 4, typo matching: a Latin word of six or more letters that is not in
+  // the index also matches the indexed words one edit away that share its first
+  // letter (citation never reaches station; hypergrahp reaches hypergraph).
+  const expand = (tokens: string[]) => {
+    const terms = new Map<string, string>();
+    for (const t of tokens) {
+      terms.set(t, t);
+      // English plural and singular: routes also matches route, and the other way round.
+      if (/^[a-z]{4,}$/.test(t)) {
+        const other = t.endsWith('s') ? t.slice(0, -1) : `${t}s`;
+        if (latinWords.has(other) && !terms.has(other)) terms.set(other, t);
+      }
+      if (!/^[a-z]{6,}$/.test(t) || latinWords.has(t)) continue;
+      for (const w of latinByFirst.get(t[0]) ?? []) if (oneEditApart(t, w) && !terms.has(w)) terms.set(w, t);
+    }
+    return terms;
+  };
+
   const run = (q: PreparedQuery, type: RecordType): Hit[] => {
     if (q.empty) return [];
     const pool = records.filter((r) => r.type === type);
@@ -231,20 +322,25 @@ export function createSearch(catalog: CatalogFile) {
     if (q.genericOnly) {
       hits = pool.map((record, i) => ({ id: record.id, type, score: pool.length - i, record }));
     } else {
-      const need = q.specific.length / 3;
+      // Rule 1, coverage: a hit must match a third of the required terms. Han
+      // bigrams overlap and repeat each other; English words do not, so a query
+      // made only of Latin words needs two thirds of them.
+      const latinOnly = q.specific.every((t) => LATIN_WORD.test(t));
+      const need = q.specific.length * (latinOnly ? 2 / 3 : 1 / 3);
       const specific = new Set(q.specific);
+      const terms = expand(q.tokens);
       hits = index
-        .search(q.tokens.join(' '), {
+        .search([...terms.keys()].join(' '), {
           tokenize: (t: string) => t.split(' ').filter(Boolean),
           processTerm: (t: string) => t,
           combineWith: 'OR',
           boost: BOOST,
           prefix: (term: string) => Array.from(term).length === 1 && HAN.test(term),
-          fuzzy: (term: string) => (/^[a-z]{6,}$/.test(term) ? 0.2 : false),
+          fuzzy: false,
           filter: (res) => res['type'] === type,
           boostDocument: (_id: unknown, _term: string, stored?: Record<string, unknown>) => Number(stored?.['boost'] ?? 1),
         })
-        .filter((res) => res.queryTerms.filter((t) => specific.has(t)).length >= need)
+        .filter((res) => new Set(res.queryTerms.map((t) => terms.get(t) ?? t).filter((t) => specific.has(t))).size >= need)
         .map((res) => {
           const record = byId.get(String(res.id))!;
           return { id: record.id, type, score: res.score, record };
