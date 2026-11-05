@@ -5,7 +5,7 @@
     "preinstall": "npx only-allow pnpm",
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && node scripts/build/sitemap.mjs",
     "test": "pnpm build && pnpm test:only",
     "test:only": "node --test \"tests/**/*.test.mjs\""
   },
