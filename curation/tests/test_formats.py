@@ -58,6 +58,13 @@ def test_graphml_round_trip_matches_the_csv_bundle(graph, tmp_path):
     assert g.nodes["p2"]["label"] == "UMA WANG"
     winners = [d["winner"] for _, _, d in g.edges(data=True)]
     assert sorted(winners) == [False, False, True]
+    # Task 12.13: every attribute of every node and edge agrees with the CSV bundle.
+    write_csv_bundle(graph, tmp_path / "csv", name="test-graph", version="1.0.0", title="測試", license_id="CC-BY-4.0")
+    c = read_csv_bundle(tmp_path / "csv")
+    for n, a in c.nodes(data=True):
+        assert dict(g.nodes[n]) == {k: v for k, v in a.items() if k != "index" and v is not None}, n
+    edges = lambda h: sorted((u, v, tuple(sorted((k, x) for k, x in d.items() if k != "id"))) for u, v, d in h.edges(data=True))  # noqa: E731
+    assert edges(g) == edges(c)
 
 
 def test_rebuilding_gives_byte_identical_files(graph, tmp_path):

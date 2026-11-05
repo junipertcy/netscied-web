@@ -107,7 +107,7 @@
 - [ ] 12.10 BibTeX authors that are organisations need double braces `{{…}}`. Verify: a BibTeX parser test.
 - [ ] 12.11 llms.txt, `markdown_url` and page URLs are referenced before they exist; do not deploy `/api/v1/` before tasks 5.x and 7.1 land. Verify: the release checklist.
 - [ ] 12.12 Record the source commit of the pinned HIF schema next to the copy. Verify: the file says it.
-- [ ] 12.13 The GraphML round-trip test compares counts and one attribute only; compare every attribute. Verify: a mutated attribute fails.
+- [x] 12.13 The GraphML round-trip test compares counts and one attribute only; compare every attribute. Verify: a mutated attribute fails.
 - [ ] 12.14 The build snapshot test only freezes output; add assertions on its meaning where it matters. Verify: review.
 - [ ] 12.15 The search-core tests bypass the real `concepts.yaml` for records; add tests over the real vocabulary. Verify: review.
 - [ ] 12.16 Add an automated release-age guard (pnpm `minimumReleaseAge`, with an exception list for the owner's Angular pins). Verify: a too-new pin fails `pnpm install`.
