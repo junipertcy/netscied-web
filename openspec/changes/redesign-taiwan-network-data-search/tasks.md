@@ -2,9 +2,9 @@
 
 ## 1. Phase 0a: close the public bucket
 
-- [ ] 1.1 Owner: in the Billing console, confirm the account is not "using AWS Free Tier"; save the distribution config and the bucket-website config to `infra/rollback/`. Verify: both files are committed, and contain no secrets.
-- [ ] 1.2 Create an OAC and a bucket policy for the distribution. Switch the origin from the S3 website endpoint to the REST endpoint through OAC, keeping the current error mapping. Verify: `https://netscied.tw/` and `/networks` still return 200.
-- [ ] 1.3 Turn on S3 Block Public Access on `netscied.tw`; add lifecycle rules (noncurrent versions 30 days); add an AWS Budgets forecast alert. Verify: the S3 REST and website endpoint URLs for `index.html` return 403 or 404; the budget lists an email subscriber.
+- [ ] 1.1 Owner: in the Billing console, confirm the account is not "using AWS Free Tier"; save the distribution config and the bucket-website config to `infra/rollback/`. Verify: both files are committed, and contain no secrets. Progress 2026-11-05: the configs are committed (account id redacted; raw copies in the git-ignored `infra/rollback/local/`); the Free Tier check is still the owner's.
+- [x] 1.2 Create an OAC and a bucket policy for the distribution. Switch the origin from the S3 website endpoint to the REST endpoint through OAC, keeping the current error mapping. Verify: `https://netscied.tw/` and `/networks` still return 200. Done 2026-11-05: OAC `E2FE01PUODZ8FZ`; origin `netscied.tw.s3.ap-northeast-2.amazonaws.com`; the bucket policy (`infra/s3/`) keeps the 281 files that were private before private; 25 URLs answered byte-identically before and after, with the cache cleared.
+- [ ] 1.3 Turn on S3 Block Public Access on `netscied.tw`; add lifecycle rules (noncurrent versions 30 days); add an AWS Budgets forecast alert. Verify: the S3 REST and website endpoint URLs for `index.html` return 403 or 404; the budget lists an email subscriber. Progress 2026-11-05: Block Public Access is on, and the S3 REST and website endpoints return 403. The existing budget "My Monthly Cost Budget" ($5) already has a forecast alert with an email subscriber. The lifecycle rule waits on the owner: it would permanently delete 118,026 old versions (1.53 GB, back to 2017).
 
 ## 2. Phase 0b: real HTTP semantics
 
