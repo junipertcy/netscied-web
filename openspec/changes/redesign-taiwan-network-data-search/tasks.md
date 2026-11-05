@@ -111,3 +111,19 @@
 - [ ] 12.14 The build snapshot test only freezes output; add assertions on its meaning where it matters. Verify: review.
 - [ ] 12.15 The search-core tests bypass the real `concepts.yaml` for records; add tests over the real vocabulary. Verify: review.
 - [ ] 12.16 Add an automated release-age guard (pnpm `minimumReleaseAge`, with an exception list for the owner's Angular pins). Verify: a too-new pin fails `pnpm install`.
+
+## 13. Final review follow-ups (2026-11-05)
+
+- [ ] 13.1 W10: The course empty state links the dataset suggestion form; add a course suggestion form.
+- [ ] 13.2 W11: /stat1021/: axe colour-contrast failures, an invalid <ul>, and 93 px of horizontal scroll at 375 px. Styles only and optional; it is the owner's archived page.
+- [ ] 13.3 W12 (rest): The takedown sentence is duplicated (dataset-detail.html and outputs.mjs); /search/ has no BreadcrumbList.
+- [ ] 13.4 W13: /news/ item bodies rendered with [innerHTML] are replaced on hydration.
+- [ ] 13.5 W14: The deploy's data-file check should compare Content-Length with the manifest's bytes; its HEAD bursts count against the WAF rate limit.
+- [ ] 13.6 D6: Errors mid-download and a full disk are neither retried nor turned into FetchError; .part and .part2 files are left behind; the Content-MD5 path needs twice the file size free.
+- [ ] 13.7 D7: The second download runs even when the recipe's expected hash already matches the first (fetch.py); every Taipei Metro fetch downloads twice.
+- [ ] 13.8 D8: No recorded validators counts as unchanged (fetch.py reuse: all([]) is true), and the health check never flags a get source that has no validators.
+- [ ] 13.9 D9: Health hashes LYAPI page 1 including its metadata (false changes), misses edits past page 1, re-hashes through the CDN, and the data.gov.tw date check is always unchecked because robots.txt forbids it.
+- [ ] 13.10 D10: metro_od does not assert that (date, hour, entry, exit) is unique, nor that each alias is one-sided.
+- [ ] 13.11 D11: The LY roster is keyed by name, so two legislators with the same name would overwrite each other.
+- [ ] 13.12 D13: The fetch user agent's contact URL (netscied.tw/about/) shows no contact until the site is deployed.
+- [ ] 13.13 D14: The zip carries no list of its contents; zip byte-reproducibility depends on the zlib build; check_recipe allows relicensing a CC BY source as CC0.
