@@ -35,7 +35,7 @@ export function classify(file) {
   if (file.startsWith('media/')) return { phase: 'hashed', cacheControl: IMMUTABLE };
   if (file.startsWith('assets/') || file === 'favicon.ico') return { phase: 'static', cacheControl: STATIC };
   if (ext === '.html') return { phase: 'html', cacheControl: SHORT, contentType: 'text/html; charset=utf-8' };
-  if (file === 'robots.txt') return { phase: 'machine', cacheControl: SHORT, contentType: 'text/plain; charset=utf-8' };
+  if (file === 'robots.txt' || file === 'llms.txt') return { phase: 'machine', cacheControl: SHORT, contentType: 'text/plain; charset=utf-8' };
   if (file === 'sitemap.xml') return { phase: 'machine', cacheControl: SHORT, contentType: 'application/xml; charset=utf-8' };
   if (base === 'feed.xml') return { phase: 'machine', cacheControl: SHORT, contentType: 'application/atom+xml; charset=utf-8' };
   if (MACHINE_TYPES[ext]) return { phase: 'machine', cacheControl: SHORT, contentType: MACHINE_TYPES[ext] };

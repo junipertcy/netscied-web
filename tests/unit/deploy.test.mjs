@@ -125,3 +125,22 @@ test('review 9: the deploy refuses a build the site check has not stamped', () =
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+// Task 7.2 — every machine file the Phase 1 build writes gets its content type
+// (site-hosting spec, "Correct content types for machine files").
+test('task 7.2: llms.txt, Markdown siblings, the feed, CSVs, schemas and page data get their content types', () => {
+  const want = {
+    'llms.txt': 'text/plain; charset=utf-8',
+    'datasets/x/index.md': 'text/markdown; charset=utf-8',
+    'news/feed.xml': 'application/atom+xml; charset=utf-8',
+    'api/v1/datasets.csv': 'text/csv; charset=utf-8',
+    'api/v1/schema/dataset-record.schema.json': 'application/json; charset=utf-8',
+    '_data/home.json': 'application/json; charset=utf-8',
+    'sitemap.xml': 'application/xml; charset=utf-8',
+  };
+  for (const [file, type] of Object.entries(want)) {
+    const c = classify(file);
+    assert.equal(c.contentType, type, file);
+    assert.equal(c.cacheControl, SHORT, file);
+  }
+});
