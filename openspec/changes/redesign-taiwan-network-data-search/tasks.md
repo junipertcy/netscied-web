@@ -78,7 +78,7 @@
 
 ## 10. Launch and handover
 
-- [ ] 10.1 Check the launch bar: at least 8 published datasets with at least 3 hosted; 7 wanted entries; at least 15 courses; gold set and smoke checks passing. Verify: a checklist in the release PR, all ticked.
+- [x] 10.1 Check the launch bar: at least 8 published datasets with at least 3 hosted; 7 wanted entries; at least 15 courses; gold set and smoke checks passing. Verify: a checklist in the release PR, all ticked. Done 2026-11-05: every item of the launch checklist in PR #44 is ticked: 11 published datasets (3 hosted), 7 wanted, 28 courses, the gold set, CI, and production smoke checks.
 - [x] 10.2 Deploy Phase 1, publish the relaunch news, and check the 2020 site's old URLs in production. Verify: `scripts/smoke.sh` passes, including the legacy redirects. Done 2026-11-05: deployed from `main` 27393f6, with the relaunch news `2026-11-05-relaunch`; `scripts/smoke.sh` passes, and the 2020 site's URLs redirect; the owner's old project folders answer byte-identically to before.
 - [ ] 10.3 Write `docs/maintainer.md`. It covers how to add a dataset, publish a version, refresh courses each semester, handle a takedown, rotate backups and run the quarterly saved searches. It also lists the triggers for the follow-up changes (archive and outreach, search endpoint, semantic search, MCP, Cloudflare flip). Verify: the owner follows it to add one record end to end.
 
