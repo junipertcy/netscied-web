@@ -159,8 +159,8 @@ def _attribution(record, recipe, version, released, out_license, decision) -> st
             line += f", under {'; '.join(names)}"
         parts.append(line + ".")
     parts.append("來源頁面 Source pages:")
-    for s in recipe["sources"]:
-        parts.append(f"- {s['landing_page']}")
+    for page in dict.fromkeys(s["landing_page"] for s in recipe["sources"]):
+        parts.append(f"- {page}")
     parts += ["", "== 本站所做的處理 Changes made by this site =="]
     for t in recipe.get("transformations") or [{"zh-Hant": "格式轉換，內容未修改。", "en": "Format conversion only; the content is unchanged."}]:
         parts.append(f"- {_lines(t['zh-Hant'])}")
