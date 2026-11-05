@@ -57,7 +57,9 @@ jobs:
       - name: Curation pipeline tests
         if: hashFiles('curation/pyproject.toml') != ''
         working-directory: curation
-        run: uv run --frozen pytest -q
+        run: |
+          uv run --frozen netscied --help
+          uv run --frozen pytest -q
       - if: failure()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
