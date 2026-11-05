@@ -238,3 +238,12 @@ test('task 6.2: a search payload over 150 KB gzipped fails the build with the bu
     rmSync(outDir, { recursive: true, force: true });
   }
 });
+
+// Review of Milestone A, finding 12: CC0 covers only what the site wrote.
+test('review 12: the CC0 statement carves out quoted license text and metadata copied from upstream', () => {
+  const st = json('api/v1/index.json').metadata_license.statement;
+  assert.match(st['zh-Hant'], /授權條款原文/);
+  assert.match(st['zh-Hant'], /上游/);
+  assert.match(st.en, /quoted license/i);
+  assert.match(st.en, /upstream/i);
+});

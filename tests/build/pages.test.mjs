@@ -200,6 +200,8 @@ test('task 5.5: /about/ has every anchor of the spec, the takedown, privacy and 
   assert.match(t('privacy'), /90 天/);
   assert.match(t('disclaimer'), /不構成法律意見/);
   assert.match(t('cite'), /CC0 1\.0/);
+  assert.match(t('cite'), /授權條款原文/, 'review 12: CC0 does not cover quoted license text');
+  assert.match(t('cite'), /上游/, 'review 12: nor metadata copied from upstream');
   assert.match(t('booklet'), /網絡素養/);
   assert.ok(doc.querySelector('#machine-access a[href="/api/v1/index.json"]'));
   assert.ok(doc.querySelector('#machine-access a[href="/llms.txt"]'));

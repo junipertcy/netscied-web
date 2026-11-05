@@ -14,8 +14,8 @@
     "id": "CC0-1.0",
     "url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "statement": {
-      "zh-Hant": "本站目錄的詮釋資料以 CC0 1.0 釋出；各資料集本身依其授權。",
-      "en": "Catalog metadata is released under CC0 1.0; each dataset keeps its own license."
+      "zh-Hant": "本站撰寫的目錄詮釋資料以 CC0 1.0 釋出。不包括：引用的授權條款原文，以及從上游來源（例如政府資料開放平臺，依政府資料開放授權條款）照錄的詮釋資料，這些依其原來的條款；各資料集本身依其授權。",
+      "en": "Catalog metadata written by this site is released under CC0 1.0. Excluded: quoted license text, and metadata copied from upstream sources (for example data.gov.tw, under the Open Government Data License), which keep their own terms. Each dataset keeps its own license."
     }
   },
   "counts": {
