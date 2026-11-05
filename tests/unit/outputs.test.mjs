@@ -4,7 +4,7 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -117,4 +117,23 @@ test('a wanted record that becomes published generates exactly one news item, in
     rmSync(pub.out, { recursive: true, force: true });
   }
   assert.ok(existsSync(path.join(site.out, 'news', 'feed.xml')));
+});
+
+test('final review W12: feed entries carry absolute links, since feed readers have no base for /paths', () => {
+  const pub = build((root) => {
+    const f = path.join(root, 'content', 'news');
+    const name = readdirSync(f).find((n) => n.endsWith('.md'));
+    writeFileSync(path.join(f, name), readFileSync(path.join(f, name), 'utf8') + '\n見[資料集](/datasets/)與<img src="/assets/x.png" alt="">。\n');
+  });
+  try {
+    const xml = pub.read('news/feed.xml');
+    const doc = new DOMParser().parseFromString(xml, 'text/xml');
+    const html = [...doc.documentElement.childNodes].filter((n) => n.tagName === 'entry').map((e) => [...e.childNodes].find((c) => c.tagName === 'content').textContent).join('\n');
+    assert.match(html, /href="https:\/\/netscied\.tw\/datasets\/"/);
+    assert.match(html, /src="https:\/\/netscied\.tw\/assets\/x\.png"/);
+    assert.doesNotMatch(html, /(href|src)="\/(?!\/)/);
+  } finally {
+    rmSync(pub.root, { recursive: true, force: true });
+    rmSync(pub.out, { recursive: true, force: true });
+  }
 });

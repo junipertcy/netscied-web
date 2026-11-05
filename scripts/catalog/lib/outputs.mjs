@@ -122,6 +122,12 @@ export function courseMarkdown(c) {
 
 // Atom 1.0 (RFC 4287): the 20 newest items, or all of them if fewer. Entry ids
 // are the items' permanent anchors on /news/, so they never change.
+// Feed readers resolve links against the feed, not the page, so every
+// root-relative href or src in an entry becomes an absolute https://netscied.tw URL.
+export function absolutizeHtml(html) {
+  return String(html ?? '').replace(/\b(href|src)=(["'])\/(?!\/)/g, (_, attr, q) => `${attr}=${q}${ORIGIN}/`);
+}
+
 export function atomFeed(news) {
   const items = news.slice(0, 20);
   const stamp = (date) => `${date}T00:00:00+08:00`;
@@ -134,7 +140,7 @@ export function atomFeed(news) {
       `    <link rel="alternate" type="text/html" href="${escapeXml(n.url)}"/>`,
       `    <updated>${stamp(n.date)}</updated>`,
       `    <published>${stamp(n.date)}</published>`,
-      `    <content type="html">${escapeXml(n.body_html)}</content>`,
+      `    <content type="html">${escapeXml(absolutizeHtml(n.body_html))}</content>`,
       '  </entry>',
     ].join('\n'),
   );
