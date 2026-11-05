@@ -110,13 +110,13 @@ class Fetcher:
                 self.sleep(gap)
         self._last[origin] = self.clock()
 
-    def _request(self, url: str):
+    def _request(self, url: str, method: str = "GET"):
         """One request with backoff on 429/503. Returns an open response."""
         origin = self._origin(url)
         for attempt in range(self.max_retries + 1):
             self._wait(origin)
             try:
-                return self.opener.open(urllib.request.Request(url, headers={"User-Agent": self.user_agent}), timeout=self.timeout)
+                return self.opener.open(urllib.request.Request(url, headers={"User-Agent": self.user_agent}, method=method), timeout=self.timeout)
             except urllib.error.HTTPError as e:
                 status, headers = e.code, e.headers
                 e.close()
@@ -155,10 +155,22 @@ class Fetcher:
             return True
         return self._robots_for(self._origin(url)).can_fetch(UA_TOKEN, url)
 
-    def open(self, url: str):
+    def open(self, url: str, method: str = "GET"):
         if not self.allowed(url):
             raise RobotsDisallowed(f"{url}: disallowed by robots.txt")
-        return self._request(url)
+        return self._request(url, method)
+
+    def head(self, url: str) -> tuple[int, dict]:
+        """Status and headers without the body: HEAD, or a GET closed after the headers
+        when the server refuses HEAD."""
+        try:
+            with self.open(url, "HEAD") as resp:
+                return resp.status, dict(resp.headers.items())
+        except FetchError as e:
+            if not re.search(r"HTTP (405|501|403)", str(e)):
+                raise
+        with self.open(url) as resp:
+            return resp.status, dict(resp.headers.items())
 
     def download(self, url: str, dest: Path) -> dict:
         """Streams url to dest; returns sha256, md5, bytes and the response headers."""
@@ -175,10 +187,8 @@ class Fetcher:
         if length is not None and length.isdigit() and int(length) != n:
             dest.unlink()
             raise FetchError(f"{url}: received {n} bytes, Content-Length says {length}")
-        if "Content-MD5" in headers and base64.b64encode(md5.digest()).decode() != headers["Content-MD5"]:
-            dest.unlink()
-            raise FetchError(f"{url}: the bytes do not match the Content-MD5 header")
-        return {"sha256": sha.hexdigest(), "md5": md5.hexdigest(), "bytes": n, "headers": headers}
+        md5_ok = None if "Content-MD5" not in headers else base64.b64encode(md5.digest()).decode() == headers["Content-MD5"]
+        return {"sha256": sha.hexdigest(), "md5": md5.hexdigest(), "bytes": n, "headers": headers, "md5_ok": md5_ok}
 
 
 @dataclass
@@ -195,6 +205,7 @@ class SourceResult:
     headers: dict = field(default_factory=dict)
     md5: str | None = None
     commit: str | None = None
+    warnings: list[str] = field(default_factory=list)
 
     def to_json(self, base: Path) -> dict:
         d = asdict(self)
@@ -234,14 +245,44 @@ def _url_with_params(url: str, params: dict | None) -> str:
     return url + ("&" if "?" in url else "?") + urlencode(params, doseq=True)
 
 
-def _fetch_get(src, folder: Path, fetcher: Fetcher):
+REUSE_VALIDATORS = ("ETag", "Content-Length", "Last-Modified")
+
+
+def _fetch_get(src, folder: Path, fetcher: Fetcher, reuse: bool = False):
     name = unquote(Path(urlparse(src["url"]).path).name) or "download"
-    part = folder / (name + ".part")
-    info = fetcher.download(_url_with_params(src["url"], src.get("params")), part)
-    _check_expected(src, info["sha256"], info["bytes"], [part])
+    url = _url_with_params(src["url"], src.get("params"))
     final = folder / name
+    sidecar = folder / f".{name}.fetch.json"
+    if reuse and final.is_file() and sidecar.is_file():
+        # Revalidate instead of downloading again: a HEAD with the same validators
+        # means the cached bytes are still what the server serves.
+        cached = json.loads(sidecar.read_text(encoding="utf-8"))
+        _, now = fetcher.head(url)
+        same = all(now.get(k) == cached["headers"].get(k) for k in REUSE_VALIDATORS if k in cached["headers"])
+        if same and file_sha256(final) == cached["sha256"]:
+            _check_expected(src, cached["sha256"], cached["bytes"], [])
+            return [final], cached["sha256"], cached["bytes"], {"headers": cached["headers"], "md5": cached.get("md5"), "retrieved_at": cached["retrieved_at"], "warnings": cached.get("warnings", [])}
+    part = folder / (name + ".part")
+    info = fetcher.download(url, part)
+    warnings = []
+    if info["md5_ok"] is False:
+        # The Content-MD5 header is the uploader's claim, which can be stale. Accept
+        # the bytes only if a second download gives the same SHA-256.
+        again = folder / (name + ".part2")
+        second = fetcher.download(url, again)
+        again.unlink()
+        if second["sha256"] != info["sha256"]:
+            part.unlink()
+            raise FetchError(f"{url}: the bytes do not match the Content-MD5 header, and two downloads differ")
+        warnings.append(
+            f"Content-MD5 {info['headers']['Content-MD5']} does not match the bytes (MD5 {base64.b64encode(bytes.fromhex(info['md5'])).decode()}); "
+            "two downloads gave the same SHA-256, so the header is taken to be stale"
+        )
+    _check_expected(src, info["sha256"], info["bytes"], [part])
     part.replace(final)
-    return [final], info["sha256"], info["bytes"], {"headers": info["headers"], "md5": info["md5"]}
+    retrieved_at = _now()
+    sidecar.write_text(json.dumps({"sha256": info["sha256"], "bytes": info["bytes"], "md5": info["md5"], "headers": info["headers"], "retrieved_at": retrieved_at, "warnings": warnings}, ensure_ascii=False), encoding="utf-8")
+    return [final], info["sha256"], info["bytes"], {"headers": info["headers"], "md5": info["md5"], "retrieved_at": retrieved_at, "warnings": warnings}
 
 
 def _fetch_api(src, folder: Path, fetcher: Fetcher):
@@ -324,13 +365,13 @@ def _fetch_manual(src, folder: Path, inputs_dir: Path | None):
     return [dest], sha, n, {}
 
 
-def fetch_source(src: dict, out_dir, fetcher: Fetcher, *, inputs_dir=None) -> SourceResult:
+def fetch_source(src: dict, out_dir, fetcher: Fetcher, *, inputs_dir=None, reuse: bool = False) -> SourceResult:
     folder = Path(out_dir) / src["id"]
     folder.mkdir(parents=True, exist_ok=True)
     method = src["method"]
     retrieved_at = src.get("retrieved_at") if method == "manual" else _now()
     if method == "get":
-        files, sha, n, extra = _fetch_get(src, folder, fetcher)
+        files, sha, n, extra = _fetch_get(src, folder, fetcher, reuse)
     elif method == "api":
         files, sha, n, extra = _fetch_api(src, folder, fetcher)
     elif method == "git":
@@ -339,7 +380,9 @@ def fetch_source(src: dict, out_dir, fetcher: Fetcher, *, inputs_dir=None) -> So
         files, sha, n, extra = _fetch_manual(src, folder, inputs_dir)
     else:
         raise FetchError(f"source {src['id']}: unknown method {method!r}")
-    if not any(folder.iterdir()):
+    if not any(p for p in folder.iterdir() if not p.name.startswith(".")):
+        for p in folder.iterdir():
+            p.unlink()
         folder.rmdir()
     return SourceResult(
         id=src["id"],
@@ -347,13 +390,14 @@ def fetch_source(src: dict, out_dir, fetcher: Fetcher, *, inputs_dir=None) -> So
         files=files,
         sha256=sha,
         bytes=n,
-        retrieved_at=retrieved_at or _now(),
+        retrieved_at=extra.get("retrieved_at") or retrieved_at or _now(),
         url=src.get("url"),
         landing_page=src.get("landing_page"),
         archived_landing_page=src.get("archived_landing_page"),
         headers=extra.get("headers") or {},
         md5=extra.get("md5"),
         commit=extra.get("commit"),
+        warnings=extra.get("warnings") or [],
     )
 
 
@@ -377,7 +421,7 @@ def capture_landing_page(fetcher: Fetcher, url: str, *, endpoint: str = ARCHIVE_
     return None
 
 
-def fetch_recipe(recipe: dict, cache_dir, fetcher: Fetcher, *, inputs_dir=None, capture: bool = True, archive_endpoint: str = ARCHIVE_SAVE) -> dict:
+def fetch_recipe(recipe: dict, cache_dir, fetcher: Fetcher, *, inputs_dir=None, capture: bool = True, archive_endpoint: str = ARCHIVE_SAVE, reuse: bool = False) -> dict:
     """Fetches every source of a recipe into cache_dir/<dataset>/<version>/sources/
     and writes fetch.json there. Fails on the first upstream change."""
     base = Path(cache_dir) / recipe["dataset"] / recipe["version"]
@@ -385,7 +429,9 @@ def fetch_recipe(recipe: dict, cache_dir, fetcher: Fetcher, *, inputs_dir=None, 
     results = []
     captures: dict[str, str | None] = {}  # one capture per landing page per run
     for src in recipe["sources"]:
-        res = fetch_source(src, sources_dir, fetcher, inputs_dir=inputs_dir)
+        res = fetch_source(src, sources_dir, fetcher, inputs_dir=inputs_dir, reuse=reuse)
+        for w in res.warnings:
+            print(f"warning: source {src['id']}: {w}", file=sys.stderr)
         if capture and src["method"] != "manual" and not src.get("archived_landing_page"):
             page = src["landing_page"]
             if page not in captures:

@@ -1,6 +1,7 @@
 """Task 8.2: fetch methods and politeness rules, against a local HTTP server
 (data-curation spec, "Reproducible fetch recipes" and "Evidence of the original source")."""
 
+import base64
 import hashlib
 import json
 import subprocess
@@ -44,11 +45,20 @@ class Server:
         self.requests = []
         self.flaky = {}  # path -> list of statuses to return before 200
         self.robots = "User-agent: *\nDisallow: /private/\n"
+        self.head_etag = '"abc"'
         outer = self
 
         class Handler(BaseHTTPRequestHandler):
             def log_message(self, *a):
                 pass
+
+            def do_HEAD(self):
+                outer.requests.append(("HEAD " + self.path, self.headers.get("User-Agent")))
+                self.send_response(200)
+                self.send_header("ETag", outer.head_etag)
+                self.send_header("Last-Modified", "Mon, 12 Oct 2026 02:45:11 GMT")
+                self.send_header("Content-Length", str(len(BODY)))
+                self.end_headers()
 
             def do_GET(self):
                 outer.requests.append((self.path, self.headers.get("User-Agent")))
@@ -64,6 +74,12 @@ class Server:
                     self.send_header("Content-Length", "0")
                     self.end_headers()
                     return
+                if u.path.startswith("/md5-"):
+                    outer.md5_hits = getattr(outer, "md5_hits", 0) + 1
+                    body = BODY if (u.path != "/md5-flip.csv" or outer.md5_hits % 2) else BODY + b"x"
+                    good = base64.b64encode(hashlib.md5(BODY).digest()).decode()  # noqa: S324
+                    md5 = good if u.path == "/md5-good.csv" else base64.b64encode(b"0" * 16).decode()
+                    return self._send(200, body, "text/csv", {"Content-MD5": md5, "ETag": '"m1"'})
                 if u.path in ("/data.csv", "/flaky.csv", "/private/x.csv"):
                     return self._send(200, BODY, "text/csv", {"ETag": '"abc"', "Last-Modified": "Mon, 12 Oct 2026 02:45:11 GMT"})
                 if u.path == "/api/items":
@@ -270,3 +286,32 @@ def test_fetch_recipe_writes_fetch_json_and_captures_each_landing_page_once(serv
     assert sum(1 for p in server.paths() if p.startswith("/save/")) == 1
     on_disk = json.loads((tmp_path / "d" / "1.0.0" / "fetch.json").read_text(encoding="utf-8"))
     assert on_disk["sources"][0]["files"] == ["sources/a/data.csv"]
+
+
+def test_a_correct_content_md5_header_passes(server, clock, tmp_path):
+    res = fetch_source(source(server.base + "/md5-good.csv"), tmp_path, fetcher(clock))
+    assert res.files[0].read_bytes() == BODY
+    assert res.warnings == []
+
+
+def test_a_wrong_content_md5_is_accepted_only_when_a_second_download_gives_the_same_bytes(server, clock, tmp_path):
+    res = fetch_source(source(server.base + "/md5-bad.csv"), tmp_path, fetcher(clock))
+    assert res.files[0].read_bytes() == BODY
+    assert server.paths().count("/md5-bad.csv") == 2
+    assert any("Content-MD5" in w for w in res.warnings)
+    with pytest.raises(FetchError, match="Content-MD5"):
+        fetch_source(source(server.base + "/md5-flip.csv"), tmp_path / "flip", fetcher(clock))
+    assert not any(p.is_file() for p in (tmp_path / "flip").rglob("*"))
+
+
+def test_a_cached_file_is_reused_while_the_server_validators_are_unchanged(server, clock, tmp_path):
+    f = fetcher(clock)
+    first = fetch_source(source(server.base + "/data.csv"), tmp_path, f)
+    gets = server.paths().count("/data.csv")
+    again = fetch_source(source(server.base + "/data.csv"), tmp_path, f, reuse=True)
+    assert server.paths().count("/data.csv") == gets  # no second GET, only a HEAD
+    assert "HEAD /data.csv" in server.paths()
+    assert (again.sha256, again.bytes, again.retrieved_at) == (first.sha256, first.bytes, first.retrieved_at)
+    server.head_etag = '"changed"'
+    fetch_source(source(server.base + "/data.csv"), tmp_path, f, reuse=True)
+    assert server.paths().count("/data.csv") == gets + 1

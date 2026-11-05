@@ -84,6 +84,7 @@ def main(argv=None) -> int:
         p = sub.add_parser(name, help=help_text, parents=[common])
         if name == "fetch":
             p.add_argument("--no-capture", action="store_true", help="do not ask the Internet Archive to capture landing pages")
+            p.add_argument("--no-reuse", action="store_true", help="download again even when the cached file's HTTP validators are unchanged")
         if name == "manifest":
             p.add_argument("--data", type=Path, default=REPO / "build" / "data", help="where version folders are written (git-ignored)")
             p.add_argument("--catalog", type=Path, default=REPO / "catalog", help="catalog root for catalog/versions/")
@@ -103,7 +104,7 @@ def main(argv=None) -> int:
         record = dataset_record(recipe["dataset"])
         if args.command == "fetch":
             check_recipe(recipe, record)
-            summary = fetch_recipe(recipe, args.cache, Fetcher(), inputs_dir=REPO / "curation" / "inputs", capture=not args.no_capture)
+            summary = fetch_recipe(recipe, args.cache, Fetcher(), inputs_dir=REPO / "curation" / "inputs", capture=not args.no_capture, reuse=not args.no_reuse)
             for s in summary["sources"]:
                 print(f"{s['id']}: {s['bytes']} bytes, sha256 {s['sha256']}, retrieved {s['retrieved_at']}" + (f", archived {s['archived_landing_page']}" if s.get("archived_landing_page") else ""))
             return 0

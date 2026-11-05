@@ -267,3 +267,12 @@ def test_originals_of_a_multi_source_recipe_sit_in_one_folder_per_source(tmp_pat
     m = write_version(recipe=recipe, record=record(), fetch_summary=summary, cache_base=base, product=Product(kind="graph", graph=graph(), weight="trips"), out_dir=tmp_path / "data", catalog_dir=tmp_path / "catalog", released="2026-11-04", pipeline=PIPELINE)
     paths = {f["path"] for f in m["files"] if f["role"] == "original"}
     assert paths == {"original/raw/raw.csv", "original/roster/page-0001.json"}
+
+
+def test_fetch_warnings_are_kept_in_provenance(tmp_path):
+    base = tmp_path / "cache"
+    summary = fetched(base)
+    summary["sources"][0]["warnings"] = ["Content-MD5 x does not match the bytes"]
+    write_version(recipe=RECIPE, record=record(), fetch_summary=summary, cache_base=base, product=Product(kind="graph", graph=graph(), weight="trips"), out_dir=tmp_path / "data", catalog_dir=tmp_path / "catalog", released="2026-11-04", pipeline=PIPELINE)
+    prov = json.loads((tmp_path / "data" / "test-graph" / "1.0.0" / "provenance.json").read_text(encoding="utf-8"))
+    assert prov["sources"][0]["warnings"] == ["Content-MD5 x does not match the bytes"]

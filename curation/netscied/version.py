@@ -276,6 +276,8 @@ def write_version(*, recipe, record, fetch_summary, cache_base, product: Product
             entry["headers"] = headers
         if got.get("commit"):
             entry["commit"] = got["commit"]
+        if got.get("warnings"):
+            entry["warnings"] = got["warnings"]
         if len(got["files"]) > 1:
             entry["files"] = [Path(f).name for f in got["files"]]
         sources.append(entry)
