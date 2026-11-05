@@ -1,0 +1,33 @@
+[project]
+name = "netscied-curation"
+version = "0.1.0"
+description = "netscied.tw curation pipeline: fetch, convert, stats, manifest and upload for hosted dataset versions"
+requires-python = ">=3.13,<3.15"
+license = "MIT"
+dependencies = [
+  "networkx==3.7",
+  "xgi==0.10.2",
+  "frictionless==5.21.0",
+  "pyyaml==6.0.3",
+  "jsonschema==4.26.0",
+]
+
+[project.scripts]
+netscied = "netscied.cli:main"
+
+[dependency-groups]
+dev = ["pytest==9.1.1"]
+
+[build-system]
+requires = ["hatchling==1.32.4"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["netscied"]
+
+[tool.uv]
+# Resolve only releases at least two weeks old at the time of locking.
+exclude-newer = "2026-10-21T00:00:00Z"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

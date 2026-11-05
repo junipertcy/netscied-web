@@ -53,3 +53,8 @@ deploy.sh
 /test-results
 /playwright-report
 /blob-report
+
+# Python (curation pipeline)
+/curation/.venv/
+__pycache__/
+.pytest_cache/
