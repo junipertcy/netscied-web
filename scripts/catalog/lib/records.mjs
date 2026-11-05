@@ -4,6 +4,7 @@
 import path from 'node:path';
 import { loadSchemas, schemaErrors } from './schemas.mjs';
 import { licenseClass, OWN_WORK_LICENSES } from './licenses.mjs';
+import { strings } from './pii.mjs';
 
 const RECOMMENDED_DATASET = [
   ['description.en', (r) => r.description?.en, 'an English description helps English searches and agents'],
@@ -84,6 +85,13 @@ export function checkDataset(record, file, { vocab }) {
         err(`provenance.access[${i}]`, 'a sensitive record may link only to controlled-access landing pages (set controlled_access: true for the access gate)');
       }
     });
+    // Every other URL in the record (source, references, license evidence …)
+    // must be one of those gates too: no path to raw data (review finding 8).
+    const gates = new Set(access.filter((a) => a.controlled_access === true).map((a) => a.url));
+    for (const [field, value] of strings(record)) {
+      if (/^provenance\.access\[\d+\]\.url$/.test(field) || !/^https?:\/\//.test(value)) continue;
+      if (!gates.has(value)) err(field, `a sensitive record may link only to its controlled-access gate; ${value} is not one`);
+    }
   }
 
   if (record.status === 'published') {

@@ -324,3 +324,34 @@ test('the rejected-course list is validated, with known universities', () => {
 test('the international list is validated: an archived entry needs its archive URL', () => {
   expectFailure((d) => writeFileSync(path.join(d, 'catalog', 'international.yaml'), '- { title: { en: Network Theory }, institution: UMich, url: "https://example.org/x", kind: course, checked_on: 2026-11-04, archived: true }\n'), 'international.yaml', '[0].archive_url');
 });
+
+// Review of Milestone A, finding 8: every URL in a sensitive record, not only the
+// access links, must be its controlled-access gate.
+function sensitiveGate(r) {
+  r.personal_data.level = 'sensitive';
+  r.provenance.access = [{ label: { 'zh-Hant': '申請使用' }, url: 'https://example.org/apply', controlled_access: true }];
+  r.provenance.source.url = 'https://example.org/apply';
+  r.license.evidence.url = 'https://example.org/apply';
+}
+
+test('review 8: a sensitive record whose every URL is the access gate is valid', () => {
+  const dir = fixture();
+  try {
+    editYaml(dir, D('link-only-graph'), sensitiveGate);
+    const { code, out } = run(dir);
+    assert.equal(code, 0, out);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('review 8: a sensitive record may not point at raw data through its source or references', () => {
+  expectFailure((d) => editYaml(d, D('link-only-graph'), (r) => {
+    sensitiveGate(r);
+    r.provenance.source.url = 'https://example.org/raw/dump.csv';
+  }), 'link-only-graph.yaml', 'provenance.source.url', 'controlled-access');
+  expectFailure((d) => editYaml(d, D('link-only-graph'), (r) => {
+    sensitiveGate(r);
+    r.references = [{ citation: '某作者（2026）。某研究。某期刊。', url: 'https://example.org/raw/edges.csv' }];
+  }), 'link-only-graph.yaml', 'references[0].url', 'controlled-access');
+});
