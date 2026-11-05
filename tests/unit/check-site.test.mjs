@@ -23,7 +23,7 @@ function site(files) {
 const run = (dir) => spawnSync(process.execPath, [cli, '--root', dir], { encoding: 'utf8' });
 
 test('a clean site passes, and the site contact address is allowed', () => {
-  const dir = site({ 'index.html': '<a href="mailto:hi@netscied.tw">hi@netscied.tw</a>', 'api/v1/x.json': '{"n": 912345678}', 'main-AAAAAAAA.js': 'x="someone@example.org"' });
+  const dir = site({ 'index.html': '<a href="mailto:tcy@inferweave.com">tcy@inferweave.com</a>', 'api/v1/x.json': '{"n": 912345678}', 'main-AAAAAAAA.js': 'x="someone@example.org"' });
   try {
     const res = run(dir);
     assert.equal(res.status, 0, res.stdout + res.stderr);

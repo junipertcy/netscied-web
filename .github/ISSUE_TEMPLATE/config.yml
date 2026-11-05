@@ -2,7 +2,7 @@ blank_issues_enabled: false
 contact_links:
   - name: 下架、個資與著作權申訴（電子郵件）
     url: https://netscied.tw/about/#takedown
-    about: 請寄信到 hi@netscied.tw。只有信件會私下處理；7 天內回覆。
+    about: 請寄信到 tcy@inferweave.com。只有信件會私下處理；7 天內回覆。
   - name: 不用 GitHub 帳號提出資料需求
     url: https://netscied.tw/about/#contribute
     about: 關於本站頁面列出不需要帳號的需求表與電子郵件。

@@ -45,7 +45,7 @@ test('task 5.1: inner pages have a header search form; the home page has its own
 test('task 5.1: the footer links to contribute, takedown and the contact address on every page', () => {
   for (const f of pages) {
     const hrefs = [...page(f).querySelectorAll('footer a')].map((a) => a.getAttribute('href'));
-    for (const h of ['/about/#contribute', '/about/#takedown', 'mailto:hi@netscied.tw']) assert.ok(hrefs.includes(h), `${f}: ${h}`);
+    for (const h of ['/about/#contribute', '/about/#takedown', 'mailto:tcy@inferweave.com']) assert.ok(hrefs.includes(h), `${f}: ${h}`);
   }
 });
 

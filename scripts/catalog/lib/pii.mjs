@@ -7,7 +7,7 @@
 
 // Addresses the site itself publishes: the contact address, and the
 // maintainer's own address on the archived /stat1021/ page (his decision).
-export const SITE_ADDRESSES = new Set(['hi@netscied.tw', 'tzuchi.yen@colorado.edu']);
+export const SITE_ADDRESSES = new Set(['tcy@inferweave.com', 'tzuchi.yen@colorado.edu']);
 
 const EMAIL = /[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}/g;
 // local [at] domain [dot] tld, local (at) domain dot tld, …

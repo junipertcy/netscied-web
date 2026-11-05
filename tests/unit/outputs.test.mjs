@@ -92,6 +92,7 @@ test('llms.txt orients an agent in Mandarin and English: the API index, structur
   assert.match(txt, /CC0 1\.0/);
   assert.match(txt, /\/datasets\/<id>\//);
   assert.match(txt, /index\.md/);
+  assert.match(txt, /^- Contact: tcy@inferweave\.com$/m);
 });
 
 test('a wanted record that becomes published generates exactly one news item, in news.json and the feed', () => {

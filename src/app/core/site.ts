@@ -3,7 +3,7 @@ export const SITE = {
   name: '台灣網絡科學教育',
   nameEn: 'Network Science Education in Taiwan',
   origin: 'https://netscied.tw',
-  contactEmail: 'hi@netscied.tw',
+  contactEmail: 'tcy@inferweave.com',
   github: 'https://github.com/junipertcy/netscied-web',
   maintainer: { name: '顏子祺', nameEn: 'Tzu-Chi Yen', url: 'https://junipertcy.info/about' },
   /**

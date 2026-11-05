@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        **如果問題和你的個人資料或著作權有關，請寄信到 hi@netscied.tw**，我們會私下處理，
+        **如果問題和你的個人資料或著作權有關，請寄信到 tcy@inferweave.com**，我們會私下處理，
         並在 7 天內回覆（下架與更正程序見 https://netscied.tw/about/#takedown）。
         GitHub 議題是公開的：請不要在這裡留下個人資料。
   - type: input

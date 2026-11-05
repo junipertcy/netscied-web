@@ -220,7 +220,7 @@ ${examples.join('\n')}
 
 - [關於本站 About](${ORIGIN}/about/): contribution channels, takedown procedure, privacy notice.
 - [Atom feed](${ORIGIN}/news/feed.xml), [sitemap](${ORIGIN}/sitemap.xml).
-- Contact: ${'hi'}@netscied.tw
+- Contact: ${'tcy'}@inferweave.com
 `;
 }
 

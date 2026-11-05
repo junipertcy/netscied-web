@@ -13,8 +13,12 @@ test('plain and obfuscated email addresses are found', () => {
   }
 });
 
+test('the old placeholder contact address is no longer allowed', () => {
+  assert.deepEqual(findPii('寄信到 hi@netscied.tw').map((h) => h.kind), ['email']);
+});
+
 test('the site contact address and the maintainer address it publishes are allowed', () => {
-  assert.deepEqual(findPii('寄信到 hi@netscied.tw'), []);
+  assert.deepEqual(findPii('寄信到 tcy@inferweave.com'), []);
   assert.deepEqual(findPii('Email: tzuchi.yen [at] colorado.edu'), []);
 });
 

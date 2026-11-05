@@ -53,7 +53,7 @@ test('the issue forms and their config validate against the SchemaStore schemas'
 test('every issue form sends takedowns to email, and the request form can be prefilled with the query', () => {
   const dir = path.join(repoRoot, '.github', 'ISSUE_TEMPLATE');
   for (const f of yamlFiles(dir).filter((x) => !x.endsWith('config.yml'))) {
-    assert.match(readFileSync(f, 'utf8'), /hi@netscied\.tw/, path.basename(f));
+    assert.match(readFileSync(f, 'utf8'), /tcy@inferweave\.com/, path.basename(f));
   }
   const request = parse(readFileSync(path.join(dir, 'request-dataset.yml'), 'utf8'));
   assert.ok(request.body.some((b) => b.id === 'need'), 'the request form has a field with id "need" for the ?need= prefill');

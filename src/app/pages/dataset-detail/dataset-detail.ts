@@ -4,6 +4,7 @@ import { ApiRecord } from '../../core/api';
 import { bytes, number, shortSha, zhDate } from '../../core/format';
 import { Head } from '../../core/head';
 import { breadcrumbs, datasetJsonLd } from '../../core/jsonld';
+import { SITE } from '../../core/site';
 
 // /datasets/<id>/ (dataset-catalog spec, "Dataset detail page"), in the spec's
 // section order. Every fact comes from the same record as
@@ -23,6 +24,7 @@ export class DatasetDetail {
   protected readonly number = number;
   protected readonly shortSha = shortSha;
   protected readonly zhDate = zhDate;
+  protected readonly site = SITE;
   private readonly head = inject(Head);
 
   ngOnInit() {

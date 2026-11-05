@@ -195,7 +195,7 @@
         <p>{{ r.personal_data.label['zh-Hant'] }}：本站只提供詮釋資料與來源連結，不收錄個人層級的資料。</p>
       }
       @if (r.personal_data.notes) {<p>{{ r.personal_data.notes['zh-Hant'] }}</p>}
-      <p>當事人如對收錄有疑義，請依<a routerLink="/about" fragment="takedown">下架與更正程序</a>提出，或寄信到 hi&#64;netscied.tw。</p>
+      <p>當事人如對收錄有疑義，請依<a routerLink="/about" fragment="takedown">下架與更正程序</a>提出，或寄信到 <a [href]="'mailto:' + site.contactEmail">{{ site.contactEmail }}</a>。</p>
       <p class="sub">個資等級最近審查：{{ r.personal_data.reviewed_on }}</p>
     </section>
   }

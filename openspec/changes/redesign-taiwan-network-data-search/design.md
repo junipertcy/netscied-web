@@ -289,7 +289,7 @@ YAML records in `catalog/` and Markdown news in `content/` are the source of tru
 
 ### D12. Governance and specific datasets
 - **Rules:** personal-data levels, takedown and channels are in the content-governance spec. The license class (D3) and the personal-data level combine, and the personal-data level always wins.
-- **Takedown:** a 7-day acknowledgement (an auto-reply on hi@netscied.tw); downloads suspended within 3 days on a credible personal-data complaint; a decision within 30 days (+30); tombstones. Precedents: Netzschleuder `restricted`, Zenodo tombstones, Common Crawl opt-out.
+- **Takedown:** a 7-day acknowledgement (an auto-reply on the contact address, tcy@inferweave.com); downloads suspended within 3 days on a credible personal-data complaint; a decision within 30 days (+30); tombstones. Precedents: Netzschleuder `restricted`, Zenodo tombstones, Common Crawl opt-out.
 - **Channels** (Q5):
   - a Google Form (no account needed) for data requests and suggestions, prefilled from empty searches. Google processes the submissions, and the privacy notice says so. Email is optional on the form;
   - GitHub Issue Forms (推薦資料集, 徵求資料集, 回報問題; still "public preview");
