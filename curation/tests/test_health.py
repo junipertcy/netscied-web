@@ -21,6 +21,7 @@ EDGES = b"id,source,target\ne0,a,a\n"
 class Site:
     def __init__(self):
         self.routes = {}
+        self.robots = b"User-agent: *\nAllow: /\n"
         outer = self
 
         class Handler(BaseHTTPRequestHandler):
@@ -29,7 +30,7 @@ class Site:
 
             def _route(self):
                 if self.path == "/robots.txt":
-                    return 200, {}, b"User-agent: *\nAllow: /\n"
+                    return 200, {}, outer.robots
                 return outer.routes.get(self.path, (404, {}, b""))
 
             def do_HEAD(self):
@@ -166,3 +167,13 @@ def test_an_api_source_is_checked_by_its_first_page_against_the_published_origin
     found = [f for f in run(root, site).findings if f.kind == "upstream"]
     assert [f.subject for f in found] == ["d1 1.0.0 來源 bills"]
     assert "第 1 頁" in found[0].detail
+
+
+def test_a_link_robots_txt_forbids_checking_is_listed_as_unchecked_not_as_a_finding(tmp_path, site):
+    root = catalog(tmp_path, site, broken_link=True)
+    site.robots = b"User-agent: *\nDisallow: /gone\n"
+    report = run(root, site)
+    assert not [f for f in report.findings if f.kind == "access-link"]
+    assert [s.subject for s in report.skipped] == ["d1"]
+    body = render(report)
+    assert "未能檢查" in body and site.base + "/gone" in body

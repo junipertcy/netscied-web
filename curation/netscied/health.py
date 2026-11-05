@@ -14,7 +14,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import urlencode
 
-from .fetch import FetchError, Fetcher
+from .fetch import FetchError, Fetcher, RobotsDisallowed
 from .recipes import REPO, load_yaml
 
 VALIDATORS = ("ETag", "Last-Modified", "Content-Length", "Content-MD5")
@@ -33,6 +33,9 @@ class Finding:
 class Report:
     today: str
     findings: list[Finding] = field(default_factory=list)
+    # Links and sources the fetcher may not check because robots.txt forbids it:
+    # listed in the report, but not counted as findings.
+    skipped: list[Finding] = field(default_factory=list)
     checked: dict = field(default_factory=lambda: {"files": 0, "sources": 0, "links": 0})
 
 
@@ -119,6 +122,8 @@ def run_health(*, root: Path = REPO, fetcher: Fetcher, data_base: str = "https:/
                     status, _ = fetcher.head(src["landing_page"])
                     if status >= 400:
                         add("upstream", subject, f"來源頁面回應 HTTP {status}")
+            except RobotsDisallowed:
+                report.skipped.append(Finding("upstream", subject, src.get("url") or src["landing_page"]))
             except FetchError as e:
                 add("upstream", subject, f"無法檢查：{e}")
         m = DATAGOV.match(((records.get(did) or {}).get("provenance") or {}).get("source", {}).get("url", ""))
@@ -129,6 +134,8 @@ def run_health(*, root: Path = REPO, fetcher: Fetcher, data_base: str = "https:/
                 modified = str((meta.get("result") or {}).get("modifiedDate") or "")[:10]
                 if modified and modified > (latest.get("snapshot_date") or ""):
                     add("upstream", did, f"政府資料開放平臺資料集 {m.group(1)} 的詮釋資料更新於 {modified}，晚於 {ver} 版的來源快照日期 {latest.get('snapshot_date')}")
+            except RobotsDisallowed:
+                report.skipped.append(Finding("upstream", did, datagov_api + m.group(1)))
             except (FetchError, ValueError) as e:
                 add("upstream", did, f"無法讀取政府資料開放平臺資料集 {m.group(1)} 的詮釋資料：{e}")
 
@@ -144,6 +151,8 @@ def run_health(*, root: Path = REPO, fetcher: Fetcher, data_base: str = "https:/
                 status, _ = fetcher.head(url)
                 if status >= 400:
                     add("access-link", did, f"{url} 回應 HTTP {status}")
+            except RobotsDisallowed:
+                report.skipped.append(Finding("access-link", did, url))
             except FetchError as e:
                 add("access-link", did, f"{url} 無法連線：{e}")
     return report
@@ -163,10 +172,12 @@ def render(report: Report) -> str:
     ]
     if not report.findings:
         lines.append("沒有發現問題。")
-        return "\n".join(lines) + "\n"
-    lines.append(f"共 {len(report.findings)} 項發現。")
+    else:
+        lines.append(f"共 {len(report.findings)} 項發現。")
     for kind, title in SECTIONS:
         items = [f for f in report.findings if f.kind == kind]
         if items:
             lines += ["", f"## {title}", ""] + [f"- {f.subject}：{f.detail}" for f in items]
+    if report.skipped:
+        lines += ["", "## 未能檢查（robots.txt 不允許自動存取）", ""] + [f"- {s.subject}：{s.detail}" for s in report.skipped]
     return "\n".join(lines) + "\n"
