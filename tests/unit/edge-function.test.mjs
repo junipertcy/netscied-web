@@ -66,6 +66,30 @@ test('task 8.8: /data/ files without an extension (SHA256SUMS) reach the origin 
   assertPassThrough(run(handler, '/data/golden-horse-2018-nominations/1.0.0/nodes.csv'), '/data/golden-horse-2018-nominations/1.0.0/nodes.csv');
 });
 
+test('owner decision A7: the legacy project folders are served exactly as before the relaunch', () => {
+  // Extensionless files (a .git object, LICENSE) get no slash, index.html is not
+  // redirected, and a folder URL is not rewritten to its index.html.
+  for (const uri of [
+    '/greenpeace/jp/.git/config',
+    '/greenpeace/jp/node_modules/leaflet/LICENSE',
+    '/greenpeace/jp/index.html',
+    '/greenpeace/jp/',
+    '/data_taipei/view-cht/index.html',
+    '/sensoro/network.m4v',
+  ]) {
+    assertPassThrough(run(handler, uri), uri);
+  }
+});
+
+test('legacy project folders still move from www to the apex, unchanged otherwise', () => {
+  assertRedirect(run(handler, '/greenpeace/jp/.git/config', { host: 'www.netscied.tw' }), `${SITE}/greenpeace/jp/.git/config`);
+});
+
+test('a path that only starts like a legacy folder gets the usual slash rule', () => {
+  assertRedirect(run(handler, '/greenpeace-x'), `${SITE}/greenpeace-x/`);
+  assertRedirect(run(handler, '/greenpeace'), `${SITE}/greenpeace/`);
+});
+
 test('/.well-known/ paths reach the origin untouched, so missing ones are a plain 404', () => {
   assertPassThrough(run(handler, '/.well-known/does-not-exist'), '/.well-known/does-not-exist');
 });
