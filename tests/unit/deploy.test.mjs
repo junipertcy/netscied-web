@@ -2,8 +2,10 @@
 // "Correct content types for machine files".
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import path from 'node:path';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { classify, planDeploy, runDeploy } from '../../scripts/deploy.mjs';
 import { repoRoot } from '../helpers/dist.mjs';
 
@@ -108,4 +110,18 @@ test('index.csr.html is never uploaded', () => {
   assert.ok(!uploaded.includes('index.csr.html'));
   assert.ok(uploaded.includes('index.html'));
   assert.ok(!p.some((s) => s.args.includes('index.csr.html')));
+});
+
+// Review of Milestone A, finding 9.
+test('review 9: the deploy refuses a build the site check has not stamped', () => {
+  const dir = mkdtempSync(path.join(tmpdir(), 'dist-'));
+  try {
+    mkdirSync(path.join(dir, 'browser'));
+    writeFileSync(path.join(dir, 'browser', 'index.html'), '<p>unchecked</p>');
+    const res = spawnSync(process.execPath, [path.join(repoRoot, 'scripts', 'deploy.mjs'), '--dry-run', '--build', path.join(dir, 'browser')], { env: { PATH: process.env.PATH, NETSCIED_CF_DISTRIBUTION_ID: 'ETEST' }, encoding: 'utf8' });
+    assert.notEqual(res.status, 0, res.stdout);
+    assert.match(res.stderr, /site check/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });

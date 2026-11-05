@@ -11,6 +11,7 @@ import { spawn } from 'node:child_process';
 import { existsSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { verifySiteStamp } from './build/check-site.mjs';
 
 const IMMUTABLE = 'public, max-age=31536000, immutable';
 const STATIC = 'public, max-age=86400';
@@ -105,11 +106,16 @@ function awsExec(args) {
 
 async function main() {
   const repoRoot = fileURLToPath(new URL('../', import.meta.url));
-  const buildDir = path.join(repoRoot, 'dist', 'netscied', 'browser');
+  const args = process.argv.slice(2);
+  const b = args.lastIndexOf('--build');
+  const buildDir = b >= 0 ? path.resolve(args[b + 1]) : path.join(repoRoot, 'dist', 'netscied', 'browser');
   const distributionId = process.env.NETSCIED_CF_DISTRIBUTION_ID;
   const bucket = process.env.NETSCIED_SITE_BUCKET || 'netscied.tw';
   if (!existsSync(buildDir)) throw new Error(`no build at ${buildDir}; run "pnpm build" first`);
   if (!distributionId) throw new Error('set NETSCIED_CF_DISTRIBUTION_ID to the CloudFront distribution id');
+  // Only a build that passed the site check (contact-details scan) is deployed.
+  const stamp = verifySiteStamp(buildDir);
+  if (!stamp.ok) throw new Error(`deploy refused: ${stamp.reason} (the site check must pass on exactly this build)`);
 
   const plan = planDeploy({ buildDir, files: listFiles(buildDir), bucket, distributionId });
   if (process.argv.includes('--dry-run')) {

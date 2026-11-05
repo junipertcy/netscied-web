@@ -67,3 +67,30 @@ test('review 7: SVG files and web manifests are scanned too', () => {
     }
   }
 });
+
+// Review of Milestone A, finding 9: deploy only a build the site check passed.
+import { siteDigest, verifySiteStamp } from '../../scripts/build/check-site.mjs';
+
+test('review 9: a passing check writes a stamp beside the site, and a changed file invalidates it', () => {
+  const dir = site({ 'browser/index.html': '<p>ok</p>', 'browser/api/v1/index.json': '{}' });
+  try {
+    const res = spawnSync(process.execPath, [cli, '--root', path.join(dir, 'browser')], { encoding: 'utf8' });
+    assert.equal(res.status, 0, res.stderr);
+    assert.equal(verifySiteStamp(path.join(dir, 'browser')).ok, true);
+    writeFileSync(path.join(dir, 'browser', 'index.html'), '<p>changed</p>');
+    assert.equal(verifySiteStamp(path.join(dir, 'browser')).ok, false);
+    assert.notEqual(siteDigest(path.join(dir, 'browser')), '');
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('review 9: a failing check leaves no stamp', () => {
+  const dir = site({ 'browser/index.html': '<p>someone@example.org</p>' });
+  try {
+    spawnSync(process.execPath, [cli, '--root', path.join(dir, 'browser')], { encoding: 'utf8' });
+    assert.equal(verifySiteStamp(path.join(dir, 'browser')).ok, false);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

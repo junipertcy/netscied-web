@@ -4,7 +4,7 @@
 // directory (default build/site/), which angular.json copies into the site.
 //
 //   node scripts/catalog/build.mjs [--root .] [--out build/site] [--today YYYY-MM-DD]
-//                                  [--no-git] [--skip-validate]
+//                                  [--no-git]
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync, copyFileSync } from 'node:fs';
 import path from 'node:path';
 import { gzipSync } from 'node:zlib';
@@ -39,9 +39,10 @@ function gitDate(root, paths) {
 
 const stable = (value) => JSON.stringify(value, null, 2) + '\n';
 
-export function buildSite({ root, out, today = taipeiToday(), useGit = true, skipValidate = false, baseRef = 'origin/main', log = console.log }) {
-  const result = validateCatalog({ root, baseRef: skipValidate ? 'none' : baseRef, today });
-  if (result.errors.length && !skipValidate) {
+export function buildSite({ root, out, today = taipeiToday(), useGit = true, baseRef = 'origin/main', log = console.log }) {
+  // Nothing is generated from a catalog that fails validation (review finding 9).
+  const result = validateCatalog({ root, baseRef, today });
+  if (result.errors.length) {
     for (const e of result.errors) console.error(formatIssue('error', e));
     throw new Error(`catalog validation failed with ${result.errors.length} errors; nothing was generated`);
   }
@@ -350,7 +351,6 @@ function main() {
       out,
       today: opt('--today', taipeiToday()),
       useGit: !args.includes('--no-git'),
-      skipValidate: args.includes('--skip-validate'),
       baseRef: opt('--base-ref', 'origin/main'),
     });
   } catch (err) {
