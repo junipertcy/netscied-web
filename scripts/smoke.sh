@@ -10,6 +10,8 @@ set -u
 
 BASE=${BASE:-https://netscied.tw}
 WWW=${WWW:-https://www.netscied.tw}
+# Redirects always point at the canonical host, even when BASE is a cloudfront.net name.
+CANONICAL=${CANONICAL:-https://netscied.tw}
 S3_REGION=${S3_REGION:-ap-northeast-2}
 S3_BUCKET=${S3_BUCKET:-netscied.tw}
 failures=0
@@ -36,6 +38,13 @@ redirect() {
     || fail "$url → $code ${loc:-<no location>} (expected 301 $expected)"
 }
 
+# stays_on_site URL: if the response redirects, it redirects to the canonical host.
+stays_on_site() {
+  local url=$1 loc
+  loc=$(curl -s -o /dev/null -w '%{redirect_url}' --max-time 20 --path-as-is "$url")
+  case $loc in "" | "$CANONICAL"/*) pass "$url stays on $CANONICAL" ;; *) fail "$url → $loc (redirects off the site)" ;; esac
+}
+
 # content_type URL PREFIX: a 200 whose Content-Type starts with PREFIX.
 content_type() {
   local url=$1 expected=$2 out code type
@@ -60,10 +69,11 @@ status "$BASE/does-not-exist/" 404
 status "$BASE/.well-known/does-not-exist" 404
 content_type "$BASE/robots.txt" "text/plain"
 content_type "$BASE/sitemap.xml" "application/xml"
-redirect "$WWW/x" "$BASE/x"
-redirect "$BASE/networks" "$BASE/networks/"
+redirect "$WWW/x" "$CANONICAL/x/"
+redirect "$BASE/networks" "$CANONICAL/networks/"
 status "$BASE/networks/" 200
-redirect "$BASE/stat1021/index.html" "$BASE/stat1021/"
+redirect "$BASE/stat1021/index.html" "$CANONICAL/stat1021/"
+stays_on_site "$BASE//evil.example/x"
 not_public "https://s3.$S3_REGION.amazonaws.com/$S3_BUCKET/index.html"
 not_public "http://$S3_BUCKET.s3-website.$S3_REGION.amazonaws.com/"
 

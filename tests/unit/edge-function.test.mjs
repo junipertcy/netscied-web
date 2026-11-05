@@ -15,6 +15,7 @@ const handler = loadHandler(committed);
 // The same function with every legacy row switched on, as Phase 1 will deploy it.
 const phase1 = loadHandler(renderFunction(committed, edgeConfig(redirects, { includeDisabled: true })));
 
+const SITE = 'https://netscied.tw';
 const run = (h, url, opts) => h(viewerRequest(url, opts));
 const location = (res) => res.headers?.location?.value;
 
@@ -34,17 +35,18 @@ test('the committed function embeds the current config/redirects.yaml', () => {
 
 test('www redirects to the apex, keeping path and query', () => {
   assertRedirect(run(handler, '/courses/?a=1', { host: 'www.netscied.tw' }), 'https://netscied.tw/courses/?a=1');
-  assertRedirect(run(handler, '/x', { host: 'www.netscied.tw' }), 'https://netscied.tw/x');
+  // Path rules apply in the same hop, so an unslashed www path needs one redirect, not two.
+  assertRedirect(run(handler, '/x', { host: 'www.netscied.tw' }), 'https://netscied.tw/x/');
 });
 
 test('an extensionless path without a trailing slash gets one, query preserved', () => {
-  assertRedirect(run(handler, '/datasets?x=1'), '/datasets/?x=1');
-  assertRedirect(run(handler, '/stat1021'), '/stat1021/');
+  assertRedirect(run(handler, '/datasets?x=1'), `${SITE}/datasets/?x=1`);
+  assertRedirect(run(handler, '/stat1021'), `${SITE}/stat1021/`);
 });
 
 test('…/index.html redirects to the directory URL', () => {
-  assertRedirect(run(handler, '/stat1021/index.html'), '/stat1021/');
-  assertRedirect(run(handler, '/index.html?q=1'), '/?q=1');
+  assertRedirect(run(handler, '/stat1021/index.html'), `${SITE}/stat1021/`);
+  assertRedirect(run(handler, '/index.html?q=1'), `${SITE}/?q=1`);
 });
 
 test('a directory URL is served from its index.html', () => {
@@ -63,29 +65,53 @@ test('/.well-known/ paths reach the origin untouched, so missing ones are a plai
 });
 
 test('a percent-encoded Mandarin query survives a redirect byte for byte', () => {
-  assertRedirect(run(handler, '/search?q=%E9%87%91%E9%A6%AC'), '/search/?q=%E9%87%91%E9%A6%AC');
+  assertRedirect(run(handler, '/search?q=%E9%87%91%E9%A6%AC'), `${SITE}/search/?q=%E9%87%91%E9%A6%AC`);
 });
 
 test('repeated and value-less query parameters are preserved in order', () => {
-  assertRedirect(run(handler, '/datasets?tag=a&tag=b&debug'), '/datasets/?tag=a&tag=b&debug');
+  assertRedirect(run(handler, '/datasets?tag=a&tag=b&debug'), `${SITE}/datasets/?tag=a&tag=b&debug`);
 });
 
 for (const row of redirects.rows) {
   test(`redirect row ${row.from} → ${row.to} (enabled: ${row.enabled})`, () => {
     const target = (q) => {
-      const hash = row.to.indexOf('#');
-      return hash < 0 ? row.to + q : row.to.slice(0, hash) + q + row.to.slice(hash);
+      const to = row.to.startsWith('/') ? SITE + row.to : row.to;
+      const hash = to.indexOf('#');
+      return hash < 0 ? to + q : to.slice(0, hash) + q + to.slice(hash);
     };
     for (const variant of [row.from, `${row.from}/`, `${row.from}/index.html`]) {
       assertRedirect(run(phase1, `${variant}?x=1`), target('?x=1'));
     }
     if (!row.enabled) {
       // Phase 0: the old page keeps serving; only the slash rules apply.
-      assertRedirect(run(handler, row.from), `${row.from}/`);
+      assertRedirect(run(handler, row.from), `${SITE}${row.from}/`);
       assertPassThrough(run(handler, `${row.from}/`), `${row.from}/index.html`);
     }
   });
 }
+
+// Review finding (critical): a leading // made the slash rule emit a protocol-relative
+// Location (//evil.example/x/), an open redirect.
+test('no crafted path can redirect a browser off the site', () => {
+  const paths = [
+    '//evil.example/x', '//evil.example/index.html', '///evil.example/x', '/\\evil.example/x',
+    '/\\/evil.example/x', '//evil.example', '/%2F%2Fevil.example/x',
+  ];
+  for (const host of ['netscied.tw', 'www.netscied.tw']) {
+    for (const p of paths) {
+      const res = run(handler, `${p}?a=1`, { host });
+      if (res.statusCode === undefined) continue;
+      // Resolve the way a browser does (WHATWG URL treats \ as / in https URLs).
+      const target = new URL(location(res), 'https://netscied.tw/');
+      assert.equal(target.host, 'netscied.tw', `${host}${p} → ${location(res)}`);
+    }
+  }
+});
+
+test('repeated slashes redirect to the collapsed path', () => {
+  assertRedirect(run(handler, '//networks/'), `${SITE}/networks/`);
+  assertRedirect(run(handler, '/stat1021//index.html'), `${SITE}/stat1021/`);
+});
 
 test('redirects carry a bounded cache lifetime, so later table changes reach browsers', () => {
   const res = run(handler, '/stat1021');
@@ -109,7 +135,7 @@ test('malformed requests pass through instead of failing', () => {
 
   const oddQuery = viewerRequest('/x');
   oddQuery.request.querystring = { q: {} };
-  assertRedirect(handler(oddQuery), '/x/?q');
+  assertRedirect(handler(oddQuery), `${SITE}/x/?q`);
 });
 
 test('the function stays under the 10 KB CloudFront Functions limit', () => {

@@ -2,9 +2,11 @@
 // Specs: site-hosting "Edge logic fails open and stays small"; site-structure
 // "URL conventions" and "Legacy URLs keep working". Tests: tests/unit/edge-function.test.mjs.
 //
-// Order: www → apex; the redirect map; …/index.html → …/; add a trailing slash
-// to extensionless paths; serve directory URLs from index.html. Any error lets
-// the request through unchanged rather than failing it.
+// Rules, first match wins: the redirect map; …/index.html → …/; add a trailing
+// slash to extensionless paths; collapse repeated slashes; www → apex. Then
+// directory URLs are served from index.html. Every site redirect is an absolute
+// https://netscied.tw URL, so no crafted path (//host, /\host) can send a browser
+// off the site. Any error lets the request through unchanged rather than failing it.
 //
 // The map between the markers is generated from config/redirects.yaml by
 // `pnpm edge:build`. Do not edit it by hand.
@@ -31,7 +33,9 @@ function withQuery(target, query) {
   return hash < 0 ? target + query : target.slice(0, hash) + query + target.slice(hash);
 }
 
-function redirect(location) {
+// target is a site path (made absolute on the canonical host) or an https URL from the map.
+function redirect(target) {
+  var location = target.charAt(0) === '/' ? 'https://' + CONFIG.canonicalHost + target : target;
   return {
     statusCode: 301,
     statusDescription: 'Moved Permanently',
@@ -49,32 +53,31 @@ function handler(event) {
     var uri = request.uri;
     var host = request.headers && request.headers.host ? request.headers.host.value : '';
     var query = queryString(request.querystring || {});
+    var path = uri.replace(/\/{2,}/g, '/');
+    var target = null;
 
-    if (CONFIG.redirectHosts.indexOf(host) >= 0) {
-      return redirect('https://' + CONFIG.canonicalHost + uri + query);
-    }
-
-    var key = uri.replace(/\/index\.html$/, '/').replace(/\/+$/, '') || '/';
+    var key = path.replace(/\/index\.html$/, '/').replace(/\/+$/, '') || '/';
     if (Object.prototype.hasOwnProperty.call(CONFIG.paths, key)) {
-      return redirect(withQuery(CONFIG.paths[key], query));
+      target = withQuery(CONFIG.paths[key], query);
+    } else if (/\/index\.html$/.test(path)) {
+      target = path.slice(0, -'index.html'.length) + query;
+    } else if (path.indexOf('/.well-known/') !== 0) {
+      // Machine paths such as /.well-known/ go to the origin as requested.
+      var last = path.slice(path.lastIndexOf('/') + 1);
+      if (last !== '' && last.indexOf('.') < 0) {
+        target = path + '/' + query;
+      }
     }
 
-    if (/\/index\.html$/.test(uri)) {
-      return redirect(uri.slice(0, -'index.html'.length) + query);
+    if (target === null && (path !== uri || CONFIG.redirectHosts.indexOf(host) >= 0)) {
+      target = path + query;
+    }
+    if (target !== null) {
+      return redirect(target);
     }
 
-    // Machine paths such as /.well-known/ go to the origin as requested.
-    if (uri.indexOf('/.well-known/') === 0) {
-      return request;
-    }
-
-    var last = uri.slice(uri.lastIndexOf('/') + 1);
-    if (last !== '' && last.indexOf('.') < 0) {
-      return redirect(uri + '/' + query);
-    }
-
-    if (uri.charAt(uri.length - 1) === '/') {
-      request.uri = uri + 'index.html';
+    if (path.charAt(path.length - 1) === '/') {
+      request.uri = path + 'index.html';
     }
   } catch (e) {
     // Fail open: let the request through unchanged.
