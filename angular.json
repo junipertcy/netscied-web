@@ -80,6 +80,20 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "fixture": {
+              "outputPath": "dist/fixture",
+              "assets": [
+                { "glob": "**/*", "input": "public" },
+                { "glob": "**/*", "input": "build/fixture-site", "ignore": [".netscied-build"] }
+              ]
+            },
+            "fixture-empty": {
+              "outputPath": "dist/fixture-empty",
+              "assets": [
+                { "glob": "**/*", "input": "public" },
+                { "glob": "**/*", "input": "build/fixture-empty-site", "ignore": [".netscied-build"] }
+              ]
             }
           },
           "defaultConfiguration": "production"
