@@ -144,3 +144,30 @@ test('task 7.2: llms.txt, Markdown siblings, the feed, CSVs, schemas and page da
     assert.equal(c.cacheControl, SHORT, file);
   }
 });
+
+// Task 8.8 ordering: a page must not link a /data/ file that is not there yet.
+test('the deploy lists every version file the pages link that the data origin does not serve', async () => {
+  const { missingDataFiles } = await import('../../scripts/deploy.mjs');
+  const { createServer } = await import('node:http');
+  const dir = mkdtempSync(path.join(tmpdir(), 'dist-'));
+  const served = new Set(['/data/d1/1.0.0/a.csv']);
+  const server = createServer((req, res) => {
+    res.writeHead(served.has(req.url) ? 200 : 404);
+    res.end();
+  });
+  await new Promise((r) => server.listen(0, '127.0.0.1', r));
+  const origin = `http://127.0.0.1:${server.address().port}`;
+  try {
+    mkdirSync(path.join(dir, 'api', 'v1', 'datasets'), { recursive: true });
+    const file = (p) => ({ path: p, url: `https://netscied.tw/data/d1/1.0.0/${p}` });
+    writeFileSync(path.join(dir, 'api', 'v1', 'datasets', 'd1.json'), JSON.stringify({ id: 'd1', versions: [{ version: '1.0.0', files: [file('a.csv'), file('b.csv')] }] }));
+    writeFileSync(path.join(dir, 'api', 'v1', 'datasets', 'd2.json'), JSON.stringify({ id: 'd2', versions: [] }));
+    const missing = await missingDataFiles(dir, { origin });
+    assert.deepEqual(missing, ['https://netscied.tw/data/d1/1.0.0/b.csv (HTTP 404)']);
+    served.add('/data/d1/1.0.0/b.csv');
+    assert.deepEqual(await missingDataFiles(dir, { origin }), []);
+  } finally {
+    server.close();
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

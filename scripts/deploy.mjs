@@ -1,14 +1,16 @@
 // Deploys dist/netscied/browser to the site bucket (site-hosting spec, "Safe deploys").
 //
 //   NETSCIED_CF_DISTRIBUTION_ID=E… [NETSCIED_SITE_BUCKET=netscied.tw] [AWS_PROFILE=…] \
-//     node scripts/deploy.mjs [--dry-run]
+//     node scripts/deploy.mjs [--dry-run] [--allow-missing-data]
 //
 // Order: content-hashed assets, then other static files and machine files, then
 // HTML, then one CloudFront invalidation. Nothing is ever deleted, so pages from
 // the previous deploy keep loading their assets, and a deploy that fails part-way
 // leaves the old HTML in place. The invalidation runs only after every upload succeeds.
+// A deploy is refused while any version file the pages link is not yet served
+// from /data/ (the data files go up first, through the approved publish job).
 import { spawn } from 'node:child_process';
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { verifySiteStamp } from './build/check-site.mjs';
@@ -77,6 +79,30 @@ export function planDeploy({ buildDir, files, bucket, distributionId }) {
 }
 
 // Runs the steps in order; the first failure stops the deploy.
+// Every version file the pages link (api/v1/datasets/*.json), checked against
+// the data origin. The data files are uploaded by the approved publish job
+// (task 8.6), separately from the site, so the site must not go live first.
+export async function missingDataFiles(buildDir, { origin = 'https://netscied.tw', fetchImpl = fetch } = {}) {
+  const dir = path.join(buildDir, 'api', 'v1', 'datasets');
+  if (!existsSync(dir)) return [];
+  const urls = [];
+  for (const name of readdirSync(dir).filter((n) => n.endsWith('.json')).sort()) {
+    const record = JSON.parse(readFileSync(path.join(dir, name), 'utf8'));
+    for (const v of record.versions ?? []) for (const f of v.files ?? []) urls.push(f.url);
+  }
+  const missing = [];
+  for (const url of urls) {
+    const target = url.replace(/^https:\/\/netscied\.tw/, origin);
+    try {
+      const res = await fetchImpl(target, { method: 'HEAD', redirect: 'manual' });
+      if (res.status !== 200) missing.push(`${url} (HTTP ${res.status})`);
+    } catch (err) {
+      missing.push(`${url} (${err.message})`);
+    }
+  }
+  return missing;
+}
+
 export async function runDeploy(plan, exec) {
   for (const step of plan) {
     try {
@@ -121,6 +147,12 @@ async function main() {
   if (process.argv.includes('--dry-run')) {
     for (const step of plan) console.log(`# ${step.label}\naws ${step.args.map(shellQuote).join(' ')}`);
     return;
+  }
+  if (!process.argv.includes('--allow-missing-data')) {
+    const missing = await missingDataFiles(buildDir);
+    if (missing.length) {
+      throw new Error(`deploy refused: ${missing.length} version files the pages link are not served yet; publish them first (task 8.8), or pass --allow-missing-data:\n  ${missing.slice(0, 20).join('\n  ')}`);
+    }
   }
   await runDeploy(plan, (args, step) => {
     console.log(`→ ${step.label}`);
