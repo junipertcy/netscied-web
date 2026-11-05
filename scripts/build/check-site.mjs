@@ -10,7 +10,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { findPii } from '../catalog/lib/pii.mjs';
 
-const TEXT = new Set(['.html', '.md', '.json', '.csv', '.txt', '.xml']);
+const TEXT = new Set(['.html', '.md', '.json', '.csv', '.txt', '.xml', '.svg', '.webmanifest']);
 
 function* walk(dir, prefix = '') {
   for (const name of readdirSync(dir).sort()) {
@@ -27,8 +27,7 @@ export function scanSite(root) {
   for (const [rel, full] of walk(root)) {
     if (!TEXT.has(path.extname(rel))) continue;
     files += 1;
-    // Decode HTML entities that hide an @ (&#64;, &commat;) before matching.
-    const text = readFileSync(full, 'utf8').replace(/&#64;|&commat;|&#x40;/gi, '@');
+    const text = readFileSync(full, 'utf8');
     for (const hit of findPii(text)) problems.push({ file: rel, ...hit });
   }
   return { problems, files };

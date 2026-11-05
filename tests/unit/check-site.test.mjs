@@ -56,3 +56,14 @@ test('a Taiwanese phone number in a Markdown sibling or JSON record fails', () =
     }
   }
 });
+
+test('review 7: SVG files and web manifests are scanned too', () => {
+  for (const [rel, text] of [['assets/img/x.svg', '<svg><text>someone@example.org</text></svg>'], ['site.webmanifest', '{"description":"0912-345-678"}']]) {
+    const dir = site({ [rel]: text });
+    try {
+      assert.notEqual(run(dir).status, 0, rel);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  }
+});
