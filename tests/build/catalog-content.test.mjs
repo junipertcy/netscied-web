@@ -19,9 +19,11 @@ test('task 4.5: at least 15 Taiwan courses, and no international entry in the co
   assert.ok(courses.some((c) => c.id === 'ncku-stat-intro-data-science' && c.freshness.id === 'historical'));
 });
 
-test('task 4.4: at least 8 published datasets, and every license has an evidence URL and a check date', () => {
+test('task 4.4: at least 8 published datasets, at least 2 of them newly hosted, and every license has an evidence URL and a check date', () => {
   const datasets = api('datasets.json');
   assert.ok(datasets.length >= 8, `${datasets.length} published`);
+  const hosted = datasets.filter((d) => d.hosted).map((d) => d.id);
+  for (const id of ['ly-bill-cosponsorship-10th', 'taipei-metro-od-monthly']) assert.ok(hosted.includes(id), `${id} is hosted`);
   for (const d of datasets) {
     const full = api(`datasets/${d.id}.json`);
     assert.ok(full.license.evidence?.url, `${d.id}: license evidence URL`);
@@ -64,4 +66,25 @@ test('task 4.1: the Golden Horse version reports its repeated pairs, and the pag
   assert.match(html, /下載（版本 1\.0\.0）/);
   assert.match(html, /href="https:\/\/netscied\.tw\/data\/golden-horse-2018-nominations\/1\.0\.0\/golden-horse-2018-nominations-1\.0\.0\.zip"/);
   assert.match(html, /個人資料與下架/);
+});
+
+test('review 11 / owner decision A1: the LY version credits LYAPI and OpenFun, and no name outside the roster is in its files', () => {
+  const full = api('datasets/ly-bill-cosponsorship-10th.json');
+  assert.equal(full.license.id, 'CC-BY-4.0');
+  assert.match(full.attribution, /歐噴有限公司 LYAPI/);
+  const files = full.latest_version.files.map((f) => f.path);
+  assert.ok(files.includes('ly-bill-cosponsorship-10th-1.0.0.hif.json') && files.includes('ATTRIBUTION.txt'));
+  assert.equal(full.latest_version.statistics.hypergraph.nodes, 120);
+  const html = readDist('datasets/ly-bill-cosponsorship-10th/index.html');
+  assert.match(html, /歐噴有限公司/);
+  assert.match(html, /LYAPI/);
+});
+
+test('task 4.4: the Taipei Metro version is a monthly aggregate under OGDL with the attribution statement in its record', () => {
+  const full = api('datasets/taipei-metro-od-monthly.json');
+  assert.equal(full.license.id, 'OGDL-Taiwan-1.0');
+  assert.match(full.attribution, /此開放資料依政府資料開放授權條款 \(Open Government Data License\) 進行公眾釋出/);
+  const g = full.latest_version.statistics.graph;
+  assert.ok(g.edges > 1000 && g.total_weight > 0);
+  assert.ok(full.latest_version.files.every((f) => f.bytes <= 100_000_000));
 });

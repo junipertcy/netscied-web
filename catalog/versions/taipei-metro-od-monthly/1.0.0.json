@@ -1,0 +1,237 @@
+{
+  "dataset": "taipei-metro-od-monthly",
+  "version": "1.0.0",
+  "released": "2026-11-05",
+  "snapshot_date": "2026-11-05",
+  "changelog": {
+    "zh-Hant": "第一版：2025 年 10 月至 2026 年 9 月共 12 個月的站間起訖月彙總網絡。120 個車站名稱照原始資料保留；11 個只出現在進站欄，0 個只出現在出站欄（節點屬性 appears_as）。2025-12 的檔案含 2026-01-01 凌晨（6 時前）的通宵營運旅次 112,999 人次，依原始檔計入 2025-12。共 12 個月份快照：每個起訖配對在每個快照中最多一條連結，跨快照的配對共 12,998 組，同一快照內沒有重複的配對。含 1,298 條自環（起點與終點相同）。",
+    "en": "First version, monthly station-to-station OD networks for the 12 months from October 2025 to September 2026. 120 station names are kept as the source gives them; 11 appear only as entries and 0 only as exits (node attribute appears_as). The 2025-12 file carries 112,999 trips from 2026-01-01 before 06:00 (all-night service); they count for 2025-12, as the source files them. 12 monthly snapshots: a pair has at most one link per snapshot, 12,998 distinct pairs across snapshots; no pair repeats within a snapshot. Self-loops (source equals target): 1,298."
+  },
+  "doi": null,
+  "license": "OGDL-Taiwan-1.0",
+  "files": [
+    {
+      "path": "taipei-metro-od-monthly-1.0.0.zip",
+      "url": "https://netscied.tw/data/taipei-metro-od-monthly/1.0.0/taipei-metro-od-monthly-1.0.0.zip",
+      "bytes": 2679247,
+      "sha256": "cc2bdbe3e11b4c57840d508bf08bf37b1366ae3291d2e7dbc5dfb372a6fe6963",
+      "media_type": "application/zip",
+      "format": "zip",
+      "role": "bundle"
+    },
+    {
+      "path": "taipei-metro-od-monthly-1.0.0.graphml",
+      "url": "https://netscied.tw/data/taipei-metro-od-monthly/1.0.0/taipei-metro-od-monthly-1.0.0.graphml",
+      "bytes": 20339889,
+      "sha256": "ba86a879f687ead5ee78cad99e906a7cdfe1c1eb539490a6d19cad8a06101b92",
+      "media_type": "application/graphml+xml",
+      "format": "graphml",
+      "role": "canonical",
+      "conforms_to": "http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"
+    },
+    {
+      "path": "nodes.csv",
+      "url": "https://netscied.tw/data/taipei-metro-od-monthly/1.0.0/nodes.csv",
+      "bytes": 2167,
+      "sha256": "6ef540a35f9ac03156c613b258347288b46c924c151e57ddbe22227bff8b65f1",
+      "media_type": "text/csv",
+      "format": "csv-bundle",
+      "role": "canonical",
+      "conforms_to": "https://datapackage.org/standard/data-package/"
+    },
+    {
+      "path": "edges.csv",
+      "url": "https://netscied.tw/data/taipei-metro-od-monthly/1.0.0/edges.csv",
+      "bytes": 6047621,
+      "sha256": "93029598e4357bfe6d4caff9a4499b4c8b1cc887ef18bce8138dbd0efa93fa50",
+      "media_type": "text/csv",
+      "format": "csv-bundle",
+      "role": "canonical",
+      "conforms_to": "https://datapackage.org/standard/data-package/"
+    },
+    {
+      "path": "datapackage.json",
+      "url": "https://netscied.tw/data/taipei-metro-od-monthly/1.0.0/datapackage.json",
+      "bytes": 2200,
+      "sha256": "2cbbb3b3bc1d9e1040fb101ee9161b999cb38c58434143bfb6e3f943a3af4dc3",
+      "media_type": "application/json",
+      "format": "datapackage",
+      "role": "canonical",
+      "conforms_to": "https://datapackage.org/profiles/2.0/datapackage.json"
+    },
+    {
+      "path": "ATTRIBUTION.txt",
+      "url": "https://netscied.tw/data/taipei-metro-od-monthly/1.0.0/ATTRIBUTION.txt",
+      "bytes": 3255,
+      "sha256": "4060bdbe82c80c3950cf195a813ca6b6f177fb59b67ea99d7d0c7d41f263b522",
+      "media_type": "text/plain",
+      "format": "attribution",
+      "role": "metadata"
+    },
+    {
+      "path": "provenance.json",
+      "url": "https://netscied.tw/data/taipei-metro-od-monthly/1.0.0/provenance.json",
+      "bytes": 21238,
+      "sha256": "be5f676155e6a6163974ddc28a96cab1436cd7ea44eaf6734cbafaa559096f37",
+      "media_type": "application/json",
+      "format": "provenance",
+      "role": "metadata"
+    },
+    {
+      "path": "SHA256SUMS",
+      "url": "https://netscied.tw/data/taipei-metro-od-monthly/1.0.0/SHA256SUMS",
+      "bytes": 603,
+      "sha256": "3f377903332304ad3bbabf65dd6d8adc7e12e438305879f4b810007dd3da2927",
+      "media_type": "text/plain",
+      "format": "sha256sums",
+      "role": "checksums"
+    }
+  ],
+  "statistics": {
+    "graph": {
+      "nodes": 120,
+      "edges": 153586,
+      "unique_pairs": 12998,
+      "repeated_pairs": 140588,
+      "self_loops": 1298,
+      "isolated_nodes": 0,
+      "components": 1,
+      "largest_component_nodes": 120,
+      "total_weight": 773307913
+    }
+  },
+  "computed_by": {
+    "tool": "netscied",
+    "version": "0.1.0",
+    "libraries": {
+      "networkx": "3.7",
+      "xgi": "0.10.2",
+      "frictionless": "5.21.0",
+      "jsonschema": "4.26.0",
+      "pyyaml": "6.0.3"
+    },
+    "commit": "97856a4ba6fe529301e3634d094936787a53ff89",
+    "lock_sha256": "f18b9e94750ef187372bfd0a5d398bc82b10dbcbb9bbc8d0487fc6f41a060078"
+  },
+  "upstream_snapshot": {
+    "sources": [
+      {
+        "id": "monthly-index",
+        "url": "https://data.taipei/api/dataset/63f31c7e-7fc3-418b-bd82-b95158755b4d/resource/eb481f58-1238-4cff-8caa-fa7bb20cb4f4/download",
+        "landing_page": "https://data.taipei/dataset/detail?id=63f31c7e-7fc3-418b-bd82-b95158755b4d",
+        "archived_landing_page": "https://web.archive.org/web/20261105045332/https://data.taipei/dataset/detail?id=63f31c7e-7fc3-418b-bd82-b95158755b4d",
+        "retrieved_at": "2026-11-05T04:57:32Z",
+        "sha256": "f9c45551bc9c4c8126a5feeabab65067682fa3a3d33b3dd1820a07f3ea63cebc",
+        "bytes": 25462
+      },
+      {
+        "id": "od-2025-10",
+        "url": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202510.csv",
+        "landing_page": "https://data.gov.tw/dataset/128506",
+        "archived_landing_page": "https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506",
+        "retrieved_at": "2026-11-05T05:00:13Z",
+        "sha256": "0730e6f828efc8d058349ab4080a5c79217d42ac712b419fa848af6dfd6276fc",
+        "bytes": 305990626
+      },
+      {
+        "id": "od-2025-11",
+        "url": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202511.csv",
+        "landing_page": "https://data.gov.tw/dataset/128506",
+        "archived_landing_page": "https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506",
+        "retrieved_at": "2026-11-05T05:03:20Z",
+        "sha256": "229228633a9fb167e5b663a8b6fefac1136e45cf89ca7b744bc6ad9a5478f229",
+        "bytes": 297158626
+      },
+      {
+        "id": "od-2025-12",
+        "url": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202512.csv",
+        "landing_page": "https://data.gov.tw/dataset/128506",
+        "archived_landing_page": "https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506",
+        "retrieved_at": "2026-11-05T05:05:52Z",
+        "sha256": "00fce70b3411ea9c251e14f962db54a53186c72d1be7cea1c33792f99867560b",
+        "bytes": 307999434
+      },
+      {
+        "id": "od-2026-01",
+        "url": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202601.csv",
+        "landing_page": "https://data.gov.tw/dataset/128506",
+        "archived_landing_page": "https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506",
+        "retrieved_at": "2026-11-05T05:08:17Z",
+        "sha256": "74d2374f526e0ab06164820a428242ada24291187b5fd2d06a6dfb91e291abad",
+        "bytes": 305559351
+      },
+      {
+        "id": "od-2026-02",
+        "url": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202602.csv",
+        "landing_page": "https://data.gov.tw/dataset/128506",
+        "archived_landing_page": "https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506",
+        "retrieved_at": "2026-11-05T05:10:29Z",
+        "sha256": "24541ac5fbff78306fbd5dfc0133fc5572ee8a5a78f0fd37e30b485e7d7fa4a4",
+        "bytes": 276259378
+      },
+      {
+        "id": "od-2026-03",
+        "url": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202603.csv",
+        "landing_page": "https://data.gov.tw/dataset/128506",
+        "archived_landing_page": "https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506",
+        "retrieved_at": "2026-11-05T05:12:57Z",
+        "sha256": "d291dfe222315f71b1854d530547efc29ec2ad05d9e4b3c54be7514ea1ad7b29",
+        "bytes": 306105901
+      },
+      {
+        "id": "od-2026-04",
+        "url": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202604.csv",
+        "landing_page": "https://data.gov.tw/dataset/128506",
+        "archived_landing_page": "https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506",
+        "retrieved_at": "2026-11-05T05:15:17Z",
+        "sha256": "5dae83fe88bc118af289e7a12ae6443c2fab2d928f418554e0cdeb0af04235cc",
+        "bytes": 296164318
+      },
+      {
+        "id": "od-2026-05",
+        "url": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202605.csv",
+        "landing_page": "https://data.gov.tw/dataset/128506",
+        "archived_landing_page": "https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506",
+        "retrieved_at": "2026-11-05T05:17:41Z",
+        "sha256": "c4a7ce82ed748d136e0bd257b904194b77347ba78b7044b24f7447dd1ecbddc8",
+        "bytes": 306054906
+      },
+      {
+        "id": "od-2026-06",
+        "url": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202606.csv",
+        "landing_page": "https://data.gov.tw/dataset/128506",
+        "archived_landing_page": "https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506",
+        "retrieved_at": "2026-11-05T05:20:08Z",
+        "sha256": "efd4a84235dc325f6fa70caa4ce9bf817e144c63c5efe34b7303dc5dbbde9e52",
+        "bytes": 296129878
+      },
+      {
+        "id": "od-2026-07",
+        "url": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202607.csv",
+        "landing_page": "https://data.gov.tw/dataset/128506",
+        "archived_landing_page": "https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506",
+        "retrieved_at": "2026-11-05T05:22:33Z",
+        "sha256": "1e331e0e4aa704b2f39fe505192ce4d9e9a456d0c822c30d694d8deed24681b9",
+        "bytes": 305954434
+      },
+      {
+        "id": "od-2026-08",
+        "url": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202608.csv",
+        "landing_page": "https://data.gov.tw/dataset/128506",
+        "archived_landing_page": "https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506",
+        "retrieved_at": "2026-11-05T05:25:06Z",
+        "sha256": "fa17140855d4984e1101b42763c34d3dd1e47be912b9d242f24f16efd5bbddae",
+        "bytes": 312474694
+      },
+      {
+        "id": "od-2026-09",
+        "url": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202609.csv",
+        "landing_page": "https://data.gov.tw/dataset/128506",
+        "archived_landing_page": "https://web.archive.org/web/20261105050041/https://data.gov.tw/dataset/128506",
+        "retrieved_at": "2026-11-05T05:27:37Z",
+        "sha256": "ff4878a3b9bf73a7bc4bf3c54ffc165d5876f65fbc88cf7d17103a8b0b2cb86a",
+        "bytes": 302444881
+      }
+    ]
+  }
+}
