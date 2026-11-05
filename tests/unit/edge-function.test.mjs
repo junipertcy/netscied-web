@@ -150,7 +150,10 @@ test('the function stays under the 10 KB CloudFront Functions limit', () => {
   assert.ok(statSync(FUNCTION_PATH).size < 10 * 1024, `${statSync(FUNCTION_PATH).size} bytes`);
 });
 
-test('the function uses no module syntax, which cloudfront-js-2.0 does not support', () => {
+// cloudfront-js-2.0 does accept `import cf from 'cloudfront'`; the function avoids
+// module syntax so that the vm harness here and scripts/preview.mjs can run it as
+// a plain script (task 11.8).
+test('the function uses no module syntax, so the vm harness and the preview server can run it as a script', () => {
   assert.doesNotMatch(committed, /^\s*(import|export)\s/m);
   assert.doesNotMatch(committed, /\brequire\(/);
 });
