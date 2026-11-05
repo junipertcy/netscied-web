@@ -1,0 +1,110 @@
+id: taipei-youbike-od
+status: published
+added: "2026-11-04"
+announce: false
+title:
+  zh-Hant: 臺北市 YouBike 起訖站點統計
+  en: Taipei YouBike station origin–destination counts
+description:
+  zh-Hant: |-
+    臺北市政府資訊局依 YouBike 交易資料，統計從借車站到還車站的總交易次數，
+    週間（星期一至五）與週末（六、日）分開統計，並附起訖站的行政區與連線座標。
+    目前版本的分析期間為 2026 年 6 月，另保留檔名標示 202507 與 202512 的版本。
+    可視為以站點為節點的有向加權網絡，週間與週末為兩層。本站只提供連結。
+  en: >-
+    Taipei City Government (臺北市政府資訊局) counts YouBike trips from
+    each rental station to each return station, separately for weekdays and
+    weekends, with the districts of both stations and a line geometry. The
+    current files cover June 2026; older files labelled 202507 and 202512 are
+    kept. A directed weighted station network with a weekday and a weekend
+    layer. Link only.
+keywords: [YouBike, 微笑單車, 公共自行車, 起訖, 借還車, OD, bike sharing, origin-destination]
+semantics:
+  node:
+    zh-Hant: YouBike 站點（on_stop_id 借車站、off_stop_id 還車站）
+    en: a YouBike station (on_stop_id for rentals and off_stop_id for returns)
+  link:
+    zh-Hant: 分析期間內在借車站借出、在還車站歸還的交易次數（sum_of_txn_times）
+    en: the number of transactions in the period rented at one station and returned at another (sum_of_txn_times)
+structure:
+  kinds: [graph]
+  directed: true
+  weighted: true
+  weight:
+    meaning:
+      zh-Hant: 分析期間的交易次數（週間或週末分開計算）
+      en: transactions in the period (weekdays and weekends counted separately)
+    unit: transactions
+  self_loops: true
+  layers: multiplex
+  temporal: { form: snapshots, resolution: month }
+  spatial: { form: edge-geometry }
+  notes:
+    zh-Hant: |-
+      檔案為 GeoJSON，每個起訖組合是一條 LineString。檔案只列出部分起訖組合：
+      2026 年 6 月週末檔中最少的組合也有 41 次，上游未說明篩選門檻。
+      width 欄位是上游建議的視覺化線寬。
+coverage:
+  temporal:
+    start: "2025-07"
+    end: "2026-06"
+    note:
+      zh-Hant: 依資料集說明，目前版本的分析範圍為 115 年 6 月整；另有檔名為 202507 與 202512 的版本。
+  spatial: { zh-Hant: 臺北市, en: Taipei City }
+counts:
+  approximate: true
+  as_of: "2026-11-04"
+  nodes: 1070
+  edges: 2872
+  layers: 2
+  note:
+    zh-Hant: |-
+      取自 2026-11-04 下載的 2026 年 6 月週末檔：1,070 個站點、2,872 個起訖組合（含 777 個同站借還）。
+      週間檔（約 8.9 MB）未下載。
+domains: [transport]
+tags: [bicycle-sharing, public-transport]
+taiwan_relevance:
+  basis: [collected-in-taiwan, about-taiwanese-entities, taiwanese-publisher]
+  justification: 由臺北市政府發布，統計臺北市 YouBike 站點之間的借還車次數。
+provenance:
+  source:
+    name: { zh-Hant: 臺北市YouBike起訖站點統計, en: YouBike starting and ending station statistics }
+    url: https://data.gov.tw/dataset/166492
+    publisher: { zh-Hant: 臺北市政府資訊局 }
+  method:
+    zh-Hant: 依資料集說明，根據 YouBike 交易資料計算不同起訖站的總交易次數；因週間與週末的使用者群像不同而分開統計。
+  access:
+    - label: { zh-Hant: 政府資料開放平臺資料集頁, en: data.gov.tw dataset page }
+      url: https://data.gov.tw/dataset/166492
+      format: web
+    - label: { zh-Hant: 臺北市資料大平臺資料集頁, en: data.taipei dataset page }
+      url: https://data.taipei/dataset/detail?id=c7dbdb7c-6bbd-495a-bd23-49b22defd83e
+      format: web
+    - label: { zh-Hant: 週間起訖站點統計（GeoJSON）, en: weekday OD counts (GeoJSON) }
+      url: https://data.taipei/api/dataset/c7dbdb7c-6bbd-495a-bd23-49b22defd83e/resource/a1b54bc5-02f9-4f82-accf-61b4105227d0/download
+      format: json
+    - label: { zh-Hant: 週末起訖站點統計（GeoJSON）, en: weekend OD counts (GeoJSON) }
+      url: https://data.taipei/api/dataset/c7dbdb7c-6bbd-495a-bd23-49b22defd83e/resource/61c37572-4eab-43d9-a786-ccdea631b871/download
+      format: json
+  checked_on: "2026-11-04"
+license:
+  id: OGDL-Taiwan-1.0
+  url: https://data.gov.tw/license
+  statement:
+    zh-Hant: 政府資料開放平臺資料集頁的「授權方式」為「政府資料開放授權條款-第1版」；臺北市資料大平臺的授權欄為「依政府資料開放授權條款-第1版」。
+  evidence:
+    url: https://data.gov.tw/dataset/166492
+    checked_on: "2026-11-04"
+    quote: 授權方式 政府資料開放授權條款-第1版
+redistribution:
+  basis: link-only
+  note:
+    zh-Hant: 授權允許轉載；本站目前只提供連結。
+personal_data:
+  level: none
+  reviewed_on: "2026-11-04"
+  notes:
+    zh-Hant: 站點之間的交易次數彙總，不含個別使用者資料；2026 年 6 月週末檔中每個組合至少 41 次。
+creators:
+  - organization: { zh-Hant: 臺北市政府資訊局 }
+    role: publisher

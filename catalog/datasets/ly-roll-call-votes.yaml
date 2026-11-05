@@ -1,0 +1,113 @@
+id: ly-roll-call-votes
+status: published
+added: "2026-11-04"
+announce: false
+title:
+  zh-Hant: 立法院院會記名表決
+  en: Legislative Yuan plenary roll-call votes
+description:
+  zh-Hant: |-
+    立法院開放資料服務平台的「院會表決資料」，逐筆記錄院會表決的議題、日期時間、
+    表決方式，出席、贊成、反對與棄權人數，以及贊成、反對、棄權三份委員名單。
+    可整理成委員與表決之間帶正負號的二分網絡（贊成為正、反對為負），
+    用來分析政黨凝聚度與跨黨投票。平台資料自第10屆第7會期（2023 年）起；
+    LYAPI 另從公報整理出第8屆起的表決紀錄。本站只提供連結。
+  en: >-
+    The Legislative Yuan open data platform's plenary vote records: for each
+    vote, the issue, date and time, voting method, the numbers present, for,
+    against and abstaining, and the three name lists. They form a signed
+    legislator–vote bipartite network (for = positive, against = negative). The
+    platform's records start in the 7th session of the 10th term (2023); LYAPI
+    also parses votes from the gazette back to the 8th term. Link only.
+keywords: [立法院, 表決, 記名表決, 贊成, 反對, 棄權, 唱名表決, roll call, roll-call votes, signed network]
+semantics:
+  node:
+    zh-Hant: 立法委員與院會的每一次表決（二分）
+    en: legislators and individual plenary votes (two node sets)
+  link:
+    zh-Hant: 一位委員在一次表決中投贊成、反對或棄權；未列名的委員沒有連結
+    en: a legislator voting for, against or abstaining in one vote; legislators not listed have no link
+structure:
+  kinds: [graph]
+  directed: false
+  weighted: false
+  signed: true
+  partitions:
+    count: 2
+    names:
+      - { id: legislators, zh-Hant: 立法委員, en: legislators }
+      - { id: votes, zh-Hant: 表決, en: votes }
+  layers: single
+  temporal: { form: event-times, resolution: minute }
+  spatial: { form: none }
+  notes:
+    zh-Hant: |-
+      上游只提供贊成（supporter）、反對（opposer）與棄權（abstainer）三份名單，
+      正負號由使用者自行設定。LYAPI 第11屆部分紀錄的表決時間缺少年份（例如「中華民國年3月20日」）。
+coverage:
+  temporal:
+    start: "2023-02"
+    ongoing: true
+    note:
+      zh-Hant: 平台 HTML 預覽的第一筆為第10屆第7會期 112/02/21；資料集每日更新。LYAPI 的表決資料涵蓋第8至第11屆。
+  spatial: { zh-Hant: 臺灣, en: Taiwan }
+counts:
+  approximate: true
+  as_of: "2026-11-04"
+  partitions:
+    votes: 1513
+  note:
+    zh-Hant: |-
+      平台資料集頁面「資料筆數」為 1,513（每筆一次表決）。
+      LYAPI /votes 端點另有 10,919 筆：第8屆 718、第9屆 6,373、第10屆 2,495、第11屆 1,333。
+domains: [politics]
+tags: [legislature, roll-call-votes]
+taiwan_relevance:
+  basis: [about-taiwanese-entities, taiwanese-publisher]
+  justification: 由立法院發布，記錄臺灣立法委員在院會的記名表決。
+provenance:
+  source:
+    name: { zh-Hant: 院會表決資料, en: plenary vote records }
+    url: https://data.ly.gov.tw/getds.action?id=370
+    publisher: { zh-Hant: 立法院, en: Legislative Yuan }
+  method:
+    zh-Hant: |-
+      資料提供者為議事暨公報資訊網，每日 12:00 更新。
+      欄位包括 term、sessionPeriod、sessionTimes、meetingName、voteDate、voteTime、voteIssue、voteType、
+      votePresence、voteAgree、voteAgainst、voteAbstain、supporter、opposer、abstainer。
+  access:
+    - label: { zh-Hant: 立法院開放資料服務平台資料集頁, en: dataset page on the LY open data platform }
+      url: https://data.ly.gov.tw/getds.action?id=370
+      format: web
+    - label: { zh-Hant: 平台 HTML 預覽, en: HTML preview on the platform }
+      url: https://data.ly.gov.tw/previewhtml.action?id=370
+      format: web
+    - label: { zh-Hant: LYAPI 表決 API（第8屆起）, en: LYAPI votes API (from the 8th term) }
+      url: https://ly.govapi.tw/v2/votes
+      format: api
+  checked_on: "2026-11-04"
+license:
+  id: LicenseRef-TW-LY-Open-Data-Declaration
+  name: { zh-Hant: 立法院網站資料開放宣告, en: Legislative Yuan open data declaration }
+  url: https://data.ly.gov.tw/copyprotection.action
+  statement:
+    zh-Hant: |-
+      平台頁尾連結「立法院網站資料開放宣告」；平台選單的「授權條款」頁則刊載政府資料開放授權條款－第1版全文。
+      LYAPI 的資料集頁尾另標示 CC-BY-4.0。
+  evidence:
+    url: https://data.ly.gov.tw/copyprotection.action
+    checked_on: "2026-11-04"
+    quote: 「立法院開放資料服務平台」網站（以下簡稱本網站）上刊載之所有資料與素材，其得受著作權保護之範圍，以無償、非專屬，得再授權之方式提供公眾使用，使用者得不限時間及地域，重製、改作、編輯、公開傳輸或為其他方式之利用，開發各種產品或服務（簡稱加值衍生物），此一授權行為不會嗣後撤回，使用者亦無須取得本院之書面或其他方式授權；然使用時，應註明出處。
+redistribution:
+  basis: link-only
+  note:
+    zh-Hant: 授權允許轉載；本站目前只提供連結。
+personal_data:
+  level: public-role
+  reviewed_on: "2026-11-04"
+  notes:
+    zh-Hant: 只含立法委員的姓名與其在院會的投票，屬公職行為。
+creators:
+  - organization: { zh-Hant: 立法院, en: Legislative Yuan }
+    url: https://data.ly.gov.tw/
+    role: publisher

@@ -1,0 +1,100 @@
+id: taipower-interregional-flow
+status: published
+added: "2026-11-04"
+announce: false
+title:
+  zh-Hant: 台電各區域間電力潮流
+  en: Taipower inter-regional power flows
+description:
+  zh-Hant: |-
+    台灣電力股份有限公司公布北、中、南、東四個區域之間每 10 分鐘的電力潮流瞬間值（MW），
+    資料擷取自電能管理系統（EMS）。四個區域是節點，區域間的潮流是有向連結，
+    權重隨時間變化，是一個小而時間解析度高的能源流動網絡。
+    目前的檔案涵蓋 2026 年 4 月至 6 月，每月底更新三個月前的資料。本站只提供連結。
+  en: >-
+    Taiwan Power Company publishes 10-minute instantaneous power flows (MW)
+    between its northern, central, southern and eastern regions, taken from its
+    energy management system. A small four-node directed network whose link
+    weights change every ten minutes. The current file covers April to June
+    2026; each month-end update adds the data from three months earlier. Link
+    only.
+keywords: [台電, 電力潮流, 區域間, 輸電, 電網, 能源, Taipower, power flow, transmission]
+semantics:
+  node:
+    zh-Hant: 台電電力系統的四個區域：北部、中部、南部、東部
+    en: one of Taipower's four grid regions (north, central, south, east)
+  link:
+    zh-Hant: 兩區域之間的電力潮流；檔案中為「中送北」「中送東」「南送中」「南送東」四條，數值為每 10 分鐘的瞬間值
+    en: the power flow between two regions; the file has four, named 中送北 (central to north), 中送東 (central to east), 南送中 (south to central) and 南送東 (south to east), as 10-minute instantaneous values
+structure:
+  kinds: [graph]
+  directed: true
+  weighted: true
+  weight:
+    meaning:
+      zh-Hant: 電力潮流瞬間值（欄位 P）；資料中有負值，資料集未說明正負號的意義
+      en: instantaneous power flow (field P); some values are negative, and the dataset does not explain the sign
+    unit: MW
+  layers: single
+  temporal: { form: snapshots, resolution: 10 minutes }
+  spatial: { form: none }
+  notes:
+    zh-Hant: |-
+      JSON 檔的 FLOW_P 陣列每筆含 FUEL_TYPE、UNIT_NAME（例如「中送北潮流」）、DATETIME 與 P。
+      資料集備註說明數值擷取自電能管理系統，可能因系統維護、資料設定或傳輸而與實際數值有些許誤差。
+coverage:
+  temporal:
+    start: "2026-04"
+    end: "2026-06"
+    ongoing: true
+    note:
+      zh-Hant: 檔案只有一個，涵蓋最近一次更新的三個月；更早的資料不在檔案中。
+  spatial: { zh-Hant: 臺灣, en: Taiwan }
+counts:
+  approximate: true
+  as_of: "2026-11-04"
+  nodes: 4
+  edges: 4
+  note:
+    zh-Hant: 區域數取自資料集說明（北、中、南、東）；連結數取自 2026-11-04 對 JSON 檔分段抽樣所見的四個 UNIT_NAME。
+domains: [technology]
+tags: [energy, power-grid, electricity]
+taiwan_relevance:
+  basis: [collected-in-taiwan, about-taiwanese-entities, taiwanese-publisher]
+  justification: 由台灣電力股份有限公司發布，記錄臺灣電力系統各區域之間的潮流。
+provenance:
+  source:
+    name: { zh-Hant: 台灣電力公司各區域間過去電力潮流量, en: Taiwan Power Company power flow between regions }
+    url: https://data.gov.tw/dataset/37326
+    publisher: { zh-Hant: 台灣電力股份有限公司, en: Taiwan Power Company }
+  method:
+    zh-Hant: |-
+      擷取自台電電能管理系統（EMS）的每 10 分鐘瞬間值。
+      依資料集備註，每月月底更新三個月前的資料，例如 10 月底更新至 4 至 6 月。
+  access:
+    - label: { zh-Hant: 政府資料開放平臺資料集頁, en: data.gov.tw dataset page }
+      url: https://data.gov.tw/dataset/37326
+      format: web
+    - label: { zh-Hant: 潮流資料 JSON 檔（約 5 MB）, en: flow data JSON (about 5 MB) }
+      url: https://service.taipower.com.tw/data/opendata/apply/file/d006009/001.json
+      format: json
+  checked_on: "2026-11-04"
+license:
+  id: OGDL-Taiwan-1.0
+  url: https://data.gov.tw/license
+  statement:
+    zh-Hant: 政府資料開放平臺資料集頁的「授權方式」為「政府資料開放授權條款-第1版」。
+  evidence:
+    url: https://data.gov.tw/dataset/37326
+    checked_on: "2026-11-04"
+    quote: 授權方式 政府資料開放授權條款-第1版
+redistribution:
+  basis: link-only
+  note:
+    zh-Hant: 授權允許轉載；本站目前只提供連結。上游只保留最近三個月，若要保存歷史需自行定期下載。
+personal_data:
+  level: none
+  reviewed_on: "2026-11-04"
+creators:
+  - organization: { zh-Hant: 台灣電力股份有限公司, en: Taiwan Power Company }
+    role: publisher

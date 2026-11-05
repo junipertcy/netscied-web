@@ -1,0 +1,104 @@
+id: cpbl-play-by-play
+status: published
+added: "2026-11-04"
+announce: false
+title:
+  zh-Hant: 中華職棒逐打席資料（野球革命開放資料）
+  en: CPBL play-by-play open data (Rebas)
+description:
+  zh-Hant: |-
+    「野球革命」（rebas.tw）在 GitHub 釋出的中華職棒原始數據，
+    以 JSON 巢狀儲存比賽、打者成績、投手成績、打席、事件與跑者六張表，
+    目前分季發布 2023 至 2025 年的資料（另含挑戰賽與台灣大賽）。
+    可整理成投手與打者之間的對戰網絡（每個打席是一條連結），
+    或球隊之間以比分決定勝負的成對比較。部分資料為人工記錄。本站只提供連結。
+  en: >-
+    Rebas (野球革命, rebas.tw) publishes raw CPBL data on GitHub as nested JSON
+    with six tables: game, batter box, pitcher box, plate appearance, event and
+    runner, released per season for 2023–2025 (plus the Challenge and Taiwan
+    Series). It yields a pitcher–batter matchup network with one link per plate
+    appearance, and team-versus-team games as scored pairwise comparisons. Some
+    data are recorded by hand. Link only.
+keywords: [中華職棒, 中職, CPBL, 野球革命, rebas, 棒球, 打席, 投打對決, baseball, play-by-play, pitcher-batter]
+semantics:
+  node:
+    zh-Hant: 球員（打者與投手）；在比賽層級則為球隊
+    en: a player (batter or pitcher); at the game level, a team
+  link:
+    zh-Hant: 一個打席：某位投手面對某位打者，記錄打席結果；在比賽層級則為兩隊之間的一場比賽與比分
+    en: one plate appearance between a pitcher and a batter, with its result; at the game level, one game between two teams with its score
+structure:
+  kinds: [graph, pairwise-comparison]
+  directed: false
+  weighted: false
+  multi_edges: true
+  partitions:
+    count: 2
+    names:
+      - { id: batters, zh-Hant: 打者, en: batters }
+      - { id: pitchers, zh-Hant: 投手, en: pitchers }
+  comparison:
+    outcome: score
+    direction:
+      zh-Hant: game 表的 awayScores 與 homeScores 為客隊與主隊的每局得分
+      en: the game table's awayScores and homeScores give each inning's runs for the away and home team
+  layers: single
+  temporal: { form: event-times, resolution: day }
+  spatial: { form: none }
+  notes:
+    zh-Hant: |-
+      打席（PA）表含 batterName、pitcherName、catcherName、局數、球數、壘包與打席結果（results），
+      以及勝率增加（WPA）等衍生數據。依 README，部分資料為手動紀錄，非球場儀器量測。
+coverage:
+  temporal:
+    start: "2023"
+    end: "2025"
+    note:
+      zh-Hant: 依 GitHub 發布：2023 年分上下半季，2024 與 2025 年各一包，另含挑戰賽與台灣大賽。
+  spatial: { zh-Hant: 臺灣, en: Taiwan }
+domains: [culture]
+tags: [sport, baseball]
+taiwan_relevance:
+  basis: [about-taiwanese-entities, taiwan-based-creators]
+  justification: 記錄中華職業棒球大聯盟在臺灣舉行的比賽，由臺灣的棒球數據社群野球革命整理發布。
+provenance:
+  source:
+    name: { zh-Hant: 野球革命 rebas.tw Open Data, en: rebas.tw Open Data }
+    url: https://github.com/rebas-tw/rebas.tw-open-data
+    publisher: { zh-Hant: 野球革命（rebas.tw）, en: Rebas (rebas.tw) }
+  method:
+    zh-Hant: |-
+      野球革命整理中華職棒比賽紀錄，依 README 部分資料為手動紀錄；
+      每季資料以 ZIP 壓縮檔在 GitHub Releases 發布，欄位定義見 schema 目錄。
+  access:
+    - label: { zh-Hant: GitHub Releases（各季 ZIP 檔）, en: GitHub releases (one ZIP per season) }
+      url: https://github.com/rebas-tw/rebas.tw-open-data/releases
+      format: zip
+    - label: { zh-Hant: 資料結構說明, en: schema documentation }
+      url: https://github.com/rebas-tw/rebas.tw-open-data/tree/main/schema
+      format: web
+  checked_on: "2026-11-04"
+license:
+  id: ODC-By-1.0
+  url: https://opendatacommons.org/licenses/by/1-0/
+  statement:
+    zh-Hant: |-
+      儲存庫的 LICENSE 檔為 Open Data Commons Attribution License (ODC-By) v1.0；
+      README「使用原則」寫明「在標註來源的情況下，可以任意使用數據，詳細可參考 ODC-By License」。
+  evidence:
+    url: https://github.com/rebas-tw/rebas.tw-open-data/blob/main/LICENSE
+    checked_on: "2026-11-04"
+    quote: Open Data Commons Attribution License (ODC-By) v1.0
+redistribution:
+  basis: link-only
+  note:
+    zh-Hant: ODC-By 允許轉載；本站目前只提供連結。
+personal_data:
+  level: public-role
+  reviewed_on: "2026-11-04"
+  notes:
+    zh-Hant: 只含職業球員的姓名、背號與場上表現，屬公開的職業活動紀錄。
+creators:
+  - organization: { zh-Hant: 野球革命, en: Rebas }
+    url: https://www.rebas.tw/
+    role: publisher

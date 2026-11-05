@@ -1,0 +1,138 @@
+id: cptond-taiwan-metro
+status: published
+added: "2026-11-04"
+announce: false
+title:
+  zh-Hant: 臺灣捷運與輕軌站點相鄰網絡（CPTOND-2025）
+  en: Taiwan metro and light-rail stop-adjacency network (CPTOND-2025)
+description:
+  zh-Hant: |-
+    CPTOND-2025 公共運輸路網資料集中的臺灣捷運網絡，收錄於 Netzschleuder 網絡目錄。
+    節點是捷運與輕軌車站，有向連結表示某條路線在一站之後緊接停靠另一站，
+    權重為經過該路段的路線數，並附車站經緯度與路段長度。
+    網絡同時包含臺北、臺中與高雄的系統，彼此不相連。
+    站名為簡體字，英文站名為機器翻譯。本站只提供連結。
+  en: >-
+    The Taiwan metro network from the CPTOND-2025 public-transport dataset, as
+    served by the Netzschleuder catalogue. Nodes are metro and light-rail
+    stations; a directed link means some route stops at one station right after
+    another, weighted by the number of routes on that segment, with station
+    coordinates and segment lengths. The systems of Taipei, Taichung and
+    Kaohsiung are all in one network and are not connected to each other. Names
+    are in simplified characters, and the English names are machine translations.
+    Link only.
+keywords: [捷運, 輕軌, 路網, 站點, 拓樸, CPTOND, Netzschleuder, metro network, light rail, transit topology]
+semantics:
+  node:
+    zh-Hant: 捷運或輕軌車站（上游依路線去重後的站點）
+    en: a metro or light-rail station (stops deduplicated over routes upstream)
+  link:
+    zh-Hant: 某條路線在車站 i 之後緊接停靠車站 j；權重為經過該路段的路線數
+    en: some route serves station j immediately after station i; weighted by the number of routes on the segment
+structure:
+  kinds: [graph]
+  directed: true
+  weighted: true
+  weight:
+    meaning:
+      zh-Hant: 經過該路段的路線數（edge 屬性 num_routes）；另有路段長度 distance（公里）
+      en: number of routes passing through the segment (edge property num_routes); segment length is in distance (km)
+    unit: routes
+  layers: single
+  temporal: { form: none }
+  spatial: { form: node-coordinates }
+  notes:
+    zh-Hant: |-
+      Netzschleuder 計算的最大連通分量只占 52%，主要因為三個城市的系統互不相連。
+      檢視 nodes.csv 時未見桃園機場捷運與安坑輕軌的站名，部分站名被截短（例如「台北车」）。
+coverage:
+  temporal:
+    start: "2025-06"
+    end: "2025-06"
+    note:
+      zh-Hant: 上游於 2025 年 6 月蒐集路線與站點。
+  spatial: { zh-Hant: 臺灣, en: Taiwan }
+counts:
+  approximate: true
+  as_of: "2026-11-04"
+  nodes: 225
+  edges: 465
+  note:
+    zh-Hant: 取自 Netzschleuder API 對 taiwan_metro 的統計（num_vertices、num_edges）。
+domains: [transport]
+tags: [metro, public-transport, light-rail]
+taiwan_relevance:
+  basis: [taiwan-subset, about-taiwanese-entities]
+  justification: 網絡由臺灣臺北、臺中與高雄的捷運與輕軌車站及路段組成。
+  subset_note:
+    zh-Hant: |-
+      上游 CPTOND-2025 收錄中國大陸、香港與澳門城市的公車與捷運網絡，另有一個臺灣捷運網絡。
+      Netzschleuder 把它列在「Bus and metro networks of Chinese cities」條目下、網絡名為 taiwan_metro，
+      圖屬性 city_cn 寫作「台湾省」，條目說明寫「around Taipei」，但實際也含臺中與高雄。
+      本站以中性方式稱為臺灣捷運網絡。取用時在條目頁選 taiwan_metro 這一列的檔案
+      （csv.zip、gt.zst、xml.zst 或 gml.zst），不必下載 figshare 上 2.16 GB 的完整壓縮檔。
+    en: >-
+      CPTOND-2025 covers bus and metro networks of cities in mainland China, Hong
+      Kong and Macao, plus one Taiwan metro network. Netzschleuder files it under
+      "Bus and metro networks of Chinese cities" as taiwan_metro, with the graph
+      property city_cn set to 台湾省 and a description saying "around Taipei",
+      although it also includes Taichung and Kaohsiung. This site names it
+      neutrally. Take the files on the taiwan_metro row of the entry page
+      (csv.zip, gt.zst, xml.zst or gml.zst) instead of the full 2.16 GB figshare
+      archive.
+provenance:
+  source:
+    name: { zh-Hant: Netzschleuder cptond_china_transit（taiwan_metro）, en: Netzschleuder cptond_china_transit (taiwan_metro) }
+    url: https://networks.skewed.de/net/cptond_china_transit
+    publisher: { zh-Hant: Netzschleuder 網絡資料目錄, en: Netzschleuder network catalogue }
+  method:
+    zh-Hant: |-
+      依 Netzschleuder 的說明，CPTOND-2025 的作者在 2025 年 6 月列舉 8684 公共運輸資訊平台的路線，
+      再以高德地圖 API 取得路線、站點與營運屬性，座標由 GCJ-02 轉為 WGS 84；
+      Netzschleuder 把相鄰站點的路段依路線與方向合併成有向邊。
+    en: >-
+      Per Netzschleuder, the CPTOND-2025 authors enumerated the routes listed by
+      the 8684 transit information platform in June 2025 and retrieved courses,
+      stops and attributes from the Amap API, converting coordinates from GCJ-02
+      to WGS 84; Netzschleuder aggregates consecutive-stop segments over routes
+      and directions into directed edges.
+  access:
+    - label: { zh-Hant: Netzschleuder 條目頁, en: Netzschleuder entry page }
+      url: https://networks.skewed.de/net/cptond_china_transit
+      format: web
+    - label: { zh-Hant: taiwan_metro CSV 檔（節點、邊、圖屬性）, en: taiwan_metro CSV files (nodes and edges and graph properties) }
+      url: https://networks.skewed.de/net/cptond_china_transit/files/taiwan_metro.csv.zip
+      format: zip
+    - label: { zh-Hant: figshare 上的 CPTOND-2025 原始資料, en: CPTOND-2025 on figshare }
+      url: https://doi.org/10.6084/m9.figshare.29377427.v2
+      format: web
+  checked_on: "2026-11-04"
+license:
+  id: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  statement:
+    zh-Hant: |-
+      Netzschleuder 條目頁的「Upstream license」為 CC BY 4.0；figshare API 對 CPTOND-2025 第 2 版的 license 也是 CC BY 4.0。
+      （Scientific Data 論文本身是 CC BY-NC-ND 4.0，但那是論文的授權，不是資料的授權。）
+  evidence:
+    url: https://networks.skewed.de/net/cptond_china_transit
+    checked_on: "2026-11-04"
+    quote: "Upstream license Creative Commons Attribution 4.0 International (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/"
+redistribution:
+  basis: link-only
+  note:
+    zh-Hant: 授權允許轉載；因站名與涵蓋範圍有上述問題，本站只提供連結並附品質說明。
+personal_data:
+  level: none
+  reviewed_on: "2026-11-04"
+creators:
+  - organization: { zh-Hant: Netzschleuder 網絡資料目錄, en: Netzschleuder network catalogue }
+    url: https://networks.skewed.de/
+    role: curator
+references:
+  - citation: "L. Wang, H. Wei, Y. Guan, L. Ouyang, D. Xu, X. Han, M. Zhang, M. Chen, D. Sun, D. Gong, Z. Zhang, X. Zhang, X. Zhang. China Public Transport Operation Network Dataset (CPTOND-2025): National-Scale Bus-Metro Vector Dataset. Scientific Data 13, 188 (2026)."
+    doi: 10.1038/s41597-025-06505-4
+    url: https://doi.org/10.1038/s41597-025-06505-4
+  - citation: "Wang, Liang; Wei, He; Guan, Yu; Ouyang, Libin; Xu, Dandan; Han, Xuehua; et al. (2025). CPTOND-2025. figshare. Dataset, version 2."
+    doi: 10.6084/m9.figshare.29377427.v2
+    url: https://doi.org/10.6084/m9.figshare.29377427.v2

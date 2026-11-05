@@ -38,12 +38,24 @@ queries:
   - q: 計算機網路
     mode: datasets
     lang: zh-Hant
-    forbidden: [golden-horse-2018-nominations, ly-bill-cosponsorship-10th, taipei-metro-od-monthly]
+    forbidden: [golden-horse-2018-nominations, ly-bill-cosponsorship-10th, taipei-metro-od-monthly, ly-roll-call-votes, ly-committee-membership, taipei-youbike-od, cptond-taiwan-metro, cpbl-play-by-play, dgbas-input-output-2021, taipower-interregional-flow]
     note: TWNIC is acceptable here; an empty result also passes
   - q: computer network
     mode: datasets
     lang: en
-    forbidden: [golden-horse-2018-nominations, ly-bill-cosponsorship-10th, taipei-metro-od-monthly]
+    forbidden: [golden-horse-2018-nominations, ly-bill-cosponsorship-10th, taipei-metro-od-monthly, ly-roll-call-votes, ly-committee-membership, taipei-youbike-od, cptond-taiwan-metro, cpbl-play-by-play, dgbas-input-output-2021, taipower-interregional-flow]
+  # Other published datasets
+  - { q: 產業關聯表, mode: datasets, lang: zh-Hant, first: dgbas-input-output-2021 }
+  - { q: input-output table, mode: datasets, lang: en, expected: [dgbas-input-output-2021] }
+  - { q: YouBike 起訖, mode: datasets, lang: mixed, first: taipei-youbike-od }
+  - { q: 共享單車, mode: datasets, lang: zh-Hant, expected: [taipei-youbike-od], note: synonym only in the alias table }
+  - { q: 中職 投打對決, mode: datasets, lang: zh-Hant, expected: [cpbl-play-by-play] }
+  - { q: baseball, mode: datasets, lang: en, first: cpbl-play-by-play }
+  - { q: 立委 記名表決, mode: datasets, lang: zh-Hant, expected: [ly-roll-call-votes] }
+  - { q: signed network, mode: datasets, lang: en, expected: [ly-roll-call-votes] }
+  - { q: 立法院委員會, mode: datasets, lang: zh-Hant, expected: [ly-committee-membership] }
+  - { q: 電力潮流, mode: datasets, lang: zh-Hant, first: taipower-interregional-flow }
+  - { q: 台中捷運 輕軌, mode: datasets, lang: zh-Hant, expected: [cptond-taiwan-metro] }
   # Sensitive data is never hosted: social-media interaction networks return nothing
   - { q: 社群網路 PTT, mode: datasets, lang: mixed, expect_zero: true, note: PTT/Dcard interaction graphs are level sensitive }
   # Generic-only query lists everything

@@ -30,3 +30,8 @@
 - { id: education, zh-Hant: 教育, en: education }
 - { id: law, zh-Hant: 法律, en: law }
 - { id: open-government-data, zh-Hant: 政府開放資料, en: open government data }
+- { id: cosponsorship, zh-Hant: 連署, en: co-sponsorship }
+- { id: roll-call-votes, zh-Hant: 記名表決, en: roll-call votes }
+- { id: committees, zh-Hant: 委員會, en: committees }
+- { id: light-rail, zh-Hant: 輕軌, en: light rail }
+- { id: electricity, zh-Hant: 電力, en: electricity }

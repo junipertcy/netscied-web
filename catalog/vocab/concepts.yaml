@@ -145,7 +145,7 @@ concepts:
   - id: topic:legislature
     zh-Hant: 立法院
     en: legislature
-    aliases: [立法院, 立委, 立法委員, 國會, 議員, 連署, 共同提案, 提案, 法案, 議案, legislator, legislators, legislature, parliament, cosponsorship, co-sponsorship, bill, bills]
+    aliases: [立法院, 立委, 立法委員, 國會, 議員, 連署, 共同提案, 提案, 法案, 議案, 表決, 記名表決, 委員會, legislator, legislators, legislature, parliament, cosponsorship, co-sponsorship, bill, bills, roll-call vote, roll call, committee]
     attach: { tag: legislature }
   - id: topic:elections
     zh-Hant: 選舉
