@@ -34,10 +34,14 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test
+      # The build and its site-check stamp travel together: deploy.mjs refuses a
+      # build whose stamp is missing or does not match it.
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: site
-          path: dist/netscied/browser/
+          path: |
+            dist/netscied/browser/
+            dist/netscied/site-check.json
           retention-days: 7
 
   deploy:
@@ -56,7 +60,7 @@ jobs:
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: site
-          path: dist/netscied/browser/
+          path: dist/netscied/
       - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
         with:
           role-to-assume: ${{ vars.NETSCIED_AWS_ROLE_ARN }}
