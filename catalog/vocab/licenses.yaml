@@ -33,7 +33,7 @@
   url: https://cdla.dev/permissive-2-0/
 - id: OGDL-Taiwan-1.0
   class: permissive
-  name: { zh-Hant: 政府資料開放授權條款－第1版, en: Taiwan Open Government Data License, version 1.0 }
+  name: { zh-Hant: 政府資料開放授權條款－第1版, en: "Taiwan Open Government Data License, version 1.0" }
   url: https://data.gov.tw/license
   # §3(2): attribution must follow the 附件「顯名聲明」; §4(2): one-way compatible with CC BY 4.0.
   attribution_template: |-

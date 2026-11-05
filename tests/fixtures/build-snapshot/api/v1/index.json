@@ -1,0 +1,151 @@
+{
+  "api_version": "1",
+  "last_breaking_change": "2026-11-04",
+  "updated": "2026-11-02",
+  "courses_refreshed": "2026-11-01",
+  "site": {
+    "name": {
+      "zh-Hant": "台灣網絡科學教育",
+      "en": "Network Science Education in Taiwan"
+    },
+    "url": "https://netscied.tw/"
+  },
+  "metadata_license": {
+    "id": "CC0-1.0",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "statement": {
+      "zh-Hant": "本站目錄的詮釋資料以 CC0 1.0 釋出；各資料集本身依其授權。",
+      "en": "Catalog metadata is released under CC0 1.0; each dataset keeps its own license."
+    }
+  },
+  "counts": {
+    "datasets": 2,
+    "hosted": 1,
+    "wanted": 1,
+    "withdrawn": 1,
+    "courses": 1
+  },
+  "guide": "https://netscied.tw/llms.txt",
+  "files": [
+    {
+      "path": "/api/v1/catalog.json",
+      "url": "https://netscied.tw/api/v1/catalog.json",
+      "media_type": "application/json",
+      "description": "The search catalog the browser uses (records, aliases and the fold map)"
+    },
+    {
+      "path": "/api/v1/courses.csv",
+      "url": "https://netscied.tw/api/v1/courses.csv",
+      "media_type": "text/csv",
+      "description": "All courses as CSV (UTF-8, no BOM)"
+    },
+    {
+      "path": "/api/v1/courses.json",
+      "url": "https://netscied.tw/api/v1/courses.json",
+      "media_type": "application/json",
+      "description": "All courses offered in Taiwan, summary form"
+    },
+    {
+      "path": "/api/v1/courses/test-graph-theory.json",
+      "url": "https://netscied.tw/api/v1/courses/test-graph-theory.json",
+      "media_type": "application/json",
+      "description": "Course record: test-graph-theory"
+    },
+    {
+      "path": "/api/v1/datasets.csv",
+      "url": "https://netscied.tw/api/v1/datasets.csv",
+      "media_type": "text/csv",
+      "description": "All published datasets as CSV (UTF-8, no BOM)"
+    },
+    {
+      "path": "/api/v1/datasets.json",
+      "url": "https://netscied.tw/api/v1/datasets.json",
+      "media_type": "application/json",
+      "description": "All published datasets, summary form"
+    },
+    {
+      "path": "/api/v1/datasets/hosted-graph.json",
+      "url": "https://netscied.tw/api/v1/datasets/hosted-graph.json",
+      "media_type": "application/json",
+      "description": "Dataset record: hosted-graph"
+    },
+    {
+      "path": "/api/v1/datasets/link-only-graph.json",
+      "url": "https://netscied.tw/api/v1/datasets/link-only-graph.json",
+      "media_type": "application/json",
+      "description": "Dataset record: link-only-graph"
+    },
+    {
+      "path": "/api/v1/datasets/withdrawn-thing.json",
+      "url": "https://netscied.tw/api/v1/datasets/withdrawn-thing.json",
+      "media_type": "application/json",
+      "description": "Dataset record: withdrawn-thing"
+    },
+    {
+      "path": "/api/v1/news.json",
+      "url": "https://netscied.tw/api/v1/news.json",
+      "media_type": "application/json",
+      "description": "News items, newest first"
+    },
+    {
+      "path": "/api/v1/schema/common.schema.json",
+      "url": "https://netscied.tw/api/v1/schema/common.schema.json",
+      "media_type": "application/schema+json",
+      "description": "JSON Schema: common"
+    },
+    {
+      "path": "/api/v1/schema/course.schema.json",
+      "url": "https://netscied.tw/api/v1/schema/course.schema.json",
+      "media_type": "application/schema+json",
+      "description": "JSON Schema: course"
+    },
+    {
+      "path": "/api/v1/schema/dataset.schema.json",
+      "url": "https://netscied.tw/api/v1/schema/dataset.schema.json",
+      "media_type": "application/schema+json",
+      "description": "JSON Schema: dataset"
+    },
+    {
+      "path": "/api/v1/schema/news.schema.json",
+      "url": "https://netscied.tw/api/v1/schema/news.schema.json",
+      "media_type": "application/schema+json",
+      "description": "JSON Schema: news"
+    },
+    {
+      "path": "/api/v1/schema/person.schema.json",
+      "url": "https://netscied.tw/api/v1/schema/person.schema.json",
+      "media_type": "application/schema+json",
+      "description": "JSON Schema: person"
+    },
+    {
+      "path": "/api/v1/schema/recipe.schema.json",
+      "url": "https://netscied.tw/api/v1/schema/recipe.schema.json",
+      "media_type": "application/schema+json",
+      "description": "JSON Schema: recipe"
+    },
+    {
+      "path": "/api/v1/schema/version.schema.json",
+      "url": "https://netscied.tw/api/v1/schema/version.schema.json",
+      "media_type": "application/schema+json",
+      "description": "JSON Schema: version"
+    },
+    {
+      "path": "/api/v1/schema/vocab.schema.json",
+      "url": "https://netscied.tw/api/v1/schema/vocab.schema.json",
+      "media_type": "application/schema+json",
+      "description": "JSON Schema: vocab"
+    },
+    {
+      "path": "/api/v1/taxonomy.json",
+      "url": "https://netscied.tw/api/v1/taxonomy.json",
+      "media_type": "application/json",
+      "description": "Every controlled vocabulary with Mandarin and English labels"
+    },
+    {
+      "path": "/api/v1/wanted.json",
+      "url": "https://netscied.tw/api/v1/wanted.json",
+      "media_type": "application/json",
+      "description": "Wanted datasets (許願池), including ones since published (已收錄)"
+    }
+  ]
+}

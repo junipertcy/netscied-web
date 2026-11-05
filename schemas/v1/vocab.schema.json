@@ -5,19 +5,41 @@
   "$defs": {
     "label": {
       "type": "object",
-      "required": ["zh-Hant", "en"],
+      "required": [
+        "zh-Hant",
+        "en"
+      ],
       "properties": {
-        "zh-Hant": { "type": "string", "minLength": 1 },
-        "en": { "type": "string", "minLength": 1 }
-      }
+        "zh-Hant": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
     },
     "labelledEntry": {
       "type": "object",
-      "required": ["id", "zh-Hant", "en"],
+      "required": [
+        "id",
+        "zh-Hant",
+        "en"
+      ],
       "properties": {
-        "id": { "$ref": "common.schema.json#/$defs/vocabId" },
-        "zh-Hant": { "type": "string", "minLength": 1 },
-        "en": { "type": "string", "minLength": 1 }
+        "id": {
+          "$ref": "common.schema.json#/$defs/vocabId"
+        },
+        "zh-Hant": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "domains": {
@@ -25,17 +47,29 @@
       "minItems": 9,
       "maxItems": 9,
       "items": {
-        "allOf": [{ "$ref": "#/$defs/labelledEntry" }],
+        "allOf": [
+          {
+            "$ref": "#/$defs/labelledEntry"
+          }
+        ],
         "unevaluatedProperties": false,
         "properties": {
-          "id": true, "zh-Hant": true, "en": true,
+          "id": true,
+          "zh-Hant": true,
+          "en": true,
           "crosswalk": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-              "icon": { "type": "string" },
-              "netzschleuder": { "type": "string" },
-              "netscied_2018": { "type": "string" }
+              "icon": {
+                "type": "string"
+              },
+              "netzschleuder": {
+                "type": "string"
+              },
+              "netscied_2018": {
+                "type": "string"
+              }
             }
           }
         }
@@ -44,9 +78,17 @@
     "tags": {
       "type": "array",
       "items": {
-        "allOf": [{ "$ref": "#/$defs/labelledEntry" }],
+        "allOf": [
+          {
+            "$ref": "#/$defs/labelledEntry"
+          }
+        ],
         "unevaluatedProperties": false,
-        "properties": { "id": true, "zh-Hant": true, "en": true }
+        "properties": {
+          "id": true,
+          "zh-Hant": true,
+          "en": true
+        }
       }
     },
     "licenses": {
@@ -54,38 +96,84 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "class", "name"],
+        "required": [
+          "id",
+          "class",
+          "name"
+        ],
         "properties": {
-          "id": { "type": "string", "pattern": "^(?:[A-Za-z0-9.+-]+|LicenseRef-[A-Za-z0-9.-]+|NOASSERTION|NONE)$" },
-          "class": { "enum": ["permissive", "share-alike", "non-commercial", "no-derivatives", "link-only"] },
-          "name": { "$ref": "#/$defs/label" },
-          "url": { "$ref": "common.schema.json#/$defs/url" },
-          "attribution_template": { "type": "string" }
+          "id": {
+            "type": "string",
+            "pattern": "^(?:[A-Za-z0-9.+-]+|LicenseRef-[A-Za-z0-9.-]+|NOASSERTION|NONE)$"
+          },
+          "class": {
+            "enum": [
+              "permissive",
+              "share-alike",
+              "non-commercial",
+              "no-derivatives",
+              "link-only"
+            ]
+          },
+          "name": {
+            "$ref": "#/$defs/label"
+          },
+          "url": {
+            "$ref": "common.schema.json#/$defs/url"
+          },
+          "attribution_template": {
+            "type": "string"
+          }
         }
       }
     },
     "formats": {
       "type": "array",
       "items": {
-        "allOf": [{ "$ref": "#/$defs/labelledEntry" }],
+        "allOf": [
+          {
+            "$ref": "#/$defs/labelledEntry"
+          }
+        ],
         "unevaluatedProperties": false,
-        "required": ["media_type"],
+        "required": [
+          "media_type"
+        ],
         "properties": {
-          "id": true, "zh-Hant": true, "en": true,
-          "media_type": { "type": "string", "minLength": 3 },
-          "conforms_to": { "$ref": "common.schema.json#/$defs/url" }
+          "id": true,
+          "zh-Hant": true,
+          "en": true,
+          "media_type": {
+            "type": "string",
+            "minLength": 3
+          },
+          "conforms_to": {
+            "$ref": "common.schema.json#/$defs/url"
+          }
         }
       }
     },
     "universities": {
       "type": "array",
       "items": {
-        "allOf": [{ "$ref": "#/$defs/labelledEntry" }],
+        "allOf": [
+          {
+            "$ref": "#/$defs/labelledEntry"
+          }
+        ],
         "unevaluatedProperties": false,
         "properties": {
-          "id": true, "zh-Hant": true, "en": true,
-          "short": { "type": "string", "minLength": 1 },
-          "ror": { "type": "string", "pattern": "^https://ror\\.org/0[a-z0-9]{8}$" }
+          "id": true,
+          "zh-Hant": true,
+          "en": true,
+          "short": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ror": {
+            "type": "string",
+            "pattern": "^https://ror\\.org/0[a-z0-9]{8}$"
+          }
         }
       }
     },
@@ -93,52 +181,142 @@
       "type": "object",
       "additionalProperties": {
         "type": "object",
-        "additionalProperties": { "$ref": "#/$defs/label" }
+        "additionalProperties": {
+          "$ref": "#/$defs/label"
+        }
       }
     },
     "concepts": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["generic", "fillers", "networking_intent", "mode_words", "phrase_folds", "concepts"],
+      "required": [
+        "generic",
+        "fillers",
+        "networking_intent",
+        "mode_words",
+        "phrase_folds",
+        "concepts"
+      ],
       "properties": {
-        "generic": { "type": "array", "items": { "type": "string", "minLength": 1 } },
-        "fillers": { "type": "array", "items": { "type": "string", "minLength": 1 } },
-        "networking_intent": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "generic": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "fillers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "networking_intent": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
         "mode_words": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["courses", "datasets"],
+          "required": [
+            "courses",
+            "datasets"
+          ],
           "properties": {
-            "courses": { "type": "array", "items": { "type": "string", "minLength": 1 } },
-            "datasets": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+            "courses": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "datasets": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
           }
         },
         "phrase_folds": {
           "type": "array",
-          "items": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "string", "minLength": 1 } }
+          "items": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
         },
         "concepts": {
           "type": "array",
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["id", "zh-Hant", "en", "aliases"],
+            "required": [
+              "id",
+              "zh-Hant",
+              "en",
+              "aliases"
+            ],
             "properties": {
-              "id": { "type": "string", "pattern": "^(kind|property|domain|topic|category|mode):[a-z0-9-]+$" },
-              "zh-Hant": { "type": "string", "minLength": 1 },
-              "en": { "type": "string", "minLength": 1 },
-              "aliases": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+              "id": {
+                "type": "string",
+                "pattern": "^(kind|property|domain|topic|category|mode):[a-z0-9-]+$"
+              },
+              "zh-Hant": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              },
+              "aliases": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "attach": {
                 "type": "object",
                 "additionalProperties": false,
                 "minProperties": 1,
                 "maxProperties": 1,
                 "properties": {
-                  "kind": { "type": "string" },
-                  "property": { "enum": ["bipartite", "multipartite", "directed", "weighted", "signed", "temporal", "multilayer", "spatial"] },
-                  "domain": { "type": "string" },
-                  "tag": { "type": "string" },
-                  "category": { "type": "string" }
+                  "kind": {
+                    "type": "string"
+                  },
+                  "property": {
+                    "enum": [
+                      "bipartite",
+                      "multipartite",
+                      "directed",
+                      "weighted",
+                      "signed",
+                      "temporal",
+                      "multilayer",
+                      "spatial"
+                    ]
+                  },
+                  "domain": {
+                    "type": "string"
+                  },
+                  "tag": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  }
                 }
               }
             }

@@ -35,10 +35,10 @@ spatial:
   areal-units: { zh-Hant: 面域單元, en: areal units }
   edge-geometry: { zh-Hant: 連結幾何, en: edge geometry }
 ranking_data_type:
-  soc: { zh-Hant: 完整嚴格排序（SOC）, en: strict orders, complete (SOC) }
-  soi: { zh-Hant: 不完整嚴格排序（SOI）, en: strict orders, incomplete (SOI) }
-  toc: { zh-Hant: 完整含並列排序（TOC）, en: orders with ties, complete (TOC) }
-  toi: { zh-Hant: 不完整含並列排序（TOI）, en: orders with ties, incomplete (TOI) }
+  soc: { zh-Hant: 完整嚴格排序（SOC）, en: "strict orders, complete (SOC)" }
+  soi: { zh-Hant: 不完整嚴格排序（SOI）, en: "strict orders, incomplete (SOI)" }
+  toc: { zh-Hant: 完整含並列排序（TOC）, en: "orders with ties, complete (TOC)" }
+  toi: { zh-Hant: 不完整含並列排序（TOI）, en: "orders with ties, incomplete (TOI)" }
   cat: { zh-Hant: 分類偏好（CAT）, en: categorical preferences (CAT) }
 comparison_outcome:
   win-loss: { zh-Hant: 勝負, en: win–loss }
@@ -60,7 +60,7 @@ personal_data:
 redistribution:
   license-permits: { zh-Hant: 授權允許本站轉載, en: the license permits redistribution }
   written-permission: { zh-Hant: 經權利人書面同意轉載, en: redistributed with written permission }
-  own-work: { zh-Hant: 本站自行整理，以 CC BY 4.0 釋出, en: compiled by this site, released under CC BY 4.0 }
+  own-work: { zh-Hant: 本站自行整理，以 CC BY 4.0 釋出, en: "compiled by this site, released under CC BY 4.0" }
   link-only: { zh-Hant: 本站不轉載，僅提供連結, en: link only; not redistributed here }
 license_class:
   permissive: { zh-Hant: 寬鬆授權, en: permissive }

@@ -11,7 +11,8 @@
     "edge:build": "node scripts/edge/build-function.mjs",
     "test:e2e": "playwright test",
     "preview": "node scripts/preview.mjs",
-    "catalog:validate": "node scripts/catalog/validate.mjs"
+    "catalog:validate": "node scripts/catalog/validate.mjs",
+    "catalog:build": "node scripts/catalog/build.mjs"
   },
   "private": true,
   "packageManager": "pnpm@11.21.0",

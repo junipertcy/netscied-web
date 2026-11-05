@@ -1,0 +1,273 @@
+{
+  "id": "hosted-graph",
+  "status": "published",
+  "url": "https://netscied.tw/datasets/hosted-graph/",
+  "api_url": "https://netscied.tw/api/v1/datasets/hosted-graph.json",
+  "markdown_url": "https://netscied.tw/datasets/hosted-graph/index.md",
+  "title": {
+    "zh-Hant": "測試用託管網絡",
+    "en": "Hosted test network"
+  },
+  "description": {
+    "zh-Hant": "這是驗證器測試用的託管資料集，節點是車站，連結是兩站之間的旅次。內容純屬虛構，只用來檢查驗證規則是否正確運作，並不對應任何真實資料。",
+    "en": "A hosted test network used by the validator tests."
+  },
+  "summary": {
+    "zh-Hant": "這是驗證器測試用的託管資料集，節點是車站，連結是兩站之間的旅次。",
+    "en": "A hosted test network used by the validator tests."
+  },
+  "keywords": [
+    "測試"
+  ],
+  "semantics": {
+    "node": {
+      "zh-Hant": "車站"
+    },
+    "link": {
+      "zh-Hant": "兩站之間的旅次"
+    }
+  },
+  "structure": {
+    "kinds": [
+      "graph"
+    ],
+    "directed": true,
+    "weighted": true,
+    "weight": {
+      "meaning": {
+        "zh-Hant": "旅次數"
+      },
+      "unit": "trips"
+    }
+  },
+  "structure_badges": [
+    {
+      "id": "graph",
+      "zh-Hant": "圖（網絡）",
+      "en": "graph",
+      "group": "kind"
+    },
+    {
+      "id": "directed",
+      "zh-Hant": "有向",
+      "en": "directed",
+      "group": "property"
+    },
+    {
+      "id": "weighted",
+      "zh-Hant": "加權",
+      "en": "weighted",
+      "group": "property"
+    }
+  ],
+  "structure_text": {
+    "zh-Hant": "圖（網絡），有向，加權（旅次數，單位 trips）",
+    "en": "graph, directed, weighted (weights, unit trips)"
+  },
+  "size": {
+    "nodes": 3,
+    "edges": 2,
+    "approximate": false,
+    "text": {
+      "zh-Hant": "3 個節點、2 條連結",
+      "en": "3 nodes, 2 edges"
+    }
+  },
+  "coverage": {
+    "temporal": {
+      "start": "2026-09",
+      "end": "2026-09",
+      "ongoing": false,
+      "zh-Hant": "2026-09",
+      "en": "2026-09"
+    },
+    "spatial": {
+      "zh-Hant": "臺北市",
+      "en": "Taipei"
+    }
+  },
+  "domains": [
+    {
+      "id": "transport",
+      "zh-Hant": "交通與移動",
+      "en": "Transport and mobility"
+    }
+  ],
+  "tags": [
+    {
+      "id": "metro",
+      "zh-Hant": "捷運",
+      "en": "metro"
+    }
+  ],
+  "taiwan_relevance": {
+    "basis": [
+      {
+        "id": "collected-in-taiwan",
+        "zh-Hant": "在臺灣蒐集",
+        "en": "collected in Taiwan"
+      }
+    ],
+    "justification": "測試資料。"
+  },
+  "license": {
+    "id": "OGDL-Taiwan-1.0",
+    "name": {
+      "zh-Hant": "政府資料開放授權條款－第1版",
+      "en": "Taiwan Open Government Data License, version 1.0"
+    },
+    "url": "https://data.gov.tw/license",
+    "class": "permissive",
+    "class_label": {
+      "id": "permissive",
+      "zh-Hant": "寬鬆授權",
+      "en": "permissive"
+    },
+    "evidence": {
+      "url": "https://example.org/license",
+      "checked_on": "2026-11-01"
+    }
+  },
+  "redistribution": {
+    "basis": "license-permits",
+    "label": {
+      "id": "license-permits",
+      "zh-Hant": "授權允許本站轉載",
+      "en": "the license permits redistribution"
+    },
+    "may_redistribute": true,
+    "effective_class": "permissive"
+  },
+  "personal_data": {
+    "level": "none",
+    "label": {
+      "id": "none",
+      "zh-Hant": "不含個人資料",
+      "en": "no personal data"
+    },
+    "reviewed_on": "2026-11-01"
+  },
+  "hosted": true,
+  "latest_version": {
+    "version": "1.0.0",
+    "released": "2026-11-05",
+    "snapshot_date": "2026-11-01",
+    "changelog": {
+      "zh-Hant": "第一版。"
+    },
+    "doi": null,
+    "license": "CC-BY-4.0",
+    "files": [
+      {
+        "path": "hosted-graph-1.0.0.graphml",
+        "url": "https://netscied.tw/data/hosted-graph/1.0.0/hosted-graph-1.0.0.graphml",
+        "format": "graphml",
+        "format_label": {
+          "id": "graphml",
+          "zh-Hant": "GraphML",
+          "en": "GraphML"
+        },
+        "media_type": "application/graphml+xml",
+        "role": "convenience",
+        "bytes": 1234,
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    ],
+    "checksums_url": null,
+    "zip_url": null,
+    "statistics": {
+      "graph": {
+        "nodes": 3,
+        "edges": 2,
+        "components": 1
+      }
+    },
+    "computed_by": {
+      "tool": "netscied",
+      "version": "0.1.0"
+    }
+  },
+  "versions": [
+    {
+      "version": "1.0.0",
+      "released": "2026-11-05",
+      "snapshot_date": "2026-11-01",
+      "changelog": {
+        "zh-Hant": "第一版。"
+      },
+      "doi": null,
+      "license": "CC-BY-4.0",
+      "files": [
+        {
+          "path": "hosted-graph-1.0.0.graphml",
+          "url": "https://netscied.tw/data/hosted-graph/1.0.0/hosted-graph-1.0.0.graphml",
+          "format": "graphml",
+          "format_label": {
+            "id": "graphml",
+            "zh-Hant": "GraphML",
+            "en": "GraphML"
+          },
+          "media_type": "application/graphml+xml",
+          "role": "convenience",
+          "bytes": 1234,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000001"
+        }
+      ],
+      "checksums_url": null,
+      "zip_url": null,
+      "statistics": {
+        "graph": {
+          "nodes": 3,
+          "edges": 2,
+          "components": 1
+        }
+      },
+      "computed_by": {
+        "tool": "netscied",
+        "version": "0.1.0"
+      }
+    }
+  ],
+  "access": [],
+  "provenance": {
+    "source": {
+      "name": {
+        "zh-Hant": "測試來源"
+      },
+      "url": "https://example.org/source"
+    },
+    "checked_on": null,
+    "retrieved_at": "2026-11-01"
+  },
+  "creators": [],
+  "credits": [
+    {
+      "role": "collector",
+      "name": {
+        "zh-Hant": "測試研究者",
+        "en": "Test Researcher"
+      },
+      "affiliation": {
+        "name": {
+          "zh-Hant": "測試大學"
+        }
+      }
+    }
+  ],
+  "references": [
+    {
+      "citation": "測試作者（2026）。測試論文。測試期刊。"
+    }
+  ],
+  "citation": {
+    "text": "測試研究者（2026）。測試用託管網絡（版本 1.0.0）［資料集］。台灣網絡科學教育。https://netscied.tw/datasets/hosted-graph/#v1.0.0",
+    "bibtex": "@misc{netscied_hosted_graph_1_0_0,\n  author = {測試研究者},\n  title = {測試用託管網絡 / Hosted test network},\n  year = {2026},\n  version = {1.0.0},\n  publisher = {netscied.tw},\n  url = {https://netscied.tw/datasets/hosted-graph/#v1.0.0},\n  note = {Dataset}\n}",
+    "url": "https://netscied.tw/datasets/hosted-graph/#v1.0.0"
+  },
+  "attribution": "測試機關 2026 測試資料 v1\n本站轉換版本（1.0.0）：https://netscied.tw/datasets/hosted-graph/",
+  "related": {},
+  "aliases": [],
+  "added": "2026-11-01",
+  "published": "2026-11-01",
+  "updated": "2026-11-01"
+}

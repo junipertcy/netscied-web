@@ -1,0 +1,30 @@
+{
+  "counts": {
+    "datasets": 2,
+    "hosted": 1,
+    "wanted": 1,
+    "withdrawn": 1,
+    "courses": 1
+  },
+  "news": [
+    {
+      "id": "2026-11-04-relaunch",
+      "date": "2026-11-04",
+      "url": "https://netscied.tw/news/#2026-11-04-relaunch",
+      "title": {
+        "zh-Hant": "測試消息"
+      },
+      "body_html": "<p>測試內容，請寄信到 <a href=\"mailto:hi@netscied.tw\">hi@netscied.tw</a>。</p>\n",
+      "related": {
+        "datasets": [
+          "hosted-graph"
+        ],
+        "courses": [
+          "test-graph-theory"
+        ]
+      },
+      "generated": false
+    }
+  ],
+  "examples": []
+}
