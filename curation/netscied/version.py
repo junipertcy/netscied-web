@@ -240,7 +240,7 @@ def write_version(*, recipe, record, fetch_summary, cache_base, product: Product
         if not src.get("redistribute_original"):
             continue
         got = fetched[src["id"]]
-        many = len(got["files"]) > 1
+        many = len(recipe["sources"]) > 1 or len(got["files"]) > 1
         for rel in got["files"]:
             name = Path(rel).name
             target = f"original/{src['id']}/{name}" if many else f"original/{name}"

@@ -254,3 +254,16 @@ def test_converter_notes_are_added_to_the_change_note(tmp_path):
     m = build(tmp_path, "a", product=p)
     assert "有 3 件議案不收錄。" in m["changelog"]["zh-Hant"]
     assert "3 bills are left out." in m["changelog"]["en"]
+
+
+def test_originals_of_a_multi_source_recipe_sit_in_one_folder_per_source(tmp_path):
+    second = {**RECIPE["sources"][0], "id": "roster"}
+    recipe = {**RECIPE, "sources": [RECIPE["sources"][0], second]}
+    base = tmp_path / "cache"
+    summary = fetched(base)
+    (base / "sources" / "roster").mkdir(parents=True)
+    (base / "sources" / "roster" / "page-0001.json").write_bytes(b"{}")
+    summary["sources"].append({**summary["sources"][0], "id": "roster", "files": ["sources/roster/page-0001.json"], "sha256": hashlib.sha256(b"{}").hexdigest(), "bytes": 2})
+    m = write_version(recipe=recipe, record=record(), fetch_summary=summary, cache_base=base, product=Product(kind="graph", graph=graph(), weight="trips"), out_dir=tmp_path / "data", catalog_dir=tmp_path / "catalog", released="2026-11-04", pipeline=PIPELINE)
+    paths = {f["path"] for f in m["files"] if f["role"] == "original"}
+    assert paths == {"original/raw/raw.csv", "original/roster/page-0001.json"}
