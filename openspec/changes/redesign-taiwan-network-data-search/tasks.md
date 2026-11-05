@@ -92,3 +92,22 @@
 - [ ] 11.6 Before the page count reaches the thousands, switch deploy upload groups to glob patterns or the SDK. AWS CLI filters are quadratic (about 6 s for 2,000 files in one group) and `ARG_MAX` is hit at about 14k files per group, which fails safely.
 - [ ] 11.7 Decide whether `/404/` itself should answer 404, and whether `/mcp` should skip the trailing-slash rule (the agent-access spec reserves it as a 404; today it gets 301 `/mcp/` → 404).
 - [ ] 11.8 Correct the reason in the edge test "uses no module syntax": runtime 2.0 supports `import cf from 'cloudfront'`; the real constraint is that the function must stay runnable in the vm harness.
+
+## 12. Milestone A review follow-ups (2026-11-04)
+
+- [ ] 12.1 Adding a DOI to a manifest that had no `doi` key fails the immutability check (validate.mjs; the fixture's `doi: null` hides it). Verify: a fixture manifest without `doi` gains one and validates.
+- [ ] 12.2 Reject person records that hold `orcid` or `homepage` without listing them in `display`. Verify: a failing fixture.
+- [ ] 12.3 Cross-check `alias` lines of `ids.lock` against the records' `aliases`. Verify: a fixture with a stray alias line fails.
+- [ ] 12.4 Add a small-cell rule for hosted aggregates (`small_cell_threshold`), for example taipei-metro-od-monthly. Verify: a fixture aggregate below the threshold fails.
+- [ ] 12.5 Reject non-neutral Taiwan naming in `coverage.spatial` (for example 中國臺灣). Verify: a failing fixture.
+- [ ] 12.6 Require `license.statement` on published link-only records. Verify: a failing fixture.
+- [ ] 12.7 `networking` alone is too broad a computer-networking trigger (`social networking` returns 0 courses). Verify: a gold query.
+- [ ] 12.8 Junk bigrams across spaces between Chinese words (spaces between Han characters are removed before tokenizing). Verify: a test with a two-word query.
+- [ ] 12.9 Short tokens (`1`, `co`) match noise; `<script>alert(1)</script>` returns hits. Verify: the hostile query returns none.
+- [ ] 12.10 BibTeX authors that are organisations need double braces `{{…}}`. Verify: a BibTeX parser test.
+- [ ] 12.11 llms.txt, `markdown_url` and page URLs are referenced before they exist; do not deploy `/api/v1/` before tasks 5.x and 7.1 land. Verify: the release checklist.
+- [ ] 12.12 Record the source commit of the pinned HIF schema next to the copy. Verify: the file says it.
+- [ ] 12.13 The GraphML round-trip test compares counts and one attribute only; compare every attribute. Verify: a mutated attribute fails.
+- [ ] 12.14 The build snapshot test only freezes output; add assertions on its meaning where it matters. Verify: review.
+- [ ] 12.15 The search-core tests bypass the real `concepts.yaml` for records; add tests over the real vocabulary. Verify: review.
+- [ ] 12.16 Add an automated release-age guard (pnpm `minimumReleaseAge`, with an exception list for the owner's Angular pins). Verify: a too-new pin fails `pnpm install`.
