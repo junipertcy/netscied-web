@@ -51,3 +51,17 @@ test('review 14: no course claims a language that its source does not state', ()
     if (c.languages_unverified) assert.match(full.unverified.checked_on, /^\d{4}-\d{2}-\d{2}$/, c.id);
   }
 });
+
+test('task 4.1: the Golden Horse version reports its repeated pairs, and the page shows the download table and the personal-data notice', () => {
+  const full = api('datasets/golden-horse-2018-nominations.json');
+  assert.equal(full.redistribution.basis, 'own-work');
+  assert.equal(full.personal_data.level, 'public-role');
+  const g = full.latest_version.statistics.graph;
+  assert.deepEqual([g.edges, g.unique_pairs, g.repeated_pairs], [146, 133, 13]);
+  assert.match(full.latest_version.changelog['zh-Hant'], /13 組節點配對重複出現/);
+  assert.ok(full.latest_version.files.some((f) => f.path === 'ATTRIBUTION.txt'));
+  const html = readDist('datasets/golden-horse-2018-nominations/index.html');
+  assert.match(html, /下載（版本 1\.0\.0）/);
+  assert.match(html, /href="https:\/\/netscied\.tw\/data\/golden-horse-2018-nominations\/1\.0\.0\/golden-horse-2018-nominations-1\.0\.0\.zip"/);
+  assert.match(html, /個人資料與下架/);
+});

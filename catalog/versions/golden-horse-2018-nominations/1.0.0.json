@@ -1,0 +1,140 @@
+{
+  "dataset": "golden-horse-2018-nominations",
+  "version": "1.0.0",
+  "released": "2026-11-04",
+  "snapshot_date": "2026-11-04",
+  "changelog": {
+    "zh-Hant": "第一版：依金馬獎官方入圍得獎資料庫（2018 年）自行整理的入圍者–影片網絡。資料品質：有 13 組節點配對重複出現（共 146 條連結、133 組不同配對），保留為多重邊，未合併。",
+    "en": "First version, compiled by this site from the official Golden Horse nominee database (2018). Data quality: 13 node pairs are repeated (146 edges, 133 distinct pairs); repeated pairs are kept as multi-edges, not merged."
+  },
+  "doi": null,
+  "license": "CC-BY-4.0",
+  "files": [
+    {
+      "path": "golden-horse-2018-nominations-1.0.0.zip",
+      "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/golden-horse-2018-nominations-1.0.0.zip",
+      "bytes": 19472,
+      "sha256": "10f628c2816409872c7b5ec84bb840ac8a0166dd063c443693210e06995b8ea6",
+      "media_type": "application/zip",
+      "format": "zip",
+      "role": "bundle"
+    },
+    {
+      "path": "golden-horse-2018-nominations-1.0.0.graphml",
+      "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/golden-horse-2018-nominations-1.0.0.graphml",
+      "bytes": 52963,
+      "sha256": "d54f2b6825465fdca458e062551618338b351f9399c630f5dcd80d7b7dfdbb7e",
+      "media_type": "application/graphml+xml",
+      "format": "graphml",
+      "role": "canonical",
+      "conforms_to": "http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"
+    },
+    {
+      "path": "nodes.csv",
+      "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/nodes.csv",
+      "bytes": 7423,
+      "sha256": "7105eebc7d163025898f5b691805e01e8dc93df9d306cac6b369e6f6631837e3",
+      "media_type": "text/csv",
+      "format": "csv-bundle",
+      "role": "canonical",
+      "conforms_to": "https://datapackage.org/standard/data-package/"
+    },
+    {
+      "path": "edges.csv",
+      "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/edges.csv",
+      "bytes": 12541,
+      "sha256": "165654b155e8ee356fdc2872288bfa2ff4fa118ad1162710f27e845afb836c16",
+      "media_type": "text/csv",
+      "format": "csv-bundle",
+      "role": "canonical",
+      "conforms_to": "https://datapackage.org/standard/data-package/"
+    },
+    {
+      "path": "datapackage.json",
+      "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/datapackage.json",
+      "bytes": 2456,
+      "sha256": "f9cd896c2b6d0588a6f98a070f0e726974cd27e551f77f58a2a004aa6970988a",
+      "media_type": "application/json",
+      "format": "datapackage",
+      "role": "canonical",
+      "conforms_to": "https://datapackage.org/profiles/2.0/datapackage.json"
+    },
+    {
+      "path": "original/nominations.csv",
+      "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/original/nominations.csv",
+      "bytes": 27931,
+      "sha256": "1a6f1bacfccb542f3e3e98310913fcd8a878fa50d61130cf9a6572f9f310136b",
+      "media_type": "text/csv",
+      "format": "csv",
+      "role": "original"
+    },
+    {
+      "path": "ATTRIBUTION.txt",
+      "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/ATTRIBUTION.txt",
+      "bytes": 2160,
+      "sha256": "56eed2f85737a2b937a295fa410e153f5cf6194abcb228e73c68dade5f29f9cd",
+      "media_type": "text/plain",
+      "format": "attribution",
+      "role": "metadata"
+    },
+    {
+      "path": "provenance.json",
+      "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/provenance.json",
+      "bytes": 3521,
+      "sha256": "e5cb783a34e35e915985c0e9cab5beedb62388c209f820436e5c4f3b2266dd50",
+      "media_type": "application/json",
+      "format": "provenance",
+      "role": "metadata"
+    },
+    {
+      "path": "SHA256SUMS",
+      "url": "https://netscied.tw/data/golden-horse-2018-nominations/1.0.0/SHA256SUMS",
+      "bytes": 706,
+      "sha256": "67de4ca65aed2e257e910e45c54aa2e47ab407ac5b04f1bae7a915b7c9fa7203",
+      "media_type": "text/plain",
+      "format": "sha256sums",
+      "role": "checksums"
+    }
+  ],
+  "statistics": {
+    "graph": {
+      "nodes": 174,
+      "edges": 146,
+      "partitions": {
+        "film": 42,
+        "person": 132
+      },
+      "unique_pairs": 133,
+      "repeated_pairs": 13,
+      "self_loops": 0,
+      "isolated_nodes": 0,
+      "components": 41,
+      "largest_component_nodes": 14
+    }
+  },
+  "computed_by": {
+    "tool": "netscied",
+    "version": "0.1.0",
+    "libraries": {
+      "networkx": "3.7",
+      "xgi": "0.10.2",
+      "frictionless": "5.21.0",
+      "jsonschema": "4.26.0",
+      "pyyaml": "6.0.3"
+    },
+    "commit": "d8e1b0e9acc1b890c3c62becb44ef340a32f30f1",
+    "lock_sha256": "f18b9e94750ef187372bfd0a5d398bc82b10dbcbb9bbc8d0487fc6f41a060078"
+  },
+  "upstream_snapshot": {
+    "sources": [
+      {
+        "id": "official-nominee-list",
+        "landing_page": "https://www.goldenhorse.org.tw/awards/nw/?serach_type=award&sc=10&search_regist_year=2018&ins=53",
+        "archived_landing_page": "http://web.archive.org/web/20181204005717/http://www.goldenhorse.org.tw/awards/nw/?serach_type=award&sc=8&search_regist_year=2018&ins=47",
+        "retrieved_at": "2026-11-04",
+        "sha256": "1a6f1bacfccb542f3e3e98310913fcd8a878fa50d61130cf9a6572f9f310136b",
+        "bytes": 27931
+      }
+    ]
+  }
+}

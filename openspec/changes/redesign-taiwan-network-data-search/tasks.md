@@ -27,7 +27,7 @@
 
 ## 4. Seed content
 
-- [ ] 4.1 Rebuild the 金馬獎 2018 network from the official nominee announcement as `own-work` (CC BY 4.0), level `public-role`, titled 第55屆金馬獎入圍者–電影網絡, unless the owner confirms rights to the existing JSON. Verify: validation passes; the page shows the personal-data notice; the manifest reports any repeated pairs.
+- [x] 4.1 Rebuild the 金馬獎 2018 network from the official nominee announcement as `own-work` (CC BY 4.0), level `public-role`, titled 第55屆金馬獎入圍者–電影網絡, unless the owner confirms rights to the existing JSON. Verify: validation passes; the page shows the personal-data notice; the manifest reports any repeated pairs.
 - [ ] 4.2 Add TWNIC as `link-only` to map.twnic.tw, and note the permission request in the private log. Verify: no hosted files; the access link resolves.
 - [ ] 4.3 Add the 7 wanted records (課業諮詢網絡, 人口遷徙, 港口貿易, 生物食物鏈, 縣市路網, 航空路線, 文獻引用網絡). Verify: `/wanted/` lists exactly 7 rows.
 - [ ] 4.4 Add at least 6 more published records from the research seed list, at least 2 of them to be hosted (the 立法院 co-sponsorship hypergraph from LYAPI under CC BY 4.0; a monthly aggregate of Taipei MRT OD flows under OGDL-Taiwan-1.0); the others may be link-only (for example the DGBAS input–output table, county-level migration, CPBL games). Verify: at least 8 published records; every license has an evidence URL and a check date.
